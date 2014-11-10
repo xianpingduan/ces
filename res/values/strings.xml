@@ -11,6 +11,9 @@
     <string name="login_account_hint">用户名</string>
     <string name="login_pwd_hint">密  码</string>
     
+    <string name="please_enter_account">请输入用户名</string>
+    <string name ="please_enter_pwd">请输入密码</string> 
+    <string name="please_select_zt">请选择账套</string>
     
     <string name="server_config_url_hint">服务器地址</string>
     <string name="server_config_port_hint">端      口</string>
