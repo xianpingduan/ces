@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- 字体大小适配 start -->
+    <!-- 应用场景：号码归属地/时间/辅助性说明 -->
+    <dimen name="pl_micro_text_size">18sp</dimen>
+    <!-- 应用场景：下拉菜单/Button/Menu上的文字-->
+    <dimen name="pl_small_text_size">22sp</dimen>
+    <!-- 应用场景：主标题、Listview主信息-->
+    <dimen name="pl_medium_text_size">24sp</dimen>
+    <!-- 应用场景：拨号输入/大标题-->
+    <dimen name="pl_large_text_size">36sp</dimen>
+    <!-- 字体大小适配 end -->
+    
+    <!-- bar start-->
+    <dimen name="pl_comm_b_margin_left">12dp</dimen>
+    <dimen name="pl_comm_b_margin_right">12dp</dimen>
+    <dimen name="pl_comm_b_margin_top">12dp</dimen>
+    <dimen name="pl_comm_b_margin_buttom">12dp</dimen>
+    
+    <!-- actionBar start-->
+    <!-- actionBar,ImageView按钮的高度和宽度 ,比如设置按键-->
+    <dimen name="pl_comm_ab_btn_width">48dp</dimen>
+    <dimen name="pl_comm_ab_btn_height">48dp</dimen>
+    <!--  actionBar logo的宽度和高度 -->
+    <dimen name="pl_comm_ab_logo_width">36dp</dimen>
+    <dimen name="pl_comm_ab_logo_height">36dp</dimen>
+    
+    <!-- actionBar end-->
+    
+    <!-- headerBar  start-->
+    <dimen name="pl_comm_hb_btn_width">72dp</dimen>
+    <dimen name="pl_comm_hb_btn_height">40dp</dimen>
+    <!-- headerBar  end-->
+    
+    <!-- footerBar  start-->
+    <!-- 暂无 -->
+    <!-- footerBar  end-->
+    
+    <!-- searcherBar  start-->
+    <dimen name="pl_comm_sb_btn_width">72dp</dimen>
+    <dimen name="pl_comm_sb_btn_height">40dp</dimen>
+    <!-- searcherBar  end-->
+    
+    <!-- bar end-->
+    
+    <!-- tabBar 导航条 start -->
+    <dimen name="pl_comm_tb_height">60dp</dimen>
+    <!-- tabBar 导航条 end -->
+    
+    <!--alert dialog 弹出框 start -->
+    <dimen name="pl_comm_ad_margin_left">30dp</dimen>
+    <dimen name="pl_comm_ad_margin_right">30dp</dimen>
+    <dimen name="pl_comm_ad_margin_top">30dp</dimen>
+    <dimen name="pl_comm_ad_margin_buttom">30dp</dimen>
+    <dimen name="pl_comm_ad_gap">8dp</dimen>
+    <dimen name="pl_comm_ad_tip_margin_top">24dp</dimen>
+    <dimen name="pl_comm_ad_pecent_margin_top">12dp</dimen>
+    <dimen name="pl_comm_ad_btn_height">64dp</dimen>
+    
+    <!--alert dialog 弹出框 end -->
+    
+    <!--设置  start-->
+    <dimen name="pl_comm_set_item_height">72dp</dimen>
+    <!-- 一般间隙 设计规范中蓝色标记 start -->
+    <dimen name="pl_comm_setting_item_gap">6dp</dimen>
+    <!-- 一般间隙 设计规范中蓝色标记 end -->
+    <dimen name="pl_comm_setting_item_margin_left">16dp</dimen>
+    <dimen name="pl_comm_setting_item_icon_margin_top">12dp</dimen>
+    <dimen name="pl_comm_setting_item_icon_margin_buttom">12dp</dimen>
+    <dimen name="pl_comm_setting_item_btn_width">36dp</dimen>
+    <dimen name="pl_comm_setting_item_btn_height">36dp</dimen>
+    <dimen name="pl_comm_setting_item_icon_48_width">48dp</dimen>
+    <dimen name="pl_comm_setting_item_icon_48_height">48dp</dimen>
+    <!--设置  end-->
+    
+    <!-- item start -->
+    <dimen name="pl_comm_item_72_height">72dp</dimen>
+    <dimen name="pl_comm_item_gap">6dp</dimen>
+   	<dimen name="pl_comm_item_margin_left">16dp</dimen>
+    <dimen name="pl_comm_item_margin_top">12dp</dimen>
+    <dimen name="pl_comm_item_margin_buttom">12dp</dimen>
+    <dimen name="pl_comm_item_margin_right">12dp</dimen>
+    
+    <!-- item 48*48 icon 中等图标  start -->
+    <dimen name="pl_comm_item_icon_48_height">48dp</dimen>
+    <dimen name="pl_comm_item_icon_48_width">48dp</dimen>
+    <!-- item 48*48 icon 中等图标   end -->
+    
+    <!-- item 96*96 icon 大图标  start -->
+    <dimen name="pl_comm_item_icon_96_height">96dp</dimen>
+    <dimen name="pl_comm_item_icon_96_width">96dp</dimen>
+    <dimen name="pl_comm_item_96_height">96dp</dimen>
+    <!-- item 96*96 icon 大图标   end -->
+    <!-- item end -->
+    
+    
+    <dimen name="pl_progress_small_height">32dp</dimen>
+    
+    <dimen name="pl_comm_ab_height">48dp</dimen>
+
+</resources>

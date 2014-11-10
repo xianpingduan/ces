@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 正文字体颜色值 纯黑色 -->
+    <color name="pl_main_text_color">#000000</color>
+    <!-- 副文本字体颜色值 -->
+    <color name="pl_deputy_text_color">#99000000</color>
+    <!-- 不可用文本字体颜色值 -->
+    <color name="pl_disabled_text_color">#33000000</color>
+    <!-- 状态栏文本字体颜色值 -->
+    <color name="pl_statusbar_text_color">#33FFFFFF</color>
+    <!-- 主红色背景颜色值 -->
+    <color name="pl_main_red_color">#DF3B4C</color>
+    <!-- 辅助红色背景颜色值 -->
+    <color name="pl_deputy_red_color">#EF5E6F</color>
+    <!-- 主黄色背景颜色值 -->
+    <color name="pl_main_orange_color">#DC9A11</color>
+    <!-- 辅助黄色背景颜色值 -->
+    <color name="pl_deputy_orange_color">#F7C249</color>
+    <!-- 主蓝色背景颜色值 -->
+    <color name="pl_main_blue_color">#08C08E</color>
+    <!-- 辅助蓝色背景颜色值 -->
+    <color name="pl_deputy_blue_color">#13A2CF</color>
+    <!-- 主绿色背景颜色值 -->
+    <color name="pl_main_green_color">#02AA7C</color>
+    <!-- 辅助绿色背景颜色值  -->
+    <color name="pl_deputy_green_color">#02B389</color>
+    
+   	<color name="pl_line">#ebebeb</color>
+    
+</resources>
