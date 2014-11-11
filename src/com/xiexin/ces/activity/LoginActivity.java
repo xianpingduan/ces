@@ -1,5 +1,7 @@
 package com.xiexin.ces.activity;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +18,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.utils.Logger;
@@ -38,6 +48,10 @@ public class LoginActivity extends Activity implements OnClickListener
 
     private TextView mZtTv;
 
+    //网络请求
+
+    private RequestQueue mQueue;
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
@@ -46,6 +60,8 @@ public class LoginActivity extends Activity implements OnClickListener
 	setContentView( R.layout.activity_login );
 	mContext = this;
 	initView( );
+
+	mQueue = Volley.newRequestQueue( App.getAppContext( ) );
 
     }
 
@@ -89,15 +105,58 @@ public class LoginActivity extends Activity implements OnClickListener
 
     private void login()
     {
-	if( validate( ) )
-	{
-	    doRequestLogin( );
-	}
+	//	if( validate( ) )
+	//	{
+	doRequestLogin( );
+	//	}
     }
 
     private void doRequestLogin()
     {
+	JsonObjectRequest json = new JsonObjectRequest( Method.GET , "http://core130.com:8081/api/CESApp/GetWorkMessage?account=web_Group&userid=000018&kind=1&filter=%20&size=10&page=1" , null ,
+		new Listener< JSONObject >( )
+		{
 
+		    @Override
+		    public void onResponse( JSONObject response )
+		    {
+			Logger.d( TAG , "----response----" + response.toString( ) );
+
+		    }
+		} , new ErrorListener( )
+		{
+
+		    @Override
+		    public void onErrorResponse( VolleyError error )
+		    {
+			Logger.d( TAG , "----e----" + error.getMessage( ) );
+
+		    }
+		} );
+	mQueue.add( json );
+
+	//	StringRequest str = new StringRequest( Method.GET , "http://core130.com:8081/api/CESApp/GetWorkMessage?account=web_Group&userid=000018&kind=1&filter=%20&size=10&page=1" ,
+	//		new Listener< String >( )
+	//		{
+	//
+	//		    @Override
+	//		    public void onResponse( String response )
+	//		    {
+	//			Logger.d( TAG , "----response---" + response.toString( ) );
+	//		    }
+	//		} , new ErrorListener( )
+	//		{
+	//
+	//		    @Override
+	//		    public void onErrorResponse( VolleyError error )
+	//		    {
+	//			Logger.d( TAG , "----error---" + error.getMessage( ) );
+	//
+	//		    }
+	//		} );
+	//
+	//	mQueue.add( str );
+	mQueue.start( );
     }
 
     private boolean validate()
