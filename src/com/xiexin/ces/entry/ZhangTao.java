@@ -5,27 +5,36 @@ import java.io.Serializable;
 public class ZhangTao implements Serializable
 {
 
-    private String realName;
-    private String showName;
+    private String UserID;
+    private String UserName;
+    private String AccInfo;
+	private String ConnName;
+	
+    public String getUserID() {
+		return UserID;
+	}
+	public void setUserID(String userID) {
+		UserID = userID;
+	}
+	public String getUserName() {
+		return UserName;
+	}
+	public void setUserName(String userName) {
+		UserName = userName;
+	}
+	public String getAccInfo() {
+		return AccInfo;
+	}
+	public void setAccInfo(String accInfo) {
+		AccInfo = accInfo;
+	}
+	public String getConnName() {
+		return ConnName;
+	}
+	public void setConnName(String connName) {
+		ConnName = connName;
+	}
 
-    public String getRealName()
-    {
-	return realName;
-    }
-
-    public void setRealName( String realName )
-    {
-	this.realName = realName;
-    }
-
-    public String getShowName()
-    {
-	return showName;
-    }
-
-    public void setShowName( String showName )
-    {
-	this.showName = showName;
-    }
+ 
 
 }

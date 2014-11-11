@@ -206,9 +206,9 @@ public class ZhangTaoActivity extends Activity
 
 	private void bindData( final ViewHolder holder , final ZhangTao zt )
 	{
-	    holder.nameTv.setText( zt.getRealName( ) );
-	    holder.showNameTv.setText( zt.getShowName( ) );
-	    holder.ckBox.setTag( zt.getRealName( ) );
+//	    holder.nameTv.setText( zt.getRealName( ) );
+//	    holder.showNameTv.setText( zt.getShowName( ) );
+//	    holder.ckBox.setTag( zt.getRealName( ) );
 	    holder.ckBox.setOnClickListener( new View.OnClickListener( )
 	    {
 		@Override

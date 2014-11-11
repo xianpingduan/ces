@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="xxxxx"
+            android:text="@string/return_text"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
@@ -35,8 +35,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true" 
         android:textColor="@android:color/white"
-        android:gravity="center"
-        android:text="xxxx"/>
+        android:gravity="center"/>
 
     <LinearLayout
         android:id="@+id/handle_btn_ll"

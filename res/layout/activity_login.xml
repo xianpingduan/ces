@@ -13,7 +13,8 @@
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/login_logo_margin_top" />
+            android:layout_marginTop="@dimen/login_logo_margin_top"
+            android:src="@drawable/logo" />
     </LinearLayout>
 
     <LinearLayout
@@ -101,7 +102,7 @@
     <RelativeLayout
         android:id="@+id/zt_select_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/login_frame_height"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/common_margin_left"
         android:layout_marginRight="@dimen/common_margin_right"
@@ -122,6 +123,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:textSize="@dimen/pl_small_text_size"
+            android:textColor="@color/pl_deputy_text_color"
             android:text="@string/p_select_zt_text" />
     </RelativeLayout>
 
@@ -192,6 +195,7 @@
         android:layout_marginLeft="@dimen/login_btn_margin_left"
         android:layout_marginRight="@dimen/login_btn_margin_right"
         android:layout_marginTop="@dimen/login_btn_margin_top"
+        android:textSize="@dimen/pl_small_text_size"
         android:gravity="center"
         android:text="@string/login_text" />
 

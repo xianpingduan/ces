@@ -6,8 +6,17 @@ public class BaseResult implements Serializable
 {
     private int Success;
     private String Msg;
+    private String Data;
 
-    public int getSuccess()
+    public String getData() {
+		return Data;
+	}
+
+	public void setData(String data) {
+		Data = data;
+	}
+
+	public int getSuccess()
     {
 	return Success;
     }
