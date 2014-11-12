@@ -34,6 +34,8 @@
     
     <string name="return_text">返回</string>
     
+    <string name="loading_tip_text">正在加载</string>
+    
     
     <string name="pl_listview_header_hint_normal_up">向下滑动获取更多</string>
     <string name="pl_listview_header_hint_normal_down">向上滑动获取更多</string>

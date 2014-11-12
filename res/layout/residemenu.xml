@@ -17,23 +17,71 @@
         android:background="@drawable/shadow"
         android:scaleType="fitXY" />
 
-    <ScrollView
-        android:id="@+id/sv_left_menu"
-        android:layout_width="150dp"
-        android:layout_height="fill_parent"
-        android:paddingLeft="30dp"
-        android:scrollbars="none" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        
+        
+        <RelativeLayout 
+            android:layout_width="@dimen/reside_menu_width"
+            android:layout_height="wrap_content">
+            
+            <ImageView  
+                android:id="@+id/user_head_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_light"
-                android:text="@string/app_name" />
+                />
+            
+            <LinearLayout 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                
+                        <TextView
+            android:id="@+id/return_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/return_text"
+            android:textColor="@android:color/white" />
+                        
+                                <TextView
+            android:id="@+id/return_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/return_text"
+            android:textColor="@android:color/white" />
+                                        <TextView
+            android:id="@+id/return_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/return_text"
+            android:textColor="@android:color/white" />
+                
+                
+            </LinearLayout>
+            
+            
+            
+            
+        </RelativeLayout>
+        
+        
+        
+        
+        
+        
+        
+
+        <ScrollView
+            android:id="@+id/sv_left_menu"
+            android:layout_width="@dimen/reside_menu_width"
+            android:layout_height="match_parent"
+            android:paddingLeft="30dp"
+            android:scrollbars="none" >
 
             <LinearLayout
                 android:id="@+id/layout_left_menu"
@@ -42,25 +90,25 @@
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical" >
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
-    <ScrollView
-        android:id="@+id/sv_right_menu"
-        android:layout_width="150dp"
-        android:layout_height="fill_parent"
-        android:layout_gravity="right"
-        android:paddingRight="30dp"
-        android:scrollbars="none" >
+        <ScrollView
+            android:id="@+id/sv_right_menu"
+            android:layout_width="@dimen/reside_menu_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:paddingRight="30dp"
+            android:scrollbars="none" >
 
-        <LinearLayout
-            android:id="@+id/layout_right_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
-            android:orientation="vertical" >
-        </LinearLayout>
-    </ScrollView>
+            <LinearLayout
+                android:id="@+id/layout_right_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="right"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
 </FrameLayout>

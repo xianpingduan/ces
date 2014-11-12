@@ -1,9 +1,5 @@
 package com.xiexin.ces.activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -22,14 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
@@ -119,123 +113,126 @@ public class LoginActivity extends Activity implements OnClickListener
 
     private void doRequestLogin()
     {
-    	
-    	JSONObject obj = new JSONObject();
-    	try {
-			obj.put("account", "web_Group");
-			obj.put("userid", "000018");
-			obj.put("kind", 1);
-			obj.put("filter", "");
-			obj.put("size", 1);
-			obj.put("page", 1);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//    	http://core130.com:8081/api/CESApp/GetWorkMessage?account=web_Group&userid=000018&kind=1&filter=%20&size=10&page=1
-	JsonObjectRequest json = new JsonObjectRequest( Method.POST , "http://core130.com:8081/api/CESApp/GetWorkMessage" , obj ,
-		new Listener< JSONObject >( )
-		{
 
-		    @Override
-		    public void onResponse( JSONObject response )
-		    {
-			Logger.d( TAG , "----response----" + response.toString( ) );
+	//account=web_001&userid=000018&password=123
 
-		    }
-		} , new ErrorListener( )
-		{
+	String account = mZtTv.getText( ).toString( );
+	String userid = mLoginAccEt.getText( ).toString( );
+	String pwd = mLoginPwdEt.getText( ).toString( );
 
-		    @Override
-		    public void onErrorResponse( VolleyError error )
-		    {
-			Logger.d( TAG , "----e----" + error.getMessage( ) );
-			Logger.d( TAG , "----e----" + error.getLocalizedMessage());
+	//	JSONObject obj = new JSONObject( );
+	//	try
+	//	{
+	//	    obj.put( "account" , account );
+	//	    obj.put( "userid" , userid );
+	//	    obj.put( "pwd" , pwd );
+	//	}
+	//	catch ( JSONException e )
+	//	{
+	//	    // TODO
+	//	    e.printStackTrace( );
+	//	}
+	//    	http://core130.com:8081/api/CESApp/GetWorkMessage?account=web_Group&userid=000018&kind=1&filter=%20&size=10&page=1
 
-		    }
-		} );
+	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.LOGIN_URL + "?" );
+	urlSbf.append( "account=" ).append( account );
+	urlSbf.append( "&userid=" ).append( userid );
+	urlSbf.append( "&pwd=" ).append( pwd );
+
+	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
+	{
+	    @Override
+	    public void onResponse( JSONObject response )
+	    {
+		Logger.d( TAG , "----response----" + response.toString( ) );
+	    }
+	} , new ErrorListener( )
+	{
+	    @Override
+	    public void onErrorResponse( VolleyError error )
+	    {
+		Logger.d( TAG , "----e----" + error.getMessage( ) );
+	    }
+	} );
 	mQueue.add( json );
 	mQueue.start( );
     }
-    
-    
-    private void getAccount(){
 
-    	
-//    	Map<String, String> map = new HashMap<String, String>();    
-//    	map.put("userid", "000018");    
-//    	JSONObject obj = new JSONObject(map);  
-//    	JSONObject obj = new JSONObject();
-//    	try {
-//			obj.put("userid", "000018");
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//    	http://core130.com:8081/api/CESApp/GetWorkMessage?account=web_Group&userid=000018&kind=1&filter=%20&size=10&page=1
-	StringRequest json = new StringRequest( Method.POST , Constants.ROOT_URL+Constants.ZHANG_TAO_URL ,
-		new Listener< String >( )
-		{
+    private void getAccount()
+    {
 
-		    @Override
-		    public void onResponse( String response )
-		    {
-			Logger.d( TAG , "----response----" + response.toString( ) );
-			
-			Message msg = Message.obtain();
-			msg.what= MSG_REQUEST_ZT_SUCCESS;
-			msg.obj = response.toString();
-			mUiHandler.sendMessage(msg);
-			
-		    }
-		} , new ErrorListener( )
-		{
+	//    	Map<String, String> map = new HashMap<String, String>();    
+	//    	map.put("userid", "000018");    
+	//    	JSONObject obj = new JSONObject(map);  
+	//    	JSONObject obj = new JSONObject();
+	//    	try {
+	//			obj.put("userid", "000018");
+	//		} catch (JSONException e) {
+	//			// TODO Auto-generated catch block
+	//			e.printStackTrace();
+	//		}
+	//    	http://core130.com:8081/api/CESApp/GetWorkMessage?account=web_Group&userid=000018&kind=1&filter=%20&size=10&page=1
 
-		    @Override
-		    public void onErrorResponse( VolleyError error )
-		    {
-			Logger.d( TAG , "----e----" + error.getMessage( ) );
-		    }
-		})
-		{
-//		@Override
-//		public Map<String, String> getHeaders() throws AuthFailureError {
-//            HashMap<String, String> headers = new HashMap<String, String>();
-//            headers.put("Accept", "application/json");
-//            headers.put("Content-Type","application/json; charset=UTF-8");
-//            return headers;
-//		}
-		
-		 @Override
-		    protected Map<String, String> getParams() 
-		    {  
-		            Map<String, String>  params = new HashMap<String, String> ();  
-		            params.put("userid", "000018");  
-		            return params;  
-		    }
-				
-		};
+	String account = mZtTv.getText( ).toString( );
+	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.ZHANG_TAO_URL + "?" );
+	urlSbf.append( "account=" ).append( account );
+	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
+	{
+	    @Override
+	    public void onResponse( JSONObject response )
+	    {
+		Logger.d( TAG , "----response----" + response.toString( ) );
+
+		//TODO
+
+		App.getSharedPreference( ).edit( ).putString( Constants.ZHANG_TAO_LIST , response.toString( ) );
+		mUiHandler.sendEmptyMessage( MSG_REQUEST_ZT_SUCCESS );
+
+	    }
+	} , new ErrorListener( )
+	{
+	    @Override
+	    public void onErrorResponse( VolleyError error )
+	    {
+		Logger.d( TAG , "----e----" + error.getMessage( ) );
+	    }
+	} );
+
+	//{		@Override
+	//		public Map<String, String> getHeaders() throws AuthFailureError {
+	//            HashMap<String, String> headers = new HashMap<String, String>();
+	//            headers.put("Accept", "application/json");
+	//            headers.put("Content-Type","application/json; charset=UTF-8");
+	//            return headers;
+	//		}
+	//	    @Override
+	//	    protected Map< String , String > getParams()
+	//	    {
+	//		Map< String , String > params = new HashMap< String , String >( );
+	//		params.put( "userid" , "000018" );
+	//		return params;
+	//	    }}
+
 	mQueue.add( json );
 	mQueue.start( );
     }
-    
 
     private boolean validate()
     {
 	String account = mLoginAccEt.getText( ).toString( );
 	String pwd = mLoginPwdEt.getText( ).toString( );
 	String zt = mZtTv.getText( ).toString( );
-	if(account ==null || account.isEmpty( ) )
+	if( account == null || account.isEmpty( ) )
 	{
 	    Toast.makeText( mContext , getString( R.string.please_enter_account ) , Toast.LENGTH_SHORT ).show( );
 	    return false;
 	}
-	else if(pwd ==null || pwd.isEmpty( ) )
+	else if( pwd == null || pwd.isEmpty( ) )
 	{
 	    Toast.makeText( mContext , getString( R.string.please_enter_pwd ) , Toast.LENGTH_SHORT ).show( );
 	    return false;
 	}
-	else if(zt==null|| zt.isEmpty( ) || zt.equals( getString( R.string.p_select_zt_text ) ) )
+	else if( zt == null || zt.isEmpty( ) || zt.equals( getString( R.string.p_select_zt_text ) ) )
 	{
 	    Toast.makeText( mContext , getString( R.string.please_select_zt ) , Toast.LENGTH_SHORT ).show( );
 	    return false;
@@ -246,16 +243,16 @@ public class LoginActivity extends Activity implements OnClickListener
     private void selectZt()
     {
 	String account = mLoginAccEt.getText( ).toString( );
-	if( account ==null || account.isEmpty( ) )
+	if( account == null || account.isEmpty( ) )
 	{
 	    Toast.makeText( mContext , getString( R.string.please_enter_account ) , Toast.LENGTH_SHORT ).show( );
 	    return;
 	}
-	getAccount();
+	getAccount( );
     }
 
     private final static int MSG_GET_ZT = 1;
-    private final static int MSG_REQUEST_ZT_SUCCESS=2;
+    private final static int MSG_REQUEST_ZT_SUCCESS = 2;
 
     private Handler mUiHandler = new Handler( )
     {
@@ -271,12 +268,11 @@ public class LoginActivity extends Activity implements OnClickListener
 		case MSG_GET_ZT :
 		    mZtTv.setText( (String)msg.obj );
 		    break;
-		case MSG_REQUEST_ZT_SUCCESS:
-			Intent intent = new Intent( );
-			intent.setClass( LoginActivity.this , ZhangTaoActivity.class );
-			intent.putExtra( Constants.ZHANG_TAO_LIST , (String)msg.obj );
-			startActivityForResult( intent , 1 );
-			break;
+		case MSG_REQUEST_ZT_SUCCESS :
+		    Intent intent = new Intent( );
+		    intent.setClass( LoginActivity.this , ZhangTaoActivity.class );
+		    startActivityForResult( intent , 1 );
+		    break;
 		default :
 		    break;
 	    }
@@ -296,7 +292,7 @@ public class LoginActivity extends Activity implements OnClickListener
 		selectZt( );
 		break;
 	    case R.id.auto_login_cb :
-	    	
+
 		break;
 	    case R.id.auto_login_tv :
 
@@ -308,7 +304,7 @@ public class LoginActivity extends Activity implements OnClickListener
 
 		break;
 	    case R.id.logo :
-	    	
+
 		break;
 	    default :
 		break;

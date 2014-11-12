@@ -18,5 +18,9 @@
     <dimen name="login_btn_height">50dp</dimen>
     
     <dimen name="remmenber_pwd_tv_margin_left">6dp</dimen>
+    
+    <dimen name="loading_dialog_padding">24dp</dimen>
+    
+    <dimen name="reside_menu_width">150dp</dimen>
 
 </resources>

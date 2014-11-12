@@ -3,6 +3,7 @@ package com.xiexin.ces.activity;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,13 +19,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xiexin.ces.App;
+import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.entry.ZhangTao;
 import com.xiexin.ces.widgets.ILoadingViewListener;
 import com.xiexin.ces.widgets.LoadingUIListView;
 import com.xiexin.ces.widgets.PullListView.IListViewListener;
 
-public class ZhangTaoActivity extends Activity
+public class ZhangTaoActivity extends Activity implements OnClickListener
 {
 
     public final static String TAG = "ZhangTaoActivity";
@@ -50,6 +52,8 @@ public class ZhangTaoActivity extends Activity
 	setContentView( R.layout.activity_zhangtao );
 
 	initView( );
+
+	initData( );
     }
 
     private void initView()
@@ -69,6 +73,17 @@ public class ZhangTaoActivity extends Activity
 	mBtn1 = (Button)findViewById( R.id.btn1 );
 	mBtn2 = (Button)findViewById( R.id.btn2 );
 	///header end
+
+	mTitle.setText( getString( R.string.server_config ) );
+	mBtn1.setVisibility( View.VISIBLE );
+	mBtn1.setText( getString( R.string.finish_to ) );
+
+	mBtn1.setOnClickListener( this );
+    }
+
+    private void initData()
+    {
+	String ztListStr = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_LIST , "" );
     }
 
     @Override
@@ -206,9 +221,9 @@ public class ZhangTaoActivity extends Activity
 
 	private void bindData( final ViewHolder holder , final ZhangTao zt )
 	{
-//	    holder.nameTv.setText( zt.getRealName( ) );
-//	    holder.showNameTv.setText( zt.getShowName( ) );
-//	    holder.ckBox.setTag( zt.getRealName( ) );
+	    //	    holder.nameTv.setText( zt.getRealName( ) );
+	    //	    holder.showNameTv.setText( zt.getShowName( ) );
+	    //	    holder.ckBox.setTag( zt.getRealName( ) );
 	    holder.ckBox.setOnClickListener( new View.OnClickListener( )
 	    {
 		@Override
@@ -242,5 +257,28 @@ public class ZhangTaoActivity extends Activity
 	TextView showNameTv;
 	TextView nameTv;
 	CheckBox ckBox;
+    }
+
+    private void setResult()
+    {
+	Intent in = new Intent( );
+	in.putExtra( Constants.ZHANG_TAO , "" );
+	setResult( RESULT_OK , in );
+
+	finish( );
+    }
+
+    @Override
+    public void onClick( View v )
+    {
+	switch ( v.getId( ) )
+	{
+	    case R.id.btn1 :
+
+		break;
+	    default :
+		break;
+	}
+
     }
 }
