@@ -21,10 +21,15 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
     private ResideMenu resideMenu;
     private MenuActivity mContext;
-    private ResideMenuItem itemHome;
-    private ResideMenuItem itemProfile;
-    private ResideMenuItem itemCalendar;
-    private ResideMenuItem itemSettings;
+    private ResideMenuItem itemPendApproval;
+    private ResideMenuItem itemSendItem;
+    private ResideMenuItem itemScratchUpcome;
+    private ResideMenuItem itemApproved;
+    private ResideMenuItem itemMessage;
+    private ResideMenuItem itemAds;
+    private ResideMenuItem itemInvoice;
+    private ResideMenuItem itemRecord;
+    
 
     /**
      * Called when the activity is first created.
@@ -50,22 +55,44 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 	resideMenu.setMenuListener( menuListener );
 	//valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip. 
 	resideMenu.setScaleValue( 0.6f );
+	
+	//右边菜单不显示
+	resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 
 	// create menu items;
-	itemHome = new ResideMenuItem( this , R.drawable.icon_home , "Home" );
-	itemProfile = new ResideMenuItem( this , R.drawable.icon_profile , "Profile" );
-	itemCalendar = new ResideMenuItem( this , R.drawable.icon_calendar , "Calendar" );
-	itemSettings = new ResideMenuItem( this , R.drawable.icon_settings , "Settings" );
+	itemPendApproval = new ResideMenuItem( this , R.drawable.icon_home , getString(R.string.menu_pend_approval) );
+	itemSendItem = new ResideMenuItem( this , R.drawable.icon_profile , getString(R.string.menu_sent_item) );
+	itemScratchUpcome = new ResideMenuItem( this , R.drawable.icon_calendar , getString(R.string.menu_scratch_upcome) );
+	itemApproved = new ResideMenuItem( this , R.drawable.icon_settings ,getString(R.string.menu_approved) );
 
-	itemHome.setOnClickListener( this );
-	itemProfile.setOnClickListener( this );
-	itemCalendar.setOnClickListener( this );
-	itemSettings.setOnClickListener( this );
+	itemPendApproval.setOnClickListener( this );
+	itemSendItem.setOnClickListener( this );
+	itemScratchUpcome.setOnClickListener( this );
+	itemApproved.setOnClickListener( this );
+	
+	itemMessage = new ResideMenuItem( this , R.drawable.icon_home , getString(R.string.menu_message) );
+	itemAds = new ResideMenuItem( this , R.drawable.icon_profile , getString(R.string.menu_ads) );
+	
+	itemMessage.setOnClickListener( this );
+	itemAds.setOnClickListener( this );
+	
+	itemInvoice = new ResideMenuItem( this , R.drawable.icon_calendar , getString(R.string.menu_invoice) );
+	itemRecord = new ResideMenuItem( this , R.drawable.icon_settings ,getString(R.string.menu_record) );
 
-	resideMenu.addMenuItem( itemHome , ResideMenu.DIRECTION_LEFT );
-	resideMenu.addMenuItem( itemProfile , ResideMenu.DIRECTION_LEFT );
-	resideMenu.addMenuItem( itemCalendar , ResideMenu.DIRECTION_RIGHT );
-	resideMenu.addMenuItem( itemSettings , ResideMenu.DIRECTION_RIGHT );
+
+	itemInvoice.setOnClickListener( this );
+	itemRecord.setOnClickListener( this );
+
+	resideMenu.addMenuItem( itemPendApproval , ResideMenu.DIRECTION_LEFT );
+	resideMenu.addMenuItem( itemSendItem , ResideMenu.DIRECTION_LEFT );
+	resideMenu.addMenuItem( itemScratchUpcome , ResideMenu.DIRECTION_LEFT );
+	resideMenu.addMenuItem( itemApproved , ResideMenu.DIRECTION_LEFT );
+	
+	resideMenu.addMenuItem( itemMessage , ResideMenu.DIRECTION_LEFT );
+	resideMenu.addMenuItem( itemAds , ResideMenu.DIRECTION_LEFT );
+	
+	resideMenu.addMenuItem( itemInvoice , ResideMenu.DIRECTION_LEFT );
+	resideMenu.addMenuItem( itemRecord , ResideMenu.DIRECTION_LEFT );
 
 	// You can disable a direction by setting ->
 	// resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
@@ -98,19 +125,19 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     public void onClick( View view )
     {
 
-	if( view == itemHome )
+	if( view == itemPendApproval )
 	{
 	    changeFragment( new HomeFragment( ) );
 	}
-	else if( view == itemProfile )
+	else if( view == itemSendItem )
 	{
 	    changeFragment( new ProfileFragment( ) );
 	}
-	else if( view == itemCalendar )
+	else if( view == itemScratchUpcome )
 	{
 	    changeFragment( new CalendarFragment( ) );
 	}
-	else if( view == itemSettings )
+	else if( view == itemApproved )
 	{
 	    changeFragment( new SettingsFragment( ) );
 	}

@@ -12,75 +12,81 @@
 
     <ImageView
         android:id="@+id/iv_shadow"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/shadow"
         android:scaleType="fitXY" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        
-        
-        <RelativeLayout 
+        android:layout_height="match_parent" 
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/user_info_rl"
             android:layout_width="@dimen/reside_menu_width"
-            android:layout_height="wrap_content">
-            
-            <ImageView  
+            android:layout_marginTop="@dimen/user_info_rl_margin_top"
+            android:paddingLeft="30dp"
+            android:layout_height="wrap_content" >
+
+            <ImageView
                 android:id="@+id/user_head_img"
+                android:layout_width="@dimen/head_image_width"
+                android:layout_height="@dimen/head_image_height" 
+               	android:src="@drawable/icon_head_portrait"/>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
-            
-            <LinearLayout 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                
-                        <TextView
-            android:id="@+id/return_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/return_text"
-            android:textColor="@android:color/white" />
-                        
-                                <TextView
-            android:id="@+id/return_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/return_text"
-            android:textColor="@android:color/white" />
-                                        <TextView
-            android:id="@+id/return_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/return_text"
-            android:textColor="@android:color/white" />
-                
-                
+                android:layout_toRightOf="@id/user_head_img"
+                android:layout_centerInParent="true"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/uesr_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/return_text"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/user_dept_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/return_text"
+                    android:layout_marginTop="@dimen/user_info_margin_top"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/user_account_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/return_text"
+                    android:layout_marginTop="@dimen/user_info_margin_top"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
-            
-            
-            
-            
         </RelativeLayout>
         
-        
-        
-        
-        
-        
-        
+        <View 
+            android:id="@+id/line_1"
+            android:layout_width="@dimen/reside_menu_width"
+            android:layout_height="1dp"
+            android:background="@color/pl_deputy_text_color"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginTop="@dimen/common_margin_top"
+            android:layout_below="@id/user_info_rl"
+            />
 
         <ScrollView
             android:id="@+id/sv_left_menu"
             android:layout_width="@dimen/reside_menu_width"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
             android:paddingLeft="30dp"
+            android:layout_below="@id/line_1"
             android:scrollbars="none" >
 
             <LinearLayout
@@ -95,7 +101,7 @@
         <ScrollView
             android:id="@+id/sv_right_menu"
             android:layout_width="@dimen/reside_menu_width"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:paddingRight="30dp"
             android:scrollbars="none" >
@@ -109,6 +115,7 @@
                 android:orientation="vertical" >
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
+        
+    </RelativeLayout>
 
 </FrameLayout>

@@ -21,6 +21,12 @@
     
     <dimen name="loading_dialog_padding">24dp</dimen>
     
-    <dimen name="reside_menu_width">150dp</dimen>
+    <dimen name="reside_menu_width">180dp</dimen>
+    
+    <dimen name="head_image_width">72dp</dimen>
+    <dimen name="head_image_height">72dp</dimen>
+    
+    <dimen name="user_info_rl_margin_top">80dp</dimen>
+    <dimen name="user_info_margin_top">6dp</dimen>
 
 </resources>

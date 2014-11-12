@@ -89,6 +89,7 @@ public class ResideMenu extends FrameLayout
 	layoutLeftMenu = (LinearLayout)findViewById( R.id.layout_left_menu );
 	layoutRightMenu = (LinearLayout)findViewById( R.id.layout_right_menu );
 	imageViewBackground = (ImageView)findViewById( R.id.iv_background );
+	
     }
 
     /**
