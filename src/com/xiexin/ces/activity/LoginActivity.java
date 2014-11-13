@@ -173,9 +173,9 @@ public class LoginActivity extends Activity implements OnClickListener
 	//		}
 	//    	http://core130.com:8081/api/CESApp/GetWorkMessage?account=web_Group&userid=000018&kind=1&filter=%20&size=10&page=1
 
-	String account = mZtTv.getText( ).toString( );
+	String userid = mLoginAccEt.getText( ).toString( );
 	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.ZHANG_TAO_URL + "?" );
-	urlSbf.append( "account=" ).append( account );
+	urlSbf.append( "userid=" ).append( userid );
 	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
 	{
 	    @Override
