@@ -39,7 +39,7 @@
     <string name="return_text">返回</string>
     
     <string name="loading_tip_text">正在加载</string>
-    <string name="expect">精彩期待...</string>
+    <string name="expect">精彩待续...</string>
     
     
     <string name="pl_listview_header_hint_normal_up">向下滑动获取更多</string>
@@ -62,6 +62,9 @@
     <string name="menu_ads">公告</string>
     <string name="menu_invoice">发票真伪</string>
     <string name="menu_record">记一笔</string>
+    
+    
+    <string name="click_exit_label">"再按一次退出程序" </string>
     
     
 

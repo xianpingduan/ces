@@ -82,4 +82,19 @@ public class App extends Application
 	return mVerName;
     }
 
+    public static void clear()
+    {
+	//	mSharePrefences.edit( ).putBoolean( key , value )
+	//保存数据
+	mSharePrefences.edit( ).putString( Constants.USER_ID , "" ).commit( );
+	mSharePrefences.edit( ).putString( Constants.PWD , "" ).commit( );
+	mSharePrefences.edit( ).putString( Constants.DEPART , "" ).commit( );
+	mSharePrefences.edit( ).putString( Constants.TITLE , "" ).commit( );
+	mSharePrefences.edit( ).putString( Constants.JOB , "" ).commit( );
+	mSharePrefences.edit( ).putBoolean( Constants.LOCKED , false ).commit( );
+	mSharePrefences.edit( ).putString( Constants.ZHANG_TAO_ACCINFO , "" ).commit( );
+	mSharePrefences.edit( ).putString( Constants.ZHANG_TAO_CONN_NAME , "" ).commit( );
+	mSharePrefences.edit( ).putString( Constants.ZHANG_TAO_LIST , "" ).commit( );
+    }
+
 }
