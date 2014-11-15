@@ -12,8 +12,12 @@
     <string name="login_pwd_hint">密  码</string>
     
     <string name="please_enter_account">请输入用户名</string>
-    <string name ="please_enter_pwd">请输入密码</string> 
+    <string name="please_enter_pwd">请输入密码</string> 
     <string name="please_select_zt">请选择账套</string>
+    
+    <string name="select_zt">选择账套</string>
+    
+    <string name="get_accout_error">用户名错误或此用户无帐套信息</string>
     
     
     <string name="server_config">服务器配置</string>
