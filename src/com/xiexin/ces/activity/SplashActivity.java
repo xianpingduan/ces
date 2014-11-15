@@ -14,7 +14,6 @@ public class SplashActivity extends Activity
 {
 
     public final static String TAG = "SplashActivity";
-    
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -22,45 +21,75 @@ public class SplashActivity extends Activity
 	// TODO Auto-generated method stub
 	super.onCreate( savedInstanceState );
 	setContentView( R.layout.activity_splash );
-	
-	String url = App.getSharedPreference().getString(Constants.SERVER_CONFIG_URL, "");
-	String port = App.getSharedPreference().getString(Constants.SERVER_CONFIG_PORT, "");
-	
-	Constants.ROOT=url+":"+port;
-	Logger.d(TAG,"server url="+ url+":"+port);
-	
-	new Handler().postDelayed(new Runnable() {
-		
-		@Override
-		public void run() {
-			// TODO 
-			
-			
-			
-			intentTo();
-		}
-	}, 1000);
-	
-	
+
+	String url = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "" );
+	String port = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "" );
+
+	Constants.ROOT = url + ":" + port;
+	Logger.d( TAG , "server url=" + url + ":" + port );
+
+	if( url.isEmpty( ) )
+	{
+	    intentToServerConfig( );
+	    return;
+	}
+
     }
-    
-    private void doRequestServerConfigInfo(){
-    	
-    	
+
+    //加载服务器信息
+    private void doRequestServerConfigInfo()
+    {
+
     }
-    
-    
-    private void intentTo(){
-		Intent intent = new Intent();
-		intent.setClass(SplashActivity.this, LoginActivity.class);
-		startActivity(intent);
-		finish();
+
+    private void intentToLogin()
+    {
+	Intent intent = new Intent( );
+	intent.setClass( SplashActivity.this , LoginActivity.class );
+	startActivity( intent );
+	finish( );
+    }
+
+    private void intentToServerConfig()
+    {
+	Intent intent = new Intent( );
+	intent.setClass( SplashActivity.this , ServerConfigActivity.class );
+	startActivity( intent );
+    }
+
+    private void intentToMain()
+    {
+	Intent intent = new Intent( );
+	intent.setClass( SplashActivity.this , MenuActivity.class );
+	startActivity( intent );
     }
 
     @Override
     protected void onResume()
     {
-	// TODO Auto-generated method stub
+
+	//加载数据，跳转到登录界面
+	//TODO
+	final boolean autoLogin = App.getSharedPreference( ).getBoolean( Constants.AUTO_LOGIN , false );
+	new Handler( ).postDelayed( new Runnable( )
+	{
+	    @Override
+	    public void run()
+	    {
+		// TODO 
+		if( autoLogin )
+		{
+		    intentToMain( );
+		}
+		else
+		{
+		    intentToLogin( );
+		}
+
+		SplashActivity.this.finish( );
+
+	    }
+	} , 1000 );
 	super.onResume( );
     }
 
@@ -70,9 +99,10 @@ public class SplashActivity extends Activity
 	// TODO Auto-generated method stub
 	super.onDestroy( );
     }
-    
+
     @Override
-    public void onBackPressed() {
-    	return ;
+    public void onBackPressed()
+    {
+	return;
     }
 }

@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -148,7 +147,8 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 	    {
 		dialog.dismiss( );
 		saveServerConfig( );
-		intentTo( );
+		App.clear( );
+		//		intentTo( );
 		ServerConfigActivity.this.finish( );
 	    }
 	} );
@@ -163,15 +163,15 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 	builder.create( ).show( );
     }
 
-    // 跳转到首页
-    private void intentTo()
-    {
-	Intent intent = new Intent( );
-	intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
-	intent.setClass( ServerConfigActivity.this , SplashActivity.class );
-	startActivity( intent );
-	finish( );
-    }
+    //    // 跳转到首页
+    //    private void intentTo()
+    //    {
+    //	Intent intent = new Intent( );
+    //	intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
+    //	intent.setClass( ServerConfigActivity.this , SplashActivity.class );
+    //	startActivity( intent );
+    //	finish( );
+    //    }
 
     @Override
     protected void onResume()
@@ -200,7 +200,8 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 		else if( validate( ) && isFirstIn )
 		{
 		    saveServerConfig( );
-		    intentTo( );
+		    //		    intentTo( );//不需跳转
+		    finish( );
 		    // TODO
 		}
 		break;

@@ -95,6 +95,9 @@ public class App extends Application
 	mSharePrefences.edit( ).putString( Constants.ZHANG_TAO_ACCINFO , "" ).commit( );
 	mSharePrefences.edit( ).putString( Constants.ZHANG_TAO_CONN_NAME , "" ).commit( );
 	mSharePrefences.edit( ).putString( Constants.ZHANG_TAO_LIST , "" ).commit( );
+
+	mSharePrefences.edit( ).putBoolean( Constants.REMEBER_PWD , false ).commit( );
+	mSharePrefences.edit( ).putBoolean( Constants.AUTO_LOGIN , false ).commit( );
     }
 
 }
