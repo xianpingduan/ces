@@ -1,5 +1,6 @@
 package com.xiexin.ces.fragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,16 +15,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,116 +38,191 @@ import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.entry.Invoice;
 import com.xiexin.ces.utils.Logger;
+import com.xiexin.ces.widgets.LoadingDialog;
 import com.xiexin.ces.widgets.LoadingUIListView;
+import com.xiexin.ces.widgets.PullListView.IListViewListener;
 
 /**
  * User: special Date: 13-12-22 Time: 下午3:26 Mail: specialcyci@gmail.com
  */
 public class PendApprovalFragment extends Fragment implements OnClickListener {
-	
-	private final static String TAG="PendApprovalFragment";
+
+	private final static String TAG = "PendApprovalFragment";
 
 	private View parentView;
 	private LoadingUIListView mListView;
 	private InvoiceAdapter mInvoiceAdapter;
-	
-	
 
-	// header start
-	private LinearLayout mReturnLl;
-	private ImageView mReturnIv;
-	private TextView mReturnTv;
-	private TextView mTitle;
-	private Button mBtn1;
-	private Button mBtn2;
+	// // header start
+	// private LinearLayout mReturnLl;
+	// private ImageView mReturnIv;
+	// private TextView mReturnTv;
+	// private TextView mTitle;
+	// private Button mBtn1;
+	// private Button mBtn2;
+	//
+	// // header end
 
-	// header end
-	
+	private LoadingDialog mLoadingDialog;
+
 	private RequestQueue mQueue;
-	private int mKind = 3;
-	private int mCurrentPage=1;
+	private int mKind = 1;
+	private int mCurrentPage = 1;
 	
+	private static final int LOAD_LIST_NORMAL=0;
+	private static final int LOAD_LIST_REFRESH=1;
+	private static final int LOAD_LIST_LOADMORE=2;
+
 	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	
+
+	private void dismissDialog() {
+		new Handler().postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+					mLoadingDialog.dismiss();
+				}
+			}
+		}, 500);
+
+	}
+
+	private void showDialog() {
+		if (mLoadingDialog == null) {
+			mLoadingDialog = new LoadingDialog(getActivity());
+		}
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				mLoadingDialog.show();
+			}
+		}, 200);
+
+	}
+
 	@Override
 	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
 		super.onAttach(activity);
+		
+		Logger.d(TAG, "onAttach");
 		
 		mQueue = Volley.newRequestQueue(App.getAppContext());
 	}
 	
-	public void setKind(int kind){
-		
-		mKind = kind;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Logger.d(TAG, "onCreate");
+	}
+
+	public void setKind(int kind,boolean b) {
+		Log.d(TAG, "mKind="+mKind +",kind="+kind);
+		if(mKind!=kind||b){
+			mKind = kind;
+			mCurrentPage = 1;
+			mUiHandler.sendEmptyMessage(MSG_KIND_CHANGE);
+		}
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		Logger.d(TAG, "onCreateView");
+		
 		parentView = inflater.inflate(R.layout.fragment_pend_approval,
 				container, false);
-		mListView = (LoadingUIListView) parentView.findViewById(R.id.pend_approval_list);
+		mListView = (LoadingUIListView) parentView
+				.findViewById(R.id.pend_approval_list);
+		mListView.setHeaderPullEnable(true);
+		mListView.setFooterPullEnable(true);
+		mListView.setListViewListener(mListViewListener);
 
-		// header start
-		mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
-		mReturnIv = (ImageView) parentView.findViewById(R.id.return_iv);
-		mReturnTv = (TextView) parentView.findViewById(R.id.return_tv);
-		mTitle = (TextView) parentView.findViewById(R.id.title);
-		mBtn1 = (Button) parentView.findViewById(R.id.btn1);
-		mBtn2 = (Button) parentView.findViewById(R.id.btn2);
-		// /header end
+		// // header start
+		// mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
+		// mReturnIv = (ImageView) parentView.findViewById(R.id.return_iv);
+		// mReturnTv = (TextView) parentView.findViewById(R.id.return_tv);
+		// mTitle = (TextView) parentView.findViewById(R.id.title);
+		// mBtn1 = (Button) parentView.findViewById(R.id.btn1);
+		// mBtn2 = (Button) parentView.findViewById(R.id.btn2);
+		// // /header end
+		//
+		// mReturnTv.setVisibility(View.GONE);
 
-		mReturnTv.setVisibility(View.GONE);
-		
-		
-		String title="";
-		switch (mKind) {
-		case Constants.TYPE_PEND_APPROVAL_TASKS:
-			title = getString(R.string.menu_pend_approval);
-			break;
-		case Constants.TYPE_SCRATCH_UPCOME_TASKS:
-			title = getString(R.string.menu_scratch_upcome);
-			break;
-		case Constants.TYPE_APPROVED_TASKS:
-			title = getString(R.string.menu_approved);
-			break;
-		case Constants.TYPE_SEND_ITEM_TASKS:
-			title = getString(R.string.menu_sent_item);
-			break;
-		default:
-			break;
-		}
-		mTitle.setText(title);
+		// String title = "";
+		// switch (mKind) {
+		// case Constants.TYPE_PEND_APPROVAL_TASKS:
+		// title = getString(R.string.menu_pend_approval);
+		// break;
+		// case Constants.TYPE_SCRATCH_UPCOME_TASKS:
+		// title = getString(R.string.menu_scratch_upcome);
+		// break;
+		// case Constants.TYPE_APPROVED_TASKS:
+		// title = getString(R.string.menu_approved);
+		// break;
+		// case Constants.TYPE_SEND_ITEM_TASKS:
+		// title = getString(R.string.menu_sent_item);
+		// break;
+		// default:
+		// break;
+		// }
+		// mTitle.setText(title);
 		// mBtn1.setText( getString( R.string.finish_to ) );
 		// mBtn1.setOnClickListener( this );
-
-		mReturnIv.setOnClickListener(this);
+		// mReturnIv.setOnClickListener(this);
 
 		initView();
-		
+
 		initData();
 		return parentView;
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		Logger.d(TAG, "onCreate");
+	}
 	
-	private void initData(){
-		
+	   private final IListViewListener mListViewListener = new IListViewListener( )
+	    {
+		@Override
+		public void onRefresh()
+		{
+			mCurrentPage = 1;
+			requestPendApproval(LOAD_LIST_REFRESH);
+		}
+
+		@Override
+		public void onLoadMore()
+		{
+		    requestPendApproval( LOAD_LIST_LOADMORE);
+		}
+	    };
+
+	private void initData() {
+
 		if (mInvoiceAdapter == null)
 			mInvoiceAdapter = new InvoiceAdapter();
 
 		mListView.setAdapter(mInvoiceAdapter);
-		
-		//请求数据
-		requestPendApproval();
-		
+
+		// 请求数据
+		requestPendApproval(LOAD_LIST_NORMAL);
+
 	}
+
+	private static final int MSG_GET_INVOICE_LIST_SUCCESS = 1;
+
+	private static final int MSG_GET_INVOICE_LIST_ERROR = 2;
+
+	private static final int MSG_LAST_PAGE = 3;
 	
-	private static final int MSG_GET_INVOICE_LIST_SUCCESS =1;
+	private static final int MSG_NO_DATA=4;
 	
-	private static final int MSG_GET_INVOICE_LIST_ERROR =2;
-	
-	private Handler mUiHandler = new Handler(){
+	private static final int MSG_KIND_CHANGE=5;
+
+	private Handler mUiHandler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
@@ -156,33 +230,82 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case MSG_GET_INVOICE_LIST_SUCCESS:
-				
-				String data = (String)msg.obj;
-				mInvoiceAdapter.addData(getInvoiceList(data), Constants.TYPE_LIST_ADD_APPEND);
-				mInvoiceAdapter.notifyDataSetChanged();
-				
-				break;
-				
-			case MSG_GET_INVOICE_LIST_ERROR:
-				
+				mListView.setFooterPullEnable(true);
+				String data = (String) msg.obj;
+				ArrayList<Invoice> invoices = getInvoiceList(data);
+				if(invoices.size()>0){
+					if(mCurrentPage==1){
+						mInvoiceAdapter.addData(invoices,
+								Constants.TYPE_LIST_ADD_COVER);
+					}else{
+						mInvoiceAdapter.addData(invoices,
+								Constants.TYPE_LIST_ADD_APPEND);
+					}
+					mInvoiceAdapter.notifyDataSetChanged();
+					mListView.stopHeaderRefresh();
+					mListView.stopFooterRefresh();
+					mCurrentPage++;
+				}else if(invoices.size()==0 &&mCurrentPage==1){
+					mInvoiceAdapter.addData(invoices,Constants.TYPE_LIST_ADD_COVER);
+					mInvoiceAdapter.notifyDataSetChanged();
+					mUiHandler.sendEmptyMessage(MSG_NO_DATA);
+				}else{
+					mUiHandler.sendEmptyMessage(MSG_LAST_PAGE);
+				}
+				dismissDialog();
 				break;
 
+			case MSG_GET_INVOICE_LIST_ERROR:
+				dismissDialog();
+				mListView.stopFooterRefresh();
+				mListView.setFooterPullEnable(false);
+				Toast.makeText(
+						App.getAppContext(),
+						App.getAppContext().getString(
+								R.string.data_laoding_failed),
+						Toast.LENGTH_SHORT).show();
+				break;
+
+			case MSG_LAST_PAGE:
+				if (mListView != null) {
+					mListView.setFooterPullEnable(false);
+					mListView.stopFooterRefresh();
+					Toast.makeText(
+							App.getAppContext(),
+							App.getAppContext().getString(
+									R.string.tip_last_page), Toast.LENGTH_SHORT)
+							.show();
+				}
+				break;
+			case MSG_NO_DATA:
+				mListView.setFooterPullEnable(false);
+				Toast.makeText(
+						App.getAppContext(),
+						App.getAppContext().getString(
+								R.string.no_invoice),
+						Toast.LENGTH_SHORT).show();
+				break;
+				
+			case MSG_KIND_CHANGE:
+				requestPendApproval(LOAD_LIST_NORMAL);
+				break;
 			default:
 				break;
 			}
 		}
-		
+
 	};
-	
-	private ArrayList<Invoice> getInvoiceList(String jsonStr ){
-		
+
+	private ArrayList<Invoice> getInvoiceList(String jsonStr) {
+
 		ArrayList<Invoice> invoiceList = new ArrayList<Invoice>();
 		try {
 			JSONArray arrays = new JSONArray(jsonStr);
 			for (int i = 0; i < arrays.length(); i++) {
 				JSONObject obj = arrays.getJSONObject(i);
 				Invoice invoice = new Invoice();
-				invoice.setAccount(obj.getString("Account")==null ?"":obj.getString("Account"));
+				invoice.setAccount(obj.getString("Account") == null ? "" : obj
+						.getString("Account"));
 				invoice.setPrgID(obj.getString("PrgID"));
 				invoice.setPrgName(obj.getString("PrgName"));
 				invoice.setDataNbr(obj.getString("DataNbr"));
@@ -191,11 +314,14 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 				invoice.setDepart(obj.getString("Depart"));
 				invoice.setChannel(obj.getString("Channel"));
 				invoice.setAccName(obj.getString("AccName"));
-				invoice.setVerType(obj.getString("VerType")==null?"":obj.getString("VerType"));
+				invoice.setVerType(obj.getString("VerType") == null ? "" : obj
+						.getString("VerType"));
 				invoice.setTotalCost(obj.getDouble("TotalCost"));
 				invoice.setApprDate(obj.getString("ApprDate"));
-				invoice.setProcessMode(obj.getString("ProcessMode")==null?"":obj.getString("ProcessMode"));
-				invoice.setStatus(obj.getString("Status")==null?"":obj.getString("Status"));
+				invoice.setProcessMode(obj.getString("ProcessMode") == null ? ""
+						: obj.getString("ProcessMode"));
+				invoice.setStatus(obj.getString("Status") == null ? "" : obj
+						.getString("Status"));
 				invoiceList.add(invoice);
 			}
 		} catch (JSONException e) {
@@ -203,14 +329,20 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			e.printStackTrace();
 		}
 		return invoiceList;
-		
+
 	}
 
-	private void requestPendApproval() {
-		
-		String account = App.getSharedPreference().getString(Constants.ZHANG_TAO_CONN_NAME, "");
-		String userId = App.getSharedPreference().getString(Constants.USER_ID, "");
-		
+	private void requestPendApproval(final int type) {
+
+		if(type==LOAD_LIST_NORMAL){
+			showDialog();
+		}
+
+		String account = App.getSharedPreference().getString(
+				Constants.ZHANG_TAO_CONN_NAME, "");
+		String userId = App.getSharedPreference().getString(Constants.USER_ID,
+				"");
+
 		StringBuffer urlSbf = new StringBuffer(Constants.ROOT_URL
 				+ Constants.GET_WORK_MESSAGE_URL + "?");
 		urlSbf.append("account=").append(account);
@@ -232,22 +364,20 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 								msg.what = MSG_GET_INVOICE_LIST_SUCCESS;
 								msg.obj = response.getString("Data");
 							} else {
-
 								msg.what = MSG_GET_INVOICE_LIST_ERROR;
 								msg.obj = response.get("Msg");
 							}
-
 							mUiHandler.sendMessage(msg);
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
 					}
 				}, new ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						Logger.d(TAG, "----e----" + error.getMessage());
+						Logger.d(TAG, "----e----" + error.toString());
+						mUiHandler.sendEmptyMessage(MSG_GET_INVOICE_LIST_ERROR);
 					}
 				});
 		mQueue.add(json);
@@ -309,18 +439,27 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = App.getLayoutInflater().inflate(R.layout.fragment_pend_approval_list_item, null);
+				convertView = App.getLayoutInflater().inflate(
+						R.layout.fragment_pend_approval_list_item, null);
 				holder = new ViewHolder();
-				holder.invoiceIdTv = (TextView) convertView.findViewById(R.id.invoice_id_tv);
-				holder.invoiceDateTv = (TextView) convertView.findViewById(R.id.invoice_date_tv);
-				holder.departUserNameTv = (TextView) convertView.findViewById(R.id.depart_username_tv);
-				holder.moneyTv = (TextView) convertView.findViewById(R.id.money_tv);
-				holder.invoiceDescTv =(TextView) convertView.findViewById(R.id.invoice_desc_tv);
-				holder.indicateIv =(ImageView) convertView.findViewById(R.id.indicate_iv);
-				
-				//存数据
-								holder.accountTv= (TextView)convertView.findViewById(R.id.account_tv);
-								holder.prgIdTv = (TextView) convertView.findViewById(R.id.prgid_tv);
+				holder.invoiceIdTv = (TextView) convertView
+						.findViewById(R.id.invoice_id_tv);
+				holder.invoiceDateTv = (TextView) convertView
+						.findViewById(R.id.invoice_date_tv);
+				holder.departUserNameTv = (TextView) convertView
+						.findViewById(R.id.depart_username_tv);
+				holder.moneyTv = (TextView) convertView
+						.findViewById(R.id.money_tv);
+				holder.invoiceDescTv = (TextView) convertView
+						.findViewById(R.id.invoice_desc_tv);
+				holder.indicateIv = (ImageView) convertView
+						.findViewById(R.id.indicate_iv);
+
+				// 存数据
+				holder.accountTv = (TextView) convertView
+						.findViewById(R.id.account_tv);
+				holder.prgIdTv = (TextView) convertView
+						.findViewById(R.id.prgid_tv);
 
 				convertView.setTag(holder);
 			} else {
@@ -334,32 +473,42 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		}
 
 		private void bindData(final ViewHolder holder, final Invoice invoice) {
-			
-//			String apprDate = sdf.format(new Date(invoice.getApprDate()));
-			holder.invoiceIdTv.setText(invoice.getPrgName() +" "+invoice.getDataNbr());
-			holder.invoiceDateTv.setText(invoice.getApprDate());
-			holder.departUserNameTv.setText(invoice.getDepart()+" "+invoice.getApprName());
-			holder.moneyTv.setText(invoice.getTotalCost()+"");
+
+			String apprDate = invoice.getApprDate();
+			Date date = new Date();
+			try {
+				date = sdf.parse(apprDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				Log.d(TAG, "date format error");
+			}
+			apprDate = sdf.format(date);
+			// Logger.d(TAG, "---prgName="+invoice.getPrgName());
+			holder.invoiceIdTv.setText(invoice.getDataNbr());
+			holder.invoiceDateTv.setText(apprDate);
+			holder.departUserNameTv.setText(invoice.getDepart() + " "
+					+ invoice.getApprName());
+			holder.moneyTv.setText(invoice.getTotalCost() + "");
 			holder.prgIdTv.setText(invoice.getPrgID());
 			holder.accountTv.setText(invoice.getAccount());
-			
+
 			holder.indicateIv.setOnClickListener(new View.OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-					
+
 					intentToInvoiceDesc();
-					
+
 				}
 			});
-			
-			
+
 		}
-		
-		private void intentToInvoiceDesc(){
-			//TODO
+
+		// 跳转到详情界面
+		private void intentToInvoiceDesc() {
+			// TODO
 			Intent intent = new Intent();
-			return ;
+			return;
 		}
 	}
 
@@ -370,8 +519,8 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		TextView moneyTv;
 		TextView invoiceDescTv;
 		ImageView indicateIv;
-		
-		//存数据
+
+		// 存数据
 		TextView prgIdTv;
 		TextView accountTv;
 	}

@@ -4,105 +4,118 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.utils.Logger;
 
-public class SplashActivity extends Activity
-{
+public class SplashActivity extends Activity {
 
-    public final static String TAG = "SplashActivity";
+	public final static String TAG = "SplashActivity";
 
-    @Override
-    protected void onCreate( Bundle savedInstanceState )
-    {
-	// TODO Auto-generated method stub
-	super.onCreate( savedInstanceState );
-	setContentView( R.layout.activity_splash );
+	private boolean mIsSetSerVerConfig = false;
 
-	String url = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "" );
-	String port = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "" );
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_splash);
 
-	Constants.ROOT = url + ":" + port;
-	Logger.d( TAG , "server url=" + url + ":" + port );
+		String url = App.getSharedPreference().getString(
+				Constants.SERVER_CONFIG_URL, "");
+		String port = App.getSharedPreference().getString(
+				Constants.SERVER_CONFIG_PORT, "");
+		Constants.ROOT = url + ":" + port;
+		Logger.d(TAG, "server url=" + url + ":" + port);
+		if (url.isEmpty()) {
+			mIsSetSerVerConfig = true;
+		}
 
-	if( url.isEmpty( ) )
-	{
-	    intentToServerConfig( );
-	    return;
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				// 加载数据，跳转到登录界面
+				// TODO
+				if (mIsSetSerVerConfig) {
+					intentToServerConfig();
+				} else {
+					doRequestServerConfigInfo();
+				}
+			}
+		}, 1000);
 	}
 
-    }
+	private final static int MSG_GET_SERVER_CONFOG_SUCCESS = 1;
+	private final static int MSG_GET_SERVER_CONFOG_ERROR = 2;
+	private Handler mUiHandler = new Handler() {
 
-    //加载服务器信息
-    private void doRequestServerConfigInfo()
-    {
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
 
-    }
-
-    private void intentToLogin()
-    {
-	Intent intent = new Intent( );
-	intent.setClass( SplashActivity.this , LoginActivity.class );
-	startActivity( intent );
-	finish( );
-    }
-
-    private void intentToServerConfig()
-    {
-	Intent intent = new Intent( );
-	intent.setClass( SplashActivity.this , ServerConfigActivity.class );
-	startActivity( intent );
-    }
-
-    private void intentToMain()
-    {
-	Intent intent = new Intent( );
-	intent.setClass( SplashActivity.this , MenuActivity.class );
-	startActivity( intent );
-    }
-
-    @Override
-    protected void onResume()
-    {
-
-	//加载数据，跳转到登录界面
-	//TODO
-	final boolean autoLogin = App.getSharedPreference( ).getBoolean( Constants.AUTO_LOGIN , false );
-	new Handler( ).postDelayed( new Runnable( )
-	{
-	    @Override
-	    public void run()
-	    {
-		// TODO 
-		if( autoLogin )
-		{
-		    intentToMain( );
-		}
-		else
-		{
-		    intentToLogin( );
+			switch (msg.what) {
+			case MSG_GET_SERVER_CONFOG_SUCCESS:
+				final boolean autoLogin = App.getSharedPreference().getBoolean(
+						Constants.AUTO_LOGIN, false);
+						if (autoLogin) {
+							intentToMain();
+						} else {
+							intentToLogin();
+						}
+						finish();
+				break;
+			case MSG_GET_SERVER_CONFOG_ERROR:
+				
+				break;
+			default:
+				break;
+			}
 		}
 
-		SplashActivity.this.finish( );
+	};
 
-	    }
-	} , 1000 );
-	super.onResume( );
-    }
+	// 加载服务器信息
+	private void doRequestServerConfigInfo() {
+		mUiHandler.sendEmptyMessage(MSG_GET_SERVER_CONFOG_SUCCESS);
+	}
 
-    @Override
-    protected void onDestroy()
-    {
-	// TODO Auto-generated method stub
-	super.onDestroy( );
-    }
+	private void intentToLogin() {
+		Intent intent = new Intent();
+		intent.setClass(SplashActivity.this, LoginActivity.class);
+		startActivity(intent);
+		finish();
+	}
 
-    @Override
-    public void onBackPressed()
-    {
-	return;
-    }
+	private void intentToServerConfig() {
+		Intent intent = new Intent();
+		intent.setClass(SplashActivity.this, ServerConfigActivity.class);
+		startActivity(intent);
+		finish();
+	}
+
+	private void intentToMain() {
+		Intent intent = new Intent();
+		intent.setClass(SplashActivity.this, MenuActivity.class);
+		startActivity(intent);
+		finish();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+
+	@Override
+	public void onBackPressed() {
+		return;
+	}
 }

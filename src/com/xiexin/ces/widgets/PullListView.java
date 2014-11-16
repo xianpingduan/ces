@@ -38,7 +38,7 @@ public class PullListView extends ListView implements OnScrollListener
     private boolean mHeaderPullRefreshing = false; // is refreashing.
 
     // -- footer view
-    private ListViewHeader mFooterView;
+    private ListViewFooter mFooterView;
     private boolean mFooterPullEnable = false;
     private boolean mFooterPullRefreshing = false;
     private RelativeLayout mFooterViewContent;
@@ -165,8 +165,8 @@ public class PullListView extends ListView implements OnScrollListener
 	{
 	    mIsFooterAdded = true;
 	    // init header view
-	    mFooterView = new ListViewHeader( getContext( ) , false );
-	    mFooterViewContent = (RelativeLayout)mFooterView.findViewById( R.id.pl_listview_header_content );
+	    mFooterView = new ListViewFooter( getContext( ) , false );
+	    mFooterViewContent = (RelativeLayout)mFooterView.findViewById( R.id.pl_listview_footer_content );
 	    //mHeaderTimeView = (TextView) mFooterView.findViewById(R.id.pl_listview_header_time);
 	    addFooterView( mFooterView );
 
@@ -467,7 +467,7 @@ public class PullListView extends ListView implements OnScrollListener
 	//Log.d(Tag, "onScroll mTotalItemCount=" + mTotalItemCount);
     }
 
-    public void setPadaListViewListener( IListViewListener listener )
+    public void setListViewListener( IListViewListener listener )
     {
 	mListViewListener = listener;
     }

@@ -3,6 +3,7 @@
     <string name="app_name">ces</string>
     
     <string name="login_text">登录</string>
+    <string name="logining">正在登录</string>
     
     <string name="remmenber_pwd_text">记住密码</string>
     <string name="auto_login_text">自动登录</string>
@@ -27,7 +28,7 @@
     <string name="finish_to">完成</string>
     
    	<string name="please_enter_server_config_url_hint">请输入服务器地址</string>
-    <string name="please_enter_server_config_port_hint">请输入端 口</string>
+    <string name="please_enter_server_config_port_hint">请输入端口</string>
     
     
     <string name="sure">确定</string>
@@ -38,14 +39,23 @@
     
     <string name="return_text">返回</string>
     
+    <string name="user_info_no_data">暂无</string>
+    
     <string name="loading_tip_text">正在加载</string>
     <string name="expect">精彩待续...</string>
+    <string name="data_laoding_failed">数据加载失败</string>
+    <string name="tip_last_page">已经到最后啦!</string>
+    <string name="no_invoice">暂无单据</string>
     
     
-    <string name="pl_listview_header_hint_normal_up">向下滑动获取更多</string>
-    <string name="pl_listview_header_hint_normal_down">向上滑动获取更多</string>
-    <string name="pl_listview_header_hint_ready">松开获取更多</string>
-    <string name="pl_listview_header_hint_loading">正在加载更多...</string>
+    <string name="pl_listview_header_hint_normal_up">下拉刷新</string>
+    <string name="pl_listview_header_hint_ready">松开刷新</string>
+    <string name="pl_listview_header_hint_loading">正在刷新...</string>
+    
+    <string name="pl_listview_footer_hint_normal_down">向上滑动获取更多</string>
+    <string name="pl_listview_footer_hint_ready">松开获取更多</string>
+    <string name="pl_listview_footer_hint_loading">正在疯狂地加载...</string>
+    
     <string name="pl_xlistview_header_last_time">上次更新时间：</string>
     <string name="pl_xlistview_footer_hint_normal">查看更多</string>
     <string name="pl_xlistview_footer_hint_ready">松开载入更多</string>
@@ -66,6 +76,9 @@
     
     <string name="click_exit_label">"再按一次退出程序" </string>
     
+    <string name="default_server_confi_url">http://core130.com</string>
+    <string name="default_server_confi_port">8081</string>
     
+    <string name="switch_account_text">切换帐套</string>
 
 </resources>

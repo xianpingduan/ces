@@ -48,6 +48,7 @@ public class ResideMenu extends FrameLayout
     private ScrollView scrollViewLeftMenu;
     private ScrollView scrollViewRightMenu;
     private ScrollView scrollViewMenu;
+//    private LinearLayout contentInfoLl;
     /** the activity that view attach to */
     private Activity activity;
     /** the decorview of the activity    */
@@ -83,6 +84,8 @@ public class ResideMenu extends FrameLayout
     {
 	LayoutInflater inflater = (LayoutInflater)context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 	inflater.inflate( R.layout.residemenu , this );
+	
+//	contentInfoLl = (LinearLayout) findViewById(R.id.content_info_ll);
 	scrollViewLeftMenu = (ScrollView)findViewById( R.id.sv_left_menu );
 	scrollViewRightMenu = (ScrollView)findViewById( R.id.sv_right_menu );
 	imageViewShadow = (ImageView)findViewById( R.id.iv_shadow );

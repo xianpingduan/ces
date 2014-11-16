@@ -27,5 +27,7 @@
     <color name="pl_deputy_green_color">#02B389</color>
     
    	<color name="pl_line">#ebebeb</color>
+   	
+   	<color name="pl_listview_item_blue">#02b2f2</color>
     
 </resources>

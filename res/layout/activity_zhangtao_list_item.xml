@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/zt_frame"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content" 
+    android:background="@drawable/list_view_item_bg">
 
     <TextView
         android:id="@+id/zt_name"
@@ -19,7 +20,6 @@
         android:layout_marginBottom="@dimen/common_margin_buttom"
         android:layout_marginLeft="@dimen/common_margin_left"
         android:layout_marginTop="@dimen/common_margin_top"
-        android:text="xxxxxx"
         android:textSize="@dimen/pl_small_text_size" />
 
     <CheckBox

@@ -48,6 +48,8 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 	private Button mBtn1;
 	private Button mBtn2;
 
+	// private int mRequestFrom;
+
 	// header end
 
 	private String mCheckAccInfo;
@@ -60,6 +62,9 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 
 		setContentView(R.layout.activity_zhangtao);
 
+		// mRequestFrom =
+		// getIntent().getIntExtra(Constants.SERVER_CONFIG_SET_FROM, 0);
+
 		initView();
 
 		initData();
@@ -69,10 +74,8 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 		mListView = (LoadingUIListView) findViewById(R.id.zhangtao_list);
 		mListView.setFooterPullEnable(false);
 		mListView.setHeaderPullEnable(false);
-
-		mListView.setPadaListViewListener(mListViewListener);
-		mListView.setPadaLoadingViewListener(mLoadingViewListener);
-
+		// mListView.setListViewListener(mListViewListener);
+		// mListView.setPadaLoadingViewListener(mLoadingViewListener);
 		if (mZhangTaoAdapter == null)
 			mZhangTaoAdapter = new ZhangTaoAdapter();
 

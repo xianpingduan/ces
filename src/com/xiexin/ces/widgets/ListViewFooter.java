@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.xiexin.ces.R;
 
-public class ListViewHeader extends LinearLayout
+public class ListViewFooter extends LinearLayout
 {
     private LinearLayout mContainer;
     private ImageView mArrowImageView;
@@ -32,7 +32,7 @@ public class ListViewHeader extends LinearLayout
     public final static int STATE_READY = 1;
     public final static int STATE_REFRESHING = 2;
 
-    public ListViewHeader( Context context , boolean bHeaderPos )
+    public ListViewFooter( Context context , boolean bHeaderPos )
     {
 	super( context );
 	bIsHeaderPosition = bHeaderPos;
@@ -43,7 +43,7 @@ public class ListViewHeader extends LinearLayout
      * @param context
      * @param attrs
      */
-    public ListViewHeader( Context context , AttributeSet attrs , boolean bHeaderPos )
+    public ListViewFooter( Context context , AttributeSet attrs , boolean bHeaderPos )
     {
 	super( context , attrs );
 	bIsHeaderPosition = bHeaderPos;
@@ -54,20 +54,20 @@ public class ListViewHeader extends LinearLayout
     {
 	// 初始情况，设置下拉刷新view高度为0
 	LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams( android.view.ViewGroup.LayoutParams.MATCH_PARENT , 0 );
-	mContainer = (LinearLayout)LayoutInflater.from( context ).inflate( R.layout.pl_pada_listview_header , null );
+	mContainer = (LinearLayout)LayoutInflater.from( context ).inflate( R.layout.pl_pada_listview_footer , null );
 	addView( mContainer , lp );
 
 	mContainer.setGravity( bIsHeaderPosition ? Gravity.BOTTOM : Gravity.TOP );
 
-	mArrowImageView = (ImageView)findViewById( R.id.pl_listview_header_arrow );
+	mArrowImageView = (ImageView)findViewById( R.id.pl_listview_footer_arrow );
 	if( bIsHeaderPosition == false )
 	{
 	    mArrowImageView.setImageResource( R.drawable.pl_pull_refresh_arrow_up );
 	    //			TextView tipTextView = (TextView) mContainer.findViewById(R.id.pl_listview_header_hint_textview);
 	    //			tipTextView.setText(R.string.pl_listview_header_hint_normal_down);
 	}
-	mHintTextView = (TextView)findViewById( R.id.pl_listview_header_hint_textview );
-	mProgressBar = (ProgressBar)findViewById( R.id.pl_listview_header_progressbar );
+	mHintTextView = (TextView)findViewById( R.id.pl_listview_footer_hint_textview );
+	mProgressBar = (ProgressBar)findViewById( R.id.pl_listview_footer_progressbar );
 
 	mRotateUpAnim = new RotateAnimation( 0.0f , -180.0f , Animation.RELATIVE_TO_SELF , 0.5f , Animation.RELATIVE_TO_SELF , 0.5f );
 	mRotateUpAnim.setDuration( ROTATE_ANIM_DURATION );
@@ -110,18 +110,18 @@ public class ListViewHeader extends LinearLayout
 		{
 		    mArrowImageView.clearAnimation( );
 		}
-		mHintTextView.setText( R.string.pl_listview_header_hint_normal_up  );
+		mHintTextView.setText( R.string.pl_listview_footer_hint_normal_down  );
 		break;
 	    case STATE_READY :
 		if( mState != STATE_READY )
 		{
 		    mArrowImageView.clearAnimation( );
 		    mArrowImageView.startAnimation( mRotateUpAnim );
-		    mHintTextView.setText( R.string.pl_listview_header_hint_ready );
+		    mHintTextView.setText( R.string.pl_listview_footer_hint_ready );
 		}
 		break;
 	    case STATE_REFRESHING :
-		mHintTextView.setText( R.string.pl_listview_header_hint_loading );
+		mHintTextView.setText( R.string.pl_listview_footer_hint_loading );
 		break;
 	    default :
 	}

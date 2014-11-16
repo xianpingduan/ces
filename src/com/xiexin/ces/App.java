@@ -1,5 +1,7 @@
 package com.xiexin.ces;
 
+import com.xiexin.ces.utils.Logger;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -88,6 +90,7 @@ public class App extends Application
 	//保存数据
 	mSharePrefences.edit( ).putString( Constants.USER_ID , "" ).commit( );
 	mSharePrefences.edit( ).putString( Constants.PWD , "" ).commit( );
+	mSharePrefences.edit( ).putString( Constants.PWD_MD5 , "" ).commit( );
 	mSharePrefences.edit( ).putString( Constants.DEPART , "" ).commit( );
 	mSharePrefences.edit( ).putString( Constants.TITLE , "" ).commit( );
 	mSharePrefences.edit( ).putString( Constants.JOB , "" ).commit( );
@@ -98,6 +101,7 @@ public class App extends Application
 
 	mSharePrefences.edit( ).putBoolean( Constants.REMEBER_PWD , false ).commit( );
 	mSharePrefences.edit( ).putBoolean( Constants.AUTO_LOGIN , false ).commit( );
+	Logger.d(TAG, "clear login info");
     }
 
 }

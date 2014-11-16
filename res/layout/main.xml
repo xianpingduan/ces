@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="@android:color/white"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
 
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layout_top">
+        android:id="@+id/layout_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#2ea3fe"/>
+        <!--<ImageView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#2ea3fe" />-->
 
         <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pl_comm_ab_height"
+            android:background="@drawable/actionbar_bg" >
 
             <Button
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:background="@drawable/titlebar_menu_selector"
-                    android:id="@+id/title_bar_left_menu"
-                    android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="10dp"/>
+                android:id="@+id/title_bar_left_menu"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/titlebar_menu_selector" />
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="7dp"
-                    android:text="RESideMenu DEMO"
-                    android:textSize="24sp"
-                    android:textColor="#999999"
-                    android:layout_gravity="center"/>
+                android:id="@+id/title_bar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/pl_medium_text_size" />
 
             <Button
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:background="@drawable/titlebar_menu_selector"
-                    android:id="@+id/title_bar_right_menu"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="10dp"/>
+                android:id="@+id/title_bar_right_menu"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/titlebar_menu_selector" />
         </FrameLayout>
 
-        <ImageView
+        <!--<ImageView
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="#ebebeb"/>
-
+                android:background="#ebebeb"/>-->
     </LinearLayout>
 
     <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/main_fragment">
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
     </FrameLayout>
 
 </LinearLayout>

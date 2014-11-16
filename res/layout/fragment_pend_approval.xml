@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <include layout="@layout/header_action_bar"/>
+ 	<!--<include layout="@layout/header_action_bar"/> -->
 
     <com.xiexin.ces.widgets.LoadingUIListView
         android:id="@+id/pend_approval_list"
+        style="@style/NormalList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never" />

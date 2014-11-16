@@ -8,6 +8,7 @@
 
     <com.xiexin.ces.widgets.LoadingUIListView
         android:id="@+id/zhangtao_list"
+        style="@style/NormalList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never" />

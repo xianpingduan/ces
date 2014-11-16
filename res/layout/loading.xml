@@ -5,6 +5,7 @@
     android:padding="@dimen/loading_dialog_padding"
     android:background="@drawable/loading_pop_background"
     android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="vertical" >
 
     <ProgressBar

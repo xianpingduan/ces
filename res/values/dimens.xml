@@ -8,6 +8,12 @@
     <dimen name="common_margin_buttom">12dp</dimen>
     <dimen name="common_margin">12dp</dimen>
     
+    <dimen name="common_padding">12dp</dimen>
+    <dimen name="common_padding_left">12dp</dimen>
+    <dimen name="common_padding_right">12dp</dimen>
+    <dimen name="common_padding_top">6dp</dimen>
+    <dimen name="common_padding_buttom">6dp</dimen>
+    
     <!-- login -->
     <dimen name="login_logo_margin_top">24dp</dimen>
     <dimen name="login_btn_margin_top">12dp</dimen>
@@ -26,7 +32,9 @@
     <dimen name="head_image_width">72dp</dimen>
     <dimen name="head_image_height">72dp</dimen>
     
-    <dimen name="user_info_rl_margin_top">80dp</dimen>
+    <dimen name="user_info_rl_margin_top">50dp</dimen>
     <dimen name="user_info_margin_top">6dp</dimen>
+    
+    <dimen name="left_menu_scrollview_margin_top">137dp</dimen>
 
 </resources>

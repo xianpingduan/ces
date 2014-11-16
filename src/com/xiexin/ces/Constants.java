@@ -8,6 +8,7 @@ public class Constants
     public final static String USER_ID = "user_id";
     public final static String USER_NAME = "user_name";
     public final static String PWD = "pwd";
+    public final static String PWD_MD5 = "pwd_md5";
     public final static String DEPART = "depart";
     public final static String TITLE = "title";
     public final static String JOB = "job";
@@ -26,9 +27,17 @@ public class Constants
     public final static String SERVER_CONFIG_PORT = "server_config_port";
     public final static String SERVER_CONFIG_FIRST_IN = "server_config_first_in";
     public final static String SERVER_CONFIG_REQ = "server_config_req";
+	// public final static String
+	// SERVER_CONFIG_SET_FROM="server_config_set_from";
+	// public final static int SERVER_CONFIG_SET_FROM_LOGIN=1;
+	// public final static int SERVER_CONFIG_SET_FROM_MENU=2;
 
     // net
-    public static String ROOT = "http://core130.com:8081";
+//    public static String ROOT = "http://core130.com:8081";
+    
+    public static String ROOT = App.getSharedPreference().getString(Constants.SERVER_CONFIG_URL, "http://core130.com")+":"+App.getSharedPreference().getString(Constants.SERVER_CONFIG_PORT, "8081");
+    
+    
     public final static String ROOT_URL = ROOT + "/api/CESApp/";
     public final static String LOGIN_URL = "Login";
     public final static String ZHANG_TAO_URL = "GetAccountByUserID";

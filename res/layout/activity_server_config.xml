@@ -27,7 +27,8 @@
             android:maxLength="18"
             android:singleLine="true"
             android:textColorHint="@color/pl_deputy_text_color"
-            android:textCursorDrawable="@drawable/edittext_cursor" />
+            android:text="@string/default_server_confi_url"
+            android:textCursorDrawable="@drawable/pl_edittext_cursor" />
 
         <View
             android:layout_width="match_parent"
@@ -44,11 +45,11 @@
             android:gravity="center_vertical"
             android:hint="@string/server_config_port_hint"
             android:imeOptions="flagNoExtractUi"
-            android:inputType="textPassword"
             android:maxLength="18"
             android:singleLine="true"
+           	android:text="@string/default_server_confi_port"
             android:textColorHint="@color/pl_deputy_text_color"
-            android:textCursorDrawable="@drawable/edittext_cursor" />
+            android:textCursorDrawable="@drawable/pl_edittext_cursor" />
     </LinearLayout>
 
 </LinearLayout>
