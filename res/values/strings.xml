@@ -46,6 +46,7 @@
     <string name="data_laoding_failed">数据加载失败</string>
     <string name="tip_last_page">已经到最后啦!</string>
     <string name="no_invoice">暂无单据</string>
+    <string name="please_check_net">请检查网络</string>
     
     
     <string name="pl_listview_header_hint_normal_up">下拉刷新</string>
