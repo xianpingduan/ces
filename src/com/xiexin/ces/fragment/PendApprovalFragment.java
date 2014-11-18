@@ -322,6 +322,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 						: obj.getString("ProcessMode"));
 				invoice.setStatus(obj.getString("Status") == null ? "" : obj
 						.getString("Status"));
+				invoice.setReason(obj.getString("Reason"));
 				invoiceList.add(invoice);
 			}
 		} catch (JSONException e) {
@@ -491,6 +492,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			holder.moneyTv.setText(invoice.getTotalCost() + "");
 			holder.prgIdTv.setText(invoice.getPrgID());
 			holder.accountTv.setText(invoice.getAccount());
+			holder.invoiceDescTv.setText(invoice.getReason());
 
 			holder.indicateIv.setOnClickListener(new View.OnClickListener() {
 

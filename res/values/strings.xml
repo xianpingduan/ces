@@ -81,5 +81,6 @@
     <string name="default_server_confi_port">8081</string>
     
     <string name="switch_account_text">切换帐套</string>
+    <string name="request_zhangtao_null">此用户名下无帐套信息,请确认用户名正确</string>
 
 </resources>
