@@ -121,33 +121,67 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/switch_accout_ll"
         android:layout_width="@dimen/reside_menu_width"
         android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
-        android:paddingBottom="24dp"
-        android:orientation="horizontal"
         android:layout_gravity="left|bottom"
-         >
-        
-        <ImageView 
-            android:id="@+id/switch_accout_iv"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/icon_settings"
-            />
-        
-        <TextView 
-            android:id="@+id/switch_text_tv"
+        android:orientation="horizontal"
+        android:paddingBottom="24dp"
+        android:gravity="center"
+        android:paddingLeft="18dp" >
+
+        <LinearLayout
+            android:id="@+id/switch_accout_ll"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/pl_micro_text_size"
-            android:text="@string/switch_account_text"
-            />
-        
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/switch_accout_iv"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/icon_settings" />
+
+            <TextView
+                android:id="@+id/switch_text_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="6dp"
+                android:text="@string/switch_account_text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/pl_mimi_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="18dp"
+            android:layout_height="wrap_content" 
+            android:gravity="center">
+            <View
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:background="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/login_out_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/login_out_iv"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/icon_settings" />
+
+            <TextView
+                android:id="@+id/loginout_text_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="6dp"
+                android:text="@string/loginout_text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/pl_mimi_text_size" />
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
