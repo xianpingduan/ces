@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/header_action_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/button_blue_edit"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:gravity="center"
+            android:text="@string/search"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/pl_small_text_size" />
+
+        <EditText
+            android:id="@+id/search_et"
+            style="@style/NormalEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toLeftOf="@id/search_btn"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/login_account_hint"
+            android:imeOptions="flagNoExtractUi"
+            android:maxLength="18"
+            android:singleLine="true"
+            android:textColorHint="@color/pl_deputy_text_color"
+            android:textCursorDrawable="@drawable/pl_edittext_cursor" />
+    </RelativeLayout>
+
+    <com.xiexin.ces.widgets.LoadingUIListView
+        android:id="@+id/employee_list"
+        style="@style/NormalList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
+
+</LinearLayout>

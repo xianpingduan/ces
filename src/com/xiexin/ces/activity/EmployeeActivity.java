@@ -1,9 +1,6 @@
 package com.xiexin.ces.activity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -15,15 +12,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,15 +35,14 @@ import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
-import com.xiexin.ces.entry.InvoiceApprRoad;
+import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
 import com.xiexin.ces.widgets.LoadingUIListView;
 
-public class InvoiceApprRoadActivity extends Activity implements
-		OnClickListener {
+public class EmployeeActivity extends Activity implements OnClickListener {
 
-	private final static String TAG = "InvoiceApprRoadActivity";
+	private final static String TAG = "EmployeeActivity";
 
 	// header start
 	private LinearLayout mReturnLl;
@@ -58,17 +55,18 @@ public class InvoiceApprRoadActivity extends Activity implements
 	// header end
 
 	private LoadingUIListView mListView;
-	private InvoiceApprRoadAdapter mInvoiceApprRoadAdapter;
+	private EmployeeAdapter mEmployeeAdapter;
 
 	private LoadingDialog mLoadingDialog;
 
 	private String mConnName;// 账套信息
-	private String mPrgid; // 业务类型
-	private String mDatanbr;// 单据编号
 
 	private RequestQueue mQueue;
 
-	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private String mEmployeeCheckId;
+
+	private EditText mSearchEt;
+	private Button mSearchBtn;
 
 	private void dismissDialog() {
 		new Handler().postDelayed(new Runnable() {
@@ -99,13 +97,12 @@ public class InvoiceApprRoadActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_invoice_road);
-		
+		setContentView(R.layout.activity_employee);
+
 		mQueue = Volley.newRequestQueue(App.getAppContext());
 		initView();
 
 		initData();
-
 
 	}
 
@@ -123,38 +120,42 @@ public class InvoiceApprRoadActivity extends Activity implements
 		// mInvoiceType = getIntent( ).getIntExtra( Constants.INVOICE_TYPE , 0
 		// );
 		mReturnTv.setText(getString(R.string.invoice_info));
-		mTitle.setText(getString(R.string.invoice_approval_road));
+		mTitle.setText(getString(R.string.please_select_employee));
 
-		mBtn1.setVisibility(View.GONE);
+		mBtn1.setVisibility(View.VISIBLE);
+		mBtn1.setText(getString(R.string.finish_to));
 		mBtn2.setVisibility(View.GONE);
 		mReturnLl.setVisibility(View.VISIBLE);
 
-		// mBtn1.setOnClickListener( this );
+		mBtn1.setOnClickListener(this);
 		// mBtn2.setOnClickListener( this );
 		mReturnLl.setOnClickListener(this);
 
-		mListView = (LoadingUIListView) findViewById(R.id.invoice_road_list);
+		mListView = (LoadingUIListView) findViewById(R.id.employee_list);
 		mListView.setFooterPullEnable(false);
 		mListView.setHeaderPullEnable(false);
+
+		mSearchEt = (EditText) findViewById(R.id.search_et);
+		mSearchBtn = (Button) findViewById(R.id.search_btn);
+
+		mSearchBtn.setOnClickListener(this);
 
 	}
 
 	private void initData() {
 
 		Intent intent = getIntent();
-		mPrgid = intent.getStringExtra(Constants.PRGID);
 		mConnName = intent.getStringExtra(Constants.ZHANG_TAO_CONN_NAME);
 		if (mConnName == null || mConnName.isEmpty()) {
 			mConnName = App.getSharedPreference().getString(
 					Constants.ZHANG_TAO_CONN_NAME, "");
 		}
-		mDatanbr = intent.getStringExtra(Constants.DATANBR);
 
-		if (mInvoiceApprRoadAdapter == null)
-			mInvoiceApprRoadAdapter = new InvoiceApprRoadAdapter();
-		mListView.setAdapter(mInvoiceApprRoadAdapter);
+		if (mEmployeeAdapter == null)
+			mEmployeeAdapter = new EmployeeAdapter();
+		mListView.setAdapter(mEmployeeAdapter);
 
-		requestInvoiceApprRoad();
+		requestEmployees("");
 	}
 
 	@Override
@@ -173,35 +174,58 @@ public class InvoiceApprRoadActivity extends Activity implements
 		case R.id.return_ll:
 			onBackPressed();
 			break;
+		case R.id.btn1:
+			setResult();
+			break;
+		case R.id.search_btn:
+			doSearch();
+			break;
 		default:
 			break;
 		}
 
 	}
 
-	private ArrayList<InvoiceApprRoad> getInvoiceList(String jsonStr) {
+	//
+	private void setResult() {
+		Intent in = new Intent();
+		// in.putExtra(Constants.ZHANG_TAO_CONN_NAME, mCheckConnName);
+		// in.putExtra(Constants.ZHANG_TAO_ACCINFO, mCheckAccInfo);
+		setResult(RESULT_OK, in);
+		finish();
+	}
 
-		ArrayList<InvoiceApprRoad> invoiceList = new ArrayList<InvoiceApprRoad>();
+	private void doSearch() {
+
+		String filter = mSearchEt.getText().toString();
+
+		if (filter == null || filter.isEmpty()) {
+			Toast.makeText(
+					App.getAppContext(),
+					App.getAppContext().getString(
+							R.string.please_enter_employee_name),
+					Toast.LENGTH_SHORT).show();
+			return;
+		} else {
+			requestEmployees(filter);
+		}
+
+	}
+
+	private ArrayList<Employee> getEmployeeList(String jsonStr) {
+
+		ArrayList<Employee> invoiceList = new ArrayList<Employee>();
 		try {
 			JSONArray arrays = new JSONArray(jsonStr);
 			for (int i = 0; i < arrays.length(); i++) {
-				
-				JSONObject obj = arrays.getJSONObject(i);
-				InvoiceApprRoad invoiceApprRoad = new InvoiceApprRoad();
-				invoiceApprRoad.setApprDate(obj.getString("ApprDate"));
-				invoiceApprRoad.setApprMemo(obj.getString("ApprMemo"));
-				invoiceApprRoad.setApprObj(obj.getString("ApprObj"));
-				invoiceApprRoad.setCategory(obj.getString("Category"));
-				invoiceApprRoad.setCrtUser(obj.getString("CrtUser"));
-				invoiceApprRoad.setDataNbr(obj.getString("DataNbr"));
-				invoiceApprRoad.setID(obj.getInt("ID"));
-				invoiceApprRoad.setInxNbr(obj.getInt("InxNbr"));
-				invoiceApprRoad.setKind(obj.getString("Kind"));
-				invoiceApprRoad.setPragID(obj.getString("PragID"));
-				invoiceApprRoad.setProcessMode(obj.getString("ProcessMode"));
-				invoiceApprRoad.setTitle(obj.getString("Title"));
 
-				invoiceList.add(invoiceApprRoad);
+				JSONObject obj = arrays.getJSONObject(i);
+				Employee employee = new Employee();
+				employee.setEmployeeID(obj.getString("EmployeeID"));
+				employee.setDescr(obj.getString("Descr"));
+				employee.setDepart(obj.getString("Depart"));
+				employee.setJob(obj.getString("Job"));
+				invoiceList.add(employee);
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -211,14 +235,13 @@ public class InvoiceApprRoadActivity extends Activity implements
 
 	}
 
-	private void requestInvoiceApprRoad() {
+	private void requestEmployees(String filter) {
 
 		showDialog();
 		StringBuffer urlSbf = new StringBuffer(Constants.ROOT_URL
-				+ Constants.GET_APPROVAL_ROAD_LIST + "?");
+				+ Constants.GET_EMPLOYEE_LIST + "?");
 		urlSbf.append("account=").append(mConnName);
-		urlSbf.append("&prgid=").append(mPrgid);
-		urlSbf.append("&datanbr=").append(mDatanbr);
+		urlSbf.append("&filter=").append(filter);
 
 		JsonObjectRequest json = new JsonObjectRequest(Method.GET,
 				urlSbf.toString(), null, new Listener<JSONObject>() {
@@ -229,10 +252,10 @@ public class InvoiceApprRoadActivity extends Activity implements
 							int resCode = response.getInt("Success");
 							Message msg = Message.obtain();
 							if (resCode == 0) {
-								msg.what = MSG_GET_INVOICE_ROAD_LIST_SUCCESS;
+								msg.what = MSG_GET_EMPLOYEE_LIST_SUCCESS;
 								msg.obj = response.getString("Data");
 							} else {
-								msg.what = MSG_GET_INVOICE_ROAD_LIST_ERROR;
+								msg.what = MSG_GET_EMPLOYEE_LIST_ERROR;
 								msg.obj = response.get("Msg");
 							}
 							mUiHandler.sendMessage(msg);
@@ -246,7 +269,7 @@ public class InvoiceApprRoadActivity extends Activity implements
 					public void onErrorResponse(VolleyError error) {
 						Logger.d(TAG, "----e----" + error.toString());
 						mUiHandler
-								.sendEmptyMessage(MSG_GET_INVOICE_ROAD_LIST_ERROR);
+								.sendEmptyMessage(MSG_GET_EMPLOYEE_LIST_ERROR);
 					}
 				});
 		mQueue.add(json);
@@ -254,8 +277,8 @@ public class InvoiceApprRoadActivity extends Activity implements
 
 	}
 
-	private static final int MSG_GET_INVOICE_ROAD_LIST_SUCCESS = 1;
-	private static final int MSG_GET_INVOICE_ROAD_LIST_ERROR = 2;
+	private static final int MSG_GET_EMPLOYEE_LIST_SUCCESS = 1;
+	private static final int MSG_GET_EMPLOYEE_LIST_ERROR = 2;
 
 	private Handler mUiHandler = new Handler() {
 
@@ -264,24 +287,24 @@ public class InvoiceApprRoadActivity extends Activity implements
 			super.handleMessage(msg);
 
 			switch (msg.what) {
-			case MSG_GET_INVOICE_ROAD_LIST_SUCCESS:
+			case MSG_GET_EMPLOYEE_LIST_SUCCESS:
 				dismissDialog();
 
-				String dataStr = (String)msg.obj;
-				ArrayList<InvoiceApprRoad> roads =getInvoiceList(dataStr);
-				if(roads.size()>0){
-					mInvoiceApprRoadAdapter.addData(roads);
+				String dataStr = (String) msg.obj;
+				ArrayList<Employee> employees = getEmployeeList(dataStr);
+				if (employees.size() > 0) {
+					mEmployeeAdapter.addData(employees);
 				}
-				mInvoiceApprRoadAdapter.notifyDataSetChanged();
+				mEmployeeAdapter.notifyDataSetChanged();
 				break;
 
-			case MSG_GET_INVOICE_ROAD_LIST_ERROR:
+			case MSG_GET_EMPLOYEE_LIST_ERROR:
 				dismissDialog();
 				Toast.makeText(
 						App.getAppContext(),
 						App.getAppContext().getString(
-								R.string.request_appr_road_list_error), Toast.LENGTH_SHORT)
-						.show();				
+								R.string.request_appr_road_list_error),
+						Toast.LENGTH_SHORT).show();
 				break;
 
 			default:
@@ -291,15 +314,20 @@ public class InvoiceApprRoadActivity extends Activity implements
 
 	};
 
-	private class InvoiceApprRoadAdapter extends BaseAdapter {
+	private class EmployeeAdapter extends BaseAdapter {
 
-		private ArrayList<InvoiceApprRoad> list = new ArrayList<InvoiceApprRoad>();
+		private ArrayList<Employee> list = new ArrayList<Employee>();
 
 		private HashMap<String, Boolean> mMap = new HashMap<String, Boolean>();
 
-		public void addData(ArrayList<InvoiceApprRoad> data) {
+		public void addData(ArrayList<Employee> data) {
 			list.clear();
 			list.addAll(data);
+
+			// 初始化
+			for (Employee e : list) {
+				mMap.put(e.getEmployeeID(), false);
+			}
 		}
 
 		@Override
@@ -326,16 +354,17 @@ public class InvoiceApprRoadActivity extends Activity implements
 			ViewHolder holder;
 			if (convertView == null) {
 				convertView = App.getLayoutInflater().inflate(
-						R.layout.activity_invoice_road_item, null);
+						R.layout.activity_employee_list_item, null);
 				holder = new ViewHolder();
-				holder.apprDateTv = (TextView) convertView
-						.findViewById(R.id.node_time_tv);
-				holder.processModeTv = (TextView) convertView
-						.findViewById(R.id.node_name_tv);
-				holder.apprMemoTv = (TextView) convertView
-						.findViewById(R.id.node_content_tv);
-				holder.isFinishedCb = (CheckBox) convertView
-						.findViewById(R.id.is_finished_cb);
+				holder.employeeFrameRl = (RelativeLayout) findViewById(R.id.employee_frame);
+				holder.employeeNameTv = (TextView) convertView
+						.findViewById(R.id.employee_name_tv);
+				holder.employeeDepartTv = (TextView) convertView
+						.findViewById(R.id.employee_depart_tv);
+				holder.employeeJobTv = (TextView) convertView
+						.findViewById(R.id.employee_job_tv);
+				holder.employeeCheckCb = (CheckBox) convertView
+						.findViewById(R.id.employee_check_cb);
 
 				convertView.setTag(holder);
 			} else {
@@ -348,36 +377,54 @@ public class InvoiceApprRoadActivity extends Activity implements
 			return convertView;
 		}
 
-		private void bindData(final ViewHolder holder, final InvoiceApprRoad iar) {
+		private void bindData(final ViewHolder holder, final Employee employee) {
 
-			String apprDate = iar.getApprDate();
-			Date date = new Date();
-			try {
-				date = sdf.parse(apprDate);
-			} catch (ParseException e) {
-				e.printStackTrace();
-				Log.d(TAG, "date format error");
-			}
-			apprDate = sdf.format(date);
-			holder.processModeTv.setText(iar.getProcessMode());
-			holder.apprDateTv.setText(apprDate);
-			holder.apprMemoTv.setTag(iar.getApprMemo());
-			String isFinished = iar.getStatus();
-			// Log.d(TAG,
-			// "connName="+zt.getConnName()+"checked="+mMap.get(zt.getConnName()));
-			if (isFinished.equals("已审") || isFinished.equals("null")) {
-				holder.isFinishedCb.setChecked(true);
+			holder.employeeNameTv.setText(employee.getDescr());
+			holder.employeeDepartTv.setText(employee.getDepart());
+			holder.employeeJobTv.setTag(employee.getJob());
+			holder.employeeCheckCb.setTag(employee.getEmployeeID());
+
+			if (mEmployeeCheckId != null
+					&& mEmployeeCheckId.equals(employee.getEmployeeID())) {
+				holder.employeeCheckCb.setChecked(true);
+				mMap.put(employee.getEmployeeID(), true);
 			} else {
-				holder.isFinishedCb.setChecked(false);
+				holder.employeeCheckCb.setChecked(false);
+				mMap.put(employee.getEmployeeID(), false);
 			}
+			holder.employeeCheckCb
+					.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (!holder.employeeCheckCb.isChecked()) {
+								holder.employeeCheckCb.setChecked(false);
+								mMap.put(holder.employeeCheckCb.getTag()
+										.toString(), false);
+							} else {
+								holder.employeeCheckCb.setChecked(true);
+								mMap.put(holder.employeeCheckCb.getTag()
+										.toString(), true);
+							}
+
+							// mUiHandler.sendEmptyMessage(MSG_REFRESH_ZT_LIST);
+						}
+					});
+			// 同步checkBox事件
+			holder.employeeFrameRl.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					((ViewHolder) v.getTag()).employeeCheckCb.performClick();
+				}
+			});
 		}
 	}
 
 	class ViewHolder {
-		TextView apprDateTv;
-		TextView processModeTv;
-		TextView apprMemoTv;
-		CheckBox isFinishedCb;
+		RelativeLayout employeeFrameRl;
+		TextView employeeNameTv;
+		TextView employeeDepartTv;
+		TextView employeeJobTv;
+		CheckBox employeeCheckCb;
 	}
 
 	@Override

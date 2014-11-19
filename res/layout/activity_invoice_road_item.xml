@@ -20,9 +20,11 @@
             android:background="@color/pl_deputy_text_color" />
 
         <CheckBox
-            android:id="@+id/is_finished"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/is_finished_cb"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/note_indiate"
+            android:button="@null"
             android:layout_gravity="center" />
     </FrameLayout>
 

@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 
@@ -26,14 +29,16 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     // header end
 
     private int mInvoiceType;
+    
+    private RequestQueue mRequestQueue;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
 	super.onCreate( savedInstanceState );
 	setContentView( R.layout.activity_invoice_info );
+	mRequestQueue=Volley.newRequestQueue(App.getAppContext());
 	initView( );
-
 	initData( );
     }
 
@@ -125,6 +130,10 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     private void intentToAttachMent()
     {
 
+    }
+    
+    private void doRequestMobileCfg(){
+    	
     }
 
     @Override

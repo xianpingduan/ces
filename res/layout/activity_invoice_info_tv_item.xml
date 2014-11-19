@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="ggggg"
         android:textColor="@android:color/white"
         android:textSize="@dimen/pl_small_text_size"
         android:visibility="visible" />
@@ -28,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="hgjhhg"
             android:textColor="@android:color/white"
             android:textSize="@dimen/pl_small_text_size" />
 
