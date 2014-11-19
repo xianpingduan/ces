@@ -16,7 +16,9 @@ public class Invoice {
 	private String ApprDate;
 	private String ProcessMode;
 	private String Status;
+	private String Reason;
 	
+
 	public String getAccount() {
 		return Account;
 	}
@@ -101,7 +103,12 @@ public class Invoice {
 	public void setStatus(String status) {
 		Status = status;
 	}
-
+	public String getReason() {
+		return Reason;
+	}
+	public void setReason(String reason) {
+		Reason = reason;
+	}
 	
 
 }

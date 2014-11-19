@@ -1,5 +1,6 @@
 package com.xiexin.ces.activity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -74,6 +75,10 @@ public class LoginActivity extends Activity implements OnClickListener
 	initView( );
 
 	mQueue = Volley.newRequestQueue( App.getAppContext( ) );
+	
+	//初始化数据
+	//修复bug(勾选记住密码后换个登陆人选择帐套没有读取到帐套信息，而且从选择帐套页面回到登录页面后登陆人也变成了记住的用户)
+	initData();
 
     }
 
@@ -134,8 +139,8 @@ public class LoginActivity extends Activity implements OnClickListener
     protected void onResume()
     {
 	super.onResume( );
-	// 初始化数据
-	initData( );
+	//	 初始化数据
+	//	initData( );
     }
 
     @Override
@@ -259,8 +264,14 @@ public class LoginActivity extends Activity implements OnClickListener
 		    int resCode = response.getInt( "Success" );
 		    if( resCode == 0 )
 		    {
-			App.getSharedPreference( ).edit( ).putString( Constants.ZHANG_TAO_LIST , response.getString( "Data" ) ).commit( );
-			mUiHandler.sendEmptyMessage( MSG_REQUEST_ZT_SUCCESS );
+		    	String rspData = response.getString("Data");
+		    	boolean b = validateRequestZt(rspData);
+		    	if(b){
+					App.getSharedPreference( ).edit( ).putString( Constants.ZHANG_TAO_LIST , response.getString( "Data" ) ).commit( );
+					mUiHandler.sendEmptyMessage( MSG_REQUEST_ZT_SUCCESS );
+		    	}else{
+		    		mUiHandler.sendEmptyMessage(MSG_REQUEST_ZT_NULL);
+		    	}
 		    }
 		    else
 		    {
@@ -281,6 +292,7 @@ public class LoginActivity extends Activity implements OnClickListener
 		mUiHandler.sendEmptyMessage( MSG_REQUEST_ZT_ERROR );
 	    }
 	} );
+	
 
 	// { @Override
 	// public Map<String, String> getHeaders() throws AuthFailureError {
@@ -300,6 +312,21 @@ public class LoginActivity extends Activity implements OnClickListener
 	mQueue.add( json );
 	mQueue.start( );
     }
+    
+	private boolean validateRequestZt(String requestZt){
+		
+		try {
+			JSONArray array = new JSONArray(requestZt);
+			if(array.length()>0){
+				return true;
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+		
+	}
 
     private boolean validate()
     {
@@ -351,6 +378,7 @@ public class LoginActivity extends Activity implements OnClickListener
     private final static int MSG_GET_ZT = 1;
     private final static int MSG_REQUEST_ZT_SUCCESS = 2;
     private final static int MSG_REQUEST_ZT_ERROR = 3;
+    private final static int MSG_REQUEST_ZT_NULL=7;
 
     private static final int MSG_LOGIN_SUCCESS = 4;
     private static final int MSG_LOGIN_ERROR = 5;
@@ -395,6 +423,10 @@ public class LoginActivity extends Activity implements OnClickListener
 		    dismissDialog( );
 		    Toast.makeText( LoginActivity.this , getString( R.string.please_check_net ) , Toast.LENGTH_SHORT ).show( );
 		    break;
+		case MSG_REQUEST_ZT_NULL:
+			dismissDialog( );
+			Toast.makeText( LoginActivity.this , getString( R.string.request_zhangtao_null ) , Toast.LENGTH_SHORT ).show( );
+			break;
 		default :
 		    break;
 	    }
@@ -534,6 +566,7 @@ public class LoginActivity extends Activity implements OnClickListener
 	if( !mAutoLoginCb.isChecked( ) )
 	{
 	    mAutoLoginCb.setChecked( false );
+	    mRemmenberPwdCb.setChecked(false);
 	    mRemmenberPwdCb.setClickable( true );
 	    mRemmenberPwdTv.setClickable( true );
 	}
