@@ -27,21 +27,22 @@ public class Constants
     public final static String SERVER_CONFIG_PORT = "server_config_port";
     public final static String SERVER_CONFIG_FIRST_IN = "server_config_first_in";
     public final static String SERVER_CONFIG_REQ = "server_config_req";
-	// public final static String
-	// SERVER_CONFIG_SET_FROM="server_config_set_from";
-	// public final static int SERVER_CONFIG_SET_FROM_LOGIN=1;
-	// public final static int SERVER_CONFIG_SET_FROM_MENU=2;
+    // public final static String
+    // SERVER_CONFIG_SET_FROM="server_config_set_from";
+    // public final static int SERVER_CONFIG_SET_FROM_LOGIN=1;
+    // public final static int SERVER_CONFIG_SET_FROM_MENU=2;
 
     // net
-//    public static String ROOT = "http://core130.com:8081";
-    
-    public static String ROOT = App.getSharedPreference().getString(Constants.SERVER_CONFIG_URL, "http://core130.com")+":"+App.getSharedPreference().getString(Constants.SERVER_CONFIG_PORT, "8081");
-    
-    
+    //    public static String ROOT = "http://core130.com:8081";
+
+    public static String ROOT = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "http://core130.com" ) + ":"
+	    + App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "8081" );
+
     public final static String ROOT_URL = ROOT + "/api/CESApp/";
     public final static String LOGIN_URL = "Login";
     public final static String ZHANG_TAO_URL = "GetAccountByUserID";
     public final static String GET_WORK_MESSAGE_URL = "GetWorkMessage";
+    public final static String GET_APPROVAL_ROAD_LIST = "GetApprListForDataNbr";
 
     // approval type
 
@@ -51,6 +52,7 @@ public class Constants
     public final static int TYPE_SCRATCH_UPCOME_TASKS = 2;
     public final static int TYPE_APPROVED_TASKS = 3;
     public final static int TYPE_SEND_ITEM_TASKS = 4;
+    public final static String INVOICE_TYPE = "invoice_type";
 
     //list data add type
     public final static int TYPE_LIST_ADD_APPEND = 1;
@@ -58,5 +60,9 @@ public class Constants
 
     //page size
     public final static int PAGE_SIZE = 25;
+
+    //road
+    public final static String PRGID = "prgid";
+    public final static String DATANBR = "datanbr";
 
 }

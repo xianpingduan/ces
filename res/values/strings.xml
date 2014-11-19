@@ -83,5 +83,10 @@
     <string name="switch_account_text">切换帐套</string>
     <string name="loginout_text">注销</string>
     <string name="request_zhangtao_null">此用户名下无帐套信息,请确认用户名正确</string>
+    
+    <!-- 详情 -->
+    <string name="invoice_info">详情</string>
+    <string name="invoice_approval_road">路线</string>
+    <string name="invoice_attachment">附件</string>
 
 </resources>

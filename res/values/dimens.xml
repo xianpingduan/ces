@@ -36,5 +36,7 @@
     <dimen name="user_info_margin_top">6dp</dimen>
     
     <dimen name="left_menu_scrollview_margin_top">137dp</dimen>
+    
+    <dimen name="approval_road_height">60dp</dimen>
 
 </resources>
