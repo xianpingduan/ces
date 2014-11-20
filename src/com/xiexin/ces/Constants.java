@@ -46,8 +46,8 @@ public class Constants
     public final static String GET_EMPLOYEE_LIST = "GetEmployee";
     public final static String SUBMIT_WORK_FLOW = "SubmitWorkFlow";
     public final static String SET_PLUS_SIGN = "SetPlusSign";
-    public final static String SET_APPR_ATTENTION="SetApprAttention";
-    public final static String GET_MOBILE_CFG="GetMobileCfg";
+    public final static String SET_APPR_ATTENTION = "SetApprAttention";
+    public final static String GET_MOBILE_CFG = "GetMobileCfg";
     // approval type
 
     // 1.待审批任务2.暂存代办3.已审批事项4.已发事项
@@ -68,5 +68,10 @@ public class Constants
     //road
     public final static String PRGID = "prgid";
     public final static String DATANBR = "datanbr";
+
+    //select employee
+    public final static String CHECK_EMPLOYEE_FROM = "check_employee_from";
+    public final static int CHECK_EMPLOYEE_FROM_SETPLUGIN = 1;
+    public final static int CHECK_EMPLOYEE_FROM_NOTIFY = 2;
 
 }
