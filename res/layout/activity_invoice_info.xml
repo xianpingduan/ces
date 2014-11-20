@@ -10,39 +10,93 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/info_content_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+
         <LinearLayout
-            android:id="@+id/approval_handle_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="3"
             android:layout_gravity="bottom"
-            android:gravity="center"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="@dimen/common_margin_buttom"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/zt_select_rl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/look_info_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/common_margin_left"
+                android:layout_marginRight="@dimen/common_margin_right"
+                android:layout_marginTop="@dimen/common_margin_top"
+                android:background="@drawable/button_white" >
+
+                <ImageView
+                    android:id="@+id/zt_select_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_arrow" />
+
+                <TextView
+                    android:id="@+id/zt_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/look_invoice_info"
+                    android:textColor="@color/pl_deputy_text_color" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/approval_handle_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_margin_top"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3" >
 
                 <RadioButton
+                    android:id="@+id/approval_rb"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" 
-                    android:layout_weight="1"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/button_approval_edit"
+                    android:gravity="center"
+                    android:text="@string/approval" />
 
                 <RadioButton
+                    android:id="@+id/notify_rb"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" 
-                    android:layout_weight="1"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/button_notify_edit"
+                    android:gravity="center"
+                    android:text="@string/notify" />
 
                 <RadioButton
+                    android:id="@+id/plus_sign_rb"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" 
-                    android:layout_weight="1"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/button_plus_sign_edit"
+                    android:gravity="center"
+                    android:text="@string/set_plugin" />
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
-
-    <!--
-         <com.xiexin.ces.widgets.LoadingUIListView
-        android:id="@+id/zhangtao_list"
-        style="@style/NormalList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never" />
-    -->
 
 </LinearLayout>

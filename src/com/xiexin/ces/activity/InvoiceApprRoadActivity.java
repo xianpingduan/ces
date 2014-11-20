@@ -71,15 +71,10 @@ public class InvoiceApprRoadActivity extends Activity implements
 	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	private void dismissDialog() {
-		new Handler().postDelayed(new Runnable() {
 
-			@Override
-			public void run() {
-				if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-					mLoadingDialog.dismiss();
-				}
-			}
-		}, 500);
+		if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+			mLoadingDialog.dismiss();
+		}
 
 	}
 
@@ -87,12 +82,8 @@ public class InvoiceApprRoadActivity extends Activity implements
 		if (mLoadingDialog == null) {
 			mLoadingDialog = new LoadingDialog(this);
 		}
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mLoadingDialog.show();
-			}
-		}, 200);
+
+		mLoadingDialog.show();
 
 	}
 
@@ -100,12 +91,11 @@ public class InvoiceApprRoadActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_invoice_road);
-		
+
 		mQueue = Volley.newRequestQueue(App.getAppContext());
 		initView();
 
 		initData();
-
 
 	}
 
@@ -185,7 +175,7 @@ public class InvoiceApprRoadActivity extends Activity implements
 		try {
 			JSONArray arrays = new JSONArray(jsonStr);
 			for (int i = 0; i < arrays.length(); i++) {
-				
+
 				JSONObject obj = arrays.getJSONObject(i);
 				InvoiceApprRoad invoiceApprRoad = new InvoiceApprRoad();
 				invoiceApprRoad.setApprDate(obj.getString("ApprDate"));
@@ -267,9 +257,9 @@ public class InvoiceApprRoadActivity extends Activity implements
 			case MSG_GET_INVOICE_ROAD_LIST_SUCCESS:
 				dismissDialog();
 
-				String dataStr = (String)msg.obj;
-				ArrayList<InvoiceApprRoad> roads =getInvoiceList(dataStr);
-				if(roads.size()>0){
+				String dataStr = (String) msg.obj;
+				ArrayList<InvoiceApprRoad> roads = getInvoiceList(dataStr);
+				if (roads.size() > 0) {
 					mInvoiceApprRoadAdapter.addData(roads);
 				}
 				mInvoiceApprRoadAdapter.notifyDataSetChanged();
@@ -280,8 +270,8 @@ public class InvoiceApprRoadActivity extends Activity implements
 				Toast.makeText(
 						App.getAppContext(),
 						App.getAppContext().getString(
-								R.string.request_appr_road_list_error), Toast.LENGTH_SHORT)
-						.show();				
+								R.string.request_appr_road_list_error),
+						Toast.LENGTH_SHORT).show();
 				break;
 
 			default:

@@ -48,6 +48,7 @@ public class Constants
     public final static String SET_PLUS_SIGN = "SetPlusSign";
     public final static String SET_APPR_ATTENTION = "SetApprAttention";
     public final static String GET_MOBILE_CFG = "GetMobileCfg";
+    public final static String GET_DOC_INFORMATION = "GetDocInformation";
     // approval type
 
     // 1.待审批任务2.暂存代办3.已审批事项4.已发事项
@@ -73,5 +74,10 @@ public class Constants
     public final static String CHECK_EMPLOYEE_FROM = "check_employee_from";
     public final static int CHECK_EMPLOYEE_FROM_SETPLUGIN = 1;
     public final static int CHECK_EMPLOYEE_FROM_NOTIFY = 2;
+    
+    //info
+    public final static String DET_INFO = "det_info";
+    public final static String DET_CONFIG = "det_config";
+    public final static String FILES_PATH = "files_path";
 
 }
