@@ -26,6 +26,7 @@
     <string name="server_config_port_hint">端      口</string>
     
     <string name="finish_to">完成</string>
+    <string name="submit">提交</string>
     
    	<string name="please_enter_server_config_url_hint">请输入服务器地址</string>
     <string name="please_enter_server_config_port_hint">请输入端口</string>
@@ -99,4 +100,12 @@
     <string name="search">搜索</string>
     <string name="please_enter_employee_name">请输入姓名</string>
 
+    
+    <string name="sure_to_login_out">是否确认注销当前帐号?</string>
+    <string name="xiangqian">向前</string>
+    <string name="xianghou">向后</string>
+    
+    
+    <string name="please_enter_approval_content">请填写审核内容</string>
+    <string name="please_check_qianhou">请选择向前或向后</string>
 </resources>

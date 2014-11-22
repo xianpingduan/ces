@@ -1,5 +1,8 @@
 package com.xiexin.ces.activity;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -88,6 +91,16 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 	initUserInfo( );
 
 	initSwitchAccoutLl( );
+	
+	
+	initLoginOutLl();
+    }
+    
+    
+    private void initLoginOutLl(){
+    	
+    	mLoginOutLl = (LinearLayout) findViewById(R.id.login_out_ll);
+    	mLoginOutLl.setOnClickListener(this);
     }
 
     @Override
@@ -142,10 +155,33 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 	startActivityForResult( intent , 1 );
 
     }
+    
+    private void sureToLoginOut(){
+    	
+    	AlertDialog.Builder builder = new Builder(MenuActivity.this);
+		builder.setMessage(getString(R.string.sure_to_login_out));
+		builder.setTitle(null);
+		builder.setPositiveButton(getString(R.string.sure),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						loginout();
+					}
+				});
+		builder.setNegativeButton(getString(R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
+    }
 
     private void loginout()
     {
-	App.getSharedPreference( ).edit( ).clear( ).commit( );
+	App.clear();
 
 	Intent intent = new Intent( );
 	intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
@@ -406,7 +442,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 	}
 	else if( view == mLoginOutLl )
 	{
-	    loginout( );
+	    sureToLoginOut( );
 	}
 
 	resideMenu.closeMenu( );

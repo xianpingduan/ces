@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/loading_pop_background"
+    android:orientation="vertical"
+    android:padding="@dimen/approval_spinner_padding" >
+
+    <RelativeLayout
+        android:id="@+id/zt_select_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/look_info_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/common_margin_left"
+        android:layout_marginRight="@dimen/common_margin_right"
+        android:layout_marginTop="@dimen/common_margin_top"
+        android:background="@drawable/button_white" >
+
+        <ImageView
+            android:id="@+id/employee_select_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_arrow" />
+
+        <TextView
+            android:id="@+id/employee_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/please_select_employee"
+            android:textColor="@color/pl_deputy_text_color" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:id="@+id/xiangqian_ll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginTop="@dimen/common_margin_top"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/xiangqian_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/normal_check_button"
+                android:button="@null"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/xiangqian_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/remmenber_pwd_tv_margin_left"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/pl_small_text_size"
+                android:text="@string/xiangqian" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/xianghou_ll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/common_margin_right"
+            android:layout_marginTop="@dimen/common_margin_top"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/xianghou_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/common_margin_right"
+                android:background="@drawable/normal_check_button"
+                android:button="@null"
+                android:gravity="center_vertical|right" />
+
+            <TextView
+                android:id="@+id/xianghou_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/common_margin_right"
+                android:gravity="center_vertical|right"
+                android:textSize="@dimen/pl_small_text_size"
+                android:text="@string/xianghou" />
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/submit_btn"
+        style="@style/NormalBlueButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/approval_dialog_submit_height"
+        android:layout_marginLeft="@dimen/common_margin_left"
+        android:layout_marginRight="@dimen/common_margin_right"
+        android:layout_marginTop="@dimen/common_margin_top"
+        android:gravity="center"
+        android:text="@string/submit"
+        android:textSize="@dimen/pl_small_text_size" />
+
+</LinearLayout>

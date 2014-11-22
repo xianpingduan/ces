@@ -73,7 +73,11 @@ public class EmployeeActivity extends Activity implements OnClickListener
     private EditText mSearchEt;
     private Button mSearchBtn;
 
-    private int mFromHanler;
+    private int mFrom;
+    
+	private String mCheckUserId;
+    
+    private HashMap<String, String>  mSelectMap = new HashMap<String, String>();
 
     private void dismissDialog()
     {
@@ -152,6 +156,7 @@ public class EmployeeActivity extends Activity implements OnClickListener
 		{
 		    filter = filter.trim( );
 		    mEmployeeAdapter.getFilter( ).filter( filter );
+		    //mEmployeeAdapter.notifyDataSetChanged();
 		}
 	    }
 
@@ -176,7 +181,7 @@ public class EmployeeActivity extends Activity implements OnClickListener
 
 	Intent intent = getIntent( );
 	mConnName = intent.getStringExtra( Constants.ZHANG_TAO_CONN_NAME );
-	mFromHanler = intent.getIntExtra( Constants.CHECK_EMPLOYEE_FROM , 0 );
+	mFrom = intent.getIntExtra( Constants.CHECK_EMPLOYEE_FROM , 0 );
 	if( mConnName == null || mConnName.isEmpty( ) )
 	{
 	    mConnName = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
@@ -328,6 +333,7 @@ public class EmployeeActivity extends Activity implements OnClickListener
 
     private static final int MSG_GET_EMPLOYEE_LIST_SUCCESS = 1;
     private static final int MSG_GET_EMPLOYEE_LIST_ERROR = 2;
+    private static final int MSG_REFRESH_ZT_LIST =3;
 
     private Handler mUiHandler = new Handler( )
     {
@@ -355,6 +361,10 @@ public class EmployeeActivity extends Activity implements OnClickListener
 		    dismissDialog( );
 		    Toast.makeText( App.getAppContext( ) , App.getAppContext( ).getString( R.string.request_appr_road_list_error ) , Toast.LENGTH_SHORT ).show( );
 		    break;
+		    
+		case MSG_REFRESH_ZT_LIST:
+			
+			mEmployeeAdapter.notifyDataSetChanged();
 
 		default :
 		    break;
@@ -438,17 +448,35 @@ public class EmployeeActivity extends Activity implements OnClickListener
 	    holder.employeeDepartTv.setText( employee.getDepart( ) );
 	    holder.employeeJobTv.setTag( employee.getJob( ) );
 	    holder.employeeCheckCb.setTag( employee.getEmployeeID( ) );
+	    
+	    switch (mFrom) {
+		case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
+			String empId = mSelectMap.get(employee.getEmployeeID());
+			if(empId!=null && empId.equals(employee.getEmployeeID())){
+				holder.employeeCheckCb.setChecked( true );
+				mMap.put( employee.getEmployeeID( ) , true );
+			}else{
+				holder.employeeCheckCb.setChecked( false );
+				mMap.put( employee.getEmployeeID( ) , false );
+			}
+			break;
+		case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
+		    if( mEmployeeCheckId != null && mEmployeeCheckId.equals( employee.getEmployeeID( ) ) )
+		    {
+			holder.employeeCheckCb.setChecked( true );
+			mMap.put( employee.getEmployeeID( ) , true );
+		    }
+		    else
+		    {
+			holder.employeeCheckCb.setChecked( false );
+			mMap.put( employee.getEmployeeID( ) , false );
+		    }
+			break;
+		default:
+			break;
+		}
 
-	    if( mEmployeeCheckId != null && mEmployeeCheckId.equals( employee.getEmployeeID( ) ) )
-	    {
-		holder.employeeCheckCb.setChecked( true );
-		mMap.put( employee.getEmployeeID( ) , true );
-	    }
-	    else
-	    {
-		holder.employeeCheckCb.setChecked( false );
-		mMap.put( employee.getEmployeeID( ) , false );
-	    }
+	    
 	    holder.employeeCheckCb.setOnClickListener( new View.OnClickListener( )
 	    {
 		@Override
@@ -458,14 +486,38 @@ public class EmployeeActivity extends Activity implements OnClickListener
 		    {
 			holder.employeeCheckCb.setChecked( false );
 			mMap.put( holder.employeeCheckCb.getTag( ).toString( ) , false );
+			switch (mFrom) {
+			case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
+				mSelectMap.remove(holder.employeeCheckCb.getTag( ).toString( ));
+				break;
+			case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
+				mCheckUserId = null;
+				break;
+			default:
+				break;
+			}
+			
 		    }
 		    else
 		    {
 			holder.employeeCheckCb.setChecked( true );
 			mMap.put( holder.employeeCheckCb.getTag( ).toString( ) , true );
-		    }
+			
+			switch (mFrom) {
+			case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
+				mSelectMap.put(holder.employeeCheckCb.getTag( ).toString( ),mSelectMap.remove(holder.employeeCheckCb.getTag( ).toString( )));
+				break;
+			case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
+				mCheckUserId = holder.employeeCheckCb.getTag( ).toString( );
+				break;
 
-		    // mUiHandler.sendEmptyMessage(MSG_REFRESH_ZT_LIST);
+			default:
+				break;
+			}
+		    }
+		    if(mFrom == Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN){
+		    	 mUiHandler.sendEmptyMessage(MSG_REFRESH_ZT_LIST);
+		    }
 		}
 	    } );
 	    // 同步checkBox事件

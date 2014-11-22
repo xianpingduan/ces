@@ -61,40 +61,46 @@
                 android:id="@+id/approval_handle_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin_top"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="3" >
+                android:layout_marginTop="@dimen/common_margin_top">
 
-                <RadioButton
-                    android:id="@+id/approval_rb"
-                    android:layout_width="0dp"
+                <RadioGroup
+                    android:id="@+id/approval_handle_rgp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:drawableTop="@drawable/button_approval_edit"
                     android:gravity="center"
-                    android:text="@string/approval" />
+                    android:orientation="horizontal"
+                    android:weightSum="3" >
 
-                <RadioButton
-                    android:id="@+id/notify_rb"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:drawableTop="@drawable/button_notify_edit"
-                    android:gravity="center"
-                    android:text="@string/notify" />
+                    <RadioButton
+                        android:id="@+id/approval_rb"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableTop="@drawable/button_approval_edit"
+                        android:gravity="center"
+                        android:text="@string/approval" />
 
-                <RadioButton
-                    android:id="@+id/plus_sign_rb"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:drawableTop="@drawable/button_plus_sign_edit"
-                    android:gravity="center"
-                    android:text="@string/set_plugin" />
+                    <RadioButton
+                        android:id="@+id/notify_rb"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableTop="@drawable/button_notify_edit"
+                        android:gravity="center"
+                        android:text="@string/notify" />
+
+                    <RadioButton
+                        android:id="@+id/plus_sign_rb"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableTop="@drawable/button_plus_sign_edit"
+                        android:gravity="center"
+                        android:text="@string/set_plugin" />
+                </RadioGroup>
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

@@ -39,5 +39,11 @@
     
     <dimen name="approval_road_height">60dp</dimen>
     <dimen name="look_info_height">36dp</dimen>
+    
+   	<dimen name="approval_spinner_width">180dp</dimen>
+    <dimen name="approval_spinner_height">50dp</dimen>
+    <dimen name="approval_spinner_padding">20dp</dimen>
+    
+    <dimen name="approval_dialog_submit_height">36dp</dimen>
 
 </resources>

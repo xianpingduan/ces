@@ -1,10 +1,14 @@
 package com.xiexin.ces.activity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
@@ -22,6 +26,8 @@ public class SplashActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		
+		//		test();
 
 		String url = App.getSharedPreference().getString(
 				Constants.SERVER_CONFIG_URL, "");
@@ -117,5 +123,16 @@ public class SplashActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		return;
+	}
+	
+	private void test(){
+		
+		try {
+			JSONObject  obj=new JSONObject(Constants.RQ001);
+			Log.d(TAG, obj.get("Data").toString());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
