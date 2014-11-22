@@ -36,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
+import com.xiexin.ces.activity.InvoiceInfoActivity;
 import com.xiexin.ces.entry.Invoice;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
@@ -469,6 +470,25 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			}
 
 			bindData(holder, list.get(position));
+			
+			convertView.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					ViewHolder holder = (ViewHolder) v.getTag();
+					String connName = holder.accountTv.getText().toString();
+					String id = holder.invoiceIdTv.getText().toString();
+					String prgId = holder.prgIdTv.getText().toString();
+					Log.d(TAG, "connName="+connName+",id="+id+",prgId="+prgId);
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), InvoiceInfoActivity.class);
+					intent .putExtra(Constants.ZHANG_TAO_CONN_NAME, connName);
+					intent.putExtra(Constants.PRGID, prgId);
+					intent.putExtra(Constants.DATANBR, id);
+					startActivity(intent);
+					
+				}
+			});
 
 			return convertView;
 		}
@@ -478,12 +498,16 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			String apprDate = invoice.getApprDate();
 			Date date = new Date();
 			try {
-				date = sdf.parse(apprDate);
+				if(apprDate!=null&&apprDate.equals("null")){
+					date = sdf.parse(apprDate);
+					apprDate = sdf.format(date);
+				}else{
+					apprDate = "";
+				}
 			} catch (ParseException e) {
 				e.printStackTrace();
 				Log.d(TAG, "date format error");
 			}
-			apprDate = sdf.format(date);
 			// Logger.d(TAG, "---prgName="+invoice.getPrgName());
 			holder.invoiceIdTv.setText(invoice.getDataNbr());
 			holder.invoiceDateTv.setText(apprDate);

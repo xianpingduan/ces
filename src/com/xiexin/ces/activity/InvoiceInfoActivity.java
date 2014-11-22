@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -163,11 +164,14 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		mPrgid = intent.getStringExtra(Constants.PRGID);
 		mConnName = intent.getStringExtra(Constants.ZHANG_TAO_CONN_NAME);
-		if (mConnName == null || mConnName.isEmpty()) {
+		if (mConnName == null || mConnName.isEmpty()||mConnName.equals("null")) {
 			mConnName = App.getSharedPreference().getString(
 					Constants.ZHANG_TAO_CONN_NAME, "");
 		}
+		
 		mDatanbr = intent.getStringExtra(Constants.DATANBR);
+		
+		Log.d(TAG, "mConnName="+mConnName +",mPrgId="+mPrgid+",mDatanbr="+mDatanbr);
 		
 		//当前登录人
 		mUpdateUser = App.getSharedPreference().getString(Constants.USER_ID, "");
