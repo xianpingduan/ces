@@ -6,26 +6,15 @@
 
     <include layout="@layout/header_action_bar" />
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <LinearLayout
-                android:id="@+id/info_content_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
-        </ScrollView>
-
         <LinearLayout
+            android:id="@+id/approval_select_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/common_margin_buttom"
             android:orientation="vertical" >
 
@@ -40,7 +29,7 @@
                 android:background="@drawable/button_white" >
 
                 <ImageView
-                    android:id="@+id/zt_select_iv"
+                    android:id="@+id/second_info_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -48,7 +37,7 @@
                     android:src="@drawable/icon_arrow" />
 
                 <TextView
-                    android:id="@+id/zt_tv"
+                    android:id="@+id/second_info_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -61,7 +50,7 @@
                 android:id="@+id/approval_handle_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin_top">
+                android:layout_marginTop="@dimen/common_margin_top" >
 
                 <RadioGroup
                     android:id="@+id/approval_handle_rgp"
@@ -103,6 +92,20 @@
                 </RadioGroup>
             </LinearLayout>
         </LinearLayout>
-    </FrameLayout>
+
+        <ScrollView
+            android:id="@+id/info_content_sv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/approval_select_ll" >
+
+            <LinearLayout
+                android:id="@+id/info_content_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
 
 </LinearLayout>

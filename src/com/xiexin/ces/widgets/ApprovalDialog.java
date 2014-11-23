@@ -167,7 +167,8 @@ public class ApprovalDialog extends Dialog {
 		}
 
 		private void bindData(ViewHolder holder, ApprovalType aType) {
-			holder.idTv.setText(aType.id);
+			Log.d("ApprovalDialog", "id="+aType.id);
+			holder.idTv.setText(aType.id+"");
 			holder.showTv.setText(aType.showName);
 		}
 

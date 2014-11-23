@@ -498,7 +498,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			String apprDate = invoice.getApprDate();
 			Date date = new Date();
 			try {
-				if(apprDate!=null&&apprDate.equals("null")){
+				if(apprDate!=null&&!apprDate.equals("null")){
 					date = sdf.parse(apprDate);
 					apprDate = sdf.format(date);
 				}else{

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/loading_pop_background"
-    android:orientation="vertical"
-    android:padding="@dimen/approval_spinner_padding" >
+    android:orientation="vertical"  >
 
     <Spinner
         android:id="@+id/approval_spinner"
-        android:layout_width="@dimen/approval_spinner_width"
-        android:layout_height="@dimen/approval_spinner_height"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_margin_top"
+        android:layout_marginLeft="@dimen/common_margin_left"
+        android:layout_marginRight="@dimen/common_margin_right"
         android:background="@drawable/button_white" />
 
     <EditText
@@ -18,9 +20,12 @@
         style="@style/NormalEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_margin_top"
+        android:layout_marginTop="@dimen/approval_dialog_margin_top"
+        android:layout_marginLeft="@dimen/common_margin_left"
+        android:layout_marginRight="@dimen/common_margin_right"
         android:background="@drawable/login_et_frame_bg"
         android:hint="@string/please_enter_approval_content"
+        android:gravity="top"
         android:imeOptions="flagNoExtractUi"
         android:textColorHint="@color/pl_deputy_text_color"
         android:textCursorDrawable="@drawable/pl_edittext_cursor" />
@@ -32,7 +37,8 @@
         android:layout_height="@dimen/approval_dialog_submit_height"
         android:layout_marginLeft="@dimen/common_margin_left"
         android:layout_marginRight="@dimen/common_margin_right"
-        android:layout_marginTop="@dimen/common_margin_top"
+        android:layout_marginTop="@dimen/approval_dialog_margin_top"
+        android:layout_marginBottom="@dimen/common_margin_buttom"
         android:gravity="center"
         android:text="@string/submit"
         android:textSize="@dimen/pl_small_text_size" />

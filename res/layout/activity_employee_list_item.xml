@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_alignLeft="@dimen/common_margin_left"
+        android:layout_marginLeft="@dimen/common_margin_left"
         android:textColor="@color/pl_main_text_color"
         android:textSize="@dimen/pl_small_text_size" />
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/employee_name_tv"
-        android:layout_alignLeft="@dimen/common_margin_left"
+        android:layout_marginLeft="@dimen/common_margin_left"
         android:textColor="@color/pl_main_text_color"
         android:textSize="@dimen/pl_small_text_size" />
 
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/employee_depart_tv"
-        android:layout_alignLeft="@dimen/common_margin_left"
+        android:layout_marginLeft="@dimen/common_margin_left"
         android:textColor="@color/pl_main_text_color"
         android:textSize="@dimen/pl_small_text_size" />
 

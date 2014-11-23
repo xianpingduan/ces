@@ -3,13 +3,12 @@
     android:id="@+id/zt_frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_view_item_bg"
     android:weightSum="3" >
 
     <TextView
         android:id="@+id/table_header_name"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="left"
         android:layout_marginLeft="@dimen/common_margin_left"

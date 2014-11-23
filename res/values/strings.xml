@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">ces</string>
     
@@ -108,4 +108,9 @@
     
     <string name="please_enter_approval_content">请填写审核内容</string>
     <string name="please_check_qianhou">请选择向前或向后</string>
+    
+    <string name="notify_success">知会<xliff:g id="norify_success">%s</xliff:g>成功</string>
+    <string name="plus_sign_success">加签<xliff:g id="plus_sign_success">%s</xliff:g>成功</string>
+    <string name="approval_success">审批成功</string>
+    
 </resources>

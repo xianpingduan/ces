@@ -43,6 +43,12 @@
         <activity
             android:name="com.xiexin.ces.activity.InvoiceApprRoadActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.xiexin.ces.activity.EmployeeActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.xiexin.ces.activity.InvoiceSecondInfoActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
     </application>
 
 </manifest>

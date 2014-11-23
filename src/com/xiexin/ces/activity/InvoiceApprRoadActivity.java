@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -344,19 +345,27 @@ public class InvoiceApprRoadActivity extends Activity implements
 			Date date = new Date();
 			try {
 				date = sdf.parse(apprDate);
+				apprDate = sdf.format(date);
 			} catch (ParseException e) {
 				e.printStackTrace();
 				Log.d(TAG, "date format error");
+				apprDate="";
 			}
-			apprDate = sdf.format(date);
+			if(apprDate.equals("0001-01-01")){
+				apprDate="";
+			}
 			holder.processModeTv.setText(iar.getProcessMode());
 			holder.apprDateTv.setText(apprDate);
 			holder.apprMemoTv.setTag(iar.getApprMemo());
-			String isFinished = iar.getStatus();
+			Log.d(TAG, "apprDate="+apprDate);
+			//String isFinished = iar.getStatus();	
 			// Log.d(TAG,
 			// "connName="+zt.getConnName()+"checked="+mMap.get(zt.getConnName()));
-			if (isFinished.equals("已审") || isFinished.equals("null")) {
+			if (!apprDate.isEmpty()) {
 				holder.isFinishedCb.setChecked(true);
+				holder.processModeTv.setTextColor(Color.parseColor("#0066CC"));
+				holder.apprDateTv.setTextColor(Color.parseColor("#0066CC"));
+				holder.apprMemoTv.setTextColor(Color.parseColor("#0066CC"));
 			} else {
 				holder.isFinishedCb.setChecked(false);
 			}

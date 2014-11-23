@@ -54,7 +54,7 @@ public class PlusSignDialog extends Dialog {
 		mXianghouLl = (LinearLayout) findViewById(R.id.xianghou_ll);
 		mXianghouCb = (CheckBox) findViewById(R.id.xianghou_cb);
 
-		mXiangqianLl.setOnClickListener(new View.OnClickListener() {
+		mXiangqianCb.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -62,14 +62,15 @@ public class PlusSignDialog extends Dialog {
 					mXiangqianCb.setChecked(false);
 					mType = -1;
 				} else {
-					mXiangqianCb.setChecked(true);
 					mType = 0;
+					mXiangqianCb.setChecked(true);
+					mXianghouCb.setChecked(false);
 				}
 
 			}
 		});
 
-		mXianghouLl.setOnClickListener(new View.OnClickListener() {
+		mXianghouCb.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -77,8 +78,10 @@ public class PlusSignDialog extends Dialog {
 					mXianghouCb.setChecked(false);
 					mType = -1;
 				} else {
-					mXianghouCb.setChecked(true);
 					mType = 1;
+					mXianghouCb.setChecked(true);
+					mXiangqianCb.setChecked(false);
+
 				}
 			}
 		});
@@ -123,7 +126,7 @@ public class PlusSignDialog extends Dialog {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		dismiss();
+		this.dismiss();
 	}
 
 }

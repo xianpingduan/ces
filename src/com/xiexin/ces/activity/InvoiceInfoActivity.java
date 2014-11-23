@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -60,14 +61,20 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	private String mPrgid; // 业务类型
 	private String mDatanbr;// 单据编号
 
+	private String[] mDataConfig; // data要显示的字段
+	private JSONObject mDataContent;
+	private JSONObject mDataHeader;// 表头
+
 	private String mDetConfig;// 详情要显示的字段，以","隔开
 	private String mDetContent;// 详情内容
+
 	private String mFilesPath; // 附件详情
 
 	private RadioGroup mApprovalHandleRgp;
 	private RadioButton mApprovalRbtn;
 	private RadioButton mNotifyRbtn;
 	private RadioButton mPlusSignRbtn;
+	private ImageView mSecondInfoIv;
 
 	private int mCurrentUi = NORMAL;
 	private final static int NORMAL = 0;
@@ -158,24 +165,33 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					}
 
 				});
+		
+		mSecondInfoIv = (ImageView) findViewById(R.id.second_info_iv);
+		mSecondInfoIv.setOnClickListener(this);
 	}
 
 	private void initData() {
 		Intent intent = getIntent();
 		mPrgid = intent.getStringExtra(Constants.PRGID);
 		mConnName = intent.getStringExtra(Constants.ZHANG_TAO_CONN_NAME);
-		if (mConnName == null || mConnName.isEmpty()||mConnName.equals("null")) {
+		if (mConnName == null || mConnName.isEmpty()
+				|| mConnName.equals("null")) {
 			mConnName = App.getSharedPreference().getString(
 					Constants.ZHANG_TAO_CONN_NAME, "");
 		}
-		
+
 		mDatanbr = intent.getStringExtra(Constants.DATANBR);
-		
-		Log.d(TAG, "mConnName="+mConnName +",mPrgId="+mPrgid+",mDatanbr="+mDatanbr);
-		
-		//当前登录人
-		mUpdateUser = App.getSharedPreference().getString(Constants.USER_ID, "");
-		
+
+		Log.d(TAG, "mConnName=" + mConnName + ",mPrgId=" + mPrgid
+				+ ",mDatanbr=" + mDatanbr);
+
+		// 当前登录人
+		mUpdateUser = App.getSharedPreference()
+				.getString(Constants.USER_ID, "");
+
+		// 初始化header信息
+		mDataHeader = Constants.getData(mPrgid);
+
 		// 获取配置
 		// doRequestMobileCfg();
 		doRequestInfo();
@@ -214,10 +230,13 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			intentToApprovalRoad();
 			break;
 		case R.id.btn2:
-			intentToAttachMent();
+			//intentToAttachMent();
 			break;
 		case R.id.return_ll:
 			onBackPressed();
+			break;
+		case R.id.second_info_iv:
+			intentToInfo();
 			break;
 		// case R.id.approval_rb:
 		// approval();
@@ -259,7 +278,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				intentToEmployee(Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN);
 				break;
 			case MSG_NOTIFY_TO_EMPLOYEE:
-				intentToEmployee(Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN);
+				intentToEmployee(Constants.CHECK_EMPLOYEE_FROM_NOTIFY);
 				break;
 			default:
 				break;
@@ -271,7 +290,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	private ApprovalDialog mApprovalDialog;
 
 	private void approval() {
-		if (mApprovalDialog != null) {
+		if (mApprovalDialog == null) {
 			mApprovalDialog = new ApprovalDialog(InvoiceInfoActivity.this,
 					mLogicHandler);
 		}
@@ -279,16 +298,17 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	}
 
 	private void dismissApprovalDialog() {
-		if (mApprovalDialog != null)
+		if (mApprovalDialog != null){
 			mApprovalDialog.dismiss();
-
+			mApprovalDialog=null;
+		}
 		mCurrentUi = APROVAL;
 	}
 
 	private PlusSignDialog mPlusSignDialog;
 
 	private void plusSign() {
-		if (mPlusSignDialog != null) {
+		if (mPlusSignDialog == null) {
 			mPlusSignDialog = new PlusSignDialog(InvoiceInfoActivity.this,
 					mLogicHandler);
 		}
@@ -296,17 +316,19 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	}
 
 	private void dismissPlusSignDialog() {
-		if (mPlusSignDialog != null)
-			mApprovalDialog.dismiss();
+		if (mPlusSignDialog != null){
+			mPlusSignDialog.dismiss();
+			mPlusSignDialog=null;
+		}
 
 		mCurrentUi = APROVAL;
-		mUserId=null;
+		mCheckUserId = null;
 	}
 
 	private NotifyDialog mNotifyDialog;
 
 	private void notifyRb() {
-		if (mNotifyDialog != null) {
+		if (mNotifyDialog == null) {
 			mNotifyDialog = new NotifyDialog(InvoiceInfoActivity.this,
 					mLogicHandler);
 		}
@@ -314,11 +336,12 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	}
 
 	private void dismissNotifyDialog() {
-		if (mNotifyDialog != null)
+		if (mNotifyDialog != null){
 			mNotifyDialog.dismiss();
-
+			mNotifyDialog=null;
+		}
 		mCurrentUi = APROVAL;
-		mUserId=null;
+		mCheckUserId = null;
 	}
 
 	private void intentToApprovalRoad() {
@@ -330,7 +353,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		startActivity(intent);
 	}
 
-	//TODO 第三阶段
+	// TODO 第三阶段
 	private void intentToAttachMent() {
 
 		Intent intent = new Intent();
@@ -341,7 +364,8 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 	private void intentToInfo() {
 		Intent intent = new Intent();
-		// intent.setClass(InvoiceInfoActivity.class, cls);
+		 intent.setClass(InvoiceInfoActivity.this, InvoiceSecondInfoActivity.class);
+		intent.putExtra(Constants.PRGID, mPrgid);
 		intent.putExtra(Constants.DET_CONFIG, mDetConfig);
 		intent.putExtra(Constants.DET_INFO, mDetContent);
 		startActivity(intent);
@@ -349,12 +373,22 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	}
 
 	private void intentToEmployee(int from) {
+		// switch (from) {
+		// case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
+		// dismissNotifyDialog();
+		// break;
+		// case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
+		// dismissPlusSignDialog();
+		// break;
+		// default:
+		// break;
+		// }
 
 		Intent intent = new Intent();
 		intent.setClass(InvoiceInfoActivity.this, EmployeeActivity.class);
 		intent.putExtra(Constants.ZHANG_TAO_CONN_NAME, mConnName);
 		intent.putExtra(Constants.CHECK_EMPLOYEE_FROM, from);
-		startActivityForResult(intent, -1);
+		startActivityForResult(intent, 1);
 	}
 
 	private void doRequestMobileCfg() {
@@ -422,31 +456,68 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 				break;
 			case MSG_GET_INFO_SUCCESS:
+				mDataContent = (JSONObject) msg.obj;
+				try {
+					mDetContent = mDataContent.getString("Det");
+					mFilesPath = mDataContent.getString("FilesPath");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				createDataView();
+
+				dismissDialog();
 
 				break;
 			case MSG_GET_INFO_ERROR:
 
+				dismissDialog();
 				break;
 
 			case MSG_SET_PLUS_SIGN_SUCCESS:
-
+				dismissDialog();
+				dismissPlusSignDialog();
+				Toast.makeText(InvoiceInfoActivity.this,
+						getString(R.string.plus_sign_success,mCheckUserName),
+						Toast.LENGTH_SHORT).show();
+				finish();
 				break;
 			case MSG_SET_PLUS_SIGN_ERROR:
-
+				dismissDialog();
+				Toast.makeText(InvoiceInfoActivity.this,
+						(String)msg.obj,
+						Toast.LENGTH_SHORT).show();
 				break;
 
 			case MSG_SET_APPR_ATTENTION_SUCCESS:
-
+				dismissDialog();
+				dismissNotifyDialog();
+				Toast.makeText(InvoiceInfoActivity.this,
+						getString(R.string.notify_success,mCheckUserName),
+						Toast.LENGTH_SHORT).show();
+				finish();
 				break;
 			case MSG_SET_APPR_ATTENTION_ERROR:
-
+				dismissDialog();
+				Toast.makeText(InvoiceInfoActivity.this,
+						(String)msg.obj,
+						Toast.LENGTH_SHORT).show();
 				break;
-
 			case MSG_SET_SUBMIT_WORK_FLOW_SUCCESS:
-
+				dismissDialog();
+				dismissApprovalDialog();
+				Toast.makeText(InvoiceInfoActivity.this,
+						getString(R.string.approval_success),
+						Toast.LENGTH_SHORT).show();
+				finish();
 				break;
 			case MSG_SET_SUBMIT_WORK_FLOW_ERROR:
 
+				dismissDialog();
+				Toast.makeText(InvoiceInfoActivity.this,
+						(String)msg.obj,
+						Toast.LENGTH_SHORT).show();
+				
 				break;
 			default:
 				break;
@@ -455,8 +526,34 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 	};
 
-	//整个单据详情
+	private void createDataView() {
+		// mInfoContentLl
+		LayoutInflater inflater = App.getLayoutInflater();
+		Log.d(TAG, "createDataView,mPrgid=" + mPrgid);
+		mDataConfig = Constants.getDataDefaultConfig(mPrgid);
+		for (int i = 0; i < mDataConfig.length; i++) {
+			View view = inflater.inflate(
+					R.layout.activity_invoice_info_tv_item, null);
+			TextView headerTv = (TextView) view
+					.findViewById(R.id.table_header_name);
+			TextView contentTv = (TextView) view
+					.findViewById(R.id.table_content);
+			try {
+				headerTv.setText(mDataHeader.getString(mDataConfig[i]));
+				contentTv.setText(mDataContent.getString(mDataConfig[i]));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			mInfoContentLl.addView(view);
+		}
+
+	}
+
+	// 整个单据详情
 	private void doRequestInfo() {
+
+		showDialog();
 
 		StringBuffer urlSbf = new StringBuffer(Constants.ROOT_URL
 				+ Constants.GET_DOC_INFORMATION + "?");
@@ -474,7 +571,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 							Message msg = Message.obtain();
 							if (resCode == 0) {
 								msg.what = MSG_GET_INFO_SUCCESS;
-								msg.obj = response.getString("Data");
+								msg.obj = response.getJSONObject("Data");
 							} else {
 								msg.what = MSG_GET_INFO_ERROR;
 								msg.obj = response.get("Msg");
@@ -498,28 +595,32 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 	// 加签
 	private int mPosition = -1;
-	private String mUserId=null;
+	private String mCheckUserId = null;
 	private String mUpdateUser;
-	private int inxnbr;
+	private int inxnbr=0;
 
 	private void doSetPlusSign() {
-		
-		if(mUserId==null || mUserId.isEmpty()){
-			Toast.makeText(InvoiceInfoActivity.this, getString(R.string.please_select_employee), Toast.LENGTH_SHORT).show();
-			return ;
-		}
-		if(mPosition==-1){
-			Toast.makeText(InvoiceInfoActivity.this, getString(R.string.please_check_qianhou), Toast.LENGTH_SHORT).show();
-			return ;
-		}
+
 		mPosition = mPlusSignDialog.getType();
+		if (mCheckUserId == null || mCheckUserId.isEmpty()) {
+			Toast.makeText(InvoiceInfoActivity.this,
+					getString(R.string.please_select_employee),
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+		if (mPosition == -1) {
+			Toast.makeText(InvoiceInfoActivity.this,
+					getString(R.string.please_check_qianhou),
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
 		StringBuffer urlSbf = new StringBuffer(Constants.ROOT_URL
 				+ Constants.SET_PLUS_SIGN + "?");
 		urlSbf.append("account=").append(mConnName);
 		urlSbf.append("&prgid=").append(mPrgid);
 		urlSbf.append("&datanbr=").append(mDatanbr);
 		urlSbf.append("&position=").append(mPosition);
-		urlSbf.append("&userid=").append(mUserId);
+		urlSbf.append("&userid=").append(mCheckUserId);
 		urlSbf.append("&updateuser=").append(mUpdateUser);
 		urlSbf.append("&inxnbr=").append(inxnbr);
 
@@ -560,7 +661,8 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	private int mApprovalKind;
 
 	private void doSubmitWorkFlow() {
-		mApprovalMemo=mApprovalDialog.getApprovalContent();
+		showDialog();
+		mApprovalMemo = mApprovalDialog.getApprovalContent();
 		mApprovalKind = mApprovalDialog.getSpinnerValue();
 		StringBuffer urlSbf = new StringBuffer(Constants.ROOT_URL
 				+ Constants.SUBMIT_WORK_FLOW + "?");
@@ -607,10 +709,12 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 	// 知会
 	private void doSetApprAttention() {
-		
-		if(mUserId==null || mUserId.isEmpty()){
-			Toast.makeText(InvoiceInfoActivity.this, getString(R.string.please_select_employee), Toast.LENGTH_SHORT).show();
-			return ;
+
+		if (mCheckUserId == null || mCheckUserId.isEmpty()) {
+			Toast.makeText(InvoiceInfoActivity.this,
+					getString(R.string.please_select_employee),
+					Toast.LENGTH_SHORT).show();
+			return;
 		}
 
 		StringBuffer urlSbf = new StringBuffer(Constants.ROOT_URL
@@ -618,7 +722,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		urlSbf.append("account=").append(mConnName);
 		urlSbf.append("&prgid=").append(mPrgid);
 		urlSbf.append("&datanbr=").append(mDatanbr);
-		urlSbf.append("&userid=").append(mUserId);
+		urlSbf.append("&userid=").append(mCheckUserId);
 		urlSbf.append("&updateuser=").append(mUpdateUser);
 
 		JsonObjectRequest json = new JsonObjectRequest(Method.GET,
@@ -660,20 +764,26 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		finish();
 	}
 
+	private String mCheckUserName;
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		Log.d(TAG, "onActivityResult");
 		if (resultCode == RESULT_OK) {
-			mUserId = data.getStringExtra("userid");
+			mCheckUserId = data.getStringExtra("userid");
+			mCheckUserName =data.getStringExtra("userName");
+			String mCheckUserName = data.getStringExtra("userName");
+			Log.d(TAG, "mCurrentUi=" + mCurrentUi + ",mCheckUserId="
+					+ mCheckUserId + ",mCheckUserName=" + mCheckUserName);
 			switch (mCurrentUi) {
 			case NOTIFY:
 				if (mNotifyDialog != null && mNotifyDialog.isShowing())
-					mNotifyDialog.setEmployee(mUserId);
+					mNotifyDialog.setEmployee(mCheckUserName);
 				break;
 			case PLUS_SIGN:
 				if (mPlusSignDialog != null && mPlusSignDialog.isShowing())
-					mPlusSignDialog.setEmployee(mUserId);
+					mPlusSignDialog.setEmployee(mCheckUserName);
 				break;
 			default:
 				break;
