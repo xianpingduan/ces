@@ -77,6 +77,7 @@ public class NotifyDialog extends Dialog {
 	public void onBackPressed() {
 		super.onBackPressed();
 		dismiss();
+		mHandler.sendEmptyMessage(InvoiceInfoActivity.MSG_CLEAR_RADIOGROUP_CHECK);
 	}
 
 }

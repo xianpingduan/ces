@@ -246,6 +246,11 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 					mListView.stopHeaderRefresh();
 					mListView.stopFooterRefresh();
 					mCurrentPage++;
+					
+					if(invoices.size()<=Constants.PAGE_SIZE){
+						mListView.setFooterPullEnable(false);
+					}
+					
 				}else if(invoices.size()==0 &&mCurrentPage==1){
 					mInvoiceAdapter.addData(invoices,Constants.TYPE_LIST_ADD_COVER);
 					mInvoiceAdapter.notifyDataSetChanged();

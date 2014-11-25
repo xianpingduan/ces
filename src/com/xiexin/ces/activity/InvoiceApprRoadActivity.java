@@ -66,6 +66,7 @@ public class InvoiceApprRoadActivity extends Activity implements
 	private String mConnName;// 账套信息
 	private String mPrgid; // 业务类型
 	private String mDatanbr;// 单据编号
+	private String mApprList;
 
 	private RequestQueue mQueue;
 
@@ -140,12 +141,27 @@ public class InvoiceApprRoadActivity extends Activity implements
 					Constants.ZHANG_TAO_CONN_NAME, "");
 		}
 		mDatanbr = intent.getStringExtra(Constants.DATANBR);
+		mApprList = intent.getStringExtra(Constants.APPR_LIST);
 
 		if (mInvoiceApprRoadAdapter == null)
 			mInvoiceApprRoadAdapter = new InvoiceApprRoadAdapter();
 		mListView.setAdapter(mInvoiceApprRoadAdapter);
 
-		requestInvoiceApprRoad();
+		if (mApprList == null || mApprList.isEmpty()) {
+			Logger.d(TAG, "requestInvoiceApprRoad");
+			requestInvoiceApprRoad();
+		} else {
+			Logger.d(TAG, "setListAdapter");
+			setListAdapter();
+		}
+	}
+
+	private void setListAdapter() {
+
+		Message msg = Message.obtain();
+		msg.what = MSG_GET_INVOICE_ROAD_LIST_SUCCESS;
+		msg.obj = mApprList;
+		mUiHandler.sendMessage(msg);
 	}
 
 	@Override
@@ -349,16 +365,25 @@ public class InvoiceApprRoadActivity extends Activity implements
 			} catch (ParseException e) {
 				e.printStackTrace();
 				Log.d(TAG, "date format error");
-				apprDate="";
+				apprDate = "";
 			}
-			if(apprDate.equals("0001-01-01")){
-				apprDate="";
+			if (apprDate.equals("0001-01-01")) {
+				apprDate = "";
 			}
-			holder.processModeTv.setText(iar.getProcessMode());
+			
+			String processMode = iar.getProcessMode();
+			if(processMode==null || processMode.equals("null")){
+				processMode="";
+			}
+			holder.processModeTv.setText(processMode);
 			holder.apprDateTv.setText(apprDate);
-			holder.apprMemoTv.setTag(iar.getApprMemo());
-			Log.d(TAG, "apprDate="+apprDate);
-			//String isFinished = iar.getStatus();	
+			String apprMemo =iar.getApprMemo();
+			if(apprMemo==null || apprMemo.equals("null")){
+				apprMemo="";
+			}
+			holder.apprMemoTv.setTag(apprMemo);
+			Log.d(TAG, "apprDate=" + apprDate);
+			// String isFinished = iar.getStatus();
 			// Log.d(TAG,
 			// "connName="+zt.getConnName()+"checked="+mMap.get(zt.getConnName()));
 			if (!apprDate.isEmpty()) {

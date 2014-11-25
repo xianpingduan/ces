@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -98,7 +99,12 @@ public class InvoiceSecondInfoActivity extends Activity implements OnClickListen
 		mDetConfigStr = intent.getStringExtra(Constants.DET_CONFIG);
 		mDetContentStr =intent.getStringExtra(Constants.DET_INFO);
 		mPrgid = intent.getStringExtra(Constants.PRGID);
-		mDetConfig = Constants.getDetDefaultConfig(mPrgid);
+		
+		if(mDetConfigStr==null || mDetConfigStr.isEmpty()){
+			mDetConfig = Constants.getDetDefaultConfig(mPrgid);
+		}else{
+			mDetConfig = mDetConfigStr.split(",");
+		}
 		//		mDetContent = new JSONObject(mDetContentStr);
 		mDetHeader= Constants.getDet(mPrgid);
 		
@@ -158,7 +164,8 @@ public class InvoiceSecondInfoActivity extends Activity implements OnClickListen
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
 			LinearLayout ll = new LinearLayout(InvoiceSecondInfoActivity.this);
-			ll.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			AbsListView.LayoutParams lp=new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			ll.setLayoutParams(lp);
 			ll.setOrientation(LinearLayout.VERTICAL);
 			ll.setBackgroundResource(R.drawable.button_white);
 			for (int i = 0; i < mDetConfig.length; i++) {
@@ -170,11 +177,14 @@ public class InvoiceSecondInfoActivity extends Activity implements OnClickListen
 						.findViewById(R.id.table_content);
 				try {
 					headerTv.setText(mDetHeader.getString(mDetConfig[i]));
-					contentTv.setText(array.getJSONObject(position).getString(mDetConfig[i]));
+					JSONObject  jsonObject = array.getJSONObject(position);
+					String content = jsonObject.getString(mDetConfig[i]);
+					if(content==null || content.equals("null")){
+						content ="";
+					}
+					contentTv.setText(content);
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
-					
 				}
 				ll.addView(view);
 			}

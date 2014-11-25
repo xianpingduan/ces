@@ -1,5 +1,6 @@
 package com.xiexin.ces.activity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,6 +63,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     private String mPrgid; // 业务类型
     private String mDatanbr;// 单据编号
 
+    private String mDataConfigStr;
     private String [] mDataConfig; // data要显示的字段
     private JSONObject mDataContent;
     private JSONObject mDataHeader;// 表头
@@ -69,7 +71,9 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     private String mDetConfigStr;// 详情要显示的字段，以","隔开
     private String mDetContentStr;// 详情内容
 
-    private String mFilesPath; // 附件详情
+    private String mFilesPathStr; // 附件详情
+    
+    private String mApprListStr;//审批路线
 
     private RadioGroup mApprovalHandleRgp;
     private RadioButton mApprovalRbtn;
@@ -200,8 +204,8 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	mDataHeader = Constants.getData( mPrgid );
 
 	// 获取配置
-	// doRequestMobileCfg();
-	doRequestInfo( );
+	 doRequestMobileCfg();
+	 //	doRequestInfo( );
     }
 
     private String getReturnStr( int type )
@@ -225,6 +229,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     @Override
     protected void onResume()
     {
+    Logger.d(TAG, "onResume");
 	super.onResume( );
     }
 
@@ -271,6 +276,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     public final static int MSG_NOTIFY_SUBMIT = 1002;
     public final static int MSG_PLUS_SIGN_TO_EMPLOYEE = 1003;
     public final static int MSG_NOTIFY_TO_EMPLOYEE = 1004;
+    public final static int MSG_CLEAR_RADIOGROUP_CHECK=1005;
     private Handler mLogicHandler = new Handler( )
     {
 
@@ -296,6 +302,9 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 		case MSG_NOTIFY_TO_EMPLOYEE :
 		    intentToEmployee( Constants.CHECK_EMPLOYEE_FROM_NOTIFY );
 		    break;
+		case MSG_CLEAR_RADIOGROUP_CHECK:
+			//			mApprovalHandleRgp.clearCheck();
+			break;
 		default :
 		    break;
 	    }
@@ -376,6 +385,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	intent.putExtra( Constants.ZHANG_TAO_CONN_NAME , mConnName );
 	intent.putExtra( Constants.PRGID , mPrgid );
 	intent.putExtra( Constants.DATANBR , mDatanbr );
+	intent.putExtra(Constants.APPR_LIST, mApprListStr);
 	startActivity( intent );
     }
 
@@ -385,7 +395,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 
 	Intent intent = new Intent( );
 	// intent.setClass(InvoiceInfoActivity.class, cls);
-	intent.putExtra( Constants.FILES_PATH , mFilesPath );
+	intent.putExtra( Constants.FILES_PATH , mFilesPathStr );
 	startActivity( intent );
     }
 
@@ -439,12 +449,12 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 		    Message msg = Message.obtain( );
 		    if( resCode == 0 )
 		    {
-			msg.what = MSG_GET_INFO_SUCCESS;
+			msg.what = MSG_GET_CONFIG_SUCCESS;
 			msg.obj = response.getString( "Data" );
 		    }
 		    else
 		    {
-			msg.what = MSG_GET_INFO_ERROR;
+			msg.what = MSG_GET_CONFIG_ERROR;
 			msg.obj = response.get( "Msg" );
 		    }
 		    mUiHandler.sendMessage( msg );
@@ -481,6 +491,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 
     private final static int MSG_SET_SUBMIT_WORK_FLOW_SUCCESS = 9;
     private final static int MSG_SET_SUBMIT_WORK_FLOW_ERROR = 10;
+    
 
     private Handler mUiHandler = new Handler( )
     {
@@ -491,25 +502,28 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	    switch ( msg.what )
 	    {
 		case MSG_GET_CONFIG_SUCCESS :
-
+			
+			String jsonStr = (String)msg.obj;
+			handleConfigResult(jsonStr);
+			doRequestInfo();
 		    break;
 		case MSG_GET_CONFIG_ERROR :
-
+			doRequestInfo();
 		    break;
 		case MSG_GET_INFO_SUCCESS :
 		    mDataContent = (JSONObject)msg.obj;
 		    try
 		    {
 			mDetContentStr = mDataContent.getString( "Det" );
-			mFilesPath = mDataContent.getString( "FilesPath" );
+			mFilesPathStr = mDataContent.getString( "FilesPath" );
+			mApprListStr = mDataContent.getString("ApprList");
 		    }
 		    catch ( JSONException e )
 		    {
 			e.printStackTrace( );
 		    }
-
+		    Logger.d(TAG, "inxNbr="+getInxNbr());
 		    createDataView( );
-
 		    dismissDialog( );
 
 		    break;
@@ -557,13 +571,63 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	}
 
     };
+    
+    
+    private void handleConfigResult(String result){
+    	
+    	try {
+			JSONArray jsonArray = new JSONArray(result);
+			for(int i =0 ;i<jsonArray.length();i++){
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				String prgId = jsonObject.getString("PrgID");
+				if(prgId.equals(mPrgid)){
+					mDataConfigStr = jsonObject.getString("Doc");
+					mDetConfigStr = jsonObject.getString("Det");
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+    	generateDataConfig(mDataConfigStr);
+    }
+    
+    private void generateDataConfig(String mDataConfigStr){
+    	mDataConfig = mDataConfigStr.split(",");
+    }
+    
 
+    private int getInxNbr(){
+    	Logger.d(TAG, "updateUser="+mUpdateUser);
+    	int inxNbr =0;
+    	try {
+			JSONArray array = new JSONArray(mApprListStr);
+			for(int i=0;i<array.length();i++){
+				JSONObject jsonObject =array.getJSONObject(i);
+				String apprObj = jsonObject.getString("ApprObj");
+				if(apprObj.equals(mUpdateUser)){
+					inxNbr =jsonObject.getInt("InxNbr");
+					break;
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+    	if(inxNbr==0){
+    		Logger.d(TAG, "get appro person "+mUpdateUser+" inxNbr error!");
+    	}
+    	return inxNbr;
+    }
+    
     private void createDataView()
     {
 	// mInfoContentLl
 	LayoutInflater inflater = App.getLayoutInflater( );
 	Log.d( TAG , "createDataView,mPrgid=" + mPrgid );
-	mDataConfig = Constants.getDataDefaultConfig( mPrgid );
+	
+	if(mDataConfig==null || mDataConfig.length==0){
+		Logger.d(TAG, "get doc config is error ,use default");
+		mDataConfig = Constants.getDataDefaultConfig( mPrgid );
+	}
 	for( int i = 0 ; i < mDataConfig.length ; i++ )
 	{
 	    View view = inflater.inflate( R.layout.activity_invoice_info_tv_item , null );
@@ -572,11 +636,14 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	    try
 	    {
 		headerTv.setText( mDataHeader.getString( mDataConfig[i] ) );
-		contentTv.setText( mDataContent.getString( mDataConfig[i] ) );
+		String  content =  mDataContent.getString( mDataConfig[i] );
+		if(content==null || content.equals("null")){
+			content="";
+		}
+		contentTv.setText( content);
 	    }
 	    catch ( JSONException e )
 	    {
-		// TODO Auto-generated catch block
 		e.printStackTrace( );
 	    }
 	    mInfoContentLl.addView( view );
@@ -587,9 +654,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     // 整个单据详情
     private void doRequestInfo()
     {
-
-	showDialog( );
-
+    //	showDialog( );
 	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_DOC_INFORMATION + "?" );
 	urlSbf.append( "account=" ).append( mConnName );
 	urlSbf.append( "&prgid=" ).append( mPrgid );
@@ -640,7 +705,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     private int mPosition = -1;
     private String mCheckUserId = null;
     private String mUpdateUser;
-    private int inxnbr = 0;
+    //private int inxnbr = 0;
 
     private void doSetPlusSign()
     {
@@ -663,7 +728,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	urlSbf.append( "&position=" ).append( mPosition );
 	urlSbf.append( "&userid=" ).append( mCheckUserId );
 	urlSbf.append( "&updateuser=" ).append( mUpdateUser );
-	urlSbf.append( "&inxnbr=" ).append( inxnbr );
+	urlSbf.append( "&inxnbr=" ).append( getInxNbr() );
 
 	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
 	{
@@ -720,7 +785,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	urlSbf.append( "&prgid=" ).append( mPrgid );
 	urlSbf.append( "&datanbr=" ).append( mDatanbr );
 	urlSbf.append( "&duty=" ).append( mUpdateUser );
-	urlSbf.append( "&inxnbr=" ).append( inxnbr );
+	urlSbf.append( "&inxnbr=" ).append( getInxNbr() );
 	urlSbf.append( "&kind=" ).append( mApprovalKind );
 	urlSbf.append( "&memo=" ).append( mApprovalMemo );
 

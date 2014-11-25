@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/employee_select_iv"
             android:text="@string/please_select_employee"
             android:textColor="@color/pl_deputy_text_color" />
     </RelativeLayout>

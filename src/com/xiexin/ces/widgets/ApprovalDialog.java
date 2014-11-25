@@ -108,6 +108,7 @@ public class ApprovalDialog extends Dialog {
 	public void onBackPressed() {
 		super.onBackPressed();
 		dismiss();
+		mHandler.sendEmptyMessage(InvoiceInfoActivity.MSG_CLEAR_RADIOGROUP_CHECK);
 	}
 
 	class ApprovalType {
@@ -120,7 +121,7 @@ public class ApprovalDialog extends Dialog {
 
 	public void generateList() {
 		mList.clear();
-		for (int i = 1; i <= 10; i++) {
+		for (int i = 2; i <= 10; i++) {
 			ApprovalType at = new ApprovalType();
 			at.id = i;
 			at.showName = Constants.getType(i);

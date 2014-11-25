@@ -127,6 +127,7 @@ public class PlusSignDialog extends Dialog {
 	public void onBackPressed() {
 		super.onBackPressed();
 		this.dismiss();
+		mHandler.sendEmptyMessage(InvoiceInfoActivity.MSG_CLEAR_RADIOGROUP_CHECK);
 	}
 
 }

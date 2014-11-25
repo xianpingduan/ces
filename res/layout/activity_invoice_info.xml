@@ -96,7 +96,7 @@
         <ScrollView
             android:id="@+id/info_content_sv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_above="@id/approval_select_ll" >
 
             <LinearLayout
