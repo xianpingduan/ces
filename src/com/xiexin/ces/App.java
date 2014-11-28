@@ -1,12 +1,16 @@
 package com.xiexin.ces;
 
-import com.xiexin.ces.utils.Logger;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.view.LayoutInflater;
+
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.xiexin.ces.utils.Logger;
 
 public class App extends Application
 {
@@ -56,6 +60,16 @@ public class App extends Application
 	    e.printStackTrace( );
 	}
 
+	ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder( this ).threadPriority( Thread.NORM_PRIORITY - 2 ).discCacheFileNameGenerator( new Md5FileNameGenerator( ) )
+		.tasksProcessingOrder( QueueProcessingType.LIFO ).discCacheSize( 50 * 1024 * 1024 ).threadPoolSize( 3 )
+		// .writeDebugLogs() // Remove
+		// for
+		// release
+		// app
+		.build( );
+	// Initialize ImageLoader with configuration.
+	ImageLoader.getInstance( ).init( config );
+
 	mSharePrefences = getSharedPreferences( SHARED_PERFERENCE_NAME , 0 );
     }
 
@@ -101,7 +115,7 @@ public class App extends Application
 
 	mSharePrefences.edit( ).putBoolean( Constants.REMEBER_PWD , false ).commit( );
 	mSharePrefences.edit( ).putBoolean( Constants.AUTO_LOGIN , false ).commit( );
-	Logger.d(TAG, "clear login info");
+	Logger.d( TAG , "clear login info" );
     }
 
 }

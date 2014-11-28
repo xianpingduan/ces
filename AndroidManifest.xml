@@ -49,6 +49,9 @@
         <activity
             android:name="com.xiexin.ces.activity.InvoiceSecondInfoActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.xiexin.ces.activity.AttachmentActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
     </application>
 
 </manifest>

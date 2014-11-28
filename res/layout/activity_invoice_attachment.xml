@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <!-- 背景图片 -->
+        <com.xiexin.ces.widgets.HorizonScrollLayout
+            android:id="@+id/image_attachment_sl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white" >
+        </com.xiexin.ces.widgets.HorizonScrollLayout>
+
+        <com.xiexin.ces.widgets.DotProgressBar
+            android:id="@+id/image_attachment_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp" />
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/file_attachment_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        
+        
+    </LinearLayout>
+</LinearLayout>
