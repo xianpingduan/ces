@@ -164,12 +164,22 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 							mCurrentUi = APROVAL;
 							break;
 						case R.id.plus_sign_rb:
-							plusSign();
-							mCurrentUi = PLUS_SIGN;
+							if (mInvoiceType == Constants.TYPE_APPROVED_TASKS
+									|| mInvoiceType == Constants.TYPE_SEND_ITEM_TASKS) {
+								Toast.makeText(InvoiceInfoActivity.this, "已审批事项或已发事项不能加签!", Toast.LENGTH_SHORT).show();
+							} else {
+								plusSign();
+								mCurrentUi = PLUS_SIGN;
+							}
 							break;
 						case R.id.notify_rb:
-							notifyRb();
-							mCurrentUi = NOTIFY;
+							if (mInvoiceType == Constants.TYPE_APPROVED_TASKS
+									|| mInvoiceType == Constants.TYPE_SEND_ITEM_TASKS) {
+								Toast.makeText(InvoiceInfoActivity.this, "已审批事项或已发事项不能知会!", Toast.LENGTH_SHORT).show();
+							} else {
+								notifyRb();
+								mCurrentUi = NOTIFY;
+							}
 							break;
 						default:
 							break;
