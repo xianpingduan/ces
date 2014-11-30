@@ -515,6 +515,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener
 		    intent.putExtra( Constants.ZHANG_TAO_CONN_NAME , connName );
 		    intent.putExtra( Constants.PRGID , prgId );
 		    intent.putExtra( Constants.DATANBR , id );
+		    intent.putExtra(Constants.INVOICE_TYPE, mKind);
 		    startActivity( intent );
 
 		}

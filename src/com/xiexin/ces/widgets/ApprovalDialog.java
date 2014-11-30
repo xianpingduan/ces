@@ -29,6 +29,7 @@ public class ApprovalDialog extends Dialog {
 	private EditText mApprovalContentEt;
 	private Button mSubmit;
 	private Handler mHandler;
+	private int mKind;
 
 	private int mSpinnerVal;
 	private ApprovalSpinnerAdapter mApprovalSpinnerAdapter;
@@ -37,9 +38,10 @@ public class ApprovalDialog extends Dialog {
 		super(context, R.style.MyDialog);
 	}
 
-	public ApprovalDialog(Context context, Handler handler) {
+	public ApprovalDialog(Context context, Handler handler,int kind) {
 		this(context);
 		mHandler = handler;
+		mKind = kind;
 	}
 
 	@Override
@@ -116,16 +118,35 @@ public class ApprovalDialog extends Dialog {
 		private int id;
 		private String showName;
 	}
+	
+	private String getIds(int kind){
+		switch (kind) {
+		case Constants.TYPE_PEND_APPROVAL_TASKS:
+			return "2,3,4,5,7,9";
+		case Constants.TYPE_APPROVED_TASKS:
+			return "8";
+		case Constants.TYPE_SCRATCH_UPCOME_TASKS:
+			return "2,3,4,5,7";
+		case Constants.TYPE_SEND_ITEM_TASKS:
+			return "10";
+		default:
+			break;
+		}
+		return "2,3,4,5,6,7,8,9,10";
+	}
 
 	private ArrayList<ApprovalType> mList = new ArrayList<ApprovalDialog.ApprovalType>();
 
 	public void generateList() {
 		mList.clear();
 		for (int i = 2; i <= 10; i++) {
-			ApprovalType at = new ApprovalType();
-			at.id = i;
-			at.showName = Constants.getType(i);
-			mList.add(at);
+			String ids = getIds(mKind);
+			if(ids.contains(i+"")){
+				ApprovalType at = new ApprovalType();
+				at.id = i;
+				at.showName = Constants.getType(i);
+				mList.add(at);
+			}
 		}
 	}
 

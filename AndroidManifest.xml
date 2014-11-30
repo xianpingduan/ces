@@ -58,6 +58,13 @@
         <activity
             android:name="com.xiexin.ces.activity.AttachmentActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        
+        <service android:name="pada.juidownloadmanager.JuiDownloadService" >
+            <intent-filter>
+                <action android:name="download.service.action" />
+            </intent-filter>
+        </service>
+        
     </application>
 
 </manifest>

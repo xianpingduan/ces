@@ -113,4 +113,8 @@
     <string name="plus_sign_success">加签<xliff:g id="plus_sign_success">%s</xliff:g>成功</string>
     <string name="approval_success">审批成功</string>
     
+    <string name="attachment">附件</string>
+    <string name="download">下载</string>
+    <string name="open_file">打开</string>
+    
 </resources>

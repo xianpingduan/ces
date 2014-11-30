@@ -4,14 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <include layout="@layout/header_action_bar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+
         <!-- 背景图片 -->
+
         <com.xiexin.ces.widgets.HorizonScrollLayout
             android:id="@+id/image_attachment_sl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@android:color/white" >
         </com.xiexin.ces.widgets.HorizonScrollLayout>
 
@@ -19,18 +23,15 @@
             android:id="@+id/image_attachment_dot"
             android:layout_width="wrap_content"
             android:layout_height="10dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="5dp" />
-    </RelativeLayout>
-    
-    <LinearLayout
-        android:id="@+id/file_attachment_ll"
-        android:layout_width="wrap_content"
+    </FrameLayout>
+
+    <com.xiexin.ces.widgets.LoadingUIListView
+        android:id="@+id/attachment_list"
+        style="@style/NormalList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        
-        
-    </LinearLayout>
+        android:overScrollMode="never" />
+
 </LinearLayout>

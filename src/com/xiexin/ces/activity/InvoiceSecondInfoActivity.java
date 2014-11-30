@@ -1,5 +1,9 @@
 package com.xiexin.ces.activity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +55,8 @@ public class InvoiceSecondInfoActivity extends Activity implements OnClickListen
     private JSONObject mDetHeader;// 表头
 
     private LayoutInflater mInflater;
+    
+	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -214,6 +220,17 @@ public class InvoiceSecondInfoActivity extends Activity implements OnClickListen
 		    {
 			content = "";
 		    }
+		    
+		    if (content.contains("T00:00:00")) {
+				Date date = new Date();
+				try {
+					date = sdf.parse(content);
+					content = sdf.format(date);
+				} catch (ParseException e) {
+					e.printStackTrace();
+					Log.d(TAG, "date format error");
+				}
+			}
 		    contentTv.setText( content );
 		}
 		catch ( JSONException e )
