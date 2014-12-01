@@ -18,6 +18,7 @@ public class InvoiceApprRoad implements Serializable
     private String Status;
     private String CrtUser;
     private int InxNbr;
+    private String ApprObjName;
 
     public int getID()
     {
@@ -147,6 +148,16 @@ public class InvoiceApprRoad implements Serializable
     public void setInxNbr( int inxNbr )
     {
 	InxNbr = inxNbr;
+    }
+
+    public String getApprObjName()
+    {
+	return ApprObjName;
+    }
+
+    public void setApprObjName( String apprObjName )
+    {
+	ApprObjName = apprObjName;
     }
 
 }
