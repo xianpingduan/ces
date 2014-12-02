@@ -75,7 +75,7 @@ public class MessageService extends Service
 
     public void startGetMsg()
     {
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.LAST_MSG_URL + "?" );
+	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_MSG_URL + "?" );
 	urlSbf.append( "userid=" ).append( "" );
 	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
 	{

@@ -128,25 +128,14 @@ public class MessageFragment extends Fragment implements OnClickListener
 	Logger.d( TAG , "onCreate" );
     }
 
-    public void setKind( int kind , boolean b )
-    {
-	Log.d( TAG , "mKind=" + mKind + ",kind=" + kind );
-	if( mKind != kind || b )
-	{
-	    mKind = kind;
-	    mCurrentPage = 1;
-	    mUiHandler.sendEmptyMessage( MSG_KIND_CHANGE );
-	}
-    }
-
     @Override
     public View onCreateView( LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState )
     {
 
 	Logger.d( TAG , "onCreateView" );
 
-	parentView = inflater.inflate( R.layout.fragment_pend_approval , container , false );
-	mListView = (LoadingUIListView)parentView.findViewById( R.id.pend_approval_list );
+	parentView = inflater.inflate( R.layout.fragment_message , container , false );
+	mListView = (LoadingUIListView)parentView.findViewById( R.id.message_list );
 	mListView.setHeaderPullEnable( true );
 	mListView.setFooterPullEnable( true );
 	mListView.setListViewListener( mListViewListener );

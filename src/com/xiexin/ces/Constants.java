@@ -52,8 +52,9 @@ public class Constants
     public final static String SET_APPR_ATTENTION = "SetApprAttention";
     public final static String GET_MOBILE_CFG = "GetMobileCfg";
     public final static String GET_DOC_INFORMATION = "GetDocInformation";
-    public final static String LAST_MSG_URL = "";
     public final static String GET_MSG_URL = "GetMessage";
+    public final static String SET_MESSAGE_READ = "SetMessageRead";
+    public final static String DEL_MSG = "DeleteMessage";
     // approval type
 
     // 1.待审批任务2.暂存代办3.已审批事项4.已发事项
