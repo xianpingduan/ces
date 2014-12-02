@@ -1,6 +1,6 @@
 package com.xiexin.ces.entry;
 
-public class Message
+public class PushMessage
 {
     private String Account;
     private String FromUser;
