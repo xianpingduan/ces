@@ -546,4 +546,46 @@ public class MessageFragment extends Fragment implements OnClickListener
 	}
 
     }
+
+    //del msg
+    private void doDelMsg( int msgId )
+    {
+	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.DEL_MSG + "?" );
+	String account = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
+	urlSbf.append( "account=" ).append( account );
+	urlSbf.append( "&id=" ).append( msgId );
+	urlSbf.append( "&msgtype=" ).append( 1 );
+	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
+	{
+	    @Override
+	    public void onResponse( JSONObject response )
+	    {
+		try
+		{
+		    int resCode = response.getInt( "Success" );
+		    if( resCode == 0 )
+		    {
+			Logger.d( TAG , response.getString( "Data" ) );
+		    }
+		    else
+		    {
+			Logger.d( TAG , response.getString( "Msg" ) );
+		    }
+		}
+		catch ( JSONException e )
+		{
+		    e.printStackTrace( );
+		}
+	    }
+	} , new ErrorListener( )
+	{
+	    @Override
+	    public void onErrorResponse( VolleyError error )
+	    {
+		Logger.d( TAG , "onErrorResponse:" + error.getMessage( ) );
+	    }
+	} );
+	mQueue.add( json );
+	mQueue.start( );
+    }
 }
