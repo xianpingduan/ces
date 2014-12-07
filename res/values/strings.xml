@@ -37,7 +37,12 @@
     
     <string name="server_config_change_msg">确认更改服务器地址和端口?如果更改将清空所有登录信息。</string>
     
-    
+   	<string name="sure_to_del_the_msg">确认删除此条消息?。</string>
+   	
+   	<string name="del_msg_success">删除消息成功！</string>
+   	
+   	<string name="no_msg">暂无消息</string>
+       
     <string name="return_text">返回</string>
     
     <string name="user_info_no_data">暂无</string>

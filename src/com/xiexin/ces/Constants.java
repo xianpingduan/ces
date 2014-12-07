@@ -87,6 +87,13 @@ public class Constants
     public final static String DET_HEAD_CONFIG = "det_head_config";
     public final static String FILES_PATH = "files_path";
     public final static String APPR_LIST = "appr_list";
+    
+    
+    public final static String APPR_LIST_RESULT_FROM = "appr_list_result_from";
+    public final static int APPR_LIST_RESULT_FROM_RETURN = 0;
+    public final static int APPR_LIST_RESULT_FROM_APPRSUC = 1;
+    
+    
 
     public final static String THE_LAST_REQUEST_MSG_TIME = "the_last_request_msg_time";
     public final static int DEFAULT_GAP_TIME = 60 * 1000;

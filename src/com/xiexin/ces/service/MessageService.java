@@ -140,10 +140,10 @@ public class MessageService extends Service
 
 	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_MSG_URL + "?" );
 	urlSbf.append( "userid=" ).append( userid );
-	urlSbf.append( "account=" ).append( account );
-	urlSbf.append( "bread=" ).append( 0 );
-	urlSbf.append( "page=" ).append( 1 );
-	urlSbf.append( "size=" ).append( 1 );
+	urlSbf.append( "&account=" ).append( account );
+	urlSbf.append( "&bread=" ).append( 0 );
+	urlSbf.append( "&page=" ).append( 1 );
+	urlSbf.append( "&size=" ).append( 1 );
 	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
 	{
 	    @Override

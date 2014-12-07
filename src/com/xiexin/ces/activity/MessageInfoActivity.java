@@ -33,6 +33,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
     private String mMegContent;
     private int mMsgId;
     private String mMsgTitle;
+    private int mMsgType;
 
     // header start
     private LinearLayout mReturnLl;
@@ -90,6 +91,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mMegContent = intent.getStringExtra( "content" );
 	mMsgId = intent.getIntExtra( "id" , 0 );
 	mMsgTitle = intent.getStringExtra( "title" );
+	mMsgType =intent.getIntExtra("msgtype", 0);
 
 	mMsgTitleTv.setText( mMsgTitle );
 	mMsgContentTv.setText( mMegContent );
@@ -107,7 +109,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	urlSbf.append( "account=" ).append( account );
 	urlSbf.append( "&userid=" ).append( userid );
 	urlSbf.append( "&id=" ).append( mMsgId );
-	urlSbf.append( "&msgtype=" ).append( 0 );
+	urlSbf.append( "&msgtype=" ).append( mMsgType );
 	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
 	{
 	    @Override

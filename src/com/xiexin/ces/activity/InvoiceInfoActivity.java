@@ -219,6 +219,15 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		// doRequestInfo( );
 	}
 
+	
+	private void setListRefreshResult(int resultFrom){
+		Logger.d(TAG, "setListRefreshResult");
+		Intent in = new Intent();
+		//		in.putExtra(Constants.APPR_LIST_RESULT_FROM, resultFrom);
+		setResult(resultFrom, in);
+		finish();
+	}
+	
 	private String getReturnStr(int type) {
 		switch (type) {
 		case Constants.TYPE_PEND_APPROVAL_TASKS:
@@ -499,11 +508,15 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				}
 				Logger.d(TAG, "inxNbr=" + getInxNbr());
 				createDataView();
+				mSecondInfoIv.setEnabled(true);
 				dismissDialog();
 
 				break;
 			case MSG_GET_INFO_ERROR:
-
+				Toast.makeText(InvoiceInfoActivity.this,
+						(String)msg.obj,
+						Toast.LENGTH_SHORT).show();
+				mSecondInfoIv.setEnabled(false);
 				dismissDialog();
 				break;
 
@@ -513,7 +526,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				Toast.makeText(InvoiceInfoActivity.this,
 						getString(R.string.plus_sign_success, mCheckUserName),
 						Toast.LENGTH_SHORT).show();
-				finish();
+				setListRefreshResult(Constants.APPR_LIST_RESULT_FROM_APPRSUC);
 				break;
 			case MSG_SET_PLUS_SIGN_ERROR:
 				dismissDialog();
@@ -527,7 +540,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				Toast.makeText(InvoiceInfoActivity.this,
 						getString(R.string.notify_success, mCheckUserName),
 						Toast.LENGTH_SHORT).show();
-				finish();
+				setListRefreshResult(Constants.APPR_LIST_RESULT_FROM_APPRSUC);
 				break;
 			case MSG_SET_APPR_ATTENTION_ERROR:
 				dismissDialog();
@@ -540,7 +553,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				Toast.makeText(InvoiceInfoActivity.this,
 						getString(R.string.approval_success),
 						Toast.LENGTH_SHORT).show();
-				finish();
+				setListRefreshResult(Constants.APPR_LIST_RESULT_FROM_APPRSUC);
 				break;
 			case MSG_SET_SUBMIT_WORK_FLOW_ERROR:
 
@@ -570,10 +583,16 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					mDetHeaderStr = jsonObject.getString("CDet");
 				}
 			}
+			
+			if(jsonArray.length()>0){
+				generateDataConfig(mDataConfigStr, mDataHeaderStr);
+				
+			}
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		generateDataConfig(mDataConfigStr, mDataHeaderStr);
+
 	}
 
 	private void generateDataConfig(String mDataConfigStr, String mDataHeaderStr) {
@@ -858,7 +877,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		finish();
+		setListRefreshResult(Constants.APPR_LIST_RESULT_FROM_RETURN);
 	}
 
 	private String mCheckUserName;

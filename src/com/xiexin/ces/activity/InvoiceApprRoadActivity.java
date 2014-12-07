@@ -408,6 +408,8 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    {
 		apprDate = "";
 	    }
+	    
+	    Logger.d(TAG, "bindData,date ="+apprDate);
 
 	    String apprObjName = iar.getApprObjName( );
 	    if( apprObjName == null || apprObjName.equals( "null" ) )
