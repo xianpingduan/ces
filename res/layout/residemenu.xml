@@ -81,12 +81,13 @@
             android:id="@+id/line_1"
             android:layout_width="@dimen/reside_menu_width"
             android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/common_margin_left"
-            android:layout_marginTop="@dimen/common_margin_top"
-            android:background="@color/pl_deputy_text_color" />
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/pl_deputy_blue_color"
+            android:visibility="gone" />
     </LinearLayout>
 
-    <ScrollView
+    <com.xiexin.ces.widgets.ReboundScrollView
         android:id="@+id/sv_left_menu"
         android:layout_width="@dimen/reside_menu_width"
         android:layout_height="wrap_content"
@@ -101,9 +102,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
         </LinearLayout>
-    </ScrollView>
+    </com.xiexin.ces.widgets.ReboundScrollView>
 
-    <ScrollView
+    <com.xiexin.ces.widgets.ReboundScrollView
         android:id="@+id/sv_right_menu"
         android:layout_width="@dimen/reside_menu_width"
         android:layout_height="wrap_content"
@@ -118,9 +119,10 @@
             android:gravity="right"
             android:orientation="vertical" >
         </LinearLayout>
-    </ScrollView>
+    </com.xiexin.ces.widgets.ReboundScrollView>
 
     <LinearLayout
+        android:id="@+id/setting_ll"
         android:layout_width="@dimen/reside_menu_width"
         android:layout_height="wrap_content"
         android:layout_gravity="left|bottom"

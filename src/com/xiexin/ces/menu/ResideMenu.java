@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.nineoldandroids.animation.Animator;
@@ -74,6 +76,10 @@ public class ResideMenu extends FrameLayout
     //valid scale factor is between 0.0f and 1.0f.
     private float mScaleValue = 0.5f;
 
+    //header
+    private RelativeLayout mUserInfoRl;
+    private LinearLayout mSettingLl;
+
     public ResideMenu( Context context )
     {
 	super( context );
@@ -93,6 +99,8 @@ public class ResideMenu extends FrameLayout
 	layoutRightMenu = (LinearLayout)findViewById( R.id.layout_right_menu );
 	imageViewBackground = (ImageView)findViewById( R.id.iv_background );
 
+	mUserInfoRl = (RelativeLayout)findViewById( R.id.user_info_rl );
+	mSettingLl = (LinearLayout)findViewById( R.id.setting_ll );
     }
 
     /**
@@ -225,12 +233,19 @@ public class ResideMenu extends FrameLayout
 
     }
 
+    private int dp2px( int dp )
+    {
+	return (int)TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP , dp , getContext( ).getResources( ).getDisplayMetrics( ) );
+    }
+
     //画直线
     private View createLineView()
     {
 	View view = new View( this.activity );
-	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT , LayoutParams.WRAP_CONTENT );
-	view.setBackgroundColor( this.activity.getResources( ).getColor( R.color.pl_deputy_text_color ) );
+
+	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT , dp2px( 1 ) );
+	layoutParams.setMargins( 0 , dp2px( 5 ) , 0 , dp2px( 5 ) );
+	view.setBackgroundColor( this.activity.getResources( ).getColor( R.color.pl_deputy_blue_color ) );
 	view.setLayoutParams( layoutParams );
 	return view;
     }
@@ -333,9 +348,14 @@ public class ResideMenu extends FrameLayout
 	AnimatorSet scaleDown_activity = buildScaleDownAnimation( viewActivity , mScaleValue , mScaleValue );
 	AnimatorSet scaleDown_shadow = buildScaleDownAnimation( imageViewShadow , mScaleValue + shadowAdjustScaleX , mScaleValue + shadowAdjustScaleY );
 	AnimatorSet alpha_menu = buildMenuAnimation( scrollViewMenu , 1.0f );
+	AnimatorSet alpha_userinfo = buildMenuAnimation( mUserInfoRl , 1.0f );
+	AnimatorSet alpha_loginout = buildMenuAnimation( mSettingLl , 1.0f );
+
 	scaleDown_shadow.addListener( animationListener );
 	scaleDown_activity.playTogether( scaleDown_shadow );
 	scaleDown_activity.playTogether( alpha_menu );
+	scaleDown_activity.playTogether( alpha_userinfo );
+	scaleDown_activity.playTogether( alpha_loginout );
 	scaleDown_activity.start( );
     }
 
@@ -349,9 +369,13 @@ public class ResideMenu extends FrameLayout
 	AnimatorSet scaleUp_activity = buildScaleUpAnimation( viewActivity , 1.0f , 1.0f );
 	AnimatorSet scaleUp_shadow = buildScaleUpAnimation( imageViewShadow , 1.0f , 1.0f );
 	AnimatorSet alpha_menu = buildMenuAnimation( scrollViewMenu , 0.0f );
+	AnimatorSet alpha_userinfo = buildMenuAnimation( mUserInfoRl , 0.0f );
+	AnimatorSet alpha_loginout = buildMenuAnimation( mSettingLl , 0.0f );
 	scaleUp_activity.addListener( animationListener );
 	scaleUp_activity.playTogether( scaleUp_shadow );
 	scaleUp_activity.playTogether( alpha_menu );
+	scaleUp_activity.playTogether( alpha_userinfo );
+	scaleUp_activity.playTogether( alpha_loginout );
 	scaleUp_activity.start( );
     }
 
@@ -423,7 +447,12 @@ public class ResideMenu extends FrameLayout
 	{
 	    if( isOpened( ) )
 	    {
+		showUserInfoView( mUserInfoRl );
+
 		showScrollViewMenu( scrollViewMenu );
+
+		showSettingLlView( mSettingLl );
+
 		if( menuListener != null )
 		    menuListener.openMenu( );
 	    }
@@ -442,8 +471,14 @@ public class ResideMenu extends FrameLayout
 	    {
 		viewActivity.setTouchDisable( false );
 		viewActivity.setOnClickListener( null );
+
+		hideUserInfoView( mUserInfoRl );
+
 		hideScrollViewMenu( scrollViewLeftMenu );
 		hideScrollViewMenu( scrollViewRightMenu );
+
+		hideLoginOutView( mSettingLl );
+
 		if( menuListener != null )
 		    menuListener.closeMenu( );
 	    }
@@ -620,7 +655,11 @@ public class ResideMenu extends FrameLayout
 		else if( pressedState == PRESSED_MOVE_HORIZANTAL )
 		{
 		    if( currentActivityScaleX < 0.95 )
+		    {
 			showScrollViewMenu( scrollViewMenu );
+			showUserInfoView( mUserInfoRl );
+			showSettingLlView( mSettingLl );
+		    }
 
 		    float targetScale = getTargetScale( ev.getRawX( ) );
 		    ViewHelper.setScaleX( viewActivity , targetScale );
@@ -628,6 +667,8 @@ public class ResideMenu extends FrameLayout
 		    ViewHelper.setScaleX( imageViewShadow , targetScale + shadowAdjustScaleX );
 		    ViewHelper.setScaleY( imageViewShadow , targetScale + shadowAdjustScaleY );
 		    ViewHelper.setAlpha( scrollViewMenu , ( 1 - targetScale ) * 2.0f );
+		    ViewHelper.setAlpha( mSettingLl , ( 1 - targetScale ) * 2.0f );
+		    ViewHelper.setAlpha( mUserInfoRl , ( 1 - targetScale ) * 2.0f );
 
 		    lastRawX = ev.getRawX( );
 		    return true;
@@ -713,6 +754,38 @@ public class ResideMenu extends FrameLayout
 	if( scrollViewMenu != null && scrollViewMenu.getParent( ) != null )
 	{
 	    removeView( scrollViewMenu );
+	}
+    }
+
+    private void showUserInfoView( RelativeLayout userInfoRl )
+    {
+	if( userInfoRl != null && userInfoRl.getParent( ) == null )
+	{
+	    addView( userInfoRl );
+	}
+    }
+
+    private void hideUserInfoView( RelativeLayout userInfoRl )
+    {
+	if( userInfoRl != null && userInfoRl.getParent( ) != null )
+	{
+	    removeView( userInfoRl );
+	}
+    }
+
+    private void showSettingLlView( LinearLayout settingLl )
+    {
+	if( settingLl != null && settingLl.getParent( ) == null )
+	{
+	    addView( settingLl );
+	}
+    }
+
+    private void hideLoginOutView( LinearLayout settingLl )
+    {
+	if( settingLl != null && settingLl.getParent( ) != null )
+	{
+	    removeView( settingLl );
 	}
     }
 }
