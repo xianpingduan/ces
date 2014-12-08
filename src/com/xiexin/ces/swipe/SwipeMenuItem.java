@@ -12,14 +12,14 @@ import android.graphics.drawable.Drawable;
 public class SwipeMenuItem
 {
 
-    private int id;
-    private Context mContext;
-    private String title;
-    private Drawable icon;
-    private Drawable background;
-    private int titleColor;
-    private int titleSize;
-    private int width;
+    private int id;//id
+    private Context mContext;//上下文
+    private String title;//名称
+    private Drawable icon;//icon
+    private Drawable background;//背景
+    private int titleColor;//名称的颜色
+    private int titleSize;//名称的大小
+    private int width;//宽度
 
     public SwipeMenuItem( Context context )
     {

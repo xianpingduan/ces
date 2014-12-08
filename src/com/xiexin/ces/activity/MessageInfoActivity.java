@@ -91,7 +91,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mMegContent = intent.getStringExtra( "content" );
 	mMsgId = intent.getIntExtra( "id" , 0 );
 	mMsgTitle = intent.getStringExtra( "title" );
-	mMsgType =intent.getIntExtra("msgtype", 0);
+	mMsgType = intent.getIntExtra( "msgtype" , 0 );
 
 	mMsgTitleTv.setText( mMsgTitle );
 	mMsgContentTv.setText( mMegContent );
@@ -173,6 +173,13 @@ public class MessageInfoActivity extends Activity implements OnClickListener
     public void onBackPressed()
     {
 	super.onBackPressed( );
+	setResult( );
+    }
+
+    private void setResult()
+    {
+	Intent in = new Intent( );
+	setResult( RESULT_OK , in );
 	finish( );
     }
 }

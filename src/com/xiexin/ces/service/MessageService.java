@@ -180,8 +180,12 @@ public class MessageService extends Service
 	    }
 	} );
 
-	mQueue.add( json );
-	mQueue.start( );
+	if( !account.isEmpty( ) && !userid.isEmpty( ) )
+	{
+	    mQueue.add( json );
+	    mQueue.start( );
+	}
+
     }
 
     @Override

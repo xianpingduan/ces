@@ -48,7 +48,7 @@ public class ResideMenu extends FrameLayout
     private ScrollView scrollViewLeftMenu;
     private ScrollView scrollViewRightMenu;
     private ScrollView scrollViewMenu;
-//    private LinearLayout contentInfoLl;
+    //    private LinearLayout contentInfoLl;
     /** the activity that view attach to */
     private Activity activity;
     /** the decorview of the activity    */
@@ -84,15 +84,15 @@ public class ResideMenu extends FrameLayout
     {
 	LayoutInflater inflater = (LayoutInflater)context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 	inflater.inflate( R.layout.residemenu , this );
-	
-//	contentInfoLl = (LinearLayout) findViewById(R.id.content_info_ll);
+
+	//	contentInfoLl = (LinearLayout) findViewById(R.id.content_info_ll);
 	scrollViewLeftMenu = (ScrollView)findViewById( R.id.sv_left_menu );
 	scrollViewRightMenu = (ScrollView)findViewById( R.id.sv_right_menu );
 	imageViewShadow = (ImageView)findViewById( R.id.iv_shadow );
 	layoutLeftMenu = (LinearLayout)findViewById( R.id.layout_left_menu );
 	layoutRightMenu = (LinearLayout)findViewById( R.id.layout_right_menu );
 	imageViewBackground = (ImageView)findViewById( R.id.iv_background );
-	
+
     }
 
     /**
@@ -195,6 +195,44 @@ public class ResideMenu extends FrameLayout
 	    this.rightMenuItems.add( menuItem );
 	    layoutRightMenu.addView( menuItem );
 	}
+    }
+
+    //add menu group
+    public void addMenuItem( List< ResideMenuItem > menuItems , int direction )
+    {
+	for( ResideMenuItem menuItem : menuItems )
+	{
+	    if( direction == DIRECTION_LEFT )
+	    {
+		this.leftMenuItems.add( menuItem );
+		layoutLeftMenu.addView( menuItem );
+	    }
+	    else
+	    {
+		this.rightMenuItems.add( menuItem );
+		layoutRightMenu.addView( menuItem );
+	    }
+	}
+
+	if( direction == DIRECTION_LEFT )
+	{
+	    layoutLeftMenu.addView( createLineView( ) );
+	}
+	else
+	{
+	    layoutRightMenu.addView( createLineView( ) );
+	}
+
+    }
+
+    //画直线
+    private View createLineView()
+    {
+	View view = new View( this.activity );
+	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT , LayoutParams.WRAP_CONTENT );
+	view.setBackgroundColor( this.activity.getResources( ).getColor( R.color.pl_deputy_text_color ) );
+	view.setLayoutParams( layoutParams );
+	return view;
     }
 
     /**
