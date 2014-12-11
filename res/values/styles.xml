@@ -25,7 +25,7 @@
     <style name="Ces.Widget" parent="AppTheme"/>
 
     <style name="NormalBlueButton" parent="Ces.Widget">
-        <item name="android:background">@drawable/button_blue_edit</item>
+        <item name="android:background">@drawable/button_login_edit</item>
         <item name="android:textSize">@dimen/pl_micro_text_size</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:singleLine">true</item>

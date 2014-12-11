@@ -30,6 +30,7 @@ public class Constants
     public final static String SERVER_CONFIG_PORT = "server_config_port";
     public final static String SERVER_CONFIG_FIRST_IN = "server_config_first_in";
     public final static String SERVER_CONFIG_REQ = "server_config_req";
+    
     // public final static String
     // SERVER_CONFIG_SET_FROM="server_config_set_from";
     // public final static int SERVER_CONFIG_SET_FROM_LOGIN=1;
@@ -329,7 +330,7 @@ public class Constants
 	{
 	    strs = Constants.BT003_DET_DEFAULT;
 	}
-	else if( type.equals( "FA001" ) )
+	else if( type.equals( "FA001" ) )  
 	{
 	    strs = Constants.FA001_DET_DEFAULT;
 	}

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/pl_comm_ab_height"
-    android:background="@drawable/actionbar_bg" >
+    android:background="@color/header_bar_bg_color" >
 
     <LinearLayout
         android:id="@+id/return_ll"
@@ -15,9 +15,10 @@
 
         <ImageView
             android:id="@+id/return_iv"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/header_return_margin_left"
             android:src="@drawable/ab_btn_return" />
 
         <TextView
@@ -45,6 +46,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/header_return_margin_left"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -52,11 +54,11 @@
             android:id="@+id/btn1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/button_blue_edit"
+            android:layout_marginRight="@dimen/header_return_margin_left"
+            android:background="@null"
             android:gravity="center"
             android:text="btn1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/btn_title_color"
             android:textSize="@dimen/pl_small_text_size"
             android:visibility="gone" />
 
@@ -64,10 +66,10 @@
             android:id="@+id/btn2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_blue_edit"
+            android:background="@null"
             android:gravity="center"
             android:text="btn2"
-            android:textColor="@android:color/white"
+            android:textColor="@color/btn_title_color"
             android:textSize="@dimen/pl_small_text_size"
             android:visibility="gone" />
     </LinearLayout>

@@ -1,4 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    
+    <string name="factory_xiexin">深圳市协鑫信息技术有限公司</string>
 
     <string name="app_name">ces</string>
     

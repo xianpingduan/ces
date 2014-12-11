@@ -48,5 +48,18 @@
     <dimen name="approval_dialog_margin_top">18dp</dimen>
     
     <dimen name="reside_menu_item_height">48dp</dimen>
+    
+    
+    <!-- welcome -->
+    
+    <dimen name="welcome_logo_margin_top">120dp</dimen>
+    <dimen name="welcome_progress_margin_top">55dp</dimen>
+    <dimen name="welcome_text_margin_top">25dp</dimen>
+    <dimen name="welcome_progress_width_height">36dp</dimen>
+    <dimen name="welcome_logo_width_height">108dp</dimen>
+    
+    <!-- header bar  -->
+    <dimen name="header_return_margin_left">12dp</dimen>
+    
 
 </resources>

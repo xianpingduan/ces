@@ -29,5 +29,11 @@
    	<color name="pl_line">#ebebeb</color>
    	
    	<color name="pl_listview_item_blue">#02b2f2</color>
+   	
+   	
+   	<color name="header_bar_bg_color">#0160fe</color>
+   	<color name="header_bar_btn_txt_press_color">#F77A0C</color>
+   	
+   	
     
 </resources>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
@@ -21,6 +22,8 @@ public class SplashActivity extends Activity
     public final static String TAG = "SplashActivity";
 
     private boolean mIsSetSerVerConfig = false;
+    
+    private TextView mPercentTv;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -28,6 +31,8 @@ public class SplashActivity extends Activity
 	// TODO Auto-generated method stub
 	super.onCreate( savedInstanceState );
 	setContentView( R.layout.activity_splash );
+	
+	initView();
 
 	//启动拉取服务
 	startPushService( );
@@ -96,6 +101,11 @@ public class SplashActivity extends Activity
 	}
 
     };
+    
+    private void initView(){
+    	
+    	mPercentTv = (TextView) findViewById(R.id.percent);
+    }
 
     // 加载服务器信息
     private void doRequestServerConfigInfo()
