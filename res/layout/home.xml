@@ -31,7 +31,6 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_selector"
                 android:textColor="@android:color/white"
                 android:text="2. Click me to open menu"
                 android:textSize="17sp"

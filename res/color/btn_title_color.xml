@@ -2,6 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true" android:color="@color/header_bar_btn_txt_press_color"/>
+    <item android:state_checked="true" android:color="@color/header_bar_btn_txt_press_color"/>
     <item android:color="@android:color/white"/>
 
 </selector>

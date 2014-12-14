@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/approval_road_height"
         android:orientation="horizontal"
-        android:weightSum="3" >
+        android:weightSum="4" >
 
         <FrameLayout
             android:layout_width="0dp"
@@ -20,12 +20,12 @@
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/pl_main_text_color" />
+                android:background="@color/pl_deputy_text_color" />
 
             <CheckBox
                 android:id="@+id/is_finished_cb"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:background="@drawable/note_indiate"
                 android:button="@null" />
@@ -34,28 +34,46 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_marginTop="@dimen/common_margin_top"
+            android:layout_weight="3"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/node_name_tv"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/pl_main_text_color"
-                android:textSize="@dimen/pl_small_text_size" />
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/node_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/pl_deputy_light_text_color"
+                    android:textSize="@dimen/pl_medium_text_size" />
+
+                <TextView
+                    android:id="@+id/node_time_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/common_margin_top"
+                    android:layout_marginRight="@dimen/common_margin_right"
+                    android:textColor="@color/pl_deputy_text_color"
+                    android:textSize="@dimen/pl_medium_text_size" />
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/node_time_tv"
+                android:id="@+id/node_date_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/pl_main_text_color"
+                android:textColor="@color/pl_deputy_text_color"
                 android:textSize="@dimen/pl_small_text_size" />
 
             <TextView
                 android:id="@+id/node_content_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/pl_main_text_color"
+                android:textColor="@color/pl_deputy_text_color"
                 android:textSize="@dimen/pl_small_text_size" />
         </LinearLayout>
     </LinearLayout>

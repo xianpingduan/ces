@@ -110,6 +110,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	urlSbf.append( "&userid=" ).append( userid );
 	urlSbf.append( "&id=" ).append( mMsgId );
 	urlSbf.append( "&msgtype=" ).append( mMsgType );
+	Logger.d(TAG, "urlSbf="+urlSbf.toString());
 	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
 	{
 	    @Override

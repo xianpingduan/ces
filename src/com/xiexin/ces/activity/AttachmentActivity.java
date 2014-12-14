@@ -63,9 +63,9 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 	private static final int TIME_CIRCULE_START = 4 * 1000;
 
 	public static DisplayImageOptions optionsIcon = new DisplayImageOptions.Builder()
-			.showImageOnLoading(R.drawable.app_icon)
-			.showImageForEmptyUri(R.drawable.app_icon)
-			.showImageOnFail(R.drawable.app_icon).cacheInMemory(true)
+			.showImageOnLoading(R.drawable.icon_air)
+			.showImageForEmptyUri(R.drawable.icon_air)
+			.showImageOnFail(R.drawable.icon_air).cacheInMemory(true)
 			.cacheOnDisc(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 
 	// header start
@@ -105,8 +105,8 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 		mDotProgressBar = (DotProgressBar) findViewById(R.id.image_attachment_dot);
 		// mDotProgressBar.setTotalNum( infos.size( ) );
-		mDotProgressBar.setDotbarIconResource(R.drawable.dot_white,
-				R.drawable.dot_black);
+		mDotProgressBar.setDotbarIconResource(R.drawable.guide_dot_white,
+				R.drawable.guide_dot_black);
 		mDotProgressBar.setVisibility(View.VISIBLE);
 
 		mHorizonScrollLayout
@@ -430,6 +430,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 				}
 				else{
 					mApkDownloadManager.resumeDownload(task);
+					Toast.makeText(AttachmentActivity.this, "继续下载...", Toast.LENGTH_SHORT).show();
 				}
 			}else {
 				
@@ -559,7 +560,6 @@ public class AttachmentActivity extends Activity implements OnClickListener {
                     getStringArray(R.array.fileEndingPackage))){
                 intent = OpenFiles.getApkFileIntent(currentPath);
                 startActivity(intent);
-
             }else if(checkEndsWithInStringArray(fileName, getResources().
                     getStringArray(R.array.fileEndingAudio))){
                 intent = OpenFiles.getAudioFileIntent(currentPath);

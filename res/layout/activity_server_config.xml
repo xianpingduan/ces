@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_margin"
-        android:background="@drawable/login_et_frame_bg"
         android:orientation="vertical" >
 
         <EditText
@@ -19,32 +18,26 @@
             style="@style/NormalEditText"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_frame_height"
-            android:layout_marginLeft="12dp"
-            android:background="@null"
             android:gravity="center_vertical"
             android:hint="@string/server_config_url_hint"
             android:imeOptions="flagNoExtractUi"
             android:maxLength="18"
             android:singleLine="true"
+            android:background="@drawable/edit_textview_bg"
             android:textColorHint="@color/pl_deputy_text_color"
             android:text="@string/default_server_confi_url"
             android:textCursorDrawable="@drawable/pl_edittext_cursor" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/pl_line" />
 
         <EditText
             android:id="@+id/server_config_port_et"
             style="@style/NormalEditText"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_frame_height"
-            android:layout_marginLeft="12dp"
-            android:background="@null"
             android:gravity="center_vertical"
             android:hint="@string/server_config_port_hint"
+            android:layout_marginTop="10dp"
             android:imeOptions="flagNoExtractUi"
+            android:background="@drawable/edit_textview_bg"
             android:maxLength="18"
             android:singleLine="true"
            	android:text="@string/default_server_confi_port"

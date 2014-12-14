@@ -163,9 +163,6 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 			public void afterTextChanged(Editable s) {
 			}
 		});
-		mSearchBtn = (Button) findViewById(R.id.search_btn);
-		mSearchBtn.setVisibility(View.GONE);
-		mSearchBtn.setOnClickListener(this);
 
 	}
 
@@ -210,9 +207,6 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 			}else{
 				Toast.makeText(EmployeeActivity.this, getString(R.string.please_select_employee), Toast.LENGTH_SHORT).show();
 			}
-			break;
-		case R.id.search_btn:
-			doSearch();
 			break;
 		default:
 			break;

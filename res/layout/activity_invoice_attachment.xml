@@ -27,6 +27,11 @@
             android:layout_marginBottom="5dp" />
     </FrameLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/pl_deputy_blue_color" />
+
     <com.xiexin.ces.widgets.LoadingUIListView
         android:id="@+id/attachment_list"
         style="@style/NormalList"

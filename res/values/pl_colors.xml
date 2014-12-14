@@ -2,9 +2,9 @@
 <resources>
 
     <!-- 正文字体颜色值 纯黑色 -->
-    <color name="pl_main_text_color">#000000</color>
+    <color name="pl_main_text_color">#2b2727</color>
     <!-- 副文本字体颜色值 -->
-    <color name="pl_deputy_text_color">#99000000</color>
+    <color name="pl_deputy_text_color">#ababab</color>
     <!-- 不可用文本字体颜色值 -->
     <color name="pl_disabled_text_color">#33000000</color>
     <!-- 状态栏文本字体颜色值 -->
@@ -33,7 +33,19 @@
    	
    	<color name="header_bar_bg_color">#0160fe</color>
    	<color name="header_bar_btn_txt_press_color">#F77A0C</color>
+   	<color name="approval_list_item_bg_color">#EFEFF4</color>
    	
+   	<color name="menu_line_color">#44494e</color>
+   	<color name="menu_bg_color">#26292d</color>
    	
+   	<color name="info_content_text_color">#0160fe</color>
+   	
+   	<color name="pl_deputy_light_text_color">#575757</color>
+   	
+   	<color name="road_line_color">#dcdcdc</color>
+   	
+   	<color name="list_view_item_press_color">#c8dde4</color>
+   	
+   	<color name="attachment_list_view_item_color">#f3f3f3</color>
     
 </resources>

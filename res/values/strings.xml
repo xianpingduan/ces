@@ -126,4 +126,10 @@
     
     <string name="msg_center">消息中心</string>
     
+   	<string name="submit_success_text">提交成功</string>
+   	<string name="submit_error_text">提交失败</string>
+   	
+   	<string name="readed">已读</string>
+   	<string name="noread">未读</string>
+    
 </resources>

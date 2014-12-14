@@ -18,7 +18,6 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/header_return_margin_left"
             android:src="@drawable/ab_btn_return" />
 
         <TextView
@@ -28,7 +27,7 @@
             android:gravity="center_vertical"
             android:text="@string/return_text"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/pl_medium_text_size" />
+            android:textSize="@dimen/pl_small_text_size" />
     </LinearLayout>
 
     <TextView

@@ -3,7 +3,7 @@
     android:id="@+id/employee_frame"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_view_item_bg" >
+    android:background="@drawable/listview_item_bg_color" >
 
     <TextView
         android:id="@+id/employee_name_tv"
@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/employee_name_tv"
         android:layout_marginLeft="@dimen/common_margin_left"
+        android:layout_toRightOf="@id/employee_name_tv"
         android:textColor="@color/pl_main_text_color"
         android:textSize="@dimen/pl_small_text_size" />
 
@@ -30,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/employee_depart_tv"
         android:layout_marginLeft="@dimen/common_margin_left"
+        android:layout_toRightOf="@id/employee_depart_tv"
         android:textColor="@color/pl_main_text_color"
         android:textSize="@dimen/pl_small_text_size" />
 
@@ -46,5 +46,11 @@
         android:layout_marginTop="@dimen/common_margin_top"
         android:background="@drawable/normal_check_button"
         android:button="@null" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pl_deputy_blue_color" />
 
 </RelativeLayout>

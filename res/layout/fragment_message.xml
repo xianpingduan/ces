@@ -3,8 +3,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
- 	<!--<include layout="@layout/header_action_bar"/> -->
+
+    <!-- <include layout="@layout/header_action_bar"/> -->
+
+    <LinearLayout
+        android:id="@+id/approval_handle_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/message_navigation_height"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/noread_cb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F5F4F0"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/noread"
+                android:textColor="@color/btn_approval_color" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#878a8d"
+                android:gravity="right" />
+        </RelativeLayout>
+
+        <CheckBox
+            android:id="@+id/readed_cb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#F5F4F0"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/readed"
+            android:textColor="@color/btn_approval_color" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#878a8d" />
 
     <com.xiexin.ces.widgets.LoadingUIListView
         android:id="@+id/message_list"

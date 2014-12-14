@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dialog_submit_width"
+    android:layout_height="@dimen/dialog_submit_height"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@drawable/loading_pop_background"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/submit_success_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/submit_success" />
+
+    <TextView
+        android:id="@+id/submit_success_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_margin_top"
+        android:text="@string/submit_success_text"
+        android:textColor="@color/pl_main_green_color"
+        android:textSize="@dimen/pl_medium_text_size" />
+
+</LinearLayout>

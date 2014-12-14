@@ -30,6 +30,12 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:singleLine">true</item>
     </style>
+    <style name="NormalSubmitButton" parent="Ces.Widget">
+        <item name="android:background">@drawable/button_submit_edit</item>
+        <item name="android:textSize">@dimen/pl_micro_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:singleLine">true</item>
+    </style>
     
     <style name="NormalEditText" parent="Ces.Widget">
         <item name="android:textSize">@dimen/pl_small_text_size</item>
@@ -53,9 +59,10 @@
     </style>
     
     <style name="NormalList" parent="Ces.Widget">
-        <item name="android:divider">@drawable/pl_list_divider_horizontal_line</item>
+        <item name="android:divider">@null</item>
         <item name="android:fadingEdge">none</item>
         <item name="android:scrollbarDefaultDelayBeforeFade">500</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
         <item name="android:scrollbarStyle">insideInset</item>
     </style>
     

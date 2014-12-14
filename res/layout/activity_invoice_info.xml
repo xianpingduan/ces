@@ -15,81 +15,94 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/common_margin_buttom"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                android:id="@+id/zt_select_rl"
+            <Button
+                android:id="@+id/second_info_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/info_look_btn_margin_right"
+                android:background="@drawable/button_lookinfo_edit"
+                android:text="@string/look_invoice_info"
+                android:textSize="@dimen/pl_micro_text_size"
+                android:textColor="@android:color/white" />
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/look_info_height"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/common_margin_left"
-                android:layout_marginRight="@dimen/common_margin_right"
+                android:layout_height="0.5dp"
                 android:layout_marginTop="@dimen/common_margin_top"
-                android:background="@drawable/button_white" >
-
-                <ImageView
-                    android:id="@+id/second_info_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/icon_arrow" />
-
-                <TextView
-                    android:id="@+id/second_info_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/look_invoice_info"
-                    android:textColor="@color/pl_deputy_text_color" />
-            </RelativeLayout>
+                android:background="#878a8d" />
 
             <LinearLayout
                 android:id="@+id/approval_handle_ll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin_top" >
+                android:layout_height="@dimen/approval_handle_height"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3" >
 
-                <RadioGroup
-                    android:id="@+id/approval_handle_rgp"
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="3" >
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
 
-                    <RadioButton
+                    <CheckBox
                         android:id="@+id/approval_rb"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:button="@null"
-                        android:drawableTop="@drawable/button_approval_edit"
                         android:gravity="center"
-                        android:text="@string/approval" />
+                        android:text="@string/approval"
+                        android:background="#F5F4F0"
+                        android:textSize="@dimen/pl_micro_text_size"
+                        android:textColor="@color/btn_approval_color" />
 
-                    <RadioButton
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:background="#878a8d"
+                        android:gravity="right" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
                         android:id="@+id/notify_rb"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:button="@null"
-                        android:drawableTop="@drawable/button_notify_edit"
                         android:gravity="center"
-                        android:text="@string/notify" />
+                        android:background="#F5F4F0"
+                        android:text="@string/notify"
+                        android:textSize="@dimen/pl_micro_text_size"
+                        android:textColor="@color/btn_approval_color" />
 
-                    <RadioButton
-                        android:id="@+id/plus_sign_rb"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:drawableTop="@drawable/button_plus_sign_edit"
-                        android:gravity="center"
-                        android:text="@string/set_plugin" />
-                </RadioGroup>
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:background="#878a8d"
+                        android:gravity="right" />
+                </RelativeLayout>
+
+                <CheckBox
+                    android:id="@+id/plus_sign_rb"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:background="#f5f4f0"
+                    android:text="@string/set_plugin"
+                    android:textSize="@dimen/pl_micro_text_size"
+                    android:textColor="@color/btn_approval_color" />
             </LinearLayout>
         </LinearLayout>
 

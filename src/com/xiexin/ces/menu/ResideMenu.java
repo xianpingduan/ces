@@ -245,7 +245,7 @@ public class ResideMenu extends FrameLayout
 
 	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT , dp2px( 1 ) );
 	layoutParams.setMargins( 0 , dp2px( 5 ) , 0 , dp2px( 5 ) );
-	view.setBackgroundColor( this.activity.getResources( ).getColor( R.color.pl_deputy_blue_color ) );
+	view.setBackgroundColor( this.activity.getResources( ).getColor( R.color.menu_line_color ) );
 	view.setLayoutParams( layoutParams );
 	return view;
     }

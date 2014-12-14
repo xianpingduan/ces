@@ -79,7 +79,7 @@ public class CirculeView
 
 	mDotProgressBar = (DotProgressBar)view.findViewById( R.id.image_attachment_dot );
 	//	mDotProgressBar.setTotalNum( infos.size( ) );
-	mDotProgressBar.setDotbarIconResource( R.drawable.dot_white , R.drawable.dot_black );
+	mDotProgressBar.setDotbarIconResource( R.drawable.guide_dot_white , R.drawable.guide_dot_black );
 	mDotProgressBar.setVisibility( View.VISIBLE );
 
 	mHorizonScrollLayout.setOnTouchScrollListener( new OnTouchScrollListener( )

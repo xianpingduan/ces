@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xiexin.ces.R;
@@ -28,6 +29,8 @@ public class PlusSignDialog extends Dialog {
 	private int mType = -1;
 
 	private Handler mHandler;
+	
+	private RelativeLayout mZtSelectRl;
 
 	public PlusSignDialog(Context context) {
 		super(context, R.style.MyDialog);
@@ -86,6 +89,21 @@ public class PlusSignDialog extends Dialog {
 			}
 		});
 
+		mZtSelectRl = (RelativeLayout) findViewById(R.id.zt_select_rl);
+
+		mZtSelectRl.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				// intent to employee activity
+				Message msg = Message.obtain();
+				msg.what = InvoiceInfoActivity.MSG_NOTIFY_TO_EMPLOYEE;
+				mHandler.sendMessage(msg);
+
+			}
+		});
+		
 		mEmployeeSelectIv.setOnClickListener(new View.OnClickListener() {
 
 			@Override

@@ -52,6 +52,7 @@ public class Constants
     public final static String SET_PLUS_SIGN = "SetPlusSign";
     public final static String SET_APPR_ATTENTION = "SetApprAttention";
     public final static String GET_MOBILE_CFG = "GetMobileCfg";
+    public final static String GET_SERVER_CFG = "GetServerConfig";
     public final static String GET_DOC_INFORMATION = "GetDocInformation";
     public final static String GET_MSG_URL = "GetMessage";
     public final static String SET_MESSAGE_READ = "SetMessageRead";

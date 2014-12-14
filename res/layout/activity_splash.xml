@@ -20,29 +20,31 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/welcome_progress_margin_top">
+            android:layout_marginTop="@dimen/welcome_progress_margin_top" >
 
             <ProgressBar
                 android:layout_width="@dimen/welcome_progress_width_height"
                 android:layout_height="@dimen/welcome_progress_width_height"
                 android:layout_gravity="center"
-                android:indeterminateDrawable="@drawable/welcome_progress" />
+                android:indeterminateDrawable="@drawable/progress_welcome"
+                 />
 
             <TextView
                 android:id="@+id/percent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:textColor="@android:color/white"
-                android:text="20%" />
+                android:text="0%"
+                android:textColor="@android:color/white" />
         </FrameLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/welcome_text_margin_top"
-            android:text="@string/factory_xiexin"
-            android:textColor="@android:color/white" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/welcome_text_margin_top"
+        android:text="@string/factory_xiexin"
+        android:layout_gravity="center_horizontal|bottom"
+        android:textColor="@android:color/white" />
 
 </FrameLayout>

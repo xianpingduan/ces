@@ -3,10 +3,7 @@
     android:id="@+id/invoice_frame"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/common_padding_buttom"
-    android:paddingLeft="@dimen/common_padding_left"
-    android:paddingTop="@dimen/common_padding_top" 
-    android:background="@drawable/list_view_item_bg">
+    android:background="@drawable/listview_item_bg_color">
 
     <ImageView
         android:id="@+id/indicate_iv"
@@ -20,6 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/zhangtao_list_item_margin"
+        android:layout_marginTop="@dimen/zhangtao_list_item_margin"
+        android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
         android:layout_toLeftOf="@id/indicate_iv"
         android:orientation="vertical" >
 
@@ -55,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="6dp"
             android:weightSum="2" >
 
             <TextView
@@ -75,7 +76,7 @@
                 android:ellipsize="end"
                 android:gravity="right"
                 android:singleLine="true"
-                android:textColor="@color/pl_main_text_color"
+                android:textColor="@color/pl_deputy_red_color"
                 android:textSize="@dimen/pl_micro_text_size" />
         </LinearLayout>
 
@@ -83,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="6dp"
             android:weightSum="2" >
 
             <TextView
@@ -114,5 +116,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pl_deputy_blue_color" />
 
 </RelativeLayout>

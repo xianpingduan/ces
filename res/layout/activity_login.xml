@@ -13,24 +13,24 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="@dimen/login_logo_width"
+            android:layout_height="@dimen/login_logo_height"
             android:src="@drawable/logo_bg" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_margin"
+        android:layout_margin="@dimen/login_margin"
         android:orientation="vertical" >
 
         <RelativeLayout
             android:id="@+id/login_account_frame"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_frame_height"
+            android:background="@drawable/edit_textview_bg"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:background="@drawable/edit_textview_bg"
             android:gravity="center_horizontal" >
 
             <CheckBox
@@ -48,8 +48,8 @@
                 style="@style/NormalEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/expansion_cb"
                 android:layout_marginLeft="12dp"
+                android:layout_toLeftOf="@id/expansion_cb"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/login_account_hint"
@@ -60,17 +60,19 @@
                 android:textCursorDrawable="@drawable/pl_edittext_cursor" />
         </RelativeLayout>
 
-		<!--<View
+        <!--
+            <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/pl_line" /> -->
+            android:background="@color/pl_line" />
+        -->
 
         <RelativeLayout
             android:id="@+id/login_pwd_frame"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_frame_height"
+            android:layout_marginTop="@dimen/common_margin_top"
             android:background="@drawable/edit_textview_bg"
-            android:layout_marginTop="10dp"
             android:gravity="center_horizontal" >
 
             <CheckBox
@@ -88,8 +90,8 @@
                 style="@style/NormalEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/show_cb"
                 android:layout_marginLeft="12dp"
+                android:layout_toLeftOf="@id/show_cb"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/login_pwd_hint"
@@ -107,8 +109,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/login_frame_height"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/common_margin_left"
-        android:layout_marginRight="@dimen/common_margin_right"
+        android:layout_marginLeft="@dimen/login_margin_left"
+        android:layout_marginRight="@dimen/login_margin_right"
         android:layout_marginTop="@dimen/common_margin_top"
         android:background="@drawable/edit_textview_bg" >
 
@@ -117,8 +119,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
             android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
             android:src="@drawable/icon_arrow" />
 
         <TextView
@@ -128,9 +130,9 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            android:textSize="@dimen/pl_small_text_size"
+            android:text="@string/p_select_zt_text"
             android:textColor="@color/pl_deputy_text_color"
-            android:text="@string/p_select_zt_text" />
+            android:textSize="@dimen/pl_small_text_size" />
     </RelativeLayout>
 
     <LinearLayout
@@ -142,15 +144,15 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginLeft="@dimen/login_margin_left"
             android:layout_marginTop="@dimen/common_margin_top"
             android:layout_weight="1"
             android:orientation="horizontal" >
 
             <CheckBox
                 android:id="@+id/remmenber_pwd_cb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@drawable/normal_login_check_button"
                 android:button="@null"
                 android:gravity="center_vertical" />
@@ -161,14 +163,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/remmenber_pwd_tv_margin_left"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/pl_small_text_size"
-                android:text="@string/remmenber_pwd_text" />
+                android:text="@string/remmenber_pwd_text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/pl_small_text_size" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/common_margin_right"
+            android:layout_marginRight="@dimen/login_margin_right"
             android:layout_marginTop="@dimen/common_margin_top"
             android:layout_weight="1"
             android:gravity="right"
@@ -176,8 +179,8 @@
 
             <CheckBox
                 android:id="@+id/auto_login_cb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginRight="@dimen/common_margin_right"
                 android:background="@drawable/normal_login_check_button"
                 android:button="@null"
@@ -187,10 +190,10 @@
                 android:id="@+id/auto_login_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/common_margin_right"
                 android:gravity="center_vertical|right"
-                android:textSize="@dimen/pl_small_text_size"
-                android:text="@string/auto_login_text" />
+                android:text="@string/auto_login_text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/pl_small_text_size" />
         </LinearLayout>
     </LinearLayout>
 
@@ -202,8 +205,8 @@
         android:layout_marginLeft="@dimen/login_btn_margin_left"
         android:layout_marginRight="@dimen/login_btn_margin_right"
         android:layout_marginTop="@dimen/login_btn_margin_top"
-        android:textSize="@dimen/pl_small_text_size"
         android:gravity="center"
-        android:text="@string/login_text" />
+        android:text="@string/login_text"
+        android:textSize="@dimen/pl_small_text_size" />
 
 </LinearLayout>

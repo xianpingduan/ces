@@ -306,8 +306,8 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			for (int i = 0; i < arrays.length(); i++) {
 				JSONObject obj = arrays.getJSONObject(i);
 				Invoice invoice = new Invoice();
-				invoice.setAccount(obj.getString("Account") == null ? "" : obj
-						.getString("Account"));
+				invoice.setAccount(obj.getString("Account").equals("null") ? ""
+						: obj.getString("Account"));
 				invoice.setPrgID(obj.getString("PrgID"));
 				invoice.setPrgName(obj.getString("PrgName"));
 				invoice.setDataNbr(obj.getString("DataNbr"));
@@ -316,15 +316,16 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 				invoice.setDepart(obj.getString("Depart"));
 				invoice.setChannel(obj.getString("Channel"));
 				invoice.setAccName(obj.getString("AccName"));
-				invoice.setVerType(obj.getString("VerType") == null ? "" : obj
-						.getString("VerType"));
+				invoice.setVerType(obj.getString("VerType").equals("null") ? ""
+						: obj.getString("VerType"));
 				invoice.setTotalCost(obj.getDouble("TotalCost"));
 				invoice.setApprDate(obj.getString("ApprDate"));
-				invoice.setProcessMode(obj.getString("ProcessMode") == null ? ""
-						: obj.getString("ProcessMode"));
-				invoice.setStatus(obj.getString("Status") == null ? "" : obj
-						.getString("Status"));
-				invoice.setReason(obj.getString("Reason"));
+				invoice.setProcessMode(obj.getString("ProcessMode").equals(
+						"null") ? "" : obj.getString("ProcessMode"));
+				invoice.setStatus(obj.getString("Status").equals("null") ? ""
+						: obj.getString("Status"));
+				invoice.setReason(obj.getString("Reason").equals("null") ? ""
+						: obj.getString("Reason"));
 				invoiceList.add(invoice);
 			}
 		} catch (JSONException e) {
@@ -516,7 +517,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			holder.invoiceDateTv.setText(apprDate);
 			holder.departUserNameTv.setText(invoice.getDepart() + " "
 					+ invoice.getApprName());
-			holder.moneyTv.setText(invoice.getTotalCost() + "");
+			holder.moneyTv.setText("￥" + invoice.getTotalCost() + "");
 			holder.prgIdTv.setText(invoice.getPrgID());
 			holder.accountTv.setText(invoice.getAccount());
 			holder.invoiceDescTv.setText(invoice.getReason());
@@ -571,8 +572,9 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
 		Logger.d(TAG, "requestCode=" + requestCode + ",resultCode="
-				+ resultCode );
-		//		int resultFrom = data.getIntExtra(Constants.APPR_LIST_RESULT_FROM, 0);
+				+ resultCode);
+		// int resultFrom = data.getIntExtra(Constants.APPR_LIST_RESULT_FROM,
+		// 0);
 		switch (resultCode) {
 		case Constants.APPR_LIST_RESULT_FROM_RETURN:
 			Logger.d(TAG, "no approval");

@@ -8,22 +8,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_margin"
+        android:background="@drawable/search_input_box_bg" >
 
-        <Button
-            android:id="@+id/search_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+        <ImageView
+            android:id="@+id/search_iv"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/button_blue_edit"
             android:layout_marginLeft="@dimen/common_margin_left"
-            android:gravity="center"
-            android:text="@string/search"
-            android:textColor="@android:color/white"
-            android:visibility="gone"
-            android:textSize="@dimen/pl_small_text_size" />
+            android:src="@drawable/fapiao_check" />
 
         <EditText
             android:id="@+id/search_et"
@@ -31,9 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_frame_height"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/common_margin"
-            android:layout_toLeftOf="@id/search_btn"
-            android:background="@drawable/button_white"
+            android:layout_toRightOf="@id/search_iv"
+            android:background="@null"
             android:gravity="center_vertical"
             android:hint="@string/please_enter_employee_name"
             android:imeOptions="flagNoExtractUi"
