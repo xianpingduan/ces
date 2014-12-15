@@ -44,7 +44,7 @@ public class PushNotificationCenter
 	nb.setSmallIcon( R.drawable.logo );
 	nb.setWhen( System.currentTimeMillis( ) );
 	nb.setOngoing( false );
-
+	nb.getNotification( ).defaults = Notification.DEFAULT_SOUND;
 	mNotificationManager.notify( MESSAGE_NOTIFY_ID , nb.getNotification( ) );
     }
 
