@@ -12,6 +12,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Handler;
+import android.util.Log;
 
 import com.xiexin.ces.activity.MenuActivity;
 import com.xiexin.ces.db.EmployeeDbAdapter.EmployeeInfoColumns;
@@ -53,7 +54,6 @@ public class EmployeeManager {
 
 	private Employee createTaskFromCursor(Cursor cursor) {
 		Employee employee = new Employee();
-
 		employee.setEmployeeID(cursor.getString(1));
 		employee.setDescr(cursor.getString(2));
 		employee.setSex(cursor.getString(3));
@@ -62,7 +62,6 @@ public class EmployeeManager {
 		employee.setMobile(cursor.getString(6));
 		employee.setTelNbr(cursor.getString(7));
 		employee.setEmail(cursor.getString(8));
-
 		return employee;
 	}
 
@@ -106,14 +105,15 @@ public class EmployeeManager {
 	public synchronized ArrayList<Employee> loadAll() {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		Cursor cursor = mEmployeeDbAdapter.queryAll();
+		
+		Log.d("Cursor", cursor.getCount() +"");
 
 		if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
 
-			while (!cursor.isAfterLast()) {
+			while (cursor.moveToNext()) {
 				Employee employee = createTaskFromCursor(cursor);
 				list.add(employee);
 			}
-			cursor.moveToNext();
 
 		}
 		if (cursor != null) {

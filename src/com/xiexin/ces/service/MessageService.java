@@ -158,7 +158,7 @@ public class MessageService extends Service
 			mMsgStr = response.getString( "Data" );
 			long next_req_time = System.currentTimeMillis( ) + Constants.DEFAULT_GAP_TIME;
 			Log.d( TAG , "next_req_time =" + next_req_time );
-			App.getSharedPreference( ).edit( ).putLong( Constants.THE_LAST_REQUEST_MSG_TIME , next_req_time );
+			App.getSharedPreference( ).edit( ).putLong( Constants.THE_LAST_REQUEST_MSG_TIME , next_req_time ).commit();
 			mHandler.sendEmptyMessage( MSG_REQUEST_LAST_MSG_SUCCESS );
 		    }
 		    else

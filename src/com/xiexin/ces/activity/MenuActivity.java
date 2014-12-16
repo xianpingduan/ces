@@ -124,7 +124,11 @@ public class MenuActivity extends FragmentActivity implements
 		initLoginOutLl();
 
 		// request
-		requestEmployees("");
+		long currentTime = System.currentTimeMillis( );
+		long nextReqTime = App.getSharedPreference( ).getLong( Constants.THE_SYNC_EMPLOYEE_TIME , 0 );
+		if(currentTime>=nextReqTime){
+			requestEmployees("");
+		}
 
 	}
 
@@ -400,6 +404,9 @@ public class MenuActivity extends FragmentActivity implements
 			case MSG_SAVE_EMPLOYEE_LIST_SUCCESS:
 				Log.d(TAG, "save data success!");
 				dismissDialog();
+				long next_req_time = System.currentTimeMillis( ) + Constants.SYNC_EMPLOYEE_GAP_TIME;
+				Log.d( TAG , "next_req_time =" + next_req_time );
+				App.getSharedPreference( ).edit( ).putLong( Constants.THE_SYNC_EMPLOYEE_TIME , next_req_time ).commit();
 				break;
 			default:
 				break;
@@ -596,7 +603,7 @@ public class MenuActivity extends FragmentActivity implements
 
 	private void showDialog() {
 		if (mLoadingDialog == null) {
-			mLoadingDialog = new LoadingDialog(this,"正在保存人员档案信息");
+			mLoadingDialog = new LoadingDialog(this,"正在同步人员档案信息");
 		}
 		mLoadingDialog.show();
 	}
