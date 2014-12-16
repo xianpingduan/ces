@@ -131,5 +131,7 @@
    	
    	<string name="readed">已读</string>
    	<string name="noread">未读</string>
+   	
+   	<string name="no_phone_info">没有电话信息！</string>
     
 </resources>

@@ -38,6 +38,8 @@ import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
+import com.xiexin.ces.db.EmployeeManager;
+import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.ApprovalDialog;
 import com.xiexin.ces.widgets.LoadingDialog;
@@ -748,24 +750,23 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 		contentTv.setTextColor( getResources( ).getColor( R.color.info_content_text_color ) );
 	    }
 
-	    if( mDataConfig[i].equals( "Duty" ) )
-	    {
-		msgIv.setVisibility( View.VISIBLE );
-		phoneIv.setVisibility( View.VISIBLE );
-	    }
-	    else
-	    {
-		msgIv.setVisibility( View.GONE );
-		phoneIv.setVisibility( View.GONE );
-	    }
-
 	    msgIv.setOnClickListener( new View.OnClickListener( )
 	    {
 
 		@Override
 		public void onClick( View v )
 		{
-		    sendSMS( "18664559136" );
+		    Object obj = v.getTag( );
+		    if( obj != null )
+		    {
+			Logger.d( TAG , "mobile =" + (String)obj );
+			sendSMS( ( (String)obj ) );
+		    }
+		    else
+		    {
+			Toast.makeText( InvoiceInfoActivity.this , getString( R.string.no_phone_info ) , Toast.LENGTH_SHORT ).show( );
+		    }
+
 		}
 	    } );
 
@@ -775,7 +776,16 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 		@Override
 		public void onClick( View v )
 		{
-		    callPhone( "18664559136" );
+		    Object obj = v.getTag( );
+		    if( obj != null )
+		    {
+			Logger.d( TAG , "mobile =" + (String)obj );
+			callPhone( ( (String)obj ) );
+		    }
+		    else
+		    {
+			Toast.makeText( InvoiceInfoActivity.this , getString( R.string.no_phone_info ) , Toast.LENGTH_SHORT ).show( );
+		    }
 		}
 	    } );
 
@@ -783,6 +793,31 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	    {
 		headerTv.setText( mDataHeader.getString( mDataConfig[i] ) + ":" );
 		String content = mDataContent.getString( mDataConfig[i] );
+
+		if( mDataConfig[i].equals( "Duty" ) )
+		{
+		    msgIv.setVisibility( View.VISIBLE );
+		    phoneIv.setVisibility( View.VISIBLE );
+
+		    Logger.d( TAG , "before,content =" + content );
+		    Employee employee = EmployeeManager.getInstance( App.getAppContext( ) ).findEmployeeById( mDataContent.getString( mDataConfig[i] ) );
+
+		    if( employee != null )
+		    {
+			content = employee.getDescr( );
+			msgIv.setTag( employee.getMobile( ) );
+			phoneIv.setTag( employee.getMobile( ) );
+		    }
+
+		    Logger.d( TAG , "last,content =" + content );
+
+		}
+		else
+		{
+		    msgIv.setVisibility( View.GONE );
+		    phoneIv.setVisibility( View.GONE );
+		}
+
 		if( content == null || content.equals( "null" ) )
 		{
 		    content = "";

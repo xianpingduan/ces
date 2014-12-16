@@ -482,7 +482,6 @@ public class EmployeeActivity extends Activity implements OnClickListener
 	    }
 	    else
 	    {
-
 		holder = (ViewHolder)convertView.getTag( );
 	    }
 
