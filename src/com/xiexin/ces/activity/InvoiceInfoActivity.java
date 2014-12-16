@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -734,6 +735,8 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	    RelativeLayout view = (RelativeLayout)inflater.inflate( R.layout.activity_invoice_info_tv_item , null );
 	    TextView headerTv = (TextView)view.findViewById( R.id.table_header_name );
 	    TextView contentTv = (TextView)view.findViewById( R.id.table_content );
+	    ImageView msgIv = (ImageView)view.findViewById( R.id.message );
+	    ImageView phoneIv = (ImageView)view.findViewById( R.id.phone );
 	    contentTv.setTextColor( getResources( ).getColor( R.color.info_content_text_color ) );
 
 	    if( mDataConfig[i].equals( "TotalCost" ) )
@@ -744,6 +747,37 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	    {
 		contentTv.setTextColor( getResources( ).getColor( R.color.info_content_text_color ) );
 	    }
+
+	    if( mDataConfig[i].equals( "Duty" ) )
+	    {
+		msgIv.setVisibility( View.VISIBLE );
+		phoneIv.setVisibility( View.VISIBLE );
+	    }
+	    else
+	    {
+		msgIv.setVisibility( View.GONE );
+		phoneIv.setVisibility( View.GONE );
+	    }
+
+	    msgIv.setOnClickListener( new View.OnClickListener( )
+	    {
+
+		@Override
+		public void onClick( View v )
+		{
+		    sendSMS( "18664559136" );
+		}
+	    } );
+
+	    phoneIv.setOnClickListener( new View.OnClickListener( )
+	    {
+
+		@Override
+		public void onClick( View v )
+		{
+		    callPhone( "18664559136" );
+		}
+	    } );
 
 	    try
 	    {
@@ -1084,6 +1118,24 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	    }
 	}
 
+    }
+
+    //发短信
+    public void sendSMS( String phoneNum )
+    {
+	Intent intent = new Intent( );
+	intent.setAction( Intent.ACTION_SENDTO );
+	intent.setData( Uri.parse( "smsto:" + phoneNum ) );
+	startActivity( intent );
+    }
+
+    //拨打电话
+    public void callPhone( String phoneNum )
+    {
+	Intent intent = new Intent( );
+	intent.setAction( Intent.ACTION_CALL );
+	intent.setData( Uri.parse( "tel:" + phoneNum ) );
+	startActivity( intent );
     }
 
 }

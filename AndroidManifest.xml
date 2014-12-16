@@ -15,6 +15,8 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+	<uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:name="com.xiexin.ces.App"
@@ -64,12 +66,12 @@
             android:name="com.xiexin.ces.activity.MessageInfoActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
 
-        <service android:name="pada.juidownloadmanager.JuiDownloadService" >
+        <service android:name="pada.juidownloadmanager.JuiDownloadService" android:exported="false">
             <intent-filter>
                 <action android:name="download.service.action" />
             </intent-filter>
         </service>
-        <service android:name="com.xiexin.ces.service.MessageService" >
+        <service android:name="com.xiexin.ces.service.MessageService" android:exported="false">
             <intent-filter>
                 <action android:name="MessageService.action.command" />
             </intent-filter>
