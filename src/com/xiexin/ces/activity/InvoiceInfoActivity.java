@@ -801,7 +801,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 
 		    Logger.d( TAG , "before,content =" + content );
 		    Employee employee = EmployeeManager.getInstance( App.getAppContext( ) ).findEmployeeById( mDataContent.getString( mDataConfig[i] ) );
-
+		    
 		    if( employee != null )
 		    {
 			content = employee.getDescr( );
