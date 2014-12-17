@@ -470,6 +470,8 @@ public class LoginActivity extends Activity implements OnClickListener
 	mLoadingDialog.show( );
     }
 
+    private boolean mConnIsChanged = false;
+
     private void saveLoginInfo( String loginInfo )
     {
 
@@ -496,6 +498,13 @@ public class LoginActivity extends Activity implements OnClickListener
 
 	    Log.d( TAG , "userName=" + userName + ",depart=" + depart );
 
+	    String cacheConn = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
+	    String currConn = mZtTv.getTag( ).toString( );
+
+	    if( !currConn.equals( cacheConn ) )
+	    {
+		mConnIsChanged = true;
+	    }
 	    // 保存数据
 	    App.getSharedPreference( ).edit( ).putString( Constants.USER_ID , mUserId ).commit( );
 	    App.getSharedPreference( ).edit( ).putString( Constants.USER_NAME , userName == null ? "" : userName ).commit( );
@@ -529,6 +538,8 @@ public class LoginActivity extends Activity implements OnClickListener
 
 	Intent intent = new Intent( );
 	intent.setClass( LoginActivity.this , MenuActivity.class );
+	Logger.d( TAG , "mConnIsChanged=" + mConnIsChanged );
+	intent.putExtra( Constants.CONN_CHANGED , mConnIsChanged );
 	startActivity( intent );
 	finish( );
     }
