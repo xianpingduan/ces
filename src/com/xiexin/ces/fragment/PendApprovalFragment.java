@@ -364,7 +364,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener
 	String account = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
 	String userId = App.getSharedPreference( ).getString( Constants.USER_ID , "" );
 
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_WORK_MESSAGE_URL + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_WORK_MESSAGE_URL + "?" );
 	urlSbf.append( "account=" ).append( account );
 	urlSbf.append( "&userid=" ).append( userId );
 	urlSbf.append( "&kind=" ).append( mKind );

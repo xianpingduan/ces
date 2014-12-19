@@ -102,7 +102,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 
     private void doMsgRead()
     {
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.SET_MESSAGE_READ + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.SET_MESSAGE_READ + "?" );
 
 	String account = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
 	String userid = App.getSharedPreference( ).getString( Constants.USER_ID , "" );
@@ -110,7 +110,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	urlSbf.append( "&userid=" ).append( userid );
 	urlSbf.append( "&id=" ).append( mMsgId );
 	urlSbf.append( "&msgtype=" ).append( mMsgType );
-	Logger.d(TAG, "urlSbf="+urlSbf.toString());
+	Logger.d( TAG , "urlSbf=" + urlSbf.toString( ) );
 	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
 	{
 	    @Override

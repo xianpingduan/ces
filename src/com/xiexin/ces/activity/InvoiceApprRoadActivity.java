@@ -244,7 +244,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
     {
 
 	showDialog( );
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_APPROVAL_ROAD_LIST + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_APPROVAL_ROAD_LIST + "?" );
 	urlSbf.append( "account=" ).append( mConnName );
 	urlSbf.append( "&prgid=" ).append( mPrgid );
 	urlSbf.append( "&datanbr=" ).append( mDatanbr );
@@ -372,7 +372,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 		convertView = App.getLayoutInflater( ).inflate( R.layout.activity_invoice_road_item , null );
 		holder = new ViewHolder( );
 		holder.apprDateTv = (TextView)convertView.findViewById( R.id.node_date_tv );
-		holder.apprTimeTv = (TextView) convertView.findViewById(R.id.node_time_tv);
+		holder.apprTimeTv = (TextView)convertView.findViewById( R.id.node_time_tv );
 		holder.processModeTv = (TextView)convertView.findViewById( R.id.node_name_tv );
 		holder.apprMemoTv = (TextView)convertView.findViewById( R.id.node_content_tv );
 		holder.isFinishedCb = (CheckBox)convertView.findViewById( R.id.is_finished_cb );
@@ -394,13 +394,13 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	{
 
 	    String apprDate = iar.getApprDate( );
-	    String apprTime ="";
+	    String apprTime = "";
 	    Date date = new Date( );
 	    try
 	    {
 		date = sdf.parse( apprDate );
 		apprDate = sdf.format( date );
-		apprTime=sdfTime.format(date);
+		apprTime = sdfTime.format( date );
 	    }
 	    catch ( ParseException e )
 	    {
@@ -412,12 +412,13 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    {
 		apprDate = "";
 	    }
-	    
-	    if(apprTime.equals("00:00")){
-	    	apprTime="";
+
+	    if( apprTime.equals( "00:00" ) )
+	    {
+		apprTime = "";
 	    }
-	    
-	    Logger.d(TAG, "bindData,date ="+apprDate);
+
+	    Logger.d( TAG , "bindData,date =" + apprDate );
 
 	    String apprObjName = iar.getApprObjName( );
 	    if( apprObjName == null || apprObjName.equals( "null" ) )
@@ -426,7 +427,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    }
 	    holder.processModeTv.setText( apprObjName );
 	    holder.apprDateTv.setText( apprDate );
-	    holder.apprTimeTv.setText(apprTime);
+	    holder.apprTimeTv.setText( apprTime );
 	    String apprMemo = iar.getApprMemo( );
 	    if( apprMemo == null || apprMemo.equals( "null" ) )
 	    {

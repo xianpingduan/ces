@@ -400,7 +400,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 	String account = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
 	String userid = App.getSharedPreference( ).getString( Constants.USER_ID , "" );
 
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_MSG_URL + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_MSG_URL + "?" );
 	urlSbf.append( "userid=" ).append( userid );
 	urlSbf.append( "&account=" ).append( account );
 	urlSbf.append( "&bread=" ).append( mBread );
@@ -688,7 +688,7 @@ public class MessageFragment extends Fragment implements OnClickListener
     // del msg
     private void doDelMsg( int msgId , int msgType )
     {
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.DEL_MSG + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.DEL_MSG + "?" );
 	String account = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
 	String userid = App.getSharedPreference( ).getString( Constants.USER_ID , "" );
 	urlSbf.append( "account=" ).append( account );

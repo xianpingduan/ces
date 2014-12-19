@@ -55,7 +55,7 @@ public class SplashActivity extends Activity
 
 	String url = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "" );
 	String port = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "" );
-	Constants.ROOT = url + ":" + port;
+	//	Constants.ROOT = url + ":" + port;
 	Logger.d( TAG , "server url=" + url + ":" + port );
 	if( url.isEmpty( ) )
 	{
@@ -149,7 +149,7 @@ public class SplashActivity extends Activity
     // 加载服务器信息
     private void doRequestServerConfigInfo()
     {
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_SERVER_CFG );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_SERVER_CFG );
 	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
 	{
 	    @Override

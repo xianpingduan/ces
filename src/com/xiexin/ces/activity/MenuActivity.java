@@ -591,7 +591,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
 	showDialog( );
 	String commName = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_EMPLOYEE_LIST + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_EMPLOYEE_LIST + "?" );
 	urlSbf.append( "account=" ).append( commName );
 	urlSbf.append( "&filter=" ).append( filter );
 

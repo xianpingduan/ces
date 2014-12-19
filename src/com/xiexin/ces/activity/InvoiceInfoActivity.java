@@ -499,7 +499,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     private void doRequestMobileCfg()
     {
 	showDialog( );
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_MOBILE_CFG + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_MOBILE_CFG + "?" );
 	urlSbf.append( "account=" ).append( mConnName );
 	urlSbf.append( "&prgid=" ).append( mPrgid );
 
@@ -801,7 +801,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 
 		    Logger.d( TAG , "before,content =" + content );
 		    Employee employee = EmployeeManager.getInstance( App.getAppContext( ) ).findEmployeeById( mDataContent.getString( mDataConfig[i] ) );
-		    
+
 		    if( employee != null )
 		    {
 			content = employee.getDescr( );
@@ -856,7 +856,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     private void doRequestInfo()
     {
 	// showDialog( );
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_DOC_INFORMATION + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_DOC_INFORMATION + "?" );
 	urlSbf.append( "account=" ).append( mConnName );
 	urlSbf.append( "&prgid=" ).append( mPrgid );
 	urlSbf.append( "&datanbr=" ).append( mDatanbr );
@@ -923,7 +923,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	    Toast.makeText( InvoiceInfoActivity.this , getString( R.string.please_check_qianhou ) , Toast.LENGTH_SHORT ).show( );
 	    return;
 	}
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.SET_PLUS_SIGN + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.SET_PLUS_SIGN + "?" );
 	urlSbf.append( "account=" ).append( mConnName );
 	urlSbf.append( "&prgid=" ).append( mPrgid );
 	urlSbf.append( "&datanbr=" ).append( mDatanbr );
@@ -1004,7 +1004,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	}
 	Log.d( TAG , "mApprovalMemo=" + mApprovalMemo );
 	mApprovalKind = mApprovalDialog.getSpinnerValue( );
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.SUBMIT_WORK_FLOW + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.SUBMIT_WORK_FLOW + "?" );
 	urlSbf.append( "account=" ).append( mConnName );
 	urlSbf.append( "&datanbr=" ).append( mDatanbr );
 	urlSbf.append( "&prgid=" ).append( mPrgid );
@@ -1066,7 +1066,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 	    return;
 	}
 
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.SET_APPR_ATTENTION + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.SET_APPR_ATTENTION + "?" );
 	urlSbf.append( "account=" ).append( mConnName );
 	urlSbf.append( "&prgid=" ).append( mPrgid );
 	urlSbf.append( "&datanbr=" ).append( mDatanbr );

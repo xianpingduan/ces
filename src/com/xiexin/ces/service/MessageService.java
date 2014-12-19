@@ -138,7 +138,7 @@ public class MessageService extends Service
 	String account = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
 	String userid = App.getSharedPreference( ).getString( Constants.USER_ID , "" );
 
-	StringBuffer urlSbf = new StringBuffer( Constants.ROOT_URL + Constants.GET_MSG_URL + "?" );
+	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_MSG_URL + "?" );
 	urlSbf.append( "userid=" ).append( userid );
 	urlSbf.append( "&account=" ).append( account );
 	urlSbf.append( "&bread=" ).append( 0 );
@@ -158,7 +158,7 @@ public class MessageService extends Service
 			mMsgStr = response.getString( "Data" );
 			long next_req_time = System.currentTimeMillis( ) + Constants.DEFAULT_GAP_TIME;
 			Log.d( TAG , "next_req_time =" + next_req_time );
-			App.getSharedPreference( ).edit( ).putLong( Constants.THE_LAST_REQUEST_MSG_TIME , next_req_time ).commit();
+			App.getSharedPreference( ).edit( ).putLong( Constants.THE_LAST_REQUEST_MSG_TIME , next_req_time ).commit( );
 			mHandler.sendEmptyMessage( MSG_REQUEST_LAST_MSG_SUCCESS );
 		    }
 		    else

@@ -21,7 +21,6 @@
             android:gravity="center_vertical"
             android:hint="@string/server_config_url_hint"
             android:imeOptions="flagNoExtractUi"
-            android:maxLength="18"
             android:singleLine="true"
             android:background="@drawable/edit_textview_bg"
             android:textColorHint="@color/pl_deputy_text_color"

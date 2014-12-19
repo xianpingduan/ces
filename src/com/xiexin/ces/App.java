@@ -4,12 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.xiexin.ces.db.EmployeeManager;
 import com.xiexin.ces.utils.Logger;
 
 public class App extends Application
@@ -39,6 +41,16 @@ public class App extends Application
     public static SharedPreferences getSharedPreference()
     {
 	return mSharePrefences;
+    }
+
+    public static String getRootUrl()
+    {
+	String rootUrl = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "http://core130.com" );
+	String port = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "8081" );
+
+	Log.d( TAG , "App.getRootUrl=" + rootUrl + ":" + port + "/api/CESApp/" );
+	return rootUrl + ":" + port + "/api/CESApp/";
+
     }
 
     @Override
@@ -115,6 +127,9 @@ public class App extends Application
 
 	mSharePrefences.edit( ).putBoolean( Constants.REMEBER_PWD , false ).commit( );
 	mSharePrefences.edit( ).putBoolean( Constants.AUTO_LOGIN , false ).commit( );
+
+	EmployeeManager.getInstance( mAppContext ).delAll( );
+
 	Logger.d( TAG , "clear login info" );
     }
 

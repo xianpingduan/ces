@@ -40,10 +40,8 @@ public class Constants
     // net
     // public static String ROOT = "http://core130.com:8081";
 
-    public static String ROOT = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "http://core130.com" ) + ":"
-	    + App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "8081" );
-
-    public final static String ROOT_URL = ROOT + "/api/CESApp/";
+    //    public static String ROOT = "http://core130.com:8081";
+    //    public final static String ROOT_URL = ROOT + "/api/CESApp/";
     public final static String LOGIN_URL = "Login";
     public final static String ZHANG_TAO_URL = "GetAccountByUserID";
     public final static String GET_WORK_MESSAGE_URL = "GetWorkMessage";
