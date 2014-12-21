@@ -407,7 +407,7 @@ public class MenuActivity extends FragmentActivity implements
 				break;
 			case MSG_SAVE_EMPLOYEE_LIST_SUCCESS:
 				Logger.d(TAG, "save data success!");
-				resideMenu.closeMenu();
+				//				resideMenu.closeMenu();
 				dismissDialog();
 				long next_req_time = System.currentTimeMillis()
 						+ Constants.SYNC_EMPLOYEE_GAP_TIME;
