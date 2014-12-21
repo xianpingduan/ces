@@ -16,7 +16,6 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -377,17 +376,11 @@ public class MenuActivity extends FragmentActivity implements
 
 			switch (msg.what) {
 			case MSG_OPEN_MENU:
-
 				break;
-
 			case MSG_CLOSE_MENU:
-
 				break;
-
 			case MSG_GET_ZT:
-
 				String account = (String) msg.obj;
-
 				if (!account.equals(mUserAccountTv.getText().toString())) {
 					mAccountChanged = true;
 					if (mPendApprovalFragment == null)
@@ -398,7 +391,6 @@ public class MenuActivity extends FragmentActivity implements
 									mAccountChanged);
 					changeFragment(mPendApprovalFragment);
 					mTitleView.setText(getString(R.string.menu_pend_approval));
-
 					// 同步人员数据
 					requestEmployees("");
 				}
@@ -415,9 +407,7 @@ public class MenuActivity extends FragmentActivity implements
 				break;
 			case MSG_SAVE_EMPLOYEE_LIST_SUCCESS:
 				Logger.d(TAG, "save data success!");
-				
 				resideMenu.closeMenu();
-				
 				dismissDialog();
 				long next_req_time = System.currentTimeMillis()
 						+ Constants.SYNC_EMPLOYEE_GAP_TIME;
@@ -427,16 +417,13 @@ public class MenuActivity extends FragmentActivity implements
 						.putLong(Constants.THE_SYNC_EMPLOYEE_TIME,
 								next_req_time).commit();
 				break;
-				
 			case MSG_FROM_FRAGMENT_CLOSE_MENU:
 				resideMenu.closeMenu();
 				break;
 			default:
 				break;
 			}
-
 		}
-
 	};
 
 	@Override
