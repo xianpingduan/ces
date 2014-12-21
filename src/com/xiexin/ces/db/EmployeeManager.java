@@ -12,11 +12,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Handler;
-import android.util.Log;
 
 import com.xiexin.ces.activity.MenuActivity;
 import com.xiexin.ces.db.EmployeeDbAdapter.EmployeeInfoColumns;
 import com.xiexin.ces.entry.Employee;
+import com.xiexin.ces.utils.Logger;
 
 public class EmployeeManager {
 
@@ -106,7 +106,7 @@ public class EmployeeManager {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		Cursor cursor = mEmployeeDbAdapter.queryAll();
 		
-		Log.d("Cursor", cursor.getCount() +"");
+		Logger.d("Cursor", cursor.getCount() +"");
 
 		if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
 

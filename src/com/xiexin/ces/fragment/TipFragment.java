@@ -2,6 +2,7 @@ package com.xiexin.ces.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,10 @@ public class TipFragment extends Fragment {
 
 	private static final String TAG = "TipFragment";
 
+	private Handler mMainUIHandler;
+	public void setMainUIHandler(Handler handler){
+		mMainUIHandler = handler;
+	}
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);

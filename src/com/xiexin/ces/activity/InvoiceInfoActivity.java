@@ -217,7 +217,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 
 	mDatanbr = intent.getStringExtra( Constants.DATANBR );
 
-	Log.d( TAG , "mConnName=" + mConnName + ",mPrgId=" + mPrgid + ",mDatanbr=" + mDatanbr );
+	Logger.d( TAG , "mConnName=" + mConnName + ",mPrgId=" + mPrgid + ",mDatanbr=" + mDatanbr );
 
 	// 当前登录人
 	mUpdateUser = App.getSharedPreference( ).getString( Constants.USER_ID , "" );
@@ -725,8 +725,8 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     {
 	// mInfoContentLl
 	LayoutInflater inflater = App.getLayoutInflater( );
-	Log.d( TAG , "createDataView,mPrgid=" + mPrgid );
-	Log.d( TAG , "createDataView,mDataHeader=" + mDataHeader.toString( ) );
+	Logger.d( TAG , "createDataView,mPrgid=" + mPrgid );
+	Logger.d( TAG , "createDataView,mDataHeader=" + mDataHeader.toString( ) );
 	if( mDataConfig == null || mDataConfig.length == 0 )
 	{
 	    Logger.d( TAG , "get doc config is error ,use default" );
@@ -833,7 +833,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 		    catch ( ParseException e )
 		    {
 			e.printStackTrace( );
-			Log.d( TAG , "date format error" );
+			Logger.d( TAG , "date format error" );
 		    }
 		}
 
@@ -1131,13 +1131,13 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
     {
 	// TODO Auto-generated method stub
 	super.onActivityResult( requestCode , resultCode , data );
-	Log.d( TAG , "onActivityResult" );
+	Logger.d( TAG , "onActivityResult" );
 	if( resultCode == RESULT_OK )
 	{
 	    mCheckUserId = data.getStringExtra( "userid" );
 	    mCheckUserName = data.getStringExtra( "userName" );
 	    String mCheckUserName = data.getStringExtra( "userName" );
-	    Log.d( TAG , "mCurrentUi=" + mCurrentUi + ",mCheckUserId=" + mCheckUserId + ",mCheckUserName=" + mCheckUserName );
+	    Logger.d( TAG , "mCurrentUi=" + mCurrentUi + ",mCheckUserId=" + mCheckUserId + ",mCheckUserName=" + mCheckUserName );
 	    switch ( mCurrentUi )
 	    {
 		case NOTIFY :

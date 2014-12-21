@@ -243,7 +243,7 @@ public class SplashActivity extends Activity
 	try
 	{
 	    JSONObject obj = new JSONObject( Constants.RQ001 );
-	    Log.d( TAG , obj.get( "Data" ).toString( ) );
+	    Logger.d( TAG , obj.get( "Data" ).toString( ) );
 	}
 	catch ( JSONException e )
 	{

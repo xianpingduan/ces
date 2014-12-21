@@ -179,7 +179,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 					Constants.ZHANG_TAO_CONN_NAME, "");
 		}
 
-		Log.d(TAG, "mFrom=" + mFrom);
+		Logger.d(TAG, "mFrom=" + mFrom);
 
 		if (mEmployeeAdapter == null)
 			mEmployeeAdapter = new EmployeeAdapter();
@@ -258,7 +258,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 		Intent in = new Intent();
 		// in.putExtra(Constants.ZHANG_TAO_CONN_NAME, mCheckConnName);
 		// in.putExtra(Constants.ZHANG_TAO_ACCINFO, mCheckAccInfo);
-		Log.d(TAG, mCheckUserId + "," + mCheckUserName);
+		Logger.d(TAG, mCheckUserId + "," + mCheckUserName);
 		in.putExtra("userid", mCheckUserId);
 		in.putExtra("userName", mCheckUserName);
 		setResult(RESULT_OK, in);
@@ -396,7 +396,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 				break;
 
 			case MSG_SEARCH_REFRESH_LIST:
-				Log.d(TAG,"MSG_SEARCH_REFRESH_LIST,filter="+ (String) msg.obj);
+				Logger.d(TAG,"MSG_SEARCH_REFRESH_LIST,filter="+ (String) msg.obj);
 				String filter = (String) msg.obj;
 				ArrayList<Employee> tempList = new ArrayList<Employee>();
 				tempList.clear();

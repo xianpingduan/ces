@@ -218,7 +218,7 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 	    case R.id.btn1 :
 
 		boolean validate = validate( );
-		Log.d( TAG , "validate=" + validate + ",isFirstIn=" + isFirstIn );
+		Logger.d( TAG , "validate=" + validate + ",isFirstIn=" + isFirstIn );
 		if( validate && !isFirstIn )
 		{
 		    showConfirmDialog( );

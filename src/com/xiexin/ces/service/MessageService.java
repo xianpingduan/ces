@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
@@ -25,6 +24,7 @@ import com.xiexin.ces.Constants;
 import com.xiexin.ces.PushNotificationCenter;
 import com.xiexin.ces.entry.PushMessage;
 import com.xiexin.ces.receiver.PushScreenOnReceiver;
+import com.xiexin.ces.utils.Logger;
 
 public class MessageService extends Service
 {
@@ -157,7 +157,7 @@ public class MessageService extends Service
 		    {
 			mMsgStr = response.getString( "Data" );
 			long next_req_time = System.currentTimeMillis( ) + Constants.DEFAULT_GAP_TIME;
-			Log.d( TAG , "next_req_time =" + next_req_time );
+			Logger.d( TAG , "next_req_time =" + next_req_time );
 			App.getSharedPreference( ).edit( ).putLong( Constants.THE_LAST_REQUEST_MSG_TIME , next_req_time ).commit( );
 			mHandler.sendEmptyMessage( MSG_REQUEST_LAST_MSG_SUCCESS );
 		    }

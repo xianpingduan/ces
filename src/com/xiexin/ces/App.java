@@ -48,7 +48,7 @@ public class App extends Application
 	String rootUrl = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "http://core130.com" );
 	String port = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "8081" );
 
-	Log.d( TAG , "App.getRootUrl=" + rootUrl + ":" + port + "/api/CESApp/" );
+	Logger.d( TAG , "App.getRootUrl=" + rootUrl + ":" + port + "/api/CESApp/" );
 	return rootUrl + ":" + port + "/api/CESApp/";
 
     }

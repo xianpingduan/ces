@@ -185,7 +185,7 @@ public class LoginActivity extends Activity implements OnClickListener
 	// }
 	// http://core130.com:8081/api/CESApp/GetWorkMessage?account=web_Group&userid=000018&kind=1&filter=%20&size=10&page=1
 
-	Log.d( TAG , "App.getRootUrl( )=" + App.getRootUrl( ) );
+	Logger.d( TAG , "App.getRootUrl( )=" + App.getRootUrl( ) );
 
 	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.LOGIN_URL + "?" );
 	urlSbf.append( "account=" ).append( account );
@@ -498,7 +498,7 @@ public class LoginActivity extends Activity implements OnClickListener
 	    String userName = object.getString( "UserName" );
 	    boolean locked = object.getBoolean( "Locked" );
 
-	    Log.d( TAG , "userName=" + userName + ",depart=" + depart );
+	    Logger.d( TAG , "userName=" + userName + ",depart=" + depart );
 
 	    String cacheConn = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
 	    String currConn = mZtTv.getTag( ).toString( );

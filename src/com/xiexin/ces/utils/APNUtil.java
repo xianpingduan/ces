@@ -270,7 +270,7 @@ public class APNUtil {
 	public static boolean hasProxy(Context context) {
 		int netType = getMProxyType(context);
 		// #if ${polish.debug}
-		Log.d(TAG, "netType:" + netType);
+		Logger.d(TAG, "netType:" + netType);
 		// #endif
 		if (netType == MPROXYTYPE_CMWAP || netType == MPROXYTYPE_UNIWAP || netType == MPROXYTYPE_WAP || netType == MPROXYTYPE_CTWAP
 				|| netType == MPROXYTYPE_3GWAP) {
@@ -298,7 +298,7 @@ public class APNUtil {
 				return MPROXYTYPE_DEFAULT;
 			String typeName = info.getTypeName();
 			// #if ${polish.debug}
-			Log.d(TAG, "typeName:" + typeName);
+			Logger.d(TAG, "typeName:" + typeName);
 			// #endif
 			if (typeName.toUpperCase().equals("WIFI")) { // wifi����
 				return MPROXYTYPE_WIFI;
@@ -377,19 +377,19 @@ public class APNUtil {
 	public static boolean isNetworkRoaming(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity == null) {
-			Log.w(TAG, "couldn't get connectivity manager");
+			Logger.w(TAG, "couldn't get connectivity manager");
 		} else {
 			NetworkInfo info = connectivity.getActiveNetworkInfo();
 			if (info != null && info.getType() == ConnectivityManager.TYPE_MOBILE) {
 				TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 				if (tm != null && tm.isNetworkRoaming()) {
-					Log.d(TAG, "network is roaming");
+					Logger.d(TAG, "network is roaming");
 					return true;
 				} else {
-					Log.d(TAG, "network is not roaming");
+					Logger.d(TAG, "network is not roaming");
 				}
 			} else {
-				Log.d(TAG, "not using mobile network");
+				Logger.d(TAG, "not using mobile network");
 			}
 		}
 		return false;

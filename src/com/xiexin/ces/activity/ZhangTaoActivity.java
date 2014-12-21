@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.entry.ZhangTao;
+import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.ILoadingViewListener;
 import com.xiexin.ces.widgets.LoadingUIListView;
 import com.xiexin.ces.widgets.PullListView.IListViewListener;
@@ -101,7 +101,7 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 	private void initData() {
 		String ztListStr = App.getSharedPreference().getString(
 				Constants.ZHANG_TAO_LIST, "");
-		Log.d(TAG, "zhangtao info is " + ztListStr);
+		Logger.d(TAG, "zhangtao info is " + ztListStr);
 		if (!ztListStr.isEmpty()) {
 
 			mZhangTaoAdapter.addData(getZhangTaoList(ztListStr));
@@ -159,7 +159,7 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 				break;
 			case MSG_REFRESH_ZT_LIST:
 				if (mZhangTaoAdapter != null) {
-					Log.d(TAG, "mZhangTaoAdapter.notifyDataSetChanged()");
+					Logger.d(TAG, "mZhangTaoAdapter.notifyDataSetChanged()");
 					mZhangTaoAdapter.notifyDataSetChanged();
 				}
 
@@ -294,7 +294,7 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 						mCheckConnName = holder.ckBox.getTag().toString();
 						mCheckAccInfo = holder.accInfoTv.getTag().toString();
 					}
-					Log.d(TAG, "mCheckConnName=" + mCheckConnName);
+					Logger.d(TAG, "mCheckConnName=" + mCheckConnName);
 
 					mUiHandler.sendEmptyMessage(MSG_REFRESH_ZT_LIST);
 				}
@@ -328,7 +328,7 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn1:
-			Log.d(TAG, "选择的帐套是:" + mCheckConnName);
+			Logger.d(TAG, "选择的帐套是:" + mCheckConnName);
 			if (mCheckConnName == null || mCheckConnName.isEmpty()) {
 				Toast.makeText(ZhangTaoActivity.this,
 						getString(R.string.please_select_zt),

@@ -81,6 +81,11 @@ public class MessageFragment extends Fragment implements OnClickListener
     private static final int LOAD_LIST_LOADMORE = 2;
 
     public SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd" );
+    
+	private Handler mMainUIHandler;
+	public void setMainUIHandler(Handler handler){
+		mMainUIHandler = handler;
+	}
 
     private void dismissDialog()
     {
@@ -597,7 +602,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 		    TextView msgTypeTv = (TextView)v.findViewById( R.id.msg_type_tv );
 		    String idStr = idTv.getText( ).toString( );
 		    String msgType = msgTypeTv.getText( ).toString( );
-		    Log.d( TAG , "idStr=" + idStr + ",msgType=" + msgType );
+		    Logger.d( TAG , "idStr=" + idStr + ",msgType=" + msgType );
 		    showConfirmDialog( Integer.parseInt( idStr ) , Integer.parseInt( msgType ) );
 
 		    return false;
@@ -741,7 +746,7 @@ public class MessageFragment extends Fragment implements OnClickListener
     {
 	mCurrentPage = 1;
 	requestMsg( LOAD_LIST_REFRESH );
-	Log.d( TAG , "MessageFragment,onActivityResult" );
+	Logger.d( TAG , "MessageFragment,onActivityResult" );
 	super.onActivityResult( requestCode , resultCode , data );
     }
 }

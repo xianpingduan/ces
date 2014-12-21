@@ -415,7 +415,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    catch ( ParseException e )
 	    {
 		e.printStackTrace( );
-		Log.d( TAG , "date format error" );
+		Logger.d( TAG , "date format error" );
 		apprDate = "";
 	    }
 	    if( apprDate.equals( "0001-01-01" ) )
@@ -442,7 +442,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 		apprMemo = "";
 	    }
 	    holder.apprMemoTv.setTag( apprMemo );
-	    Log.d( TAG , "apprDate=" + apprDate );
+	    Logger.d( TAG , "apprDate=" + apprDate );
 	    // String isFinished = iar.getStatus();
 	    // Log.d(TAG,
 	    // "connName="+zt.getConnName()+"checked="+mMap.get(zt.getConnName()));

@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
+import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingUIListView;
 
 public class InvoiceSecondInfoActivity extends Activity implements
@@ -124,7 +125,7 @@ public class InvoiceSecondInfoActivity extends Activity implements
 			}
 		}
 
-		Log.d(TAG, "mDetContentStr=" + mDetContentStr + ",mPrgid=" + mPrgid);
+		Logger.d(TAG, "mDetContentStr=" + mDetContentStr + ",mPrgid=" + mPrgid);
 
 		try {
 			JSONArray array = new JSONArray(mDetContentStr);
@@ -223,7 +224,7 @@ public class InvoiceSecondInfoActivity extends Activity implements
 							content = sdf.format(date);
 						} catch (ParseException e) {
 							e.printStackTrace();
-							Log.d(TAG, "date format error");
+							Logger.d(TAG, "date format error");
 						}
 					}
 					contentTv.setText(content);
