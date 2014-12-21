@@ -44,7 +44,7 @@
 
                 <TextView
                     android:id="@+id/node_name_tv"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:textColor="@color/pl_deputy_light_text_color"
@@ -52,7 +52,7 @@
 
                 <TextView
                     android:id="@+id/node_time_tv"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"

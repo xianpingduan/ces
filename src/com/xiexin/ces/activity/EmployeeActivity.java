@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pada.juidownloader.util.LogUtils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,633 +49,601 @@ import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
 import com.xiexin.ces.widgets.LoadingUIListView;
 
-public class EmployeeActivity extends Activity implements OnClickListener
-{
+public class EmployeeActivity extends Activity implements OnClickListener {
 
-    private final static String TAG = "EmployeeActivity";
-
-    // header start
-    private LinearLayout mReturnLl;
-    private ImageView mReturnIv;
-    private TextView mReturnTv;
-    private TextView mTitle;
-    private Button mBtn1;
-    private Button mBtn2;
-
-    // header end
-
-    private LoadingUIListView mListView;
-    private EmployeeAdapter mEmployeeAdapter;
-
-    private LoadingDialog mLoadingDialog;
-
-    private String mConnName;// 账套信息
-
-    private RequestQueue mQueue;
-
-    private Employee mEmployeeChecked;
-
-    private EditText mSearchEt;
-    private Button mSearchBtn;
-
-    private int mFrom;
-
-    private HashMap< String , Employee > mSelectMap = new HashMap< String , Employee >( );
-
-    private void dismissDialog()
-    {
-
-	if( mLoadingDialog != null && mLoadingDialog.isShowing( ) )
-	{
-	    mLoadingDialog.dismiss( );
-	}
-
-    }
-
-    private void showDialog()
-    {
-	if( mLoadingDialog == null )
-	{
-	    mLoadingDialog = new LoadingDialog( this );
-	}
-
-	mLoadingDialog.show( );
-
-    }
-
-    @Override
-    protected void onCreate( Bundle savedInstanceState )
-    {
-	super.onCreate( savedInstanceState );
-	setContentView( R.layout.activity_employee );
-
-	mQueue = Volley.newRequestQueue( App.getAppContext( ) );
-	initView( );
-
-	initData( );
-
-    }
-
-    private void initView()
-    {
+	private final static String TAG = "EmployeeActivity";
 
 	// header start
-	mReturnLl = (LinearLayout)findViewById( R.id.return_ll );
-	mReturnIv = (ImageView)findViewById( R.id.return_iv );
-	mReturnTv = (TextView)findViewById( R.id.return_tv );
-	mTitle = (TextView)findViewById( R.id.title );
-	mBtn1 = (Button)findViewById( R.id.btn1 );
-	mBtn2 = (Button)findViewById( R.id.btn2 );
-	// /header end
+	private LinearLayout mReturnLl;
+	private ImageView mReturnIv;
+	private TextView mReturnTv;
+	private TextView mTitle;
+	private Button mBtn1;
+	private Button mBtn2;
 
-	// mInvoiceType = getIntent( ).getIntExtra( Constants.INVOICE_TYPE , 0
-	// );
-	mReturnTv.setText( getString( R.string.invoice_info ) );
-	mTitle.setText( getString( R.string.please_select_employee ) );
+	// header end
 
-	mBtn1.setVisibility( View.VISIBLE );
-	mBtn1.setText( getString( R.string.finish_to ) );
-	mBtn2.setVisibility( View.GONE );
-	mReturnLl.setVisibility( View.VISIBLE );
+	private LoadingUIListView mListView;
+	private EmployeeAdapter mEmployeeAdapter;
 
-	mBtn1.setOnClickListener( this );
-	// mBtn2.setOnClickListener( this );
-	mReturnLl.setOnClickListener( this );
+	private LoadingDialog mLoadingDialog;
 
-	mListView = (LoadingUIListView)findViewById( R.id.employee_list );
-	mListView.setFooterPullEnable( false );
-	mListView.setHeaderPullEnable( false );
+	private String mConnName;// 账套信息
 
-	mSearchEt = (EditText)findViewById( R.id.search_et );
+	private RequestQueue mQueue;
 
-	mSearchEt.addTextChangedListener( new TextWatcher( )
-	{
-	    @Override
-	    public void onTextChanged( CharSequence s , int start , int before , int count )
-	    {
-		Logger.d( TAG , "Text [" + s + "]" );
-		String filter = s.toString( );
-		if( filter != null && !filter.isEmpty( ) )
-		{
-		    filter = filter.trim( );
-		    Message msg = Message.obtain( );
-		    msg.what = MSG_SEARCH_REFRESH_LIST;
-		    msg.obj = filter;
-		    mUiHandler.sendMessage( msg );
+	private Employee mEmployeeChecked;
+
+	private EditText mSearchEt;
+	private Button mSearchBtn;
+
+	private int mFrom;
+	
+	private HashMap<String, Employee> mSelectMap = new HashMap<String, Employee>();
+
+	private void dismissDialog() {
+
+		if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+			mLoadingDialog.dismiss();
 		}
-	    }
 
-	    @Override
-	    public void beforeTextChanged( CharSequence s , int start , int count , int after )
-	    {
-
-	    }
-
-	    @Override
-	    public void afterTextChanged( Editable s )
-	    {}
-	} );
-
-    }
-
-    private void initData()
-    {
-
-	Intent intent = getIntent( );
-	mConnName = intent.getStringExtra( Constants.ZHANG_TAO_CONN_NAME );
-	mFrom = intent.getIntExtra( Constants.CHECK_EMPLOYEE_FROM , 0 );
-	if( mConnName == null || mConnName.isEmpty( ) )
-	{
-	    mConnName = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
 	}
 
-	Log.d( TAG , "mFrom=" + mFrom );
-
-	if( mEmployeeAdapter == null )
-	    mEmployeeAdapter = new EmployeeAdapter( );
-	mListView.setAdapter( mEmployeeAdapter );
-
-	requestEmployees( "" );
-    }
-
-    @Override
-    protected void onResume()
-    {
-	super.onResume( );
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-	super.onDestroy( );
-    }
-
-    @Override
-    public void onClick( View v )
-    {
-	switch ( v.getId( ) )
-	{
-	    case R.id.return_ll :
-		onBackPressed( );
-		break;
-	    case R.id.btn1 :
-		if( mEmployeeChecked != null || mSelectMap.size( ) > 0 )
-		{
-		    setResult( );
+	private void showDialog() {
+		if (mLoadingDialog == null) {
+			mLoadingDialog = new LoadingDialog(this);
 		}
-		else
-		{
-		    Toast.makeText( EmployeeActivity.this , getString( R.string.please_select_employee ) , Toast.LENGTH_SHORT ).show( );
-		}
-		break;
-	    default :
-		break;
+
+		mLoadingDialog.show();
+
 	}
 
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_employee);
 
-    private String mCheckUserId = null;
-    private String mCheckUserName = null;
+		mQueue = Volley.newRequestQueue(App.getAppContext());
+		initView();
 
-    private void generateCheckedUser()
-    {
+		initData();
 
-	switch ( mFrom )
-	{
-	    case Constants.CHECK_EMPLOYEE_FROM_NOTIFY :
-		StringBuffer userIdSbf = new StringBuffer( "" );
-		StringBuffer userNameSbf = new StringBuffer( "" );
-		for( Map.Entry< String , Employee > ee : mSelectMap.entrySet( ) )
-		{
-		    userIdSbf.append( ee.getKey( ) ).append( "," );
-		    userNameSbf.append( ee.getValue( ).getDescr( ) ).append( "," );
-		}
-		String ids = userIdSbf.toString( );
-		String names = userNameSbf.toString( );
-		Log.d( TAG , "ids=" + ids + ",names=" + names );
-		mCheckUserId = ids.substring( 0 , ids.lastIndexOf( "," ) );
-		mCheckUserName = names.substring( 0 , names.lastIndexOf( "," ) );
-
-		break;
-	    case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN :
-		mCheckUserId = mEmployeeChecked.getEmployeeID( );
-		mCheckUserName = mEmployeeChecked.getDescr( );
-		Log.d( TAG , "mCheckUserId=" + mCheckUserId + ",mCheckUserName=" + mCheckUserName );
-		break;
-
-	    default :
-		break;
 	}
 
-    }
+	private void initView() {
 
-    //
-    private void setResult()
-    {
-	generateCheckedUser( );
-	Intent in = new Intent( );
-	// in.putExtra(Constants.ZHANG_TAO_CONN_NAME, mCheckConnName);
-	// in.putExtra(Constants.ZHANG_TAO_ACCINFO, mCheckAccInfo);
-	Log.d( TAG , mCheckUserId + "," + mCheckUserName );
-	in.putExtra( "userid" , mCheckUserId );
-	in.putExtra( "userName" , mCheckUserName );
-	setResult( RESULT_OK , in );
-	finish( );
-    }
+		// header start
+		mReturnLl = (LinearLayout) findViewById(R.id.return_ll);
+		mReturnIv = (ImageView) findViewById(R.id.return_iv);
+		mReturnTv = (TextView) findViewById(R.id.return_tv);
+		mTitle = (TextView) findViewById(R.id.title);
+		mBtn1 = (Button) findViewById(R.id.btn1);
+		mBtn2 = (Button) findViewById(R.id.btn2);
+		// /header end
 
-    private void doSearch()
-    {
+		// mInvoiceType = getIntent( ).getIntExtra( Constants.INVOICE_TYPE , 0
+		// );
+		mReturnTv.setText(getString(R.string.invoice_info));
+		mTitle.setText(getString(R.string.please_select_employee));
 
-	String filter = mSearchEt.getText( ).toString( );
+		mBtn1.setVisibility(View.VISIBLE);
+		mBtn1.setText(getString(R.string.finish_to));
+		mBtn2.setVisibility(View.GONE);
+		mReturnLl.setVisibility(View.VISIBLE);
 
-	if( filter == null || filter.isEmpty( ) )
-	{
-	    Toast.makeText( App.getAppContext( ) , App.getAppContext( ).getString( R.string.please_enter_employee_name ) , Toast.LENGTH_SHORT ).show( );
-	    return;
-	}
-	else
-	{
-	    requestEmployees( filter );
-	}
+		mBtn1.setOnClickListener(this);
+		// mBtn2.setOnClickListener( this );
+		mReturnLl.setOnClickListener(this);
 
-    }
+		mListView = (LoadingUIListView) findViewById(R.id.employee_list);
+		mListView.setFooterPullEnable(false);
+		mListView.setHeaderPullEnable(false);
 
-    private ArrayList< Employee > getEmployeeList( String jsonStr )
-    {
+		mSearchEt = (EditText) findViewById(R.id.search_et);
 
-	ArrayList< Employee > invoiceList = new ArrayList< Employee >( );
-	try
-	{
-	    JSONArray arrays = new JSONArray( jsonStr );
-	    for( int i = 0 ; i < arrays.length( ) ; i++ )
-	    {
-
-		JSONObject obj = arrays.getJSONObject( i );
-		Employee employee = new Employee( );
-		employee.setEmployeeID( obj.getString( "EmployeeID" ) );
-		employee.setDescr( obj.getString( "Descr" ) );
-		employee.setDepart( obj.getString( "Depart" ) );
-		employee.setJob( obj.getString( "Job" ) );
-		invoiceList.add( employee );
-	    }
-	}
-	catch ( JSONException e )
-	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace( );
-	}
-	return invoiceList;
-
-    }
-
-    private ArrayList< Employee > mEmployees = null;
-
-    private void requestEmployees( String filter )
-    {
-
-	showDialog( );
-
-	mEmployees = EmployeeManager.getInstance( App.getAppContext( ) ).loadAll( );
-
-	if( mEmployees != null && mEmployees.size( ) > 0 )
-	{
-	    mUiHandler.sendEmptyMessage( MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS );
-	}
-	else
-	{
-	    StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_EMPLOYEE_LIST + "?" );
-	    urlSbf.append( "account=" ).append( mConnName );
-	    urlSbf.append( "&filter=" ).append( filter );
-
-	    JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
-	    {
-		@Override
-		public void onResponse( JSONObject response )
-		{
-		    Logger.d( TAG , "----response----" + response.toString( ) );
-		    try
-		    {
-			int resCode = response.getInt( "Success" );
-			Message msg = Message.obtain( );
-			if( resCode == 0 )
-			{
-			    msg.what = MSG_GET_EMPLOYEE_LIST_SUCCESS;
-			    msg.obj = response.getString( "Data" );
+		mSearchEt.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				Logger.d(TAG, "Text [" + s + "]");
+				String filter = s.toString();
+				if (filter != null) {
+					filter = filter.trim();
+					Message msg = Message.obtain();
+					msg.what = MSG_SEARCH_REFRESH_LIST;
+					msg.obj = filter;
+					mUiHandler.sendMessage(msg);
+				}
 			}
-			else
-			{
-			    msg.what = MSG_GET_EMPLOYEE_LIST_ERROR;
-			    msg.obj = response.get( "Msg" );
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+
 			}
-			mUiHandler.sendMessage( msg );
-		    }
-		    catch ( JSONException e )
-		    {
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
+	}
+
+	private void initData() {
+
+		Intent intent = getIntent();
+		mConnName = intent.getStringExtra(Constants.ZHANG_TAO_CONN_NAME);
+		mFrom = intent.getIntExtra(Constants.CHECK_EMPLOYEE_FROM, 0);
+		if (mConnName == null || mConnName.isEmpty()) {
+			mConnName = App.getSharedPreference().getString(
+					Constants.ZHANG_TAO_CONN_NAME, "");
+		}
+
+		Log.d(TAG, "mFrom=" + mFrom);
+
+		if (mEmployeeAdapter == null)
+			mEmployeeAdapter = new EmployeeAdapter();
+		mListView.setAdapter(mEmployeeAdapter);
+
+		requestEmployees("");
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.return_ll:
+			onBackPressed();
+			break;
+		case R.id.btn1:
+			if (mEmployeeChecked != null || mSelectMap.size() > 0) {
+				setResult();
+			} else {
+				Toast.makeText(EmployeeActivity.this,
+						getString(R.string.please_select_employee),
+						Toast.LENGTH_SHORT).show();
+			}
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	private String mCheckUserId = null;
+	private String mCheckUserName = null;
+
+	private void generateCheckedUser() {
+
+		switch (mFrom) {
+		case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
+			StringBuffer userIdSbf = new StringBuffer("");
+			StringBuffer userNameSbf = new StringBuffer("");
+			for (Map.Entry<String, Employee> ee : mSelectMap.entrySet()) {
+				userIdSbf.append(ee.getKey()).append(",");
+				userNameSbf.append(ee.getValue().getDescr()).append(",");
+			}
+			String ids = userIdSbf.toString();
+			String names = userNameSbf.toString();
+			Log.d(TAG, "ids=" + ids + ",names=" + names);
+			mCheckUserId = ids.substring(0, ids.lastIndexOf(","));
+			mCheckUserName = names.substring(0, names.lastIndexOf(","));
+
+			break;
+		case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
+			mCheckUserId = mEmployeeChecked.getEmployeeID();
+			mCheckUserName = mEmployeeChecked.getDescr();
+			Log.d(TAG, "mCheckUserId=" + mCheckUserId + ",mCheckUserName="
+					+ mCheckUserName);
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+	//
+	private void setResult() {
+		generateCheckedUser();
+		Intent in = new Intent();
+		// in.putExtra(Constants.ZHANG_TAO_CONN_NAME, mCheckConnName);
+		// in.putExtra(Constants.ZHANG_TAO_ACCINFO, mCheckAccInfo);
+		Log.d(TAG, mCheckUserId + "," + mCheckUserName);
+		in.putExtra("userid", mCheckUserId);
+		in.putExtra("userName", mCheckUserName);
+		setResult(RESULT_OK, in);
+		finish();
+	}
+
+	private void doSearch() {
+
+		String filter = mSearchEt.getText().toString();
+
+		if (filter == null || filter.isEmpty()) {
+			Toast.makeText(
+					App.getAppContext(),
+					App.getAppContext().getString(
+							R.string.please_enter_employee_name),
+					Toast.LENGTH_SHORT).show();
+			return;
+		} else {
+			requestEmployees(filter);
+		}
+
+	}
+
+	private ArrayList<Employee> getEmployeeList(String jsonStr) {
+
+		ArrayList<Employee> invoiceList = new ArrayList<Employee>();
+		try {
+			JSONArray arrays = new JSONArray(jsonStr);
+			for (int i = 0; i < arrays.length(); i++) {
+
+				JSONObject obj = arrays.getJSONObject(i);
+				Employee employee = new Employee();
+				employee.setEmployeeID(obj.getString("EmployeeID"));
+				employee.setDescr(obj.getString("Descr"));
+				employee.setDepart(obj.getString("Depart"));
+				employee.setJob(obj.getString("Job"));
+				invoiceList.add(employee);
+			}
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace( );
-		    }
+			e.printStackTrace();
 		}
-	    } , new ErrorListener( )
-	    {
-		@Override
-		public void onErrorResponse( VolleyError error )
-		{
-		    Logger.d( TAG , "----e----" + error.toString( ) );
-		    mUiHandler.sendEmptyMessage( MSG_GET_EMPLOYEE_LIST_ERROR );
+		return invoiceList;
+
+	}
+
+	private ArrayList<Employee> mEmployees = null;
+
+	private void requestEmployees(String filter) {
+
+		showDialog();
+
+		mEmployees = EmployeeManager.getInstance(App.getAppContext()).loadAll();
+
+		if (mEmployees != null && mEmployees.size() > 0) {
+			mUiHandler.sendEmptyMessage(MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS);
+		} else {
+			StringBuffer urlSbf = new StringBuffer(App.getRootUrl()
+					+ Constants.GET_EMPLOYEE_LIST + "?");
+			urlSbf.append("account=").append(mConnName);
+			urlSbf.append("&filter=").append(filter);
+
+			JsonObjectRequest json = new JsonObjectRequest(Method.GET,
+					urlSbf.toString(), null, new Listener<JSONObject>() {
+						@Override
+						public void onResponse(JSONObject response) {
+							Logger.d(TAG,
+									"----response----" + response.toString());
+							try {
+								int resCode = response.getInt("Success");
+								Message msg = Message.obtain();
+								if (resCode == 0) {
+									msg.what = MSG_GET_EMPLOYEE_LIST_SUCCESS;
+									msg.obj = response.getString("Data");
+								} else {
+									msg.what = MSG_GET_EMPLOYEE_LIST_ERROR;
+									msg.obj = response.get("Msg");
+								}
+								mUiHandler.sendMessage(msg);
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}, new ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+							Logger.d(TAG, "----e----" + error.toString());
+							mUiHandler
+									.sendEmptyMessage(MSG_GET_EMPLOYEE_LIST_ERROR);
+						}
+					});
+			json.setShouldCache(true);
+			mQueue.add(json);
+			mQueue.start();
 		}
-	    } );
-	    json.setShouldCache( true );
-	    mQueue.add( json );
-	    mQueue.start( );
+
 	}
 
-    }
+	private static final int MSG_GET_EMPLOYEE_LIST_SUCCESS = 1;
+	private static final int MSG_GET_EMPLOYEE_LIST_ERROR = 2;
+	private static final int MSG_REFRESH_EMPLOYEE_LIST = 3;
+	private static final int MSG_SEARCH_REFRESH_LIST = 4;
+	private static final int MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS = 5;
 
-    private static final int MSG_GET_EMPLOYEE_LIST_SUCCESS = 1;
-    private static final int MSG_GET_EMPLOYEE_LIST_ERROR = 2;
-    private static final int MSG_REFRESH_EMPLOYEE_LIST = 3;
-    private static final int MSG_SEARCH_REFRESH_LIST = 4;
-    private static final int MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS = 5;
+	private Handler mUiHandler = new Handler() {
 
-    private Handler mUiHandler = new Handler( )
-    {
-
-	@Override
-	public void handleMessage( Message msg )
-	{
-	    super.handleMessage( msg );
-
-	    switch ( msg.what )
-	    {
-		case MSG_GET_EMPLOYEE_LIST_SUCCESS :
-		    dismissDialog( );
-
-		    String dataStr = (String)msg.obj;
-		    ArrayList< Employee > employees = getEmployeeList( dataStr );
-		    if( employees.size( ) > 0 )
-		    {
-			mEmployeeAdapter.addData( employees );
-		    }
-		    mEmployeeAdapter.notifyDataSetChanged( );
-		    break;
-
-		case MSG_GET_EMPLOYEE_LIST_ERROR :
-		    dismissDialog( );
-		    Toast.makeText( App.getAppContext( ) , App.getAppContext( ).getString( R.string.request_appr_road_list_error ) , Toast.LENGTH_SHORT ).show( );
-		    break;
-
-		case MSG_REFRESH_EMPLOYEE_LIST :
-		    mEmployeeAdapter.notifyDataSetChanged( );
-		    break;
-
-		case MSG_SEARCH_REFRESH_LIST :
-		    Log.d( TAG , (String)msg.obj );
-		    mEmployeeAdapter.getFilter( ).filter( (String)msg.obj );
-		    break;
-		case MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS :
-		    dismissDialog( );
-		    mEmployeeAdapter.addData( mEmployees );
-		    mEmployeeAdapter.notifyDataSetChanged( );
-		    break;
-		default :
-		    break;
-	    }
-	}
-
-    };
-
-    private class EmployeeAdapter extends BaseAdapter implements Filterable
-    {
-
-	private ArrayList< Employee > list = new ArrayList< Employee >( );
-
-	private HashMap< String , Boolean > mMap = new HashMap< String , Boolean >( );
-
-	public void addData( ArrayList< Employee > data )
-	{
-	    list.clear( );
-	    list.addAll( data );
-
-	    // 初始化
-	    for( Employee e : list )
-	    {
-		mMap.put( e.getEmployeeID( ) , false );
-	    }
-	}
-
-	@Override
-	public int getCount()
-	{
-	    // TODO Auto-generated method stub
-	    return list.size( );
-	}
-
-	@Override
-	public Object getItem( int arg0 )
-	{
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	@Override
-	public long getItemId( int position )
-	{
-	    // TODO Auto-generated method stub
-	    return position;
-	}
-
-	@Override
-	public View getView( int position , View convertView , ViewGroup parent )
-	{
-
-	    ViewHolder holder;
-	    if( convertView == null )
-	    {
-		convertView = App.getLayoutInflater( ).inflate( R.layout.activity_employee_list_item , null );
-		holder = new ViewHolder( );
-		holder.employeeFrameRl = (RelativeLayout)findViewById( R.id.employee_frame );
-		holder.employeeNameTv = (TextView)convertView.findViewById( R.id.employee_name_tv );
-		holder.employeeDepartTv = (TextView)convertView.findViewById( R.id.employee_depart_tv );
-		holder.employeeJobTv = (TextView)convertView.findViewById( R.id.employee_job_tv );
-		holder.employeeCheckCb = (CheckBox)convertView.findViewById( R.id.employee_check_cb );
-
-		convertView.setTag( holder );
-	    }
-	    else
-	    {
-		holder = (ViewHolder)convertView.getTag( );
-	    }
-
-	    bindData( holder , list.get( position ) );
-
-	    return convertView;
-	}
-
-	private void bindData( final ViewHolder holder , final Employee employee )
-	{
-
-	    holder.employeeNameTv.setText( employee.getDescr( ) );
-	    holder.employeeDepartTv.setText( employee.getDepart( ) );
-	    holder.employeeJobTv.setTag( employee.getJob( ) );
-	    holder.employeeCheckCb.setTag( employee );
-
-	    switch ( mFrom )
-	    {
-		case Constants.CHECK_EMPLOYEE_FROM_NOTIFY :
-		    Employee empId = mSelectMap.get( employee.getEmployeeID( ) );
-		    if( empId != null && empId.getEmployeeID( ).equals( employee.getEmployeeID( ) ) )
-		    {
-			holder.employeeCheckCb.setChecked( true );
-			mMap.put( employee.getEmployeeID( ) , true );
-		    }
-		    else
-		    {
-			holder.employeeCheckCb.setChecked( false );
-			mMap.put( employee.getEmployeeID( ) , false );
-		    }
-		    break;
-		case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN :
-		    if( mEmployeeChecked != null && mEmployeeChecked.getEmployeeID( ).equals( employee.getEmployeeID( ) ) )
-		    {
-			holder.employeeCheckCb.setChecked( true );
-			mMap.put( employee.getEmployeeID( ) , true );
-		    }
-		    else
-		    {
-			holder.employeeCheckCb.setChecked( false );
-			mMap.put( employee.getEmployeeID( ) , false );
-		    }
-		    break;
-		default :
-		    break;
-	    }
-
-	    holder.employeeCheckCb.setOnClickListener( new View.OnClickListener( )
-	    {
 		@Override
-		public void onClick( View v )
-		{
-		    Employee ele = (Employee)holder.employeeCheckCb.getTag( );
-		    if( !holder.employeeCheckCb.isChecked( ) )
-		    {
-			holder.employeeCheckCb.setChecked( false );
-			mMap.put( ele.getEmployeeID( ) , false );
-			switch ( mFrom )
-			{
-			    case Constants.CHECK_EMPLOYEE_FROM_NOTIFY :
-				mSelectMap.remove( ele.getEmployeeID( ) );
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+
+			switch (msg.what) {
+			case MSG_GET_EMPLOYEE_LIST_SUCCESS:
+				dismissDialog();
+
+				String dataStr = (String) msg.obj;
+				mEmployees = getEmployeeList(dataStr);
+				if (mEmployees!=null&&mEmployees.size() > 0) {
+					mEmployeeAdapter.addData(mEmployees);
+				}
+				mEmployeeAdapter.notifyDataSetChanged();
 				break;
-			    case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN :
-				mEmployeeChecked = null;
+
+			case MSG_GET_EMPLOYEE_LIST_ERROR:
+				dismissDialog();
+				Toast.makeText(
+						App.getAppContext(),
+						App.getAppContext().getString(
+								R.string.request_appr_road_list_error),
+						Toast.LENGTH_SHORT).show();
 				break;
-			    default :
+
+			case MSG_REFRESH_EMPLOYEE_LIST:
+				mEmployeeAdapter.notifyDataSetChanged();
+				break;
+
+			case MSG_SEARCH_REFRESH_LIST:
+				Log.d(TAG,"MSG_SEARCH_REFRESH_LIST,filter="+ (String) msg.obj);
+				String filter = (String) msg.obj;
+				ArrayList<Employee> tempList = new ArrayList<Employee>();
+				tempList.clear();
+				if(filter.isEmpty()&&mEmployees!=null){
+					tempList.addAll(mEmployees);
+				}else{
+					for(Employee e:mEmployees){
+						if(e.getDescr().contains(filter)){
+							tempList.add(e);
+						}
+					}
+				}
+				mEmployeeAdapter.addData(tempList);
+				mEmployeeAdapter.notifyDataSetChanged();
+//				mEmployeeAdapter.getFilter().filter((String) msg.obj);
+				break;
+			case MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS:
+				dismissDialog();
+				mEmployeeAdapter.addData(mEmployees);
+				mEmployeeAdapter.notifyDataSetChanged();
+				break;
+			default:
+				break;
+			}
+		}
+
+	};
+
+	private class EmployeeAdapter extends BaseAdapter {
+
+		private ArrayList<Employee> list = new ArrayList<Employee>();
+
+		private HashMap<String, Boolean> mMap = new HashMap<String, Boolean>();
+
+		public void addData(ArrayList<Employee> data) {
+			list.clear();
+			list.addAll(data);
+
+			// 初始化
+			for (Employee e : list) {
+				mMap.put(e.getEmployeeID(), false);
+			}
+		}
+		public ArrayList<Employee> getData(){
+			return list;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return list.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+
+			ViewHolder holder;
+			if (convertView == null) {
+				convertView = App.getLayoutInflater().inflate(
+						R.layout.activity_employee_list_item, null);
+				holder = new ViewHolder();
+				holder.employeeFrameRl = (RelativeLayout) findViewById(R.id.employee_frame);
+				holder.employeeNameTv = (TextView) convertView
+						.findViewById(R.id.employee_name_tv);
+				holder.employeeDepartTv = (TextView) convertView
+						.findViewById(R.id.employee_depart_tv);
+				holder.employeeJobTv = (TextView) convertView
+						.findViewById(R.id.employee_job_tv);
+				holder.employeeCheckCb = (CheckBox) convertView
+						.findViewById(R.id.employee_check_cb);
+
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+
+			bindData(holder, list.get(position));
+
+			return convertView;
+		}
+
+		private void bindData(final ViewHolder holder, final Employee employee) {
+
+			holder.employeeNameTv.setText(employee.getDescr());
+			holder.employeeDepartTv.setText(employee.getDepart());
+			holder.employeeJobTv.setTag(employee.getJob());
+			holder.employeeCheckCb.setTag(employee);
+
+			switch (mFrom) {
+			case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
+				Employee empId = mSelectMap.get(employee.getEmployeeID());
+				if (empId != null
+						&& empId.getEmployeeID().equals(
+								employee.getEmployeeID())) {
+					holder.employeeCheckCb.setChecked(true);
+					mMap.put(employee.getEmployeeID(), true);
+				} else {
+					holder.employeeCheckCb.setChecked(false);
+					mMap.put(employee.getEmployeeID(), false);
+				}
+				break;
+			case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
+				if (mEmployeeChecked != null
+						&& mEmployeeChecked.getEmployeeID().equals(
+								employee.getEmployeeID())) {
+					holder.employeeCheckCb.setChecked(true);
+					mMap.put(employee.getEmployeeID(), true);
+				} else {
+					holder.employeeCheckCb.setChecked(false);
+					mMap.put(employee.getEmployeeID(), false);
+				}
+				break;
+			default:
 				break;
 			}
 
-		    }
-		    else
-		    {
-			holder.employeeCheckCb.setChecked( true );
-			mMap.put( ele.getEmployeeID( ) , true );
+			holder.employeeCheckCb
+					.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							Employee ele = (Employee) holder.employeeCheckCb
+									.getTag();
+							if (!holder.employeeCheckCb.isChecked()) {
+								holder.employeeCheckCb.setChecked(false);
+								mMap.put(ele.getEmployeeID(), false);
+								switch (mFrom) {
+								case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
+									mSelectMap.remove(ele.getEmployeeID());
+									break;
+								case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
+									mEmployeeChecked = null;
+									break;
+								default:
+									break;
+								}
 
-			switch ( mFrom )
-			{
-			    case Constants.CHECK_EMPLOYEE_FROM_NOTIFY :
-				mSelectMap.put( ele.getEmployeeID( ) , ele );
-				break;
-			    case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN :
-				mEmployeeChecked = ele;
-				break;
+							} else {
+								holder.employeeCheckCb.setChecked(true);
+								mMap.put(ele.getEmployeeID(), true);
 
-			    default :
-				break;
-			}
-		    }
-		    if( mFrom == Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN )
-		    {
-			mUiHandler.sendEmptyMessage( MSG_REFRESH_EMPLOYEE_LIST );
-		    }
+								switch (mFrom) {
+								case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
+									mSelectMap.put(ele.getEmployeeID(), ele);
+									break;
+								case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
+									mEmployeeChecked = ele;
+									break;
+
+								default:
+									break;
+								}
+							}
+							if (mFrom == Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN) {
+								mUiHandler
+										.sendEmptyMessage(MSG_REFRESH_EMPLOYEE_LIST);
+							}
+						}
+					});
+			// 同步checkBox事件
+			// Log.d(TAG, "holder.employeeFrameRl=" + holder.employeeFrameRl);
+			// holder.employeeFrameRl.setOnClickListener(new
+			// View.OnClickListener() {
+			// @Override
+			// public void onClick(View v) {
+			// ((ViewHolder) v.getTag()).employeeCheckCb.performClick();
+			// }
+			// });
 		}
-	    } );
-	    // 同步checkBox事件
-	    // Log.d(TAG, "holder.employeeFrameRl=" + holder.employeeFrameRl);
-	    // holder.employeeFrameRl.setOnClickListener(new
-	    // View.OnClickListener() {
-	    // @Override
-	    // public void onClick(View v) {
-	    // ((ViewHolder) v.getTag()).employeeCheckCb.performClick();
-	    // }
-	    // });
+
+//		public Filter tmpFilter = new Filter() {
+//
+//			@Override
+//			protected FilterResults performFiltering(CharSequence constraint) {
+//				FilterResults results = new FilterResults();
+//				Log.d(TAG, "constraint=" + constraint);
+//				// We implement here the filter logic
+//				if (constraint == null || constraint.length() == 0
+//						|| constraint.toString().isEmpty()) {
+//					// No filter implemented we return all the list
+//					Log.d(TAG, "constraint is empty");
+//					results.values = list;
+//					results.count = list.size();
+//				} else {
+//					// We perform filtering operation
+//					ArrayList<Employee> nEmployeeList = new ArrayList<Employee>();
+//					nEmployeeList.clear();
+//					for (Employee p : list) {
+//						if (p.getDescr().contains(
+//								constraint.toString().toUpperCase())
+//								&& !constraint.toString().toUpperCase()
+//										.isEmpty()) {
+//							nEmployeeList.add(p);
+//						} else if (constraint.toString().toUpperCase()
+//								.isEmpty()) {
+//							nEmployeeList.add(p);
+//						}
+//					}
+//
+//					results.values = nEmployeeList;
+//					results.count = nEmployeeList.size();
+//
+//				}
+//				return results;
+//			}
+//
+//			@Override
+//			protected void publishResults(CharSequence constraint,
+//					FilterResults results) {
+//				// Now we have to inform the adapter about the new list
+//				// filtered
+//				Logger.d(TAG, "publishResults,results.count=" + results.count);
+//				list=(ArrayList<Employee>) results.values;
+//				notifyDataSetChanged();
+//			}
+//
+//		};
+//
+//		@Override
+//		public Filter getFilter() {
+//			return tmpFilter;
+//		}
+	}
+
+	class ViewHolder {
+		RelativeLayout employeeFrameRl;
+		TextView employeeNameTv;
+		TextView employeeDepartTv;
+		TextView employeeJobTv;
+		CheckBox employeeCheckCb;
 	}
 
 	@Override
-	public Filter getFilter()
-	{
-	    return new Filter( )
-	    {
-
-		@Override
-		protected FilterResults performFiltering( CharSequence constraint )
-		{
-		    FilterResults results = new FilterResults( );
-		    Log.d( TAG , "constraint=" + constraint );
-		    // We implement here the filter logic
-		    if( constraint == null || constraint.length( ) == 0 )
-		    {
-			// No filter implemented we return all the list
-			results.values = list;
-			results.count = list.size( );
-		    }
-		    else
-		    {
-			// We perform filtering operation
-			ArrayList< Employee > nEmployeeList = new ArrayList< Employee >( );
-
-			for( Employee p : list )
-			{
-			    if( p.getDescr( ).contains( constraint.toString( ).toUpperCase( ) ) )
-				nEmployeeList.add( p );
-			}
-
-			results.values = nEmployeeList;
-			results.count = nEmployeeList.size( );
-
-		    }
-		    return results;
-		}
-
-		@Override
-		protected void publishResults( CharSequence constraint , FilterResults results )
-		{
-		    // Now we have to inform the adapter about the new list
-		    // filtered
-		    if( results.count == 0 )
-			notifyDataSetInvalidated( );
-		    else
-		    {
-			list = (ArrayList< Employee >)results.values;
-			notifyDataSetChanged( );
-		    }
-		}
-
-	    };
+	public void onBackPressed() {
+		super.onBackPressed();
+		finish();
 	}
-    }
-
-    class ViewHolder
-    {
-	RelativeLayout employeeFrameRl;
-	TextView employeeNameTv;
-	TextView employeeDepartTv;
-	TextView employeeJobTv;
-	CheckBox employeeCheckCb;
-    }
-
-    @Override
-    public void onBackPressed()
-    {
-	super.onBackPressed( );
-	finish( );
-    }
 
 }

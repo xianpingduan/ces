@@ -39,6 +39,8 @@
     
     <dimen name="left_menu_scrollview_margin_top">137dp</dimen>
     
+    <dimen name="left_menu_scrollview_margin_buttom">68dp</dimen>
+    
     <dimen name="approval_road_height">80dp</dimen>
     <dimen name="look_info_height">40dp</dimen>
     

@@ -336,7 +336,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener
 		invoice.setChannel( obj.getString( "Channel" ) );
 		invoice.setAccName( obj.getString( "AccName" ) );
 		invoice.setVerType( obj.getString( "VerType" ).equals( "null" ) ? "" : obj.getString( "VerType" ) );
-		invoice.setTotalCost( obj.getDouble( "TotalCost" ) );
+		invoice.setTotalCost( obj.getInt( "TotalCost" ) );
 		invoice.setApprDate( obj.getString( "ApprDate" ) );
 		invoice.setProcessMode( obj.getString( "ProcessMode" ).equals( "null" ) ? "" : obj.getString( "ProcessMode" ) );
 		invoice.setStatus( obj.getString( "Status" ).equals( "null" ) ? "" : obj.getString( "Status" ) );
@@ -551,7 +551,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener
 	    holder.invoiceIdTv.setText( invoice.getDataNbr( ) );
 	    holder.invoiceDateTv.setText( apprDate );
 	    holder.departUserNameTv.setText( invoice.getDepart( ) + " " + invoice.getApprName( ) );
-	    holder.moneyTv.setText( "￥" + invoice.getTotalCost( ) + "" );
+	    holder.moneyTv.setText( "￥" + String.valueOf(invoice.getTotalCost( ))  );
 	    holder.prgIdTv.setText( invoice.getPrgID( ) );
 	    holder.accountTv.setText( invoice.getAccount( ) );
 	    holder.invoiceDescTv.setText( invoice.getReason( ) );

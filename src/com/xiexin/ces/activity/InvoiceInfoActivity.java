@@ -757,7 +757,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 		public void onClick( View v )
 		{
 		    Object obj = v.getTag( );
-		    if( obj != null )
+		    if( obj != null && !((String)obj).isEmpty())
 		    {
 			Logger.d( TAG , "mobile =" + (String)obj );
 			sendSMS( ( (String)obj ) );
@@ -777,7 +777,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener
 		public void onClick( View v )
 		{
 		    Object obj = v.getTag( );
-		    if( obj != null )
+		    if( obj != null && !((String)obj).isEmpty() )
 		    {
 			Logger.d( TAG , "mobile =" + (String)obj );
 			callPhone( ( (String)obj ) );

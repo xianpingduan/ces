@@ -12,7 +12,7 @@ public class Invoice {
 	private String Channel;
 	private String AccName;
 	private String VerType;
-	private double TotalCost;
+	private int TotalCost;
 	private String ApprDate;
 	private String ProcessMode;
 	private String Status;
@@ -79,10 +79,10 @@ public class Invoice {
 	public void setVerType(String verType) {
 		VerType = verType;
 	}
-	public double getTotalCost() {
+	public int getTotalCost() {
 		return TotalCost;
 	}
-	public void setTotalCost(double totalCost) {
+	public void setTotalCost(int totalCost) {
 		TotalCost = totalCost;
 	}
 	public String getApprDate() {

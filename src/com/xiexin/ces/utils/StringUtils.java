@@ -9,4 +9,9 @@ public class StringUtils {
 			return str;
 		}
 	}
+	
+	public static String numberToStr(String money){
+		
+		return "";
+	}
 }

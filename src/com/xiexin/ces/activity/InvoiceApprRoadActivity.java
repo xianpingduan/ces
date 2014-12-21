@@ -71,7 +71,6 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
     private RequestQueue mQueue;
 
     public SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd" );
-    public SimpleDateFormat sdfTime = new SimpleDateFormat( "HH:mm" );
 
     private void dismissDialog()
     {
@@ -395,12 +394,23 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 
 	    String apprDate = iar.getApprDate( );
 	    String apprTime = "";
+	    
+	    if(!apprDate.isEmpty()){
+	    	apprTime=apprDate.substring(apprDate.lastIndexOf("T")+1);
+	    	if(apprTime.contains(".")){
+		    	apprTime=apprTime.substring(0,apprTime.lastIndexOf("."));
+	    	}
+	    }
+	    if( apprTime.equals( "00:00:00" ) )
+	    {
+		apprTime = "";
+	    }
+	    
 	    Date date = new Date( );
 	    try
 	    {
 		date = sdf.parse( apprDate );
 		apprDate = sdf.format( date );
-		apprTime = sdfTime.format( date );
 	    }
 	    catch ( ParseException e )
 	    {
@@ -412,13 +422,11 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    {
 		apprDate = "";
 	    }
-
-	    if( apprTime.equals( "00:00" ) )
-	    {
-		apprTime = "";
-	    }
+	    
+	  
 
 	    Logger.d( TAG , "bindData,date =" + apprDate );
+	    Logger.d( TAG , "bindData,apprTime =" + apprTime );
 
 	    String apprObjName = iar.getApprObjName( );
 	    if( apprObjName == null || apprObjName.equals( "null" ) )
@@ -444,6 +452,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 		holder.processModeTv.setTextColor( Color.parseColor( "#0160fe" ) );
 		holder.apprDateTv.setTextColor( Color.parseColor( "#0160fe" ) );
 		holder.apprMemoTv.setTextColor( Color.parseColor( "#0160fe" ) );
+		holder.apprTimeTv.setTextColor( Color.parseColor( "#0160fe" ) );
 	    }
 	    else
 	    {
