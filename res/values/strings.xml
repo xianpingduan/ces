@@ -85,8 +85,8 @@
     
     <string name="click_exit_label">"再按一次退出程序" </string>
     
-    <string name="default_server_confi_url">http://core130.com</string>
-    <string name="default_server_confi_port">8081</string>
+    <string name="default_server_confi_url">http://210.75.12.178</string>
+    <string name="default_server_confi_port">8091</string>
     
     <string name="switch_account_text">切换帐套</string>
     <string name="loginout_text">注销</string>

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -45,8 +44,8 @@ public class App extends Application
 
     public static String getRootUrl()
     {
-	String rootUrl = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "http://core130.com" );
-	String port = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "8081" );
+	String rootUrl = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "http://210.75.12.178" );
+	String port = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "8091" );
 
 	Logger.d( TAG , "App.getRootUrl=" + rootUrl + ":" + port + "/api/CESApp/" );
 	return rootUrl + ":" + port + "/api/CESApp/";

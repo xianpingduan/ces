@@ -317,11 +317,9 @@ public class MenuActivity extends FragmentActivity implements
 		thirdList.add(itemInvoice);
 		thirdList.add(itemRecord);
 
-		// resideMenu.addMenuItem( itemPendApproval , ResideMenu.DIRECTION_LEFT
-		// );
+		// resideMenu.addMenuItem( itemPendApproval , ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem( itemSendItem , ResideMenu.DIRECTION_LEFT );
-		// resideMenu.addMenuItem( itemScratchUpcome , ResideMenu.DIRECTION_LEFT
-		// );
+		// resideMenu.addMenuItem( itemScratchUpcome , ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem( itemApproved , ResideMenu.DIRECTION_LEFT );
 
 		resideMenu.addMenuItem(oneList, ResideMenu.DIRECTION_LEFT);
