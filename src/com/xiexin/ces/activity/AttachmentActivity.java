@@ -1,6 +1,8 @@
 package com.xiexin.ces.activity;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,11 +19,15 @@ import pada.juidownloadmanager.IDownloadTaskStateListener;
 import pada.juidownloadmanager.JuiDownloadService;
 import pada.juidownloadmanager.entry.DownloadInfo;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,6 +46,7 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.entry.AttachMent;
+import com.xiexin.ces.utils.APNUtil;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.utils.Md5Util;
 import com.xiexin.ces.utils.OpenFiles;
@@ -62,6 +69,8 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 	private static final int MSG_CIRCULE = 0;
 	private static final int TIME_CIRCULE_START = 4 * 1000;
 
+	private static final int MSG_LOADING_IMAGE = 1;
+
 	public static DisplayImageOptions optionsIcon = new DisplayImageOptions.Builder()
 			.showImageOnLoading(R.drawable.icon_air)
 			.showImageForEmptyUri(R.drawable.icon_air)
@@ -82,7 +91,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 	private LoadingUIListView mListView;
 	private AttachmentAdapter mAttachmentAdapter;
-	
+
 	private ApkDownloadManager mApkDownloadManager;
 
 	@Override
@@ -92,8 +101,12 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 		mContext = this;
 		initView();
 		initData();
-		
+
 		LogUtils.open();
+
+		IntentFilter mFilter = new IntentFilter();
+		mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+		registerReceiver(mNetChangeReceiver, mFilter);
 	}
 
 	private void initView() {
@@ -177,7 +190,9 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 				for (int i = 0; i < jsonArray.length(); i++) {
 					JSONObject object = jsonArray.getJSONObject(i);
 					String attachMentName = object.getString("AttchName");
-					if (attachMentName.contains(".jpg")) {
+					if (attachMentName.contains(".jpg")
+							|| attachMentName.contains(".png")
+							|| attachMentName.contains(".jpeg")) {
 						mImageList.add(object.getString("FilePath"));
 					} else {
 						AttachMent attachMent = new AttachMent();
@@ -194,10 +209,10 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 		scrollViewAddData(mImageList);
 		setListAdapter();
-		
-		
-		mApkDownloadManager = JuiDownloadService.getDownloadManager(App.getAppContext());
-		mApkDownloadManager.setAutoInstall(false);//不自动安装
+
+		mApkDownloadManager = JuiDownloadService.getDownloadManager(App
+				.getAppContext());
+		mApkDownloadManager.setAutoInstall(false);// 不自动安装
 		mApkDownloadManager.setIsNotApk(true);
 
 	}
@@ -206,26 +221,26 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 		mAttachmentAdapter.addData(mDocList);
 		mAttachmentAdapter.notifyDataSetChanged();
 	}
-	
-	private DownloadTaskStateListener  mDownloadTaskStateListener = new DownloadTaskStateListener() {
-		
+
+	private DownloadTaskStateListener mDownloadTaskStateListener = new DownloadTaskStateListener() {
+
 		@Override
 		public void onUpdateTaskState(DownloadTask arg0) {
-			
-			if(mAttachmentAdapter!=null)
+
+			if (mAttachmentAdapter != null)
 				mAttachmentAdapter.onUpdateTaskState(arg0);
 		}
-		
+
 		@Override
 		public void onUpdateTaskProgress(DownloadTask arg0) {
-			
-			if(mAttachmentAdapter!=null)
+
+			if (mAttachmentAdapter != null)
 				mAttachmentAdapter.onUpdateTaskProgress(arg0);
 		}
-		
+
 		@Override
 		public void onUpdateTaskList(Object arg0) {
-			if(mAttachmentAdapter!=null)
+			if (mAttachmentAdapter != null)
 				mAttachmentAdapter.onUpdateTaskList(arg0);
 		}
 	};
@@ -242,6 +257,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		mApkDownloadManager.unregisterListener(mDownloadTaskStateListener);
+		unregisterReceiver(mNetChangeReceiver);
 	}
 
 	private void circule() {
@@ -255,23 +271,29 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 		Logger.d(TAG, "===images.size=" + images.size());
 		this.infoSize = images.size();
+		mHorizonScrollLayout.removeAllViews();
 
 		mDotProgressBar.setTotalNum(images.size());
 		mDotProgressBar.setDotbarNum(images.size());
 
-		for (String image : images) {
-			LayoutInflater inflater = App.getLayoutInflater();
-			ViewGroup view = (ViewGroup) inflater.inflate(
-					R.layout.attachment_child, null);
-			mHorizonScrollLayout.addView(view);
-			ImageView imageView = (ImageView) view
-					.findViewById(R.id.attachment_child_iv);
-			ImageLoader
-					.getInstance()
-					.displayImage(
-							image,
-							imageView, optionsIcon);
+		if (APNUtil.isWifiDataEnable(mContext)) {
+			for (String image : images) {
+				LayoutInflater inflater = App.getLayoutInflater();
+				ViewGroup view = (ViewGroup) inflater.inflate(
+						R.layout.attachment_child, null);
+				mHorizonScrollLayout.addView(view);
+				ImageView imageView = (ImageView) view
+						.findViewById(R.id.attachment_child_iv);
+				Logger.d(TAG, "changeToUrl(image)=" + changeToUrl(image));
+				ImageLoader.getInstance().displayImage(changeToUrl(image),
+						imageView, optionsIcon);
+			}
+		} else {
+			Toast.makeText(AttachmentActivity.this,
+					getString(R.string.please_download_at_wifi),
+					Toast.LENGTH_SHORT).show();
 		}
+
 	}
 
 	public void setCurScreen(int position) {
@@ -319,6 +341,26 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 		};
 	};
 
+	private Handler mUiHandler = new Handler() {
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			// 暂停消息发送的时候，不需处理
+			switch (msg.what) {
+			case MSG_LOADING_IMAGE:
+				if (mImageList.size() > 0) {
+					Logger.d(TAG, "loading image...");
+					Toast.makeText(AttachmentActivity.this,
+							getString(R.string.download_at_wifi),
+							Toast.LENGTH_SHORT).show();
+					scrollViewAddData(mImageList);
+				}
+				break;
+			default:
+				break;
+			}
+		};
+	};
+
 	public void stopCricule() {
 		isCircule = false;
 		if (mScrollHandler != null) {
@@ -327,11 +369,11 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 	}
 
 	private class AttachmentAdapter extends BaseAdapter implements
-			IUpdateSingleView<String> ,IDownloadTaskStateListener {
+			IUpdateSingleView<String>, IDownloadTaskStateListener {
 
 		private ArrayList<AttachMent> list = new ArrayList<AttachMent>();
 
-		protected HashMap< String , View > mViewMap = new HashMap< String , View >( );
+		protected HashMap<String, View> mViewMap = new HashMap<String, View>();
 
 		public void addData(ArrayList<AttachMent> data) {
 			list.clear();
@@ -376,26 +418,26 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 			}
 
 			bindData(holder, list.get(position));
-			
-			String url = list.get( position ).getFilePath();
-			String signCode = Md5Util.stringToMD5(url);
-			
-		    setViewForSingleUpdate( signCode , convertView );
+
+			String url = list.get(position).getFilePath();
+			String signCode = Md5Util.stringToMD5(changeToUrl(url));
+
+			setViewForSingleUpdate(signCode, convertView);
 			return convertView;
 		}
 
 		private void bindData(final ViewHolder holder, final AttachMent am) {
-			
-			
+
 			String url = am.getFilePath();
-			String signCode = Md5Util.stringToMD5(url);
-			Logger.d(TAG, "bindData,signCode="+signCode);
-			DownloadTask task = mApkDownloadManager.getDownloadTaskBySignCode(signCode);
-			Logger.d(TAG, "bindData,task="+task);
-			if(task!=null && task.getState()==TaskState.SUCCEEDED){
+			String signCode = Md5Util.stringToMD5(changeToUrl(url));
+			Logger.d(TAG, "bindData,signCode=" + signCode);
+			final DownloadTask task = mApkDownloadManager
+					.getDownloadTaskBySignCode(signCode);
+			Logger.d(TAG, "bindData,task=" + task);
+			if (task != null && task.getState() == TaskState.SUCCEEDED) {
 				holder.handleBtn.setText(getString(R.string.open_file));
 				holder.handleBtn.setTag(task);
-			}else{
+			} else {
 				holder.handleBtn.setTag(am);
 				holder.handleBtn.setText(getString(R.string.download));
 			}
@@ -404,107 +446,129 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 				@Override
 				public void onClick(View v) {
-					AttachMent attachMent = (AttachMent)v.getTag();
-					startDownload(attachMent);
+
+					Object obj = v.getTag();
+					if (obj instanceof DownloadTask) {
+						DownloadTask task = (DownloadTask) obj;
+						if (task != null
+								&& task.getState() == TaskState.SUCCEEDED) {
+							Logger.d(TAG,
+									"startDownload,openFile,task.getState()="
+											+ task.getState());
+							openFile(task.getFileSavePath());
+							return;
+						}
+
+						if (APNUtil.isWifiDataEnable(mContext)) {
+							if (task != null) {
+								if (task.getState() == TaskState.LOADING
+										|| task.getState() == TaskState.PREPARING
+										|| task.getState() == TaskState.STARTED) {
+									Toast.makeText(AttachmentActivity.this,
+											"正在下载...", Toast.LENGTH_SHORT)
+											.show();
+								} else {
+									mApkDownloadManager.resumeDownload(task);
+									Toast.makeText(AttachmentActivity.this,
+											"继续下载...", Toast.LENGTH_SHORT)
+											.show();
+								}
+							}
+						} else {
+
+							Toast.makeText(
+									AttachmentActivity.this,
+									getString(R.string.please_download_at_wifi),
+									Toast.LENGTH_SHORT).show();
+						}
+					} else if (obj instanceof AttachMent) {
+						AttachMent attachMent = (AttachMent) v.getTag();
+						startDownload(attachMent);
+					}
 				}
 			});
 			// Log.d(TAG,
 			// "connName="+zt.getConnName()+"checked="+mMap.get(zt.getConnName()));
 		}
-		
-		private void startDownload(AttachMent attachMent){
-			
+
+		private void startDownload(AttachMent attachMent) {
+
 			String url = attachMent.getFilePath();
-			String signCode = Md5Util.stringToMD5(url);
-			
-			Logger.d(TAG, "startDownload,signCode="+signCode);
-			
-			DownloadTask task = mApkDownloadManager.getDownloadTaskBySignCode(signCode);
-			Logger.d(TAG, "startDownload,task="+task);
-			if(task!=null){
-				if(task.getState()==TaskState.SUCCEEDED){
-					Logger.d(TAG, "startDownload,openFile,task.getState()="+task.getState());
-					openFile(task.getFileSavePath());
-				}else if(task.getState()==TaskState.LOADING || task.getState()==TaskState.PREPARING ||task.getState()==TaskState.STARTED){
-					Toast.makeText(AttachmentActivity.this, "正在下载...", Toast.LENGTH_SHORT).show();
-				}
-				else{
-					mApkDownloadManager.resumeDownload(task);
-					Toast.makeText(AttachmentActivity.this, "继续下载...", Toast.LENGTH_SHORT).show();
-				}
-			}else {
-				
-				
-				
-				DownloadInfo downloadInfo = new DownloadInfo();
-				downloadInfo.appDownloadURL = attachMent.getFilePath();
-				downloadInfo.appIconURL="";
-				downloadInfo.appName =attachMent.getAttchName();
-				downloadInfo.nFromPos=0;
-				downloadInfo.packageName="com.xiexin.ces";
-				downloadInfo.packId=0;
-				downloadInfo.signCode = Md5Util.stringToMD5(attachMent.getFilePath());
-				
-				Logger.d(TAG, "startDownload,downloadInfo.signCode="+signCode);
-				
-				mApkDownloadManager.startDownload(downloadInfo);
-			}
+			String signCode = Md5Util.stringToMD5(changeToUrl(url));
+
+			Logger.d(TAG, "startDownload,signCode=" + signCode);
+
+			DownloadInfo downloadInfo = new DownloadInfo();
+			downloadInfo.appDownloadURL = changeToUrl(url);
+			Log.d(TAG, "downloadInfo.appDownloadURL="
+					+ downloadInfo.appDownloadURL);
+			downloadInfo.appIconURL = "";
+
+			downloadInfo.appName = attachMent.getAttchName();
+
+			downloadInfo.nFromPos = 0;
+			downloadInfo.packageName = "com.xiexin.ces";
+			downloadInfo.packId = 0;
+			downloadInfo.signCode = signCode;
+
+			Logger.d(TAG, "startDownload,downloadInfo.signCode=" + signCode);
+
+			mApkDownloadManager.startDownload(downloadInfo);
 		}
 
 		@Override
 		public View getViewByKey(String key) {
 			// TODO Auto-generated method stub
-		    View view = mViewMap.get( key );
-		    return view;
+			View view = mViewMap.get(key);
+			return view;
 		}
 
 		@Override
 		public void setViewForSingleUpdate(String key, View view) {
-		    if( view == null )
-		    {
-			return;
-		    }
-		    mViewMap.put( key , view );
+			if (view == null) {
+				return;
+			}
+			mViewMap.put(key, view);
 		}
 
 		@Override
 		public void removeViewForSingleUpdate(View view) {
-			
+
 		}
 
 		@Override
 		public void removeViewForSingleUpdate(String key) {
-			mViewMap.remove( key );
+			mViewMap.remove(key);
 		}
 
 		@Override
 		public void onUpdateTaskList(Object arg0) {
 			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void onUpdateTaskProgress(DownloadTask arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onUpdateTaskState(DownloadTask arg0) {
-			String url = arg0.appDownloadURL;
-			String signCode = Md5Util.stringToMD5(url);
-			View view = getViewByKey( signCode);
-		    if( view == null )
-		    {
-			return;
-		    }
-		    ViewHolder holder = (ViewHolder)view.getTag( );
-		    if(arg0.getState() ==TaskState.SUCCEEDED){
-			    holder.handleBtn.setTag(arg0);
-			    holder.handleBtn.setText(getString(R.string.open_file));
-		    }else{
-			    holder.handleBtn.setText(getString(R.string.download));
-		    }
+
+			Log.d(TAG, "onUpdateTaskState,signCode=" + arg0.signCode);
+			View view = getViewByKey(arg0.signCode);
+			Log.d(TAG, "view=" + view);
+			if (view == null) {
+				return;
+			}
+			ViewHolder holder = (ViewHolder) view.getTag();
+			holder.handleBtn.setTag(arg0);
+			Log.d(TAG, "onUpdateTaskState,arg0.getState()=" + arg0.getState());
+			if (arg0.getState() == TaskState.SUCCEEDED) {
+				holder.handleBtn.setText(getString(R.string.open_file));
+			} else {
+				holder.handleBtn.setText(getString(R.string.download));
+			}
 		}
 	}
 
@@ -539,63 +603,94 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 		}
 		return false;
 	}
-	
-	private void openFile(String filePath){
-		
-		File currentPath =new File(filePath);
-		
-		if(currentPath!=null&&currentPath.isFile())
-        {
-            String fileName = currentPath.toString();
-            Intent intent;
-            if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingImage))){
-                intent = OpenFiles.getImageFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingWebText))){
-                intent = OpenFiles.getHtmlFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingPackage))){
-                intent = OpenFiles.getApkFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingAudio))){
-                intent = OpenFiles.getAudioFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingVideo))){
-                intent = OpenFiles.getVideoFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingText))){
-                intent = OpenFiles.getTextFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingPdf))){
-                intent = OpenFiles.getPdfFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingWord))){
-                intent = OpenFiles.getWordFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingExcel))){
-                intent = OpenFiles.getExcelFileIntent(currentPath);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingPPT))){
-                intent = OpenFiles.getPPTFileIntent(currentPath);
-                startActivity(intent);
-            }else
-            {
-                Toast.makeText(AttachmentActivity.this, "无法打开，请安装相应的软件！", Toast.LENGTH_SHORT).show();
-            }
-        }else
-        {
-            Toast.makeText(AttachmentActivity.this, "对不起，这不是文件！", Toast.LENGTH_SHORT).show();
-        }
+
+	private void openFile(String filePath) {
+
+		File currentPath = new File(filePath);
+
+		if (currentPath != null && currentPath.isFile()) {
+			String fileName = currentPath.toString();
+			Intent intent;
+			if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingImage))) {
+				intent = OpenFiles.getImageFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingWebText))) {
+				intent = OpenFiles.getHtmlFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingPackage))) {
+				intent = OpenFiles.getApkFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingAudio))) {
+				intent = OpenFiles.getAudioFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingVideo))) {
+				intent = OpenFiles.getVideoFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingText))) {
+				intent = OpenFiles.getTextFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingPdf))) {
+				intent = OpenFiles.getPdfFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingWord))) {
+				intent = OpenFiles.getWordFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingExcel))) {
+				intent = OpenFiles.getExcelFileIntent(currentPath);
+				startActivity(intent);
+			} else if (checkEndsWithInStringArray(fileName, getResources()
+					.getStringArray(R.array.fileEndingPPT))) {
+				intent = OpenFiles.getPPTFileIntent(currentPath);
+				startActivity(intent);
+			} else {
+				Toast.makeText(AttachmentActivity.this, "无法打开，请安装相应的软件！",
+						Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			Toast.makeText(AttachmentActivity.this, "对不起，这不是文件！",
+					Toast.LENGTH_SHORT).show();
+		}
 	}
+
+	private String changeToUrl(String filePath) {
+		String downLoadUrl = filePath;
+		String url1 = downLoadUrl
+				.substring(0, downLoadUrl.lastIndexOf("/") + 1);
+		String url2 = downLoadUrl.substring(downLoadUrl.lastIndexOf("/") + 1,
+				downLoadUrl.length());
+		try {
+			return url1 + URLEncoder.encode(url2, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return filePath;
+	}
+
+	// if(mImageList.size()>0&&APNUtil.isWifiDataEnable(mContext)){
+	// scrollViewAddData(mImageList);
+	// }
+
+	private BroadcastReceiver mNetChangeReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+				Logger.d(TAG, "net changed!");
+				if (APNUtil.isWifiDataEnable(mContext)) {
+					Logger.d(TAG, "net is wifi!");
+					mUiHandler.sendEmptyMessage(MSG_LOADING_IMAGE);
+				}
+			}
+		}
+	};
 
 }

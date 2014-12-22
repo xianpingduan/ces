@@ -133,5 +133,7 @@
    	<string name="noread">未读</string>
    	
    	<string name="no_phone_info">没有电话信息！</string>
+   	<string name="please_download_at_wifi">文件过大,请在wifi网络下加载</string>
+   	<string name="download_at_wifi">当前wifi网络下,图片正在加载...</string>
     
 </resources>

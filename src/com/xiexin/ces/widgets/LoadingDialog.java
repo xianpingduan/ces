@@ -34,5 +34,11 @@ public class LoadingDialog extends Dialog
 	    tipTv.setText( tiptext );
 	}
     }
+    
+    @Override
+    public void onBackPressed() {
+    	super.onBackPressed();
+    	return;
+    }
 
 }
