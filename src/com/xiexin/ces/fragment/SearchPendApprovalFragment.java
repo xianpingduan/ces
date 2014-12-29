@@ -21,6 +21,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,13 +47,15 @@ import com.xiexin.ces.widgets.PullListView.IListViewListener;
 /**
  * User: special Date: 13-12-22 Time: 下午3:26 Mail: specialcyci@gmail.com
  */
-public class PendApprovalFragment extends Fragment implements OnClickListener {
+public class SearchPendApprovalFragment extends Fragment implements OnClickListener {
 
-	private final static String TAG = "PendApprovalFragment";
+	private final static String TAG = "SearchPendApprovalFragment";
 
 	private View parentView;
 	private LoadingUIListView mListView;
 	private InvoiceAdapter mInvoiceAdapter;
+	private EditText mFilterEt;
+	private Button mCancelBtn;
 
 	// // header start
 	// private LinearLayout mReturnLl;
@@ -105,20 +109,6 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		}, 200);
 
 	}
-	
-	private View generateListHeaderView(){
-		LayoutInflater inflater = App.getLayoutInflater();
-		View view  = inflater.inflate(R.layout.fragment_pend_approval_list_header, null);
-		view.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-					
-			}
-		});
-		return view;
-	}
-	
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -150,15 +140,16 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 
 		Logger.d(TAG, "onCreateView");
 
-		parentView = inflater.inflate(R.layout.fragment_pend_approval,
+		parentView = inflater.inflate(R.layout.fragment_search_pend_approval,
 				container, false);
 		mListView = (LoadingUIListView) parentView
-				.findViewById(R.id.pend_approval_list);
-		mListView.setHeaderPullEnable(true);
-		mListView.setFooterPullEnable(true);
+				.findViewById(R.id.search_pend_approval_list);
+		mListView.setHeaderPullEnable(false);
+		mListView.setFooterPullEnable(false);
 		mListView.setListViewListener(mListViewListener);
 		
-		mListView.addHeaderView(generateListHeaderView());
+		mFilterEt = (EditText) parentView.findViewById(R.id.search_et);
+		mCancelBtn  = (Button) parentView.findViewById(R.id.cancel_btn);
 
 		// // header start
 		// mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
@@ -583,7 +574,9 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		case R.id.return_iv:
 
 			break;
-
+		case R.id.cancel_btn:
+			
+			break;
 		default:
 			break;
 		}

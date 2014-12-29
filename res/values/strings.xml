@@ -135,5 +135,11 @@
    	<string name="no_phone_info">没有电话信息！</string>
    	<string name="please_download_at_wifi">文件过大,请在wifi网络下加载</string>
    	<string name="download_at_wifi">当前wifi网络下,图片正在加载...</string>
+   	
+   	<string name="app_pause">暂停</string>
+   	<string name="app_resume">继续</string>
+    <string name="app_redownload">重下</string>
+    <string name="app_retry">重试</string>
+    <string name="app_delete">删除</string>
     
 </resources>

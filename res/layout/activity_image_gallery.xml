@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@color/menu_bg_color">
+
+    <com.xiexin.ces.widgets.OverScrollGallery
+        android:id="@+id/img_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:spacing="16dp" />
+
+    <ImageView
+        android:id="@+id/close_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="15dp"
+        android:paddingLeft ="30dp"
+        android:paddingBottom="30dp"
+        android:src="@drawable/gallery_icon_close"
+        android:scaleType="centerInside" />
+
+    <com.xiexin.ces.widgets.DotProgressBar
+        android:id="@+id/dot"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp" />
+
+</RelativeLayout>

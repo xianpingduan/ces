@@ -17,8 +17,6 @@
             android:layout_marginLeft="@dimen/common_margin_left"
             android:layout_marginTop="@dimen/zhangtao_list_item_margin"
             android:layout_weight="1"
-            android:singleLine="true"
-            android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:textColor="@color/pl_main_text_color"
             android:textSize="@dimen/pl_small_text_size"

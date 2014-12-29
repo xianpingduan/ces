@@ -47,5 +47,7 @@
    	<color name="list_view_item_press_color">#c8dde4</color>
    	
    	<color name="attachment_list_view_item_color">#f3f3f3</color>
+   	
+   	<color name="black_99">#99000000</color>
     
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_view_search_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/pl_disabled_text_color" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_frame_height"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/common_margin"
+        android:gravity="center"
+        android:background="@drawable/pl_input_box_default" >
+
+        <ImageView
+            android:id="@+id/search_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/fapiao_check" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="搜索" />
+    </LinearLayout>
+
+</RelativeLayout>

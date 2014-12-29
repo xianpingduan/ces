@@ -31,8 +31,16 @@ public class Employee implements Serializable
     private String UpdateDT;
     private String Remark;
     private boolean bTelAss;
+    
+    private String sortLetters; // 显示数据拼音的首字母
+    public String getSortLetters() {
+		return sortLetters;
+	}
+	public void setSortLetters(String sortLetters) {
+		this.sortLetters = sortLetters;
+	}
 
-    public String getEmployeeID()
+	public String getEmployeeID()
     {
 	return EmployeeID;
     }

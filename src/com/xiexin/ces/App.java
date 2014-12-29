@@ -7,6 +7,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.view.LayoutInflater;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -72,7 +73,8 @@ public class App extends Application
 	}
 
 	ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder( this ).threadPriority( Thread.NORM_PRIORITY - 2 ).discCacheFileNameGenerator( new Md5FileNameGenerator( ) )
-		.tasksProcessingOrder( QueueProcessingType.LIFO ).discCacheSize( 50 * 1024 * 1024 ).threadPoolSize( 3 )
+		.tasksProcessingOrder( QueueProcessingType.LIFO ).discCacheSize( 50 * 1024 * 1024 ).threadPoolSize( 4 )
+		.memoryCache(new UsingFreqLimitedMemoryCache(2000000))
 		// .writeDebugLogs() // Remove
 		// for
 		// release

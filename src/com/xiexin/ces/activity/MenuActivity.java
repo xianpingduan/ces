@@ -103,18 +103,9 @@ public class MenuActivity extends FragmentActivity implements
 		mEmployeeManager.setHandler(mUiHandler);
 
 		setUpMenu();
-		if (savedInstanceState == null)
-			if (mPendApprovalFragment == null)
-				mPendApprovalFragment = new PendApprovalFragment();
-		// mPendApprovalFragment.setArguments(args);
-		mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,
-				mAccountChanged);
-		changeFragment(mPendApprovalFragment);
 
 		// 置位
 		mAccountChanged = false;
-
-		mTitleView.setText(getString(R.string.menu_pend_approval));
 
 		initUserInfo();
 
@@ -136,12 +127,47 @@ public class MenuActivity extends FragmentActivity implements
 			requestEmployees("");
 		}
 
+		boolean b = getIntent().getBooleanExtra(Constants.MENU_HANDLE, false);
+		if (b) {
+			if (mMessageFragment == null) {
+				mMessageFragment = new MessageFragment();
+			}
+			mMessageFragment.setMainUIHandler(mUiHandler);
+			changeFragment(mMessageFragment);
+			mTitleView.setText(getString(R.string.menu_message));
+		} else {
+			if (mPendApprovalFragment == null)
+				mPendApprovalFragment = new PendApprovalFragment();
+			// mPendApprovalFragment.setArguments(args);
+			mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,
+					mAccountChanged);
+			changeFragment(mPendApprovalFragment);
+			mTitleView.setText(getString(R.string.menu_pend_approval));
+		}
+
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+
+		boolean b = intent.getBooleanExtra(Constants.MENU_HANDLE, false);
+		Logger.d(TAG, "b=" + b);
+		if (b) {
+			if (mMessageFragment == null) {
+				mMessageFragment = new MessageFragment();
+			}
+			mMessageFragment.setMainUIHandler(mUiHandler);
+			changeFragment(mMessageFragment);
+			mTitleView.setText(getString(R.string.menu_message));
+		}
+		super.onNewIntent(intent);
 	}
 
 	private void initLoginOutLl() {
 
 		mLoginOutLl = (LinearLayout) findViewById(R.id.login_out_ll);
 		mLoginOutLl.setOnClickListener(this);
+
 	}
 
 	@Override
@@ -238,8 +264,8 @@ public class MenuActivity extends FragmentActivity implements
 						.putString(Constants.ZHANG_TAO_CONN_NAME, ztConnName)
 						.commit();
 				App.getSharedPreference().edit()
-				.putString(Constants.ZHANG_TAO_ACCINFO, ztAccInfo)
-				.commit();
+						.putString(Constants.ZHANG_TAO_ACCINFO, ztAccInfo)
+						.commit();
 				Message msg = Message.obtain();
 				msg.what = MSG_GET_ZT;
 				msg.obj = ztAccInfo;
@@ -317,9 +343,11 @@ public class MenuActivity extends FragmentActivity implements
 		thirdList.add(itemInvoice);
 		thirdList.add(itemRecord);
 
-		// resideMenu.addMenuItem( itemPendApproval , ResideMenu.DIRECTION_LEFT);
+		// resideMenu.addMenuItem( itemPendApproval ,
+		// ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem( itemSendItem , ResideMenu.DIRECTION_LEFT );
-		// resideMenu.addMenuItem( itemScratchUpcome , ResideMenu.DIRECTION_LEFT);
+		// resideMenu.addMenuItem( itemScratchUpcome ,
+		// ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem( itemApproved , ResideMenu.DIRECTION_LEFT );
 
 		resideMenu.addMenuItem(oneList, ResideMenu.DIRECTION_LEFT);
@@ -405,7 +433,7 @@ public class MenuActivity extends FragmentActivity implements
 				break;
 			case MSG_SAVE_EMPLOYEE_LIST_SUCCESS:
 				Logger.d(TAG, "save data success!");
-				//				resideMenu.closeMenu();
+				// resideMenu.closeMenu();
 				dismissDialog();
 				long next_req_time = System.currentTimeMillis()
 						+ Constants.SYNC_EMPLOYEE_GAP_TIME;
@@ -499,10 +527,10 @@ public class MenuActivity extends FragmentActivity implements
 			sureToLoginOut();
 		}
 
-		if(view !=mSwitchAccountLl && view !=mLoginOutLl){
+		if (view != mSwitchAccountLl && view != mLoginOutLl) {
 			mUiHandler.sendEmptyMessageDelayed(MSG_FROM_FRAGMENT_CLOSE_MENU, 0);
 		}
-		
+
 	}
 
 	// 菜单打开和关闭监听
@@ -566,7 +594,6 @@ public class MenuActivity extends FragmentActivity implements
 	private static final int MSG_GET_EMPLOYEE_LIST_SUCCESS = 5;
 	public static final int MSG_SAVE_EMPLOYEE_LIST_SUCCESS = 6;
 	public static final int MSG_FROM_FRAGMENT_CLOSE_MENU = 7;
-	
 
 	private void requestEmployees(String filter) {
 

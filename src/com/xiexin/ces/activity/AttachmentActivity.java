@@ -93,6 +93,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 	private AttachmentAdapter mAttachmentAdapter;
 
 	private ApkDownloadManager mApkDownloadManager;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +170,8 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 			mAttachmentAdapter = new AttachmentAdapter();
 
 		mListView.setAdapter(mAttachmentAdapter);
+
+		// mHorizonScrollLayout.setOnClickListener(this);
 
 	}
 
@@ -284,7 +287,19 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 				mHorizonScrollLayout.addView(view);
 				ImageView imageView = (ImageView) view
 						.findViewById(R.id.attachment_child_iv);
-				Logger.d(TAG, "changeToUrl(image)=" + changeToUrl(image));
+
+				imageView.setTag(changeToUrl(image));
+
+				imageView.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View view) {
+						String url = (String) view.getTag();
+						intentToImageGallery(url);
+					}
+				});
+
+				Logger.d(TAG, "url=" + changeToUrl(image));
 				ImageLoader.getInstance().displayImage(changeToUrl(image),
 						imageView, optionsIcon);
 			}
@@ -434,53 +449,73 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 			final DownloadTask task = mApkDownloadManager
 					.getDownloadTaskBySignCode(signCode);
 			Logger.d(TAG, "bindData,task=" + task);
-			if (task != null && task.getState() == TaskState.SUCCEEDED) {
-				holder.handleBtn.setText(getString(R.string.open_file));
+			// if (task != null && task.getState() == TaskState.SUCCEEDED) {
+			// holder.handleBtn.setText(getString(R.string.open_file));
+			// holder.handleBtn.setTag(task);
+			// } else {
+			// holder.handleBtn.setTag(am);
+			// holder.handleBtn.setText(getString(R.string.download));
+			// }
+
+			if (task != null) {
 				holder.handleBtn.setTag(task);
+				setState(holder.handleBtn, task);
 			} else {
 				holder.handleBtn.setTag(am);
 				holder.handleBtn.setText(getString(R.string.download));
 			}
+
 			holder.fileNameTv.setText(am.getAttchName());
 			holder.handleBtn.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-
 					Object obj = v.getTag();
 					if (obj instanceof DownloadTask) {
-						DownloadTask task = (DownloadTask) obj;
-						if (task != null
-								&& task.getState() == TaskState.SUCCEEDED) {
-							Logger.d(TAG,
-									"startDownload,openFile,task.getState()="
-											+ task.getState());
-							openFile(task.getFileSavePath());
-							return;
-						}
-
-						if (APNUtil.isWifiDataEnable(mContext)) {
-							if (task != null) {
-								if (task.getState() == TaskState.LOADING
-										|| task.getState() == TaskState.PREPARING
-										|| task.getState() == TaskState.STARTED) {
-									Toast.makeText(AttachmentActivity.this,
-											"正在下载...", Toast.LENGTH_SHORT)
-											.show();
+						DownloadTask dinfo = (DownloadTask) obj;
+							switch (dinfo.getState()) {
+							case PREPARING:
+							case WAITING:
+							case STARTED:
+							case LOADING:
+								mApkDownloadManager.stopDownload(dinfo);
+								break;
+							case SUCCEEDED:
+								openFile(dinfo.getFileSavePath());
+								break;
+							case STOPPED:
+							case FAILED_NETWORK:
+							case FAILED_SERVER:
+							case FAILED_NOFREESPACE:
+								if (APNUtil.isWifiDataEnable(mContext)) {
+									mApkDownloadManager.resumeDownload(dinfo);
 								} else {
-									mApkDownloadManager.resumeDownload(task);
-									Toast.makeText(AttachmentActivity.this,
-											"继续下载...", Toast.LENGTH_SHORT)
-											.show();
-								}
-							}
-						} else {
 
-							Toast.makeText(
-									AttachmentActivity.this,
-									getString(R.string.please_download_at_wifi),
-									Toast.LENGTH_SHORT).show();
-						}
+									Toast.makeText(
+											AttachmentActivity.this,
+											getString(R.string.please_download_at_wifi),
+											Toast.LENGTH_SHORT).show();
+								}
+
+								break;
+							case FAILED_BROKEN:
+							case DELETED:
+								if (APNUtil.isWifiDataEnable(mContext)) {
+									mApkDownloadManager.restartDownload(dinfo);
+								} else {
+
+									Toast.makeText(
+											AttachmentActivity.this,
+											getString(R.string.please_download_at_wifi),
+											Toast.LENGTH_SHORT).show();
+								}
+
+								break;
+							case FAILED_NOEXIST:
+								mApkDownloadManager.removeDownload(dinfo);
+								break;
+							}
+
 					} else if (obj instanceof AttachMent) {
 						AttachMent attachMent = (AttachMent) v.getTag();
 						startDownload(attachMent);
@@ -489,6 +524,48 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 			});
 			// Log.d(TAG,
 			// "connName="+zt.getConnName()+"checked="+mMap.get(zt.getConnName()));
+		}
+
+		private void setState(Button button, DownloadTask task) {
+
+			switch (task.getState()) {
+			case PREPARING:
+				button.setText(getString(R.string.app_pause));
+				break;
+			case WAITING:
+				button.setText(getString(R.string.app_pause));
+				break;
+			case STARTED:
+			case LOADING:
+				button.setText(getString(R.string.app_pause));
+				break;
+			case STOPPED:
+				button.setText(getString(R.string.app_resume));
+				break;
+			case SUCCEEDED:
+				button.setText(getString(R.string.open_file));
+				break;
+			case DELETED:
+				button.setText(getString(R.string.app_redownload));
+				break;
+			case FAILED_NETWORK:
+				button.setText(getString(R.string.app_retry));
+				break;
+			case FAILED_BROKEN:
+				button.setText(getString(R.string.app_retry));
+				break;
+			case FAILED_NOEXIST:
+				button.setText(getString(R.string.app_delete));
+				break;
+			case FAILED_SERVER:
+				button.setText(getString(R.string.app_retry));
+				break;
+			case FAILED_NOFREESPACE:
+				button.setText(getString(R.string.app_retry));
+				break;
+			default:
+				break;
+			}
 		}
 
 		private void startDownload(AttachMent attachMent) {
@@ -518,7 +595,6 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 		@Override
 		public View getViewByKey(String key) {
-			// TODO Auto-generated method stub
 			View view = mViewMap.get(key);
 			return view;
 		}
@@ -542,33 +618,34 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 		}
 
 		@Override
-		public void onUpdateTaskList(Object arg0) {
+		public void onUpdateTaskList(Object task) {
 			// TODO Auto-generated method stub
 		}
 
 		@Override
-		public void onUpdateTaskProgress(DownloadTask arg0) {
+		public void onUpdateTaskProgress(DownloadTask task) {
 			// TODO Auto-generated method stub
 
 		}
 
 		@Override
-		public void onUpdateTaskState(DownloadTask arg0) {
+		public void onUpdateTaskState(DownloadTask task) {
 
-			Log.d(TAG, "onUpdateTaskState,signCode=" + arg0.signCode);
-			View view = getViewByKey(arg0.signCode);
+			Log.d(TAG, "onUpdateTaskState,signCode=" + task.signCode);
+			View view = getViewByKey(task.signCode);
 			Log.d(TAG, "view=" + view);
 			if (view == null) {
 				return;
 			}
 			ViewHolder holder = (ViewHolder) view.getTag();
-			holder.handleBtn.setTag(arg0);
-			Log.d(TAG, "onUpdateTaskState,arg0.getState()=" + arg0.getState());
-			if (arg0.getState() == TaskState.SUCCEEDED) {
+			Log.d(TAG, "onUpdateTaskState,arg0.getState()=" + task.getState());
+			if (task.getState() == TaskState.SUCCEEDED) {
 				holder.handleBtn.setText(getString(R.string.open_file));
 			} else {
 				holder.handleBtn.setText(getString(R.string.download));
 			}
+			
+			notifyDataSetChanged();
 		}
 	}
 
@@ -584,9 +661,22 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 		case R.id.return_ll:
 			onBackPressed();
 			break;
+		case R.id.image_attachment_sl:
+
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void intentToImageGallery(String url) {
+
+		Intent intent = new Intent();
+		intent.setClass(AttachmentActivity.this, ImageGalleryActivity.class);
+		Logger.d(TAG, "ImageGalleryActivity.URL=" + ImageGalleryActivity.URL);
+		intent.putExtra(ImageGalleryActivity.URL, url);
+		intent.putExtra(ImageGalleryActivity.URL_DATA, mImageList);
+		startActivity(intent);
 	}
 
 	@Override

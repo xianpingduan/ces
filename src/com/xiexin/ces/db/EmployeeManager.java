@@ -17,6 +17,7 @@ import com.xiexin.ces.activity.MenuActivity;
 import com.xiexin.ces.db.EmployeeDbAdapter.EmployeeInfoColumns;
 import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.utils.Logger;
+import com.xiexin.sortlistview.CharacterParser;
 
 public class EmployeeManager {
 
@@ -25,6 +26,11 @@ public class EmployeeManager {
 	private static EmployeeManager mEmployeeManager;
 
 	private EmployeeDbAdapter mEmployeeDbAdapter;
+
+	/**
+	 * 汉字转换成拼音的类
+	 */
+	private CharacterParser characterParser;
 
 	private Handler mHandler;
 
@@ -37,6 +43,7 @@ public class EmployeeManager {
 
 	private EmployeeManager(Context context) {
 		mEmployeeDbAdapter = new EmployeeDbAdapter(context);
+		characterParser = CharacterParser.getInstance();
 	}
 
 	private ContentValues createContentValues(Employee employee) {
@@ -62,6 +69,17 @@ public class EmployeeManager {
 		employee.setMobile(cursor.getString(6));
 		employee.setTelNbr(cursor.getString(7));
 		employee.setEmail(cursor.getString(8));
+		
+		// 汉字转换成拼音
+		String pinyin = characterParser.getSelling(cursor.getString(2));
+		String sortString = pinyin.substring(0, 1).toUpperCase();
+		// 正则表达式，判断首字母是否是英文字母
+		if (sortString.matches("[A-Z]")) {
+			employee.setSortLetters(sortString.toUpperCase());
+		} else {
+			employee.setSortLetters("#");
+		}
+		
 		return employee;
 	}
 
@@ -105,8 +123,8 @@ public class EmployeeManager {
 	public synchronized ArrayList<Employee> loadAll() {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		Cursor cursor = mEmployeeDbAdapter.queryAll();
-		
-		Logger.d("Cursor", cursor.getCount() +"");
+
+		Logger.d("Cursor", cursor.getCount() + "");
 
 		if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
 
@@ -143,9 +161,9 @@ public class EmployeeManager {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		mEmployeeDbAdapter.delAll();
-		
+
 		new Thread(new SaveDataToDBRunnable(employeeList)).start();
 	}
 

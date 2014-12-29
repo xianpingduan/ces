@@ -1,7 +1,9 @@
 package com.xiexin.ces.activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -25,7 +27,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +47,11 @@ import com.xiexin.ces.db.EmployeeManager;
 import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
-import com.xiexin.ces.widgets.LoadingUIListView;
+import com.xiexin.sortlistview.CharacterParser;
+import com.xiexin.sortlistview.ClearEditText;
+import com.xiexin.sortlistview.PinyinComparator;
+import com.xiexin.sortlistview.SideBar;
+import com.xiexin.sortlistview.SideBar.OnTouchingLetterChangedListener;
 
 public class EmployeeActivity extends Activity implements OnClickListener {
 
@@ -59,23 +67,105 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 	// header end
 
-	private LoadingUIListView mListView;
+	// private LoadingUIListView mListView;
 	private EmployeeAdapter mEmployeeAdapter;
 
 	private LoadingDialog mLoadingDialog;
 
 	private String mConnName;// 账套信息
-
 	private RequestQueue mQueue;
-
 	private Employee mEmployeeChecked;
 
 	private EditText mSearchEt;
 	private Button mSearchBtn;
 
 	private int mFrom;
-	
 	private HashMap<String, Employee> mSelectMap = new HashMap<String, Employee>();
+
+	// 字母排序
+	private ListView sortListView;
+	private SideBar sideBar;
+	private TextView dialog;
+	// private SortAdapter adapter;
+	private ClearEditText mClearEditText;
+	/**
+	 * 汉字转换成拼音的类
+	 */
+	private CharacterParser characterParser;
+	// private List<SortModel> SourceDateList;
+	/**
+	 * 根据拼音来排列ListView里面的数据类
+	 */
+	private PinyinComparator pinyinComparator;
+
+	private void initViews() {
+		// 实例化汉字转拼音类
+		characterParser = CharacterParser.getInstance();
+		pinyinComparator = new PinyinComparator();
+
+		sideBar = (SideBar) findViewById(R.id.sidebar);
+		dialog = (TextView) findViewById(R.id.dialog);
+		sideBar.setTextView(dialog);
+
+		// 设置右侧触摸监听
+		sideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
+
+			@Override
+			public void onTouchingLetterChanged(String s) {
+				// 该字母首次出现的位置
+				int position = mEmployeeAdapter.getPositionForSection(s
+						.charAt(0));
+				if (position != -1) {
+					sortListView.setSelection(position);
+				}
+
+			}
+		});
+
+		sortListView = (ListView) findViewById(R.id.employee_list);
+		// sortListView.setOnItemClickListener(new OnItemClickListener() {
+		//
+		// @Override
+		// public void onItemClick(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// // 这里要利用adapter.getItem(position)来获取当前position所对应的对象
+		// Toast.makeText(getApplication(),
+		// ((SortModel) mEmployeeAdapter.getItem(position)).getName(),
+		// Toast.LENGTH_SHORT).show();
+		// }
+		// });
+
+		mClearEditText = (ClearEditText) findViewById(R.id.search_et);
+		// 根据输入框输入值的改变来过滤搜索
+		mClearEditText.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+				Logger.d(TAG, "Text [" + s + "]");
+				String filter = s.toString();
+				if (filter != null) {
+					filter = filter.trim();
+					Message msg = Message.obtain();
+					msg.what = MSG_SEARCH_REFRESH_LIST;
+					msg.obj = filter;
+					mUiHandler.sendMessage(msg);
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
+	}
 
 	private void dismissDialog() {
 
@@ -101,6 +191,8 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 		mQueue = Volley.newRequestQueue(App.getAppContext());
 		initView();
+
+		initViews();
 
 		initData();
 
@@ -131,37 +223,33 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 		// mBtn2.setOnClickListener( this );
 		mReturnLl.setOnClickListener(this);
 
-		mListView = (LoadingUIListView) findViewById(R.id.employee_list);
-		mListView.setFooterPullEnable(false);
-		mListView.setHeaderPullEnable(false);
-
-		mSearchEt = (EditText) findViewById(R.id.search_et);
-
-		mSearchEt.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				Logger.d(TAG, "Text [" + s + "]");
-				String filter = s.toString();
-				if (filter != null) {
-					filter = filter.trim();
-					Message msg = Message.obtain();
-					msg.what = MSG_SEARCH_REFRESH_LIST;
-					msg.obj = filter;
-					mUiHandler.sendMessage(msg);
-				}
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		});
+		// mListView = (LoadingUIListView) findViewById(R.id.employee_list);
+		// mListView.setFooterPullEnable(false);
+		// mListView.setHeaderPullEnable(false);
+		// mSearchEt = (EditText) findViewById(R.id.search_et);
+		// mSearchEt.addTextChangedListener(new TextWatcher() {
+		// @Override
+		// public void onTextChanged(CharSequence s, int start, int before,
+		// int count) {
+		// Logger.d(TAG, "Text [" + s + "]");
+		// String filter = s.toString();
+		// if (filter != null) {
+		// filter = filter.trim();
+		// Message msg = Message.obtain();
+		// msg.what = MSG_SEARCH_REFRESH_LIST;
+		// msg.obj = filter;
+		// mUiHandler.sendMessage(msg);
+		// }
+		// }
+		// @Override
+		// public void beforeTextChanged(CharSequence s, int start, int count,
+		// int after) {
+		//
+		// }
+		// @Override
+		// public void afterTextChanged(Editable s) {
+		// }
+		// });
 
 	}
 
@@ -179,7 +267,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 		if (mEmployeeAdapter == null)
 			mEmployeeAdapter = new EmployeeAdapter();
-		mListView.setAdapter(mEmployeeAdapter);
+		sortListView.setAdapter(mEmployeeAdapter);
 
 		requestEmployees("");
 	}
@@ -278,9 +366,9 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 	}
 
-	private ArrayList<Employee> getEmployeeList(String jsonStr) {
+	private List<Employee> getEmployeeList(String jsonStr) {
 
-		ArrayList<Employee> invoiceList = new ArrayList<Employee>();
+		List<Employee> invoiceList = new ArrayList<Employee>();
 		try {
 			JSONArray arrays = new JSONArray(jsonStr);
 			for (int i = 0; i < arrays.length(); i++) {
@@ -301,7 +389,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 	}
 
-	private ArrayList<Employee> mEmployees = null;
+	private List<Employee> mEmployees = null;
 
 	private void requestEmployees(String filter) {
 
@@ -372,7 +460,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 				String dataStr = (String) msg.obj;
 				mEmployees = getEmployeeList(dataStr);
-				if (mEmployees!=null&&mEmployees.size() > 0) {
+				if (mEmployees != null && mEmployees.size() > 0) {
 					mEmployeeAdapter.addData(mEmployees);
 				}
 				mEmployeeAdapter.notifyDataSetChanged();
@@ -392,25 +480,31 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 				break;
 
 			case MSG_SEARCH_REFRESH_LIST:
-				Logger.d(TAG,"MSG_SEARCH_REFRESH_LIST,filter="+ (String) msg.obj);
+				Logger.d(TAG, "MSG_SEARCH_REFRESH_LIST,filter="
+						+ (String) msg.obj);
 				String filter = (String) msg.obj;
-				ArrayList<Employee> tempList = new ArrayList<Employee>();
+				List<Employee> tempList = new ArrayList<Employee>();
 				tempList.clear();
-				if(filter.isEmpty()&&mEmployees!=null){
+				if (filter.isEmpty() && mEmployees != null) {
 					tempList.addAll(mEmployees);
-				}else{
-					for(Employee e:mEmployees){
-						if(e.getDescr().contains(filter)){
+				} else {
+					for (Employee e : mEmployees) {
+						if (e.getDescr().contains(filter)) {
 							tempList.add(e);
 						}
 					}
 				}
+				// 根据a-z进行排序
+				Collections.sort(tempList, pinyinComparator);
 				mEmployeeAdapter.addData(tempList);
 				mEmployeeAdapter.notifyDataSetChanged();
-//				mEmployeeAdapter.getFilter().filter((String) msg.obj);
+				// mEmployeeAdapter.getFilter().filter((String) msg.obj);
 				break;
 			case MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS:
 				dismissDialog();
+
+				// 根据a-z进行排序源数据
+				Collections.sort(mEmployees, pinyinComparator);
 				mEmployeeAdapter.addData(mEmployees);
 				mEmployeeAdapter.notifyDataSetChanged();
 				break;
@@ -421,13 +515,13 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 	};
 
-	private class EmployeeAdapter extends BaseAdapter {
+	private class EmployeeAdapter extends BaseAdapter implements SectionIndexer {
 
-		private ArrayList<Employee> list = new ArrayList<Employee>();
+		private List<Employee> list = new ArrayList<Employee>();
 
 		private HashMap<String, Boolean> mMap = new HashMap<String, Boolean>();
 
-		public void addData(ArrayList<Employee> data) {
+		public void addData(List<Employee> data) {
 			list.clear();
 			list.addAll(data);
 
@@ -436,7 +530,8 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 				mMap.put(e.getEmployeeID(), false);
 			}
 		}
-		public ArrayList<Employee> getData(){
+
+		public List<Employee> getData() {
 			return list;
 		}
 
@@ -475,14 +570,24 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 						.findViewById(R.id.employee_job_tv);
 				holder.employeeCheckCb = (CheckBox) convertView
 						.findViewById(R.id.employee_check_cb);
+				holder.letterTv = (TextView) convertView.findViewById(R.id.catalog);
 
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
+			
+			Employee employee = list.get(position);
+			
+			int section = getSectionForPosition(position);
+			if(position == getPositionForSection(section)){
+				holder.letterTv.setVisibility(View.VISIBLE);
+				holder.letterTv.setText(employee.getSortLetters());
+			}else{
+				holder.letterTv.setVisibility(View.GONE);
+			}
 
-			bindData(holder, list.get(position));
-
+			bindData(holder, employee);
 			return convertView;
 		}
 
@@ -574,58 +679,86 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 			// });
 		}
 
-//		public Filter tmpFilter = new Filter() {
-//
-//			@Override
-//			protected FilterResults performFiltering(CharSequence constraint) {
-//				FilterResults results = new FilterResults();
-//				Log.d(TAG, "constraint=" + constraint);
-//				// We implement here the filter logic
-//				if (constraint == null || constraint.length() == 0
-//						|| constraint.toString().isEmpty()) {
-//					// No filter implemented we return all the list
-//					Log.d(TAG, "constraint is empty");
-//					results.values = list;
-//					results.count = list.size();
-//				} else {
-//					// We perform filtering operation
-//					ArrayList<Employee> nEmployeeList = new ArrayList<Employee>();
-//					nEmployeeList.clear();
-//					for (Employee p : list) {
-//						if (p.getDescr().contains(
-//								constraint.toString().toUpperCase())
-//								&& !constraint.toString().toUpperCase()
-//										.isEmpty()) {
-//							nEmployeeList.add(p);
-//						} else if (constraint.toString().toUpperCase()
-//								.isEmpty()) {
-//							nEmployeeList.add(p);
-//						}
-//					}
-//
-//					results.values = nEmployeeList;
-//					results.count = nEmployeeList.size();
-//
-//				}
-//				return results;
-//			}
-//
-//			@Override
-//			protected void publishResults(CharSequence constraint,
-//					FilterResults results) {
-//				// Now we have to inform the adapter about the new list
-//				// filtered
-//				Logger.d(TAG, "publishResults,results.count=" + results.count);
-//				list=(ArrayList<Employee>) results.values;
-//				notifyDataSetChanged();
-//			}
-//
-//		};
-//
-//		@Override
-//		public Filter getFilter() {
-//			return tmpFilter;
-//		}
+		/**
+		 * 根据ListView的当前位置获取分类的首字母的Char ascii值
+		 */
+		public int getSectionForPosition(int position) {
+			return list.get(position).getSortLetters().charAt(0);
+		}
+
+		/**
+		 * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的位置
+		 */
+		public int getPositionForSection(int section) {
+			for (int i = 0; i < getCount(); i++) {
+				String sortStr = list.get(i).getSortLetters();
+				char firstChar = sortStr.toUpperCase().charAt(0);
+				if (firstChar == section) {
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
+		@Override
+		public Object[] getSections() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		// public Filter tmpFilter = new Filter() {
+		//
+		// @Override
+		// protected FilterResults performFiltering(CharSequence constraint) {
+		// FilterResults results = new FilterResults();
+		// Log.d(TAG, "constraint=" + constraint);
+		// // We implement here the filter logic
+		// if (constraint == null || constraint.length() == 0
+		// || constraint.toString().isEmpty()) {
+		// // No filter implemented we return all the list
+		// Log.d(TAG, "constraint is empty");
+		// results.values = list;
+		// results.count = list.size();
+		// } else {
+		// // We perform filtering operation
+		// ArrayList<Employee> nEmployeeList = new ArrayList<Employee>();
+		// nEmployeeList.clear();
+		// for (Employee p : list) {
+		// if (p.getDescr().contains(
+		// constraint.toString().toUpperCase())
+		// && !constraint.toString().toUpperCase()
+		// .isEmpty()) {
+		// nEmployeeList.add(p);
+		// } else if (constraint.toString().toUpperCase()
+		// .isEmpty()) {
+		// nEmployeeList.add(p);
+		// }
+		// }
+		//
+		// results.values = nEmployeeList;
+		// results.count = nEmployeeList.size();
+		//
+		// }
+		// return results;
+		// }
+		//
+		// @Override
+		// protected void publishResults(CharSequence constraint,
+		// FilterResults results) {
+		// // Now we have to inform the adapter about the new list
+		// // filtered
+		// Logger.d(TAG, "publishResults,results.count=" + results.count);
+		// list=(ArrayList<Employee>) results.values;
+		// notifyDataSetChanged();
+		// }
+		//
+		// };
+		//
+		// @Override
+		// public Filter getFilter() {
+		// return tmpFilter;
+		// }
 	}
 
 	class ViewHolder {
@@ -634,6 +767,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 		TextView employeeDepartTv;
 		TextView employeeJobTv;
 		CheckBox employeeCheckCb;
+		TextView letterTv;
 	}
 
 	@Override

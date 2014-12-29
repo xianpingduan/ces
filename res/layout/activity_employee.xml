@@ -20,7 +20,7 @@
             android:layout_marginLeft="@dimen/common_margin_left"
             android:src="@drawable/fapiao_check" />
 
-        <EditText
+        <com.xiexin.sortlistview.ClearEditText
             android:id="@+id/search_et"
             style="@style/NormalEditText"
             android:layout_width="match_parent"
@@ -37,11 +37,35 @@
             android:textCursorDrawable="@drawable/pl_edittext_cursor" />
     </RelativeLayout>
 
-    <com.xiexin.ces.widgets.LoadingUIListView
-        android:id="@+id/employee_list"
-        style="@style/NormalList"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never" />
+        android:layout_height="match_parent" >
+
+        <ListView
+            android:id="@+id/employee_list"
+            style="@style/NormalList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scrollbars="none"
+            android:overScrollMode="never" />
+
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="80dip"
+            android:layout_height="80dip"
+            android:layout_gravity="center"
+            android:background="@drawable/loading_pop_background"
+            android:gravity="center"
+            android:textColor="@color/pl_deputy_blue_color"
+            android:textSize="30.0dip"
+            android:visibility="invisible" />
+
+        <com.xiexin.sortlistview.SideBar
+            android:id="@+id/sidebar"
+            android:layout_width="30.0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center" />
+    </FrameLayout>
 
 </LinearLayout>

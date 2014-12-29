@@ -31,6 +31,8 @@ public class Constants
     public final static String SERVER_CONFIG_PORT = "server_config_port";
     public final static String SERVER_CONFIG_FIRST_IN = "server_config_first_in";
     public final static String SERVER_CONFIG_REQ = "server_config_req";
+    
+    public final static String MENU_HANDLE="menu_handle";
 
     // public final static String
     // SERVER_CONFIG_SET_FROM="server_config_set_from";

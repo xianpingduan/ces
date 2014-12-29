@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-	<uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name="com.xiexin.ces.App"
@@ -36,7 +36,11 @@
         </activity>
 
         <!-- <activity android:name="com.xiexin.ces.activity.LoginActivity"/> -->
-        <activity android:name="com.xiexin.ces.activity.MenuActivity" />
+        <activity
+            android:name="com.xiexin.ces.activity.MenuActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
             android:name="com.xiexin.ces.activity.ServerConfigActivity"
             android:screenOrientation="portrait"
@@ -60,6 +64,7 @@
         <activity
             android:name="com.xiexin.ces.activity.EmployeeActivity"
             android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
             android:name="com.xiexin.ces.activity.InvoiceSecondInfoActivity"
@@ -73,13 +78,21 @@
             android:name="com.xiexin.ces.activity.MessageInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.xiexin.ces.activity.ImageGalleryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
 
-        <service android:name="pada.juidownloadmanager.JuiDownloadService" android:exported="false">
+        <service
+            android:name="pada.juidownloadmanager.JuiDownloadService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="download.service.action" />
             </intent-filter>
         </service>
-        <service android:name="com.xiexin.ces.service.MessageService" android:exported="false">
+        <service
+            android:name="com.xiexin.ces.service.MessageService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="MessageService.action.command" />
             </intent-filter>
@@ -89,7 +102,6 @@
             android:name="com.xiexin.ces.receiver.PushStartServiceReceiver"
             android:priority="1000" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="com.xiexin.ces.receiver.PushStartServiceReceiver" />
             </intent-filter>
         </receiver>
