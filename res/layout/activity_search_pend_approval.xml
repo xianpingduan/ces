@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- <include layout="@layout/header_action_bar"/> -->
+
+    <RelativeLayout
+        android:id="@+id/search_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pl_disabled_text_color" >
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="62dp"
+            android:layout_height="@dimen/login_frame_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_download_edit"
+            android:textColor="@color/pl_deputy_text_color"
+            android:layout_marginRight="@dimen/common_margin_right"
+            android:textSize="@dimen/pl_mimi_text_size"
+            android:text="@string/cancel" />
+
+        <LinearLayout
+            android:id="@+id/search_edit_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_frame_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/common_margin"
+            android:background="@drawable/pl_input_box_default"
+            android:gravity="center"
+            android:layout_toLeftOf="@id/cancel_btn"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/search_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/fapiao_check" />
+
+            <com.xiexin.sortlistview.ClearEditText
+                android:id="@+id/search_et"
+                style="@style/NormalEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_frame_height"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColorHint="@color/pl_deputy_text_color"
+                android:textCursorDrawable="@drawable/pl_edittext_cursor" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.xiexin.ces.widgets.LoadingUIListView
+        android:id="@+id/search_pend_approval_list"
+        style="@style/NormalList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
+
+</LinearLayout>

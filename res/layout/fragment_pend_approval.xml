@@ -3,61 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <!-- <include layout="@layout/header_action_bar"/> -->
-
-    <RelativeLayout
-        android:id="@+id/search_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/pl_disabled_text_color" >
-
-        <LinearLayout
-            android:id="@+id/search_edit_ll"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/login_frame_height"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="@dimen/common_margin"
-            android:background="@drawable/pl_input_box_default"
-            android:orientation="horizontal"
-            android:gravity="center" >
-
-            <ImageView
-                android:id="@+id/search_iv"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/fapiao_check" />
-
-            <EditText
-                android:id="@+id/search_et"
-                style="@style/NormalEditText"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/login_frame_height"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="@string/please_enter_employee_name"
-                android:imeOptions="flagNoExtractUi"
-                android:maxLength="18"
-                android:singleLine="true"
-                android:text="搜索"
-                android:textColorHint="@color/pl_deputy_text_color"
-                android:textCursorDrawable="@drawable/pl_edittext_cursor" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/cancel_btn"
-            android:layout_width="72dp"
-            android:layout_height="36dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/search_edit_ll"
-            android:layout_marginRight="@dimen/common_margin_right"
-            android:text="@string/cancel" />
-    </RelativeLayout>
+    
+ 	<!--<include layout="@layout/header_action_bar"/> -->
+ 	
 
     <com.xiexin.ces.widgets.LoadingUIListView
-        android:id="@+id/search_pend_approval_list"
+        android:id="@+id/pend_approval_list"
         style="@style/NormalList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -17,7 +17,7 @@
     <dimen name="common_padding_buttom">6dp</dimen>
     
     <!-- login -->
-    <dimen name="login_logo_margin_top">24dp</dimen>
+    <dimen name="login_logo_margin_top">48dp</dimen>
     <dimen name="login_btn_margin_top">20dp</dimen>
     <dimen name="login_btn_margin_left">24dp</dimen>
     <dimen name="login_btn_margin_right">24dp</dimen>
@@ -60,10 +60,10 @@
     <dimen name="welcome_progress_margin_top">55dp</dimen>
     <dimen name="welcome_text_margin_top">25dp</dimen>
     <dimen name="welcome_progress_width_height">48dp</dimen>
-    <dimen name="welcome_logo_width_height">120dp</dimen>
+    <dimen name="welcome_logo_width_height">108dp</dimen>
     
     <!-- header bar  -->
-    <dimen name="header_return_margin_left">12dp</dimen>
+    <dimen name="header_return_margin_left">18dp</dimen>
     
     <!-- login -->
     <dimen name="login_margin_left">24dp</dimen>
@@ -72,8 +72,8 @@
     <dimen name="login_margin_buttom">24dp</dimen>
     <dimen name="login_margin">24dp</dimen>
     
-    <dimen name="login_logo_width">108dp</dimen>
-    <dimen name="login_logo_height">108dp</dimen>
+    <dimen name="login_logo_width">96dp</dimen>
+    <dimen name="login_logo_height">96dp</dimen>
     
     <!-- info -->
     <dimen name="info_look_btn_margin_right">24dp</dimen>

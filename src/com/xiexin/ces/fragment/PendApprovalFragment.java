@@ -36,6 +36,7 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.activity.InvoiceInfoActivity;
+import com.xiexin.ces.activity.SearchPendApprovalActivity;
 import com.xiexin.ces.entry.Invoice;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
@@ -68,9 +69,10 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 	private RequestQueue mQueue;
 	private int mKind = 1;
 	private int mCurrentPage = 1;
-	
+
 	private Handler mMainUIHandler;
-	public void setMainUIHandler(Handler handler){
+
+	public void setMainUIHandler(Handler handler) {
 		mMainUIHandler = handler;
 	}
 
@@ -105,20 +107,24 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		}, 200);
 
 	}
-	
-	private View generateListHeaderView(){
+
+	private View generateListHeaderView() {
 		LayoutInflater inflater = App.getLayoutInflater();
-		View view  = inflater.inflate(R.layout.fragment_pend_approval_list_header, null);
+		View view = inflater.inflate(
+				R.layout.fragment_pend_approval_list_header, null);
 		view.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-					
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), SearchPendApprovalActivity.class);
+				Logger.d(TAG, "kind="+mKind);
+				intent.putExtra("kind", mKind);
+				startActivityForResult(intent, 1);
 			}
 		});
 		return view;
 	}
-	
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -157,7 +163,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		mListView.setHeaderPullEnable(true);
 		mListView.setFooterPullEnable(true);
 		mListView.setListViewListener(mListViewListener);
-		
+
 		mListView.addHeaderView(generateListHeaderView());
 
 		// // header start
@@ -502,8 +508,8 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 					String connName = holder.accountTv.getText().toString();
 					String id = holder.invoiceIdTv.getText().toString();
 					String prgId = holder.prgIdTv.getText().toString();
-					Logger.d(TAG, "connName=" + connName + ",id=" + id + ",prgId="
-							+ prgId);
+					Logger.d(TAG, "connName=" + connName + ",id=" + id
+							+ ",prgId=" + prgId);
 					Intent intent = new Intent();
 					intent.setClass(getActivity(), InvoiceInfoActivity.class);
 					intent.putExtra(Constants.ZHANG_TAO_CONN_NAME, connName);
@@ -593,7 +599,8 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
-		Logger.d(TAG, "requestCode=" + requestCode + ",resultCode="+ resultCode);
+		Logger.d(TAG, "requestCode=" + requestCode + ",resultCode="
+				+ resultCode);
 		// int resultFrom = data.getIntExtra(Constants.APPR_LIST_RESULT_FROM,0);
 		switch (resultCode) {
 		case Constants.APPR_LIST_RESULT_FROM_RETURN:

@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.os.IBinder;
+import android.text.Html;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
@@ -122,7 +123,7 @@ public class MessageService extends Service
 	    msg.setTitle( jsonObject.getString( "Title" ) );
 	    msg.setToUser( jsonObject.getString( "ToUser" ) );
 
-	    PushNotificationCenter.getInstance( mContext ).addMessageNotification( msg.getTitle( ) , msg.getContent( ) );
+	    PushNotificationCenter.getInstance( mContext ).addMessageNotification( msg.getTitle( ) ,Html.fromHtml( msg.getContent( )).toString() );
 
 	}
 	catch ( JSONException e )

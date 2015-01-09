@@ -1,5 +1,7 @@
-package com.xiexin.ces.fragment;
+package com.xiexin.ces.activity;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,21 +12,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -37,7 +42,6 @@ import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
-import com.xiexin.ces.activity.InvoiceInfoActivity;
 import com.xiexin.ces.entry.Invoice;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
@@ -47,15 +51,17 @@ import com.xiexin.ces.widgets.PullListView.IListViewListener;
 /**
  * User: special Date: 13-12-22 Time: 下午3:26 Mail: specialcyci@gmail.com
  */
-public class SearchPendApprovalFragment extends Fragment implements OnClickListener {
+public class SearchPendApprovalActivity extends Activity implements
+		OnClickListener {
 
 	private final static String TAG = "SearchPendApprovalFragment";
 
-	private View parentView;
 	private LoadingUIListView mListView;
 	private InvoiceAdapter mInvoiceAdapter;
 	private EditText mFilterEt;
 	private Button mCancelBtn;
+
+	private String filter;
 
 	// // header start
 	// private LinearLayout mReturnLl;
@@ -72,9 +78,10 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 	private RequestQueue mQueue;
 	private int mKind = 1;
 	private int mCurrentPage = 1;
-	
+
 	private Handler mMainUIHandler;
-	public void setMainUIHandler(Handler handler){
+
+	public void setMainUIHandler(Handler handler) {
 		mMainUIHandler = handler;
 	}
 
@@ -99,7 +106,7 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 
 	private void showDialog() {
 		if (mLoadingDialog == null) {
-			mLoadingDialog = new LoadingDialog(getActivity());
+			mLoadingDialog = new LoadingDialog(SearchPendApprovalActivity.this);
 		}
 		new Handler().postDelayed(new Runnable() {
 			@Override
@@ -111,45 +118,47 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		Logger.d(TAG, "onAttach");
-
-		mQueue = Volley.newRequestQueue(App.getAppContext());
-	}
-
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Logger.d(TAG, "onCreate");
-	}
+		mQueue = Volley.newRequestQueue(App.getAppContext());
 
-	public void setKind(int kind, boolean b) {
-		Logger.d(TAG, "mKind=" + mKind + ",kind=" + kind);
-		if (mKind != kind || b) {
-			mKind = kind;
-			mCurrentPage = 1;
-			mUiHandler.sendEmptyMessage(MSG_KIND_CHANGE);
-		}
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-		Logger.d(TAG, "onCreateView");
-
-		parentView = inflater.inflate(R.layout.fragment_search_pend_approval,
-				container, false);
-		mListView = (LoadingUIListView) parentView
-				.findViewById(R.id.search_pend_approval_list);
+		setContentView(R.layout.activity_search_pend_approval);
+		mListView = (LoadingUIListView) findViewById(R.id.search_pend_approval_list);
 		mListView.setHeaderPullEnable(false);
 		mListView.setFooterPullEnable(false);
-		mListView.setListViewListener(mListViewListener);
-		
-		mFilterEt = (EditText) parentView.findViewById(R.id.search_et);
-		mCancelBtn  = (Button) parentView.findViewById(R.id.cancel_btn);
+
+		mFilterEt = (EditText) findViewById(R.id.search_et);
+		mCancelBtn = (Button) findViewById(R.id.cancel_btn);
+
+		mFilterEt.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					// 先隐藏键盘
+					((InputMethodManager) mFilterEt.getContext()
+							.getSystemService(Context.INPUT_METHOD_SERVICE))
+							.hideSoftInputFromWindow(getCurrentFocus()
+									.getWindowToken(),
+									InputMethodManager.HIDE_NOT_ALWAYS);
+
+					filter = mFilterEt.getText().toString();
+
+					if (!filter.isEmpty()) {
+						try {
+							filter = URLEncoder.encode(filter, "utf-8");
+						} catch (UnsupportedEncodingException e) {
+							e.printStackTrace();
+						}
+						requestPendApproval(filter);
+					}
+				}
+				return false;
+			}
+		});
+
+		// mFilterEt.requestFocus();
 
 		// // header start
 		// mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
@@ -183,11 +192,10 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 		// mBtn1.setText( getString( R.string.finish_to ) );
 		// mBtn1.setOnClickListener( this );
 		// mReturnIv.setOnClickListener(this);
-
+		mCancelBtn.setOnClickListener(this);
 		initView();
 
 		initData();
-		return parentView;
 	}
 
 	@Override
@@ -196,28 +204,16 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 		Logger.d(TAG, "onResume");
 	}
 
-	private final IListViewListener mListViewListener = new IListViewListener() {
-		@Override
-		public void onRefresh() {
-			mCurrentPage = 1;
-			requestPendApproval(LOAD_LIST_REFRESH);
-		}
-
-		@Override
-		public void onLoadMore() {
-			requestPendApproval(LOAD_LIST_LOADMORE);
-		}
-	};
-
 	private void initData() {
 
 		if (mInvoiceAdapter == null)
 			mInvoiceAdapter = new InvoiceAdapter();
 
 		mListView.setAdapter(mInvoiceAdapter);
+		mKind = getIntent().getIntExtra("kind", 1);
 
 		// 请求数据
-		requestPendApproval(LOAD_LIST_NORMAL);
+		// requestPendApproval(LOAD_LIST_NORMAL);
 
 	}
 
@@ -239,26 +235,13 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case MSG_GET_INVOICE_LIST_SUCCESS:
-				mListView.setFooterPullEnable(true);
 				String data = (String) msg.obj;
 				ArrayList<Invoice> invoices = getInvoiceList(data);
 				if (invoices.size() > 0) {
-					if (mCurrentPage == 1) {
-						mInvoiceAdapter.addData(invoices,
-								Constants.TYPE_LIST_ADD_COVER);
-					} else {
-						mInvoiceAdapter.addData(invoices,
-								Constants.TYPE_LIST_ADD_APPEND);
-					}
+					mInvoiceAdapter.addData(invoices,
+							Constants.TYPE_LIST_ADD_COVER);
 					mInvoiceAdapter.notifyDataSetChanged();
-					mListView.stopHeaderRefresh();
-					mListView.stopFooterRefresh();
 					mCurrentPage++;
-
-					if (invoices.size() < Constants.PAGE_SIZE) {
-						mListView.setFooterPullEnable(false);
-					}
-
 				} else if (invoices.size() == 0 && mCurrentPage == 1) {
 					mInvoiceAdapter.addData(invoices,
 							Constants.TYPE_LIST_ADD_COVER);
@@ -273,7 +256,6 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 			case MSG_GET_INVOICE_LIST_ERROR:
 				dismissDialog();
 				mListView.stopFooterRefresh();
-				mListView.setFooterPullEnable(false);
 				Toast.makeText(
 						App.getAppContext(),
 						App.getAppContext().getString(
@@ -283,7 +265,6 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 
 			case MSG_LAST_PAGE:
 				if (mListView != null) {
-					mListView.setFooterPullEnable(false);
 					mListView.stopFooterRefresh();
 					Toast.makeText(
 							App.getAppContext(),
@@ -300,8 +281,8 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 				break;
 
 			case MSG_KIND_CHANGE:
-				mListView.setFooterPullEnable(true);
-				requestPendApproval(LOAD_LIST_NORMAL);
+				// mListView.setFooterPullEnable(true);
+				// requestPendApproval(LOAD_LIST_NORMAL);
 				break;
 			default:
 				break;
@@ -348,11 +329,10 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 
 	}
 
-	private void requestPendApproval(final int type) {
+	private void requestPendApproval(final String filter) {
 
-		if (type == LOAD_LIST_NORMAL) {
-			showDialog();
-		}
+		Logger.d(TAG, "filter =" + filter);
+		showDialog();
 
 		String account = App.getSharedPreference().getString(
 				Constants.ZHANG_TAO_CONN_NAME, "");
@@ -366,7 +346,7 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 		urlSbf.append("&kind=").append(mKind);
 		urlSbf.append("&size=").append(Constants.PAGE_SIZE);
 		urlSbf.append("&page=").append(mCurrentPage);
-		urlSbf.append("&filter=").append("");
+		urlSbf.append("&filter=").append(filter);
 
 		JsonObjectRequest json = new JsonObjectRequest(Method.GET,
 				urlSbf.toString(), null, new Listener<JSONObject>() {
@@ -403,14 +383,15 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 
 	private void initView() {
 
-		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view,
-					int i, long l) {
-				Toast.makeText(getActivity(), "Clicked item!",
-						Toast.LENGTH_LONG).show();
-			}
-		});
+		// mListView.setOnItemClickListener(new
+		// AdapterView.OnItemClickListener() {
+		// @Override
+		// public void onItemClick(AdapterView<?> adapterView, View view,
+		// int i, long l) {
+		// Toast.makeText(SearchPendApprovalActivity.this,
+		// "Clicked item!", Toast.LENGTH_LONG).show();
+		// }
+		// });
 	}
 
 	private class InvoiceAdapter extends BaseAdapter {
@@ -493,10 +474,11 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 					String connName = holder.accountTv.getText().toString();
 					String id = holder.invoiceIdTv.getText().toString();
 					String prgId = holder.prgIdTv.getText().toString();
-					Logger.d(TAG, "connName=" + connName + ",id=" + id + ",prgId="
-							+ prgId);
+					Logger.d(TAG, "connName=" + connName + ",id=" + id
+							+ ",prgId=" + prgId);
 					Intent intent = new Intent();
-					intent.setClass(getActivity(), InvoiceInfoActivity.class);
+					intent.setClass(SearchPendApprovalActivity.this,
+							InvoiceInfoActivity.class);
 					intent.putExtra(Constants.ZHANG_TAO_CONN_NAME, connName);
 					intent.putExtra(Constants.PRGID, prgId);
 					intent.putExtra(Constants.DATANBR, id);
@@ -534,14 +516,11 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 			holder.prgIdTv.setText(invoice.getPrgID());
 			holder.accountTv.setText(invoice.getAccount());
 			holder.invoiceDescTv.setText(invoice.getReason());
-
 			holder.indicateIv.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-
 					intentToInvoiceDesc();
-
 				}
 			});
 
@@ -562,7 +541,6 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 		TextView moneyTv;
 		TextView invoiceDescTv;
 		ImageView indicateIv;
-
 		// 存数据
 		TextView prgIdTv;
 		TextView accountTv;
@@ -572,10 +550,11 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.return_iv:
-
 			break;
 		case R.id.cancel_btn:
-			
+			Intent in = new Intent();
+			setResult(Constants.APPR_LIST_RESULT_FROM_RETURN, in);
+			finish();
 			break;
 		default:
 			break;
@@ -586,24 +565,14 @@ public class SearchPendApprovalFragment extends Fragment implements OnClickListe
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
-		Logger.d(TAG, "requestCode=" + requestCode + ",resultCode="+ resultCode);
-		// int resultFrom = data.getIntExtra(Constants.APPR_LIST_RESULT_FROM,0);
-		switch (resultCode) {
-		case Constants.APPR_LIST_RESULT_FROM_RETURN:
-			Logger.d(TAG, "no approval");
-			break;
-		case Constants.APPR_LIST_RESULT_FROM_APPRSUC:
-			Logger.d(TAG, "approval success!");
-			refreshList();
-			break;
-		default:
-			break;
-		}
-
+		Logger.d(TAG, "requestCode=" + requestCode + ",resultCode="
+				+ resultCode);
+		setResult(resultCode, data);
+		finish();
 	}
-
-	private void refreshList() {
-		mCurrentPage = 1;
-		requestPendApproval(LOAD_LIST_REFRESH);
-	}
+	//
+	// private void refreshList() {
+	// mCurrentPage = 1;
+	// requestPendApproval(LOAD_LIST_REFRESH);
+	// }
 }
