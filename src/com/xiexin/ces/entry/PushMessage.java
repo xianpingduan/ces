@@ -1,127 +1,104 @@
 package com.xiexin.ces.entry;
 
-public class PushMessage
-{
-    private String Account;
-    private String FromUser;
-    private String Title;
-    private String Content;
-    private String ToUser;
-    private int bRead;
-    private int MsgType;
-    private String MsgID;
-    private String CrtDate;
-    private int ApprID;
-    private String FilesPath;
+public class PushMessage {
+	private String account;
+	private String fromuser;
+	private String title;
+	private String content;
+	private String touser;
+	private int bread;
+	private int msgtype;
+	private String msgid;
+	private String crtdate;
+	private int apprid;
+	private String filespath;
 
-    public String getAccount()
-    {
-	return Account;
-    }
+	public String getAccount() {
+		return account;
+	}
 
-    public void setAccount( String account )
-    {
-	Account = account;
-    }
+	public void setAccount(String account) {
+		this.account = account;
+	}
 
-    public String getFromUser()
-    {
-	return FromUser;
-    }
+	public String getFromuser() {
+		return fromuser;
+	}
 
-    public void setFromUser( String fromUser )
-    {
-	FromUser = fromUser;
-    }
+	public void setFromuser(String fromuser) {
+		this.fromuser = fromuser;
+	}
 
-    public String getTitle()
-    {
-	return Title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle( String title )
-    {
-	Title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getContent()
-    {
-	return Content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setContent( String content )
-    {
-	Content = content;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public String getToUser()
-    {
-	return ToUser;
-    }
+	public String getTouser() {
+		return touser;
+	}
 
-    public void setToUser( String toUser )
-    {
-	ToUser = toUser;
-    }
+	public void setTouser(String touser) {
+		this.touser = touser;
+	}
 
-    public int getbRead()
-    {
-	return bRead;
-    }
+	public int getBread() {
+		return bread;
+	}
 
-    public void setbRead( int bRead )
-    {
-	this.bRead = bRead;
-    }
+	public void setBread(int bread) {
+		this.bread = bread;
+	}
 
-    public int getMsgType()
-    {
-	return MsgType;
-    }
+	public int getMsgtype() {
+		return msgtype;
+	}
 
-    public void setMsgType( int msgType )
-    {
-	MsgType = msgType;
-    }
+	public void setMsgtype(int msgtype) {
+		this.msgtype = msgtype;
+	}
 
-    public String getMsgID()
-    {
-	return MsgID;
-    }
+	public String getMsgid() {
+		return msgid;
+	}
 
-    public void setMsgID( String msgID )
-    {
-	MsgID = msgID;
-    }
+	public void setMsgid(String msgid) {
+		this.msgid = msgid;
+	}
 
-    public String getCrtDate()
-    {
-	return CrtDate;
-    }
+	public String getCrtdate() {
+		return crtdate;
+	}
 
-    public void setCrtDate( String crtDate )
-    {
-	CrtDate = crtDate;
-    }
+	public void setCrtdate(String crtdate) {
+		this.crtdate = crtdate;
+	}
 
-    public int getApprID()
-    {
-	return ApprID;
-    }
+	public int getApprid() {
+		return apprid;
+	}
 
-    public void setApprID( int apprID )
-    {
-	ApprID = apprID;
-    }
+	public void setApprid(int apprid) {
+		this.apprid = apprid;
+	}
 
-    public String getFilesPath()
-    {
-	return FilesPath;
-    }
+	public String getFilespath() {
+		return filespath;
+	}
 
-    public void setFilesPath( String filesPath )
-    {
-	FilesPath = filesPath;
-    }
+	public void setFilespath(String filespath) {
+		this.filespath = filespath;
+	}
 
 }

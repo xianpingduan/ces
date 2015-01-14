@@ -40,6 +40,7 @@ import com.xiexin.ces.fragment.PendApprovalFragment;
 import com.xiexin.ces.fragment.TipFragment;
 import com.xiexin.ces.menu.ResideMenu;
 import com.xiexin.ces.menu.ResideMenuItem;
+import com.xiexin.ces.update.SelfUpgrade;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
 
@@ -442,6 +443,11 @@ public class MenuActivity extends FragmentActivity implements
 						.edit()
 						.putLong(Constants.THE_SYNC_EMPLOYEE_TIME,
 								next_req_time).commit();
+				
+				
+				//checkUpdate
+				checkUpdate();
+				
 				break;
 			case MSG_FROM_FRAGMENT_CLOSE_MENU:
 				resideMenu.closeMenu();
@@ -611,14 +617,14 @@ public class MenuActivity extends FragmentActivity implements
 					public void onResponse(JSONObject response) {
 						Logger.d(TAG, "----response----" + response.toString());
 						try {
-							int resCode = response.getInt("Success");
+							int resCode = response.getInt("success");
 							Message msg = Message.obtain();
 							if (resCode == 0) {
 								msg.what = MSG_GET_EMPLOYEE_LIST_SUCCESS;
-								msg.obj = response.getString("Data");
+								msg.obj = response.getString("data");
 							} else {
 								msg.what = MSG_GET_EMPLOYEE_LIST_ERROR;
-								msg.obj = response.get("Msg");
+								msg.obj = response.get("msg");
 							}
 							mUiHandler.sendMessage(msg);
 						} catch (JSONException e) {
@@ -654,4 +660,19 @@ public class MenuActivity extends FragmentActivity implements
 		}
 		mLoadingDialog.show();
 	}
+	
+	
+	private void checkUpdate(){
+		
+		mUiHandler.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				SelfUpgrade.getInstance(App.getAppContext()).startUpgrade();				
+				
+			}
+		}, 1000);
+	}
+	
 }

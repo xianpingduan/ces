@@ -2,113 +2,113 @@ package com.xiexin.ces.entry;
 
 public class Invoice {
 	
-	private String Account;
-	private String PrgID;
-	private String PrgName;
-	private String DataNbr;
-	private String ApprObj;
-	private String ApprName;
-	private String Depart;
-	private String Channel;
-	private String AccName;
-	private String VerType;
-	private int TotalCost;
-	private String ApprDate;
-	private String ProcessMode;
-	private String Status;
-	private String Reason;
-	
-
+	private String account;
+	private String prgid;
+	private String prgname;
+	private String datanbr;
+	private String approbj;
+	private String apprname;
+	private String depart;
+	private String channel;
+	private String accname;
+	private String vertype;
+	private int totalcost;
+	private String apprdate;
+	private String processmode;
+	private String status;
+	private String reason;
 	public String getAccount() {
-		return Account;
+		return account;
 	}
 	public void setAccount(String account) {
-		Account = account;
+		this.account = account;
 	}
-	public String getPrgID() {
-		return PrgID;
+	public String getPrgid() {
+		return prgid;
 	}
-	public void setPrgID(String prgID) {
-		PrgID = prgID;
+	public void setPrgid(String prgid) {
+		this.prgid = prgid;
 	}
-	public String getPrgName() {
-		return PrgName;
+	public String getPrgname() {
+		return prgname;
 	}
-	public void setPrgName(String prgName) {
-		PrgName = prgName;
+	public void setPrgname(String prgname) {
+		this.prgname = prgname;
 	}
-	public String getDataNbr() {
-		return DataNbr;
+	public String getDatanbr() {
+		return datanbr;
 	}
-	public void setDataNbr(String dataNbr) {
-		DataNbr = dataNbr;
+	public void setDatanbr(String datanbr) {
+		this.datanbr = datanbr;
 	}
-	public String getApprObj() {
-		return ApprObj;
+	public String getApprobj() {
+		return approbj;
 	}
-	public void setApprObj(String apprObj) {
-		ApprObj = apprObj;
+	public void setApprobj(String approbj) {
+		this.approbj = approbj;
 	}
-	public String getApprName() {
-		return ApprName;
+	public String getApprname() {
+		return apprname;
 	}
-	public void setApprName(String apprName) {
-		ApprName = apprName;
+	public void setApprname(String apprname) {
+		this.apprname = apprname;
 	}
 	public String getDepart() {
-		return Depart;
+		return depart;
 	}
 	public void setDepart(String depart) {
-		Depart = depart;
+		this.depart = depart;
 	}
 	public String getChannel() {
-		return Channel;
+		return channel;
 	}
 	public void setChannel(String channel) {
-		Channel = channel;
+		this.channel = channel;
 	}
-	public String getAccName() {
-		return AccName;
+	public String getAccname() {
+		return accname;
 	}
-	public void setAccName(String accName) {
-		AccName = accName;
+	public void setAccname(String accname) {
+		this.accname = accname;
 	}
-	public String getVerType() {
-		return VerType;
+	public String getVertype() {
+		return vertype;
 	}
-	public void setVerType(String verType) {
-		VerType = verType;
+	public void setVertype(String vertype) {
+		this.vertype = vertype;
 	}
-	public int getTotalCost() {
-		return TotalCost;
+	public int getTotalcost() {
+		return totalcost;
 	}
-	public void setTotalCost(int totalCost) {
-		TotalCost = totalCost;
+	public void setTotalcost(int totalcost) {
+		this.totalcost = totalcost;
 	}
-	public String getApprDate() {
-		return ApprDate;
+	public String getApprdate() {
+		return apprdate;
 	}
-	public void setApprDate(String apprDate) {
-		ApprDate = apprDate;
+	public void setApprdate(String apprdate) {
+		this.apprdate = apprdate;
 	}
-	public String getProcessMode() {
-		return ProcessMode;
+	public String getProcessmode() {
+		return processmode;
 	}
-	public void setProcessMode(String processMode) {
-		ProcessMode = processMode;
+	public void setProcessmode(String processmode) {
+		this.processmode = processmode;
 	}
 	public String getStatus() {
-		return Status;
+		return status;
 	}
 	public void setStatus(String status) {
-		Status = status;
+		this.status = status;
 	}
 	public String getReason() {
-		return Reason;
+		return reason;
 	}
 	public void setReason(String reason) {
-		Reason = reason;
+		this.reason = reason;
 	}
+	
+
 	
 
 }

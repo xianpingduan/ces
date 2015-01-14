@@ -2,37 +2,33 @@ package com.xiexin.ces.entry;
 
 import java.io.Serializable;
 
-public class BaseResult implements Serializable
-{
-    private int Success;
-    private String Msg;
-    private String Data;
+public class BaseResult implements Serializable {
+	private int success;
+	private String msg;
+	private String data;
 
-    public String getData() {
-		return Data;
+	public int getSuccess() {
+		return success;
+	}
+
+	public void setSuccess(int success) {
+		this.success = success;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public String getData() {
+		return data;
 	}
 
 	public void setData(String data) {
-		Data = data;
+		this.data = data;
 	}
 
-	public int getSuccess()
-    {
-	return Success;
-    }
-
-    public void setSuccess( int success )
-    {
-	Success = success;
-    }
-
-    public String getMsg()
-    {
-	return Msg;
-    }
-
-    public void setMsg( String msg )
-    {
-	Msg = msg;
-    }
 }

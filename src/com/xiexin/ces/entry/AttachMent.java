@@ -1,29 +1,24 @@
 package com.xiexin.ces.entry;
 
-public class AttachMent
-{
+public class AttachMent {
 
-    private String AttchName;
-    private String FilePath;
+	private String attchname;
+	private String filepath;
 
-    public String getAttchName()
-    {
-	return AttchName;
-    }
+	public String getAttchname() {
+		return attchname;
+	}
 
-    public void setAttchName( String attchName )
-    {
-	AttchName = attchName;
-    }
+	public void setAttchname(String attchname) {
+		this.attchname = attchname;
+	}
 
-    public String getFilePath()
-    {
-	return FilePath;
-    }
+	public String getFilepath() {
+		return filepath;
+	}
 
-    public void setFilePath( String filePath )
-    {
-	FilePath = filePath;
-    }
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
 
 }

@@ -333,26 +333,26 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			for (int i = 0; i < arrays.length(); i++) {
 				JSONObject obj = arrays.getJSONObject(i);
 				Invoice invoice = new Invoice();
-				invoice.setAccount(obj.getString("Account").equals("null") ? ""
-						: obj.getString("Account"));
-				invoice.setPrgID(obj.getString("PrgID"));
-				invoice.setPrgName(obj.getString("PrgName"));
-				invoice.setDataNbr(obj.getString("DataNbr"));
-				invoice.setApprObj(obj.getString("ApprObj"));
-				invoice.setApprName(obj.getString("ApprName"));
-				invoice.setDepart(obj.getString("Depart"));
-				invoice.setChannel(obj.getString("Channel"));
-				invoice.setAccName(obj.getString("AccName"));
-				invoice.setVerType(obj.getString("VerType").equals("null") ? ""
-						: obj.getString("VerType"));
-				invoice.setTotalCost(obj.getInt("TotalCost"));
-				invoice.setApprDate(obj.getString("ApprDate"));
-				invoice.setProcessMode(obj.getString("ProcessMode").equals(
-						"null") ? "" : obj.getString("ProcessMode"));
-				invoice.setStatus(obj.getString("Status").equals("null") ? ""
-						: obj.getString("Status"));
-				invoice.setReason(obj.getString("Reason").equals("null") ? ""
-						: obj.getString("Reason"));
+				invoice.setAccount(obj.getString("account").equals("null") ? ""
+						: obj.getString("account"));
+				invoice.setPrgid(obj.getString("prgid"));
+				invoice.setPrgname(obj.getString("prgname"));
+				invoice.setDatanbr(obj.getString("datanbr"));
+				invoice.setApprobj(obj.getString("approbj"));
+				invoice.setApprname(obj.getString("apprname"));
+				invoice.setDepart(obj.getString("depart"));
+				invoice.setChannel(obj.getString("channel"));
+				invoice.setAccname(obj.getString("accname"));
+				invoice.setVertype(obj.getString("vertype").equals("null") ? ""
+						: obj.getString("vertype"));
+				invoice.setTotalcost(obj.getInt("totalcost"));
+				invoice.setApprdate(obj.getString("apprdate"));
+				invoice.setProcessmode(obj.getString("processmode").equals(
+						"null") ? "" : obj.getString("processmode"));
+				invoice.setStatus(obj.getString("status").equals("null") ? ""
+						: obj.getString("status"));
+				invoice.setReason(obj.getString("reason").equals("null") ? ""
+						: obj.getString("reason"));
 				invoiceList.add(invoice);
 			}
 		} catch (JSONException e) {
@@ -389,14 +389,14 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 					public void onResponse(JSONObject response) {
 						Logger.d(TAG, "----response----" + response.toString());
 						try {
-							int resCode = response.getInt("Success");
+							int resCode = response.getInt("success");
 							Message msg = Message.obtain();
 							if (resCode == 0) {
 								msg.what = MSG_GET_INVOICE_LIST_SUCCESS;
-								msg.obj = response.getString("Data");
+								msg.obj = response.getString("data");
 							} else {
 								msg.what = MSG_GET_INVOICE_LIST_ERROR;
-								msg.obj = response.get("Msg");
+								msg.obj = response.get("msg");
 							}
 							mUiHandler.sendMessage(msg);
 						} catch (JSONException e) {
@@ -526,7 +526,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 
 		private void bindData(final ViewHolder holder, final Invoice invoice) {
 
-			String apprDate = invoice.getApprDate();
+			String apprDate = invoice.getApprdate();
 			Date date = new Date();
 			try {
 				if (apprDate != null && !apprDate.equals("null")) {
@@ -540,13 +540,13 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 				Logger.d(TAG, "date format error");
 			}
 			// Logger.d(TAG, "---prgName="+invoice.getPrgName());
-			holder.invoiceIdTv.setText(invoice.getDataNbr());
+			holder.invoiceIdTv.setText(invoice.getDatanbr());
 			holder.invoiceDateTv.setText(apprDate);
 			holder.departUserNameTv.setText(invoice.getDepart() + " "
-					+ invoice.getApprName());
+					+ invoice.getApprname());
 			holder.moneyTv
-					.setText("￥" + String.valueOf(invoice.getTotalCost()));
-			holder.prgIdTv.setText(invoice.getPrgID());
+					.setText("￥" + String.valueOf(invoice.getTotalcost()));
+			holder.prgIdTv.setText(invoice.getPrgid());
 			holder.accountTv.setText(invoice.getAccount());
 			holder.invoiceDescTv.setText(invoice.getReason());
 

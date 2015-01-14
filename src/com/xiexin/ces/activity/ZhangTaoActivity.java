@@ -118,10 +118,10 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 			for (int i = 0; i < arrays.length(); i++) {
 				JSONObject obj = arrays.getJSONObject(i);
 				ZhangTao zt = new ZhangTao();
-				zt.setAccInfo(obj.getString("AccInfo"));
-				zt.setConnName(obj.getString("ConnName"));
-				zt.setUserID(obj.getString("UserID"));
-				zt.setUserName(obj.getString("UserName"));
+				zt.setAccinfo(obj.getString("accinfo"));
+				zt.setConnname(obj.getString("connname"));
+				zt.setUserid(obj.getString("userid"));
+				zt.setUsername(obj.getString("username"));
 				ztList.add(zt);
 			}
 		} catch (JSONException e) {
@@ -215,7 +215,7 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 
 			// 初始化
 			for (ZhangTao zt : list) {
-				mMap.put(zt.getConnName(), false);
+				mMap.put(zt.getConnname(), false);
 			}
 		}
 
@@ -266,19 +266,19 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 		}
 
 		private void bindData(final ViewHolder holder, final ZhangTao zt) {
-			holder.connNameTv.setText(zt.getConnName());
-			holder.accInfoTv.setText(zt.getAccInfo());
-			holder.ckBox.setTag(zt.getConnName());
-			holder.accInfoTv.setTag(zt.getAccInfo());
+			holder.connNameTv.setText(zt.getConnname());
+			holder.accInfoTv.setText(zt.getAccinfo());
+			holder.ckBox.setTag(zt.getConnname());
+			holder.accInfoTv.setTag(zt.getAccinfo());
 			// Log.d(TAG,
 			// "connName="+zt.getConnName()+"checked="+mMap.get(zt.getConnName()));
 			if (mCheckConnName != null
-					&& mCheckConnName.equals(zt.getConnName())) {
+					&& mCheckConnName.equals(zt.getConnname())) {
 				holder.ckBox.setChecked(true);
-				mMap.put(zt.getConnName(), true);
+				mMap.put(zt.getConnname(), true);
 			} else {
 				holder.ckBox.setChecked(false);
-				mMap.put(zt.getConnName(), false);
+				mMap.put(zt.getConnname(), false);
 			}
 			holder.ckBox.setOnClickListener(new View.OnClickListener() {
 				@Override

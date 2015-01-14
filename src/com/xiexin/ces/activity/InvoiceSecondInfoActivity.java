@@ -206,12 +206,12 @@ public class InvoiceSecondInfoActivity extends Activity implements
 				try {
 					
 					if(i == 0){
-						headerTv.setText(mDetHeader.getString(mDetConfig[i]) );
+						headerTv.setText(mDetHeader.getString(mDetConfig[i].toLowerCase()) );
 					}else{
-						headerTv.setText(mDetHeader.getString(mDetConfig[i]) + ":");
+						headerTv.setText(mDetHeader.getString(mDetConfig[i].toLowerCase()) + ":");
 					}
 					JSONObject jsonObject = array.getJSONObject(position);
-					String content = jsonObject.getString(mDetConfig[i]);
+					String content = jsonObject.getString(mDetConfig[i].toLowerCase());
 					if (content == null || content.equals("null")) {
 						content = "";
 					}

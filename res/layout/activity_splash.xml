@@ -15,7 +15,7 @@
             android:layout_width="@dimen/welcome_logo_width_height"
             android:layout_height="@dimen/welcome_logo_width_height"
             android:layout_marginTop="@dimen/welcome_logo_margin_top"
-            android:src="@drawable/logo_bg" />
+            android:src="@drawable/logo" />
 
         <FrameLayout
             android:layout_width="wrap_content"

@@ -199,18 +199,17 @@ public class LoginActivity extends Activity implements OnClickListener
 		Logger.d( TAG , "----response----" + response.toString( ) );
 		try
 		{
-		    int resCode = response.getInt( "Success" );
+		    int resCode = response.getInt( "success" );
 		    Message msg = Message.obtain( );
 		    if( resCode == 0 )
 		    {
 			msg.what = MSG_LOGIN_SUCCESS;
-			msg.obj = response.getString( "Data" );
+			msg.obj = response.getString( "data" );
 		    }
 		    else
 		    {
-
 			msg.what = MSG_LOGIN_ERROR;
-			msg.obj = response.get( "Msg" );
+			msg.obj = response.get( "msg" );
 		    }
 
 		    mUiHandler.sendMessage( msg );
@@ -264,14 +263,14 @@ public class LoginActivity extends Activity implements OnClickListener
 		// TODO
 		try
 		{
-		    int resCode = response.getInt( "Success" );
+		    int resCode = response.getInt( "success" );
 		    if( resCode == 0 )
 		    {
-			String rspData = response.getString( "Data" );
+			String rspData = response.getString( "data" );
 			boolean b = validateRequestZt( rspData );
 			if( b )
 			{
-			    App.getSharedPreference( ).edit( ).putString( Constants.ZHANG_TAO_LIST , response.getString( "Data" ) ).commit( );
+			    App.getSharedPreference( ).edit( ).putString( Constants.ZHANG_TAO_LIST , response.getString( "data" ) ).commit( );
 			    mUiHandler.sendEmptyMessage( MSG_REQUEST_ZT_SUCCESS );
 			}
 			else
@@ -479,23 +478,23 @@ public class LoginActivity extends Activity implements OnClickListener
 	try
 	{
 	    JSONObject object = new JSONObject( loginInfo );
-	    mUserId = object.getString( "UserID" );
+	    mUserId = object.getString( "userid" );
 	    mPwd = mLoginPwdEt.getText( ).toString( );
 
-	    String mPwdMd5 = object.getString( "Password" );
-	    String depart = object.getString( "Depart" );
+	    String mPwdMd5 = object.getString( "password" );
+	    String depart = object.getString( "depart" );
 	    if( "null".equals( depart ) )
 	    {
 		depart = "";
 	    }
-	    String title = object.getString( "Title" );
-	    String job = object.getString( "Job" );
+	    String title = object.getString( "title" );
+	    String job = object.getString( "job" );
 	    if( "null".equals( job ) )
 	    {
 		job = "";
 	    }
-	    String userName = object.getString( "UserName" );
-	    boolean locked = object.getBoolean( "Locked" );
+	    String userName = object.getString( "username" );
+	    boolean locked = object.getBoolean( "locked" );
 
 	    Logger.d( TAG , "userName=" + userName + ",depart=" + depart );
 

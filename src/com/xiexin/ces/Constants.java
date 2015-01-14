@@ -58,6 +58,7 @@ public class Constants
     public final static String GET_MSG_URL = "GetMessage";
     public final static String SET_MESSAGE_READ = "SetMessageRead";
     public final static String DEL_MSG = "DeleteMessage";
+    public final static String UPDATE = "GetVersion";
     // approval type
 
     // 1.待审批任务2.暂存代办3.已审批事项4.已发事项

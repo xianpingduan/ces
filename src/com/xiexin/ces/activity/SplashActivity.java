@@ -25,236 +25,206 @@ import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.utils.Logger;
 
-public class SplashActivity extends Activity
-{
+public class SplashActivity extends Activity {
 
-    public final static String TAG = "SplashActivity";
+	public final static String TAG = "SplashActivity";
 
-    private boolean mIsSetSerVerConfig = false;
+	private boolean mIsSetSerVerConfig = false;
 
-    private TextView mPercentTv;
+	private TextView mPercentTv;
 
-    private RequestQueue mQueue;
-
-    @Override
-    protected void onCreate( Bundle savedInstanceState )
-    {
-	// TODO Auto-generated method stub
-	super.onCreate( savedInstanceState );
-	setContentView( R.layout.activity_splash );
-
-	mQueue = Volley.newRequestQueue( App.getAppContext( ) );
-
-	initView( );
-
-	// 启动拉取服务
-	startPushService( );
-
-	// test();
-
-	String url = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_URL , "" );
-	String port = App.getSharedPreference( ).getString( Constants.SERVER_CONFIG_PORT , "" );
-	//	Constants.ROOT = url + ":" + port;
-	Logger.d( TAG , "server url=" + url + ":" + port );
-	if( url.isEmpty( ) )
-	{
-	    mIsSetSerVerConfig = true;
-	}
-
-	new Handler( ).postDelayed( new Runnable( )
-	{
-	    @Override
-	    public void run()
-	    {
-		// 加载数据，跳转到登录界面
-		// TODO
-		if( mIsSetSerVerConfig )
-		{
-		    intentToServerConfig( );
-		}
-		else
-		{
-		    doRequestServerConfigInfo( );
-		}
-	    }
-	} , 1000 );
-    }
-
-    private final static int MSG_GET_SERVER_CONFOG_SUCCESS = 1;
-    private final static int MSG_GET_SERVER_CONFOG_ERROR = 2;
-    private Handler mUiHandler = new Handler( )
-    {
+	private RequestQueue mQueue;
 
 	@Override
-	public void handleMessage( Message msg )
-	{
-	    // TODO Auto-generated method stub
-	    super.handleMessage( msg );
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_splash);
 
-	    switch ( msg.what )
-	    {
-		case MSG_GET_SERVER_CONFOG_SUCCESS :
-		    final boolean autoLogin = App.getSharedPreference( ).getBoolean( Constants.AUTO_LOGIN , false );
-		    if( autoLogin )
-		    {
-			intentToMain( );
-		    }
-		    else
-		    {
-			intentToLogin( );
-		    }
-		    finish( );
-		    break;
-		case MSG_GET_SERVER_CONFOG_ERROR :
+		mQueue = Volley.newRequestQueue(App.getAppContext());
 
-		    break;
-		default :
-		    break;
-	    }
-	}
+		initView();
 
-    };
+		// 启动拉取服务
+		startPushService();
 
-    private int counter = 0;
-    private Timer timer;
+		// test();
 
-    private void initView()
-    {
-	mPercentTv = (TextView)findViewById( R.id.percent );
-	counter = 0;
-	timer = new Timer( );
-	timer.schedule( new TimerTask( )
-	{
-	    @Override
-	    public void run()
-	    {
-		runOnUiThread( new Runnable( )
-		{
-		    @Override
-		    public void run()
-		    {
-			mPercentTv.setText( counter + "%" );
-			counter = counter + 10;
-			if( counter > 100 )
-			{
-			    mPercentTv.setText( "100%" );
+		String url = App.getSharedPreference().getString(
+				Constants.SERVER_CONFIG_URL, "");
+		String port = App.getSharedPreference().getString(
+				Constants.SERVER_CONFIG_PORT, "");
+		// Constants.ROOT = url + ":" + port;
+		Logger.d(TAG, "server url=" + url + ":" + port);
+		if (url.isEmpty()) {
+			mIsSetSerVerConfig = true;
+		}
+
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				// 加载数据，跳转到登录界面
+				// TODO
+				if (mIsSetSerVerConfig) {
+					intentToServerConfig();
+				} else {
+					doRequestServerConfigInfo();
+				}
 			}
-		    }
-		} );
-	    }
-	} , 100 , 100 );
-    }
+		}, 1000);
+	}
 
-    // 加载服务器信息
-    private void doRequestServerConfigInfo()
-    {
-	StringBuffer urlSbf = new StringBuffer( App.getRootUrl( ) + Constants.GET_SERVER_CFG );
-	JsonObjectRequest json = new JsonObjectRequest( Method.GET , urlSbf.toString( ) , null , new Listener< JSONObject >( )
-	{
-	    @Override
-	    public void onResponse( JSONObject response )
-	    {
-		Logger.d( TAG , "----response----" + response.toString( ) );
-		try
-		{
-		    int resCode = response.getInt( "Success" );
-		    Message msg = Message.obtain( );
-		    if( resCode == 0 )
-		    {
-			msg.what = MSG_GET_SERVER_CONFOG_SUCCESS;
-			msg.obj = response.getString( "Data" );
-		    }
-		    else
-		    {
+	private final static int MSG_GET_SERVER_CONFOG_SUCCESS = 1;
+	private final static int MSG_GET_SERVER_CONFOG_ERROR = 2;
+	private Handler mUiHandler = new Handler() {
 
-			msg.what = MSG_GET_SERVER_CONFOG_ERROR;
-			msg.obj = response.get( "Msg" );
-		    }
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			final boolean autoLogin = App.getSharedPreference().getBoolean(
+					Constants.AUTO_LOGIN, false);
+			switch (msg.what) {
+			case MSG_GET_SERVER_CONFOG_SUCCESS:
 
-		    mUiHandler.sendMessage( msg );
-		}
-		catch ( JSONException e )
-		{
-		    e.printStackTrace( );
+				if (autoLogin) {
+					intentToMain();
+				} else {
+					intentToLogin();
+				}
+				finish();
+				break;
+			case MSG_GET_SERVER_CONFOG_ERROR:
+				if (autoLogin) {
+					intentToMain();
+				} else {
+					intentToLogin();
+				}
+				finish();
+				break;
+			default:
+				break;
+			}
 		}
 
-	    }
-	} , new ErrorListener( )
-	{
-	    @Override
-	    public void onErrorResponse( VolleyError error )
-	    {
-		mUiHandler.sendEmptyMessage( MSG_GET_SERVER_CONFOG_ERROR );
-	    }
-	} );
-	mQueue.add( json );
-	mQueue.start( );
-	// mUiHandler.sendEmptyMessage( MSG_GET_SERVER_CONFOG_SUCCESS );
-    }
+	};
 
-    private void intentToLogin()
-    {
-	Intent intent = new Intent( );
-	intent.setClass( SplashActivity.this , LoginActivity.class );
-	startActivity( intent );
-	finish( );
-    }
+	private int counter = 0;
+	private Timer timer;
 
-    private void intentToServerConfig()
-    {
-	Intent intent = new Intent( );
-	intent.setClass( SplashActivity.this , ServerConfigActivity.class );
-	startActivity( intent );
-	finish( );
-    }
-
-    private void intentToMain()
-    {
-	Intent intent = new Intent( );
-	intent.setClass( SplashActivity.this , MenuActivity.class );
-	intent.putExtra( Constants.CONN_CHANGED , false );
-	startActivity( intent );
-	finish( );
-    }
-
-    @Override
-    protected void onResume()
-    {
-	super.onResume( );
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-	// TODO Auto-generated method stub
-	super.onDestroy( );
-    }
-
-    @Override
-    public void onBackPressed()
-    {
-	return;
-    }
-
-    private void test()
-    {
-
-	try
-	{
-	    JSONObject obj = new JSONObject( Constants.RQ001 );
-	    Logger.d( TAG , obj.get( "Data" ).toString( ) );
+	private void initView() {
+		mPercentTv = (TextView) findViewById(R.id.percent);
+		counter = 0;
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						mPercentTv.setText(counter + "%");
+						counter = counter + 10;
+						if (counter > 100) {
+							mPercentTv.setText("100%");
+						}
+					}
+				});
+			}
+		}, 100, 100);
 	}
-	catch ( JSONException e )
-	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace( );
-	}
-    }
 
-    private void startPushService()
-    {
-	Intent intent = new Intent( );
-	intent.setAction( "com.xiexin.ces.receiver.PushStartServiceReceiver" );
-	sendStickyBroadcast( intent );
-    }
+	// 加载服务器信息
+	private void doRequestServerConfigInfo() {
+		StringBuffer urlSbf = new StringBuffer(App.getRootUrl()
+				+ Constants.GET_SERVER_CFG);
+		JsonObjectRequest json = new JsonObjectRequest(Method.GET,
+				urlSbf.toString(), null, new Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Logger.d(TAG, "----response----" + response.toString());
+						try {
+							int resCode = response.getInt("success");
+							Message msg = Message.obtain();
+							if (resCode == 0) {
+								msg.what = MSG_GET_SERVER_CONFOG_SUCCESS;
+								msg.obj = response.getString("data");
+							} else {
+
+								msg.what = MSG_GET_SERVER_CONFOG_ERROR;
+								msg.obj = response.get("msg");
+							}
+
+							mUiHandler.sendMessage(msg);
+						} catch (JSONException e) {
+							mUiHandler
+							.sendEmptyMessage(MSG_GET_SERVER_CONFOG_ERROR);
+						}
+
+					}
+				}, new ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						mUiHandler
+								.sendEmptyMessage(MSG_GET_SERVER_CONFOG_ERROR);
+					}
+				});
+		mQueue.add(json);
+		mQueue.start();
+		// mUiHandler.sendEmptyMessage( MSG_GET_SERVER_CONFOG_SUCCESS );
+	}
+
+	private void intentToLogin() {
+		Intent intent = new Intent();
+		intent.setClass(SplashActivity.this, LoginActivity.class);
+		startActivity(intent);
+		finish();
+	}
+
+	private void intentToServerConfig() {
+		Intent intent = new Intent();
+		intent.setClass(SplashActivity.this, ServerConfigActivity.class);
+		startActivity(intent);
+		finish();
+	}
+
+	private void intentToMain() {
+		Intent intent = new Intent();
+		intent.setClass(SplashActivity.this, MenuActivity.class);
+		intent.putExtra(Constants.CONN_CHANGED, false);
+		startActivity(intent);
+		finish();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+
+	@Override
+	public void onBackPressed() {
+		return;
+	}
+
+	private void test() {
+
+		try {
+			JSONObject obj = new JSONObject(Constants.RQ001);
+			Logger.d(TAG, obj.get("Data").toString());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void startPushService() {
+		Intent intent = new Intent();
+		intent.setAction("com.xiexin.ces.receiver.PushStartServiceReceiver");
+		sendStickyBroadcast(intent);
+	}
 }

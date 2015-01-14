@@ -111,17 +111,17 @@ public class MessageService extends Service
 	PushMessage msg = new PushMessage( );
 	try
 	{
-	    msg.setAccount( jsonObject.getString( "Account" ) );
-	    msg.setApprID( jsonObject.getInt( "ApprID" ) );
-	    msg.setbRead( jsonObject.getInt( "bRead" ) );
-	    msg.setContent( jsonObject.getString( "Content" ) );
-	    msg.setCrtDate( jsonObject.getString( "CrtDate" ) );
-	    msg.setFilesPath( jsonObject.getString( "FilesPath" ) );
-	    msg.setFromUser( jsonObject.getString( "FromUser" ) );
-	    msg.setMsgID( jsonObject.getString( "MsgID" ) );
-	    msg.setMsgType( jsonObject.getInt( "MsgType" ) );
-	    msg.setTitle( jsonObject.getString( "Title" ) );
-	    msg.setToUser( jsonObject.getString( "ToUser" ) );
+	    msg.setAccount( jsonObject.getString( "account" ) );
+	    msg.setApprid( jsonObject.getInt( "apprid" ) );
+	    msg.setBread( jsonObject.getInt( "bread" ) );
+	    msg.setContent( jsonObject.getString( "content" ) );
+	    msg.setCrtdate( jsonObject.getString( "crtdate" ) );
+	    msg.setFilespath( jsonObject.getString( "filespath" ) );
+	    msg.setFromuser( jsonObject.getString( "fromuser" ) );
+	    msg.setMsgid( jsonObject.getString( "msgid" ) );
+	    msg.setMsgtype( jsonObject.getInt( "msgtype" ) );
+	    msg.setTitle( jsonObject.getString( "title" ) );
+	    msg.setTouser( jsonObject.getString( "touser" ) );
 
 	    PushNotificationCenter.getInstance( mContext ).addMessageNotification( msg.getTitle( ) ,Html.fromHtml( msg.getContent( )).toString() );
 
@@ -153,10 +153,10 @@ public class MessageService extends Service
 		// TODO
 		try
 		{
-		    int resCode = response.getInt( "Success" );
+		    int resCode = response.getInt( "success" );
 		    if( resCode == 0 )
 		    {
-			mMsgStr = response.getString( "Data" );
+			mMsgStr = response.getString( "data" );
 			long next_req_time = System.currentTimeMillis( ) + Constants.DEFAULT_GAP_TIME;
 			Logger.d( TAG , "next_req_time =" + next_req_time );
 			App.getSharedPreference( ).edit( ).putLong( Constants.THE_LAST_REQUEST_MSG_TIME , next_req_time ).commit( );

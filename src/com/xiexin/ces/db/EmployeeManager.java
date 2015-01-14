@@ -48,26 +48,26 @@ public class EmployeeManager {
 
 	private ContentValues createContentValues(Employee employee) {
 		ContentValues values = new ContentValues();
-		values.put(EmployeeInfoColumns.EMPLOYEE_ID, employee.getEmployeeID());
+		values.put(EmployeeInfoColumns.EMPLOYEE_ID, employee.getEmployeeid());
 		values.put(EmployeeInfoColumns.SEX, employee.getSex());
 		values.put(EmployeeInfoColumns.DESCR, employee.getDescr());
 		values.put(EmployeeInfoColumns.DEPART, employee.getDepart());
 		values.put(EmployeeInfoColumns.JOB, employee.getJob());
 		values.put(EmployeeInfoColumns.MOBILE, employee.getMobile());
-		values.put(EmployeeInfoColumns.TELNBR, employee.getTelNbr());
+		values.put(EmployeeInfoColumns.TELNBR, employee.getTelnbr());
 		values.put(EmployeeInfoColumns.EMIAL, employee.getEmail());
 		return values;
 	}
 
 	private Employee createTaskFromCursor(Cursor cursor) {
 		Employee employee = new Employee();
-		employee.setEmployeeID(cursor.getString(1));
+		employee.setEmployeeid(cursor.getString(1));
 		employee.setDescr(cursor.getString(2));
 		employee.setSex(cursor.getString(3));
 		employee.setDepart(cursor.getString(4));
 		employee.setJob(cursor.getString(5));
 		employee.setMobile(cursor.getString(6));
-		employee.setTelNbr(cursor.getString(7));
+		employee.setTelnbr(cursor.getString(7));
 		employee.setEmail(cursor.getString(8));
 		
 		// 汉字转换成拼音
@@ -100,7 +100,7 @@ public class EmployeeManager {
 			@Override
 			public void run() {
 				synchronized (removelock) {
-					mEmployeeDbAdapter.update(employee.getEmployeeID(),
+					mEmployeeDbAdapter.update(employee.getEmployeeid(),
 							createContentValues(employee));
 				}
 			}
@@ -148,14 +148,14 @@ public class EmployeeManager {
 			for (int i = 0; i < arrays.length(); i++) {
 				JSONObject obj = arrays.getJSONObject(i);
 				Employee employee = new Employee();
-				employee.setEmployeeID(obj.getString("EmployeeID"));
-				employee.setDescr(obj.getString("Descr"));
-				employee.setDepart(obj.getString("Depart"));
-				employee.setJob(obj.getString("Job"));
-				employee.setSex(obj.getString("Sex"));
-				employee.setEmail(obj.getString("Email"));
-				employee.setMobile(obj.getString("Mobile"));
-				employee.setTelNbr(obj.getString("TelNbr"));
+				employee.setEmployeeid(obj.getString("employeeid"));
+				employee.setDescr(obj.getString("descr"));
+				employee.setDepart(obj.getString("depart"));
+				employee.setJob(obj.getString("job"));
+				employee.setSex(obj.getString("sex"));
+				employee.setEmail(obj.getString("email"));
+				employee.setMobile(obj.getString("mobile"));
+				employee.setTelnbr(obj.getString("telnbr"));
 				employeeList.add(employee);
 			}
 		} catch (JSONException e) {

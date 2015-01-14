@@ -471,14 +471,14 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					public void onResponse(JSONObject response) {
 						Logger.d(TAG, "----response----" + response.toString());
 						try {
-							int resCode = response.getInt("Success");
+							int resCode = response.getInt("success");
 							Message msg = Message.obtain();
 							if (resCode == 0) {
 								msg.what = MSG_GET_CONFIG_SUCCESS;
-								msg.obj = response.getString("Data");
+								msg.obj = response.getString("data");
 							} else {
 								msg.what = MSG_GET_CONFIG_ERROR;
-								msg.obj = response.get("Msg");
+								msg.obj = response.get("msg");
 							}
 							mUiHandler.sendMessage(msg);
 						} catch (JSONException e) {
@@ -528,9 +528,9 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			case MSG_GET_INFO_SUCCESS:
 				mDataContent = (JSONObject) msg.obj;
 				try {
-					mDetContentStr = mDataContent.getString("Det");
-					mFilesPathStr = mDataContent.getString("FilesPath");
-					mApprListStr = mDataContent.getString("ApprList");
+					mDetContentStr = mDataContent.getString("det");
+					mFilesPathStr = mDataContent.getString("filespath");
+					mApprListStr = mDataContent.getString("apprlist");
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -609,14 +609,19 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			JSONArray jsonArray = new JSONArray(result);
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
-				String prgId = jsonObject.getString("PrgID");
+				String prgId = jsonObject.getString("prgid");
 				if (prgId.equals(mPrgid)) {
-					mDataConfigStr = jsonObject.getString("Doc");
-					mDetConfigStr = jsonObject.getString("Det");
-					mDataHeaderStr = jsonObject.getString("CDoc");
-					mDetHeaderStr = jsonObject.getString("CDet");
+					mDataConfigStr = jsonObject.getString("doc");
+					mDetConfigStr = jsonObject.getString("det");
+					mDataHeaderStr = jsonObject.getString("cdoc");
+					mDetHeaderStr = jsonObject.getString("cdet");
 				}
 			}
+			
+			Logger.d(TAG, "mDataConfigStr ="+mDataConfigStr);
+			Logger.d(TAG, "mDetConfigStr ="+mDetConfigStr);
+			Logger.d(TAG, "mDataHeaderStr ="+mDataHeaderStr);
+			Logger.d(TAG, "mDetHeaderStr ="+mDetHeaderStr);
 
 			if (jsonArray.length() > 0) {
 				generateDataConfig(mDataConfigStr, mDataHeaderStr);
@@ -645,9 +650,9 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			JSONArray array = new JSONArray(mApprListStr);
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject jsonObject = array.getJSONObject(i);
-				String apprObj = jsonObject.getString("ApprObj");
+				String apprObj = jsonObject.getString("approbj");
 				if (apprObj.equals(mUpdateUser)) {
-					inxNbr = jsonObject.getInt("InxNbr");
+					inxNbr = jsonObject.getInt("inxnbr");
 					break;
 				}
 			}
@@ -681,7 +686,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			contentTv.setTextColor(getResources().getColor(
 					R.color.info_content_text_color));
 
-			if (mDataConfig[i].equals("TotalCost")) {
+			if (mDataConfig[i].toLowerCase().equals("totalcost")) {
 				contentTv.setTextColor(getResources().getColor(
 						R.color.pl_main_red_color));
 			} else {
@@ -723,17 +728,17 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			});
 
 			try {
-				headerTv.setText(mDataHeader.getString(mDataConfig[i]) + ":");
-				String content = mDataContent.getString(mDataConfig[i]);
+				headerTv.setText(mDataHeader.getString(mDataConfig[i].toLowerCase()) + ":");
+				String content = mDataContent.getString(mDataConfig[i].toLowerCase());
 
-				if (mDataConfig[i].equals("Duty")) {
+				if (mDataConfig[i].toLowerCase().equals("duty")) {
 					msgIv.setVisibility(View.VISIBLE);
 					phoneIv.setVisibility(View.VISIBLE);
 
 					Logger.d(TAG, "before,content =" + content);
 					Employee employee = EmployeeManager.getInstance(
 							App.getAppContext()).findEmployeeById(
-							mDataContent.getString(mDataConfig[i]));
+							mDataContent.getString(mDataConfig[i].toLowerCase()));
 
 					if (employee != null) {
 						content = employee.getDescr();
@@ -762,7 +767,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					}
 				}
 
-				if (!content.isEmpty() && mDataConfig[i].equals("TotalCost")) {
+				if (!content.isEmpty() && mDataConfig[i].toLowerCase().equals("totalcost")) {
 					content = "￥" + content;
 				}
 				contentTv.setText(content);
@@ -789,14 +794,14 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					public void onResponse(JSONObject response) {
 						Logger.d(TAG, "----response----" + response.toString());
 						try {
-							int resCode = response.getInt("Success");
+							int resCode = response.getInt("success");
 							Message msg = Message.obtain();
 							if (resCode == 0) {
 								msg.what = MSG_GET_INFO_SUCCESS;
-								msg.obj = response.getJSONObject("Data");
+								msg.obj = response.getJSONObject("data");
 							} else {
 								msg.what = MSG_GET_INFO_ERROR;
-								msg.obj = response.get("Msg");
+								msg.obj = response.get("msg");
 							}
 							mUiHandler.sendMessage(msg);
 						} catch (JSONException e) {
@@ -853,14 +858,14 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					public void onResponse(JSONObject response) {
 						Logger.d(TAG, "----response----" + response.toString());
 						try {
-							int resCode = response.getInt("Success");
+							int resCode = response.getInt("success");
 							Message msg = Message.obtain();
 							if (resCode == 0) {
 								msg.what = MSG_SET_PLUS_SIGN_SUCCESS;
-								msg.obj = response.getString("Data");
+								msg.obj = response.getString("data");
 							} else {
 								msg.what = MSG_SET_PLUS_SIGN_ERROR;
-								msg.obj = response.get("Msg");
+								msg.obj = response.get("msg");
 							}
 							mUiHandler.sendMessage(msg);
 						} catch (JSONException e) {
@@ -924,14 +929,14 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					public void onResponse(JSONObject response) {
 						Logger.d(TAG, "----response----" + response.toString());
 						try {
-							int resCode = response.getInt("Success");
+							int resCode = response.getInt("success");
 							Message msg = Message.obtain();
 							if (resCode == 0) {
 								msg.what = MSG_SET_SUBMIT_WORK_FLOW_SUCCESS;
-								msg.obj = response.getString("Data");
+								msg.obj = response.getString("data");
 							} else {
 								msg.what = MSG_SET_SUBMIT_WORK_FLOW_ERROR;
-								msg.obj = response.get("Msg");
+								msg.obj = response.get("msg");
 							}
 							mUiHandler.sendMessage(msg);
 						} catch (JSONException e) {
@@ -975,14 +980,14 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					public void onResponse(JSONObject response) {
 						Logger.d(TAG, "----response----" + response.toString());
 						try {
-							int resCode = response.getInt("Success");
+							int resCode = response.getInt("success");
 							Message msg = Message.obtain();
 							if (resCode == 0) {
 								msg.what = MSG_SET_APPR_ATTENTION_SUCCESS;
-								msg.obj = response.getString("Data");
+								msg.obj = response.getString("data");
 							} else {
 								msg.what = MSG_SET_APPR_ATTENTION_ERROR;
-								msg.obj = response.get("Msg");
+								msg.obj = response.get("msg");
 							}
 							mUiHandler.sendMessage(msg);
 						} catch (JSONException e) {

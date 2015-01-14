@@ -2,162 +2,133 @@ package com.xiexin.ces.entry;
 
 import java.io.Serializable;
 
-public class InvoiceApprRoad implements Serializable
-{
+public class InvoiceApprRoad implements Serializable {
 
-    private int ID;
-    private String PragID;
-    private String DataNbr;
-    private String Category;
-    private String Kind;
-    private String ApprObj;
-    private String Title;
-    private String ApprDate;
-    private String ProcessMode;
-    private String ApprMemo;
-    private String Status;
-    private String CrtUser;
-    private int InxNbr;
-    private String ApprObjName;
+	private int id;
+	private String pragid;
+	private String datanbr;
+	private String category;
+	private String kind;
+	private String approbj;
+	private String title;
+	private String apprdate;
+	private String processmode;
+	private String apprmemo;
+	private String status;
+	private String crtuser;
+	private int inxnbr;
+	private String approbjname;
 
-    public int getID()
-    {
-	return ID;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setID( int iD )
-    {
-	ID = iD;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getPragID()
-    {
-	return PragID;
-    }
+	public String getPragid() {
+		return pragid;
+	}
 
-    public void setPragID( String pragID )
-    {
-	PragID = pragID;
-    }
+	public void setPragid(String pragid) {
+		this.pragid = pragid;
+	}
 
-    public String getDataNbr()
-    {
-	return DataNbr;
-    }
+	public String getDatanbr() {
+		return datanbr;
+	}
 
-    public void setDataNbr( String dataNbr )
-    {
-	DataNbr = dataNbr;
-    }
+	public void setDatanbr(String datanbr) {
+		this.datanbr = datanbr;
+	}
 
-    public String getCategory()
-    {
-	return Category;
-    }
+	public String getCategory() {
+		return category;
+	}
 
-    public void setCategory( String category )
-    {
-	Category = category;
-    }
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
-    public String getKind()
-    {
-	return Kind;
-    }
+	public String getKind() {
+		return kind;
+	}
 
-    public void setKind( String kind )
-    {
-	Kind = kind;
-    }
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
 
-    public String getApprObj()
-    {
-	return ApprObj;
-    }
+	public String getApprobj() {
+		return approbj;
+	}
 
-    public void setApprObj( String apprObj )
-    {
-	ApprObj = apprObj;
-    }
+	public void setApprobj(String approbj) {
+		this.approbj = approbj;
+	}
 
-    public String getTitle()
-    {
-	return Title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle( String title )
-    {
-	Title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getApprDate()
-    {
-	return ApprDate;
-    }
+	public String getApprdate() {
+		return apprdate;
+	}
 
-    public void setApprDate( String apprDate )
-    {
-	ApprDate = apprDate;
-    }
+	public void setApprdate(String apprdate) {
+		this.apprdate = apprdate;
+	}
 
-    public String getProcessMode()
-    {
-	return ProcessMode;
-    }
+	public String getProcessmode() {
+		return processmode;
+	}
 
-    public void setProcessMode( String processMode )
-    {
-	ProcessMode = processMode;
-    }
+	public void setProcessmode(String processmode) {
+		this.processmode = processmode;
+	}
 
-    public String getApprMemo()
-    {
-	return ApprMemo;
-    }
+	public String getApprmemo() {
+		return apprmemo;
+	}
 
-    public void setApprMemo( String apprMemo )
-    {
-	ApprMemo = apprMemo;
-    }
+	public void setApprmemo(String apprmemo) {
+		this.apprmemo = apprmemo;
+	}
 
-    public String getStatus()
-    {
-	return Status;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setStatus( String status )
-    {
-	Status = status;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public String getCrtUser()
-    {
-	return CrtUser;
-    }
+	public String getCrtuser() {
+		return crtuser;
+	}
 
-    public void setCrtUser( String crtUser )
-    {
-	CrtUser = crtUser;
-    }
+	public void setCrtuser(String crtuser) {
+		this.crtuser = crtuser;
+	}
 
-    public int getInxNbr()
-    {
-	return InxNbr;
-    }
+	public int getInxnbr() {
+		return inxnbr;
+	}
 
-    public void setInxNbr( int inxNbr )
-    {
-	InxNbr = inxNbr;
-    }
+	public void setInxnbr(int inxnbr) {
+		this.inxnbr = inxnbr;
+	}
 
-    public String getApprObjName()
-    {
-	return ApprObjName;
-    }
+	public String getApprobjname() {
+		return approbjname;
+	}
 
-    public void setApprObjName( String apprObjName )
-    {
-	ApprObjName = apprObjName;
-    }
+	public void setApprobjname(String approbjname) {
+		this.approbjname = approbjname;
+	}
 
 }

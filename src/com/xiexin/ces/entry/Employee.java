@@ -5,32 +5,32 @@ import java.io.Serializable;
 public class Employee implements Serializable
 {
 
-    private String EmployeeID;
-    private String Descr;
-    private String Sex;
-    private String Condition;
-    private String Credit;
-    private String Title;
-    private String Depart;
-    private String Job;
-    private String ReportTo;
-    private String EName;
-    private String TelNbr;
-    private String Mobile;
-    private String Email;
-    private String EffDate;
-    private String FailDate;
-    private String Bank;
-    private String Account;
-    private String Channel;
-    private String Area;
+    private String employeeid;
+    private String descr;
+    private String sex;
+    private String condition;
+    private String credit;
+    private String title;
+    private String depart;
+    private String job;
+    private String reportto;
+    private String ename;
+    private String telnbr;
+    private String mobile;
+    private String email;
+    private String effdate;
+    private String faildate;
+    private String bank;
+    private String account;
+    private String channel;
+    private String area;
 
-    private boolean bDupBorrow;
+    private boolean bdupborrow;
 
-    private String UpdateUser;
-    private String UpdateDT;
-    private String Remark;
-    private boolean bTelAss;
+    private String updateuser;
+    private String updatedt;
+    private String remark;
+    private boolean btelass;
     
     private String sortLetters; // 显示数据拼音的首字母
     public String getSortLetters() {
@@ -39,245 +39,151 @@ public class Employee implements Serializable
 	public void setSortLetters(String sortLetters) {
 		this.sortLetters = sortLetters;
 	}
+	public String getEmployeeid() {
+		return employeeid;
+	}
+	public void setEmployeeid(String employeeid) {
+		this.employeeid = employeeid;
+	}
+	public String getDescr() {
+		return descr;
+	}
+	public void setDescr(String descr) {
+		this.descr = descr;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+	public String getCredit() {
+		return credit;
+	}
+	public void setCredit(String credit) {
+		this.credit = credit;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getDepart() {
+		return depart;
+	}
+	public void setDepart(String depart) {
+		this.depart = depart;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	public String getReportto() {
+		return reportto;
+	}
+	public void setReportto(String reportto) {
+		this.reportto = reportto;
+	}
+	public String getEname() {
+		return ename;
+	}
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+	public String getTelnbr() {
+		return telnbr;
+	}
+	public void setTelnbr(String telnbr) {
+		this.telnbr = telnbr;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getEffdate() {
+		return effdate;
+	}
+	public void setEffdate(String effdate) {
+		this.effdate = effdate;
+	}
+	public String getFaildate() {
+		return faildate;
+	}
+	public void setFaildate(String faildate) {
+		this.faildate = faildate;
+	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public String getChannel() {
+		return channel;
+	}
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public boolean isBdupborrow() {
+		return bdupborrow;
+	}
+	public void setBdupborrow(boolean bdupborrow) {
+		this.bdupborrow = bdupborrow;
+	}
+	public String getUpdateuser() {
+		return updateuser;
+	}
+	public void setUpdateuser(String updateuser) {
+		this.updateuser = updateuser;
+	}
+	public String getUpdatedt() {
+		return updatedt;
+	}
+	public void setUpdatedt(String updatedt) {
+		this.updatedt = updatedt;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public boolean isBtelass() {
+		return btelass;
+	}
+	public void setBtelass(boolean btelass) {
+		this.btelass = btelass;
+	}
 
-	public String getEmployeeID()
-    {
-	return EmployeeID;
-    }
-
-    public void setEmployeeID( String employeeID )
-    {
-	EmployeeID = employeeID;
-    }
-
-    public String getDescr()
-    {
-	return Descr;
-    }
-
-    public void setDescr( String descr )
-    {
-	Descr = descr;
-    }
-
-    public String getSex()
-    {
-	return Sex;
-    }
-
-    public void setSex( String sex )
-    {
-	Sex = sex;
-    }
-
-    public String getCondition()
-    {
-	return Condition;
-    }
-
-    public void setCondition( String condition )
-    {
-	Condition = condition;
-    }
-
-    public String getCredit()
-    {
-	return Credit;
-    }
-
-    public void setCredit( String credit )
-    {
-	Credit = credit;
-    }
-
-    public String getTitle()
-    {
-	return Title;
-    }
-
-    public void setTitle( String title )
-    {
-	Title = title;
-    }
-
-    public String getDepart()
-    {
-	return Depart;
-    }
-
-    public void setDepart( String depart )
-    {
-	Depart = depart;
-    }
-
-    public String getJob()
-    {
-	return Job;
-    }
-
-    public void setJob( String job )
-    {
-	Job = job;
-    }
-
-    public String getReportTo()
-    {
-	return ReportTo;
-    }
-
-    public void setReportTo( String reportTo )
-    {
-	ReportTo = reportTo;
-    }
-
-    public String getEName()
-    {
-	return EName;
-    }
-
-    public void setEName( String eName )
-    {
-	EName = eName;
-    }
-
-    public String getTelNbr()
-    {
-	return TelNbr;
-    }
-
-    public void setTelNbr( String telNbr )
-    {
-	TelNbr = telNbr;
-    }
-
-    public String getMobile()
-    {
-	return Mobile;
-    }
-
-    public void setMobile( String mobile )
-    {
-	Mobile = mobile;
-    }
-
-    public String getEmail()
-    {
-	return Email;
-    }
-
-    public void setEmail( String email )
-    {
-	Email = email;
-    }
-
-    public String getEffDate()
-    {
-	return EffDate;
-    }
-
-    public void setEffDate( String effDate )
-    {
-	EffDate = effDate;
-    }
-
-    public String getFailDate()
-    {
-	return FailDate;
-    }
-
-    public void setFailDate( String failDate )
-    {
-	FailDate = failDate;
-    }
-
-    public String getBank()
-    {
-	return Bank;
-    }
-
-    public void setBank( String bank )
-    {
-	Bank = bank;
-    }
-
-    public String getAccount()
-    {
-	return Account;
-    }
-
-    public void setAccount( String account )
-    {
-	Account = account;
-    }
-
-    public String getChannel()
-    {
-	return Channel;
-    }
-
-    public void setChannel( String channel )
-    {
-	Channel = channel;
-    }
-
-    public String getArea()
-    {
-	return Area;
-    }
-
-    public void setArea( String area )
-    {
-	Area = area;
-    }
-
-    public boolean getbDupBorrow()
-    {
-	return bDupBorrow;
-    }
-
-    public void setbDupBorrow( boolean bDupBorrow )
-    {
-	this.bDupBorrow = bDupBorrow;
-    }
-
-    public String getUpdateUser()
-    {
-	return UpdateUser;
-    }
-
-    public void setUpdateUser( String updateUser )
-    {
-	UpdateUser = updateUser;
-    }
-
-    public String getUpdateDT()
-    {
-	return UpdateDT;
-    }
-
-    public void setUpdateDT( String updateDT )
-    {
-	UpdateDT = updateDT;
-    }
-
-    public String getRemark()
-    {
-	return Remark;
-    }
-
-    public void setRemark( String remark )
-    {
-	Remark = remark;
-    }
-
-    public boolean getbTelAss()
-    {
-	return bTelAss;
-    }
-
-    public void setbTelAss( boolean bTelAss )
-    {
-	this.bTelAss = bTelAss;
-    }
+	
 
 }

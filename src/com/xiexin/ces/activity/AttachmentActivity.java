@@ -192,15 +192,15 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 				JSONArray jsonArray = new JSONArray(mFilePathStr);
 				for (int i = 0; i < jsonArray.length(); i++) {
 					JSONObject object = jsonArray.getJSONObject(i);
-					String attachMentName = object.getString("AttchName");
+					String attachMentName = object.getString("attchname");
 					if (attachMentName.contains(".jpg")
 							|| attachMentName.contains(".png")
 							|| attachMentName.contains(".jpeg")) {
-						mImageList.add(object.getString("FilePath"));
+						mImageList.add(object.getString("filepath"));
 					} else {
 						AttachMent attachMent = new AttachMent();
-						attachMent.setAttchName(attachMentName);
-						attachMent.setFilePath(object.getString("FilePath"));
+						attachMent.setAttchname(attachMentName);
+						attachMent.setFilepath(object.getString("filepath"));
 						mDocList.add(attachMent);
 					}
 				}
@@ -434,7 +434,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 			bindData(holder, list.get(position));
 
-			String url = list.get(position).getFilePath();
+			String url = list.get(position).getFilepath();
 			String signCode = Md5Util.stringToMD5(changeToUrl(url));
 
 			setViewForSingleUpdate(signCode, convertView);
@@ -443,7 +443,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 		private void bindData(final ViewHolder holder, final AttachMent am) {
 
-			String url = am.getFilePath();
+			String url = am.getFilepath();
 			String signCode = Md5Util.stringToMD5(changeToUrl(url));
 			Logger.d(TAG, "bindData,signCode=" + signCode);
 			final DownloadTask task = mApkDownloadManager
@@ -465,7 +465,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 				holder.handleBtn.setText(getString(R.string.download));
 			}
 
-			holder.fileNameTv.setText(am.getAttchName());
+			holder.fileNameTv.setText(am.getAttchname());
 			holder.handleBtn.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -570,7 +570,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 
 		private void startDownload(AttachMent attachMent) {
 
-			String url = attachMent.getFilePath();
+			String url = attachMent.getFilepath();
 			String signCode = Md5Util.stringToMD5(changeToUrl(url));
 
 			Logger.d(TAG, "startDownload,signCode=" + signCode);
@@ -581,7 +581,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 					+ downloadInfo.appDownloadURL);
 			downloadInfo.appIconURL = "";
 
-			downloadInfo.appName = attachMent.getAttchName();
+			downloadInfo.appName = attachMent.getAttchname();
 
 			downloadInfo.nFromPos = 0;
 			downloadInfo.packageName = "com.xiexin.ces";

@@ -53,7 +53,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/login_margin_right"
                 android:src="@drawable/msg"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/phone"
@@ -63,7 +63,7 @@
                 android:layout_marginRight="@dimen/login_margin_right"
                 android:layout_toLeftOf="@id/message"
                 android:src="@drawable/phone"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 

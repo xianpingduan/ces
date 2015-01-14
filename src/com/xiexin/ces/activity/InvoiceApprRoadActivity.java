@@ -212,19 +212,19 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 
 		JSONObject obj = arrays.getJSONObject( i );
 		InvoiceApprRoad invoiceApprRoad = new InvoiceApprRoad( );
-		invoiceApprRoad.setApprDate( obj.getString( "ApprDate" ) );
-		invoiceApprRoad.setApprMemo( obj.getString( "ApprMemo" ) );
-		invoiceApprRoad.setApprObj( obj.getString( "ApprObj" ) );
-		invoiceApprRoad.setCategory( obj.getString( "Category" ) );
-		invoiceApprRoad.setCrtUser( obj.getString( "CrtUser" ) );
-		invoiceApprRoad.setDataNbr( obj.getString( "DataNbr" ) );
-		invoiceApprRoad.setID( obj.getInt( "ID" ) );
-		invoiceApprRoad.setInxNbr( obj.getInt( "InxNbr" ) );
-		invoiceApprRoad.setKind( obj.getString( "Kind" ) );
-		invoiceApprRoad.setPragID( obj.getString( "PragID" ) );
-		invoiceApprRoad.setProcessMode( obj.getString( "ProcessMode" ) );
-		invoiceApprRoad.setTitle( obj.getString( "Title" ) );
-		invoiceApprRoad.setApprObjName( obj.getString( "ApprObjName" ) );
+		invoiceApprRoad.setApprdate( obj.getString( "apprdate" ) );
+		invoiceApprRoad.setApprmemo( obj.getString( "apprmemo" ) );
+		invoiceApprRoad.setApprobj( obj.getString( "approbj" ) );
+		invoiceApprRoad.setCategory( obj.getString( "category" ) );
+		invoiceApprRoad.setCrtuser( obj.getString( "crtuser" ) );
+		invoiceApprRoad.setDatanbr( obj.getString( "datanbr" ) );
+		invoiceApprRoad.setId( obj.getInt( "id" ) );
+		invoiceApprRoad.setInxnbr( obj.getInt( "inxnbr" ) );
+		invoiceApprRoad.setKind( obj.getString( "kind" ) );
+		invoiceApprRoad.setPragid( obj.getString( "pragid" ) );
+		invoiceApprRoad.setProcessmode( obj.getString( "processmode" ) );
+		invoiceApprRoad.setTitle( obj.getString( "title" ) );
+		invoiceApprRoad.setApprobjname( obj.getString( "approbjname" ) );
 
 		invoiceList.add( invoiceApprRoad );
 	    }
@@ -255,17 +255,17 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 		Logger.d( TAG , "----response----" + response.toString( ) );
 		try
 		{
-		    int resCode = response.getInt( "Success" );
+		    int resCode = response.getInt( "success" );
 		    Message msg = Message.obtain( );
 		    if( resCode == 0 )
 		    {
 			msg.what = MSG_GET_INVOICE_ROAD_LIST_SUCCESS;
-			msg.obj = response.getString( "Data" );
+			msg.obj = response.getString( "data" );
 		    }
 		    else
 		    {
 			msg.what = MSG_GET_INVOICE_ROAD_LIST_ERROR;
-			msg.obj = response.get( "Msg" );
+			msg.obj = response.get( "msg" );
 		    }
 		    mUiHandler.sendMessage( msg );
 		}
@@ -391,7 +391,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	private void bindData( final ViewHolder holder , final InvoiceApprRoad iar )
 	{
 
-	    String apprDate = iar.getApprDate( );
+	    String apprDate = iar.getApprdate( );
 	    String apprTime = "";
 	    
 	    if(!apprDate.isEmpty()){
@@ -427,7 +427,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    Logger.d( TAG , "bindData,date =" + apprDate );
 	    Logger.d( TAG , "bindData,apprTime =" + apprTime );
 
-	    String apprObjName = iar.getApprObjName( );
+	    String apprObjName = iar.getApprobjname( );
 	    if( apprObjName == null || apprObjName.equals( "null" ) )
 	    {
 		apprObjName = "";
@@ -435,7 +435,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    holder.processModeTv.setText( apprObjName );
 	    holder.apprDateTv.setText( apprDate );
 	    holder.apprTimeTv.setText( apprTime );
-	    String apprMemo = iar.getApprMemo( );
+	    String apprMemo = iar.getApprmemo( );
 	    if( apprMemo == null || apprMemo.equals( "null" ) )
 	    {
 		apprMemo = "";

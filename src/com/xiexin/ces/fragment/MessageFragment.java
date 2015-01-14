@@ -366,17 +366,17 @@ public class MessageFragment extends Fragment implements OnClickListener
 		JSONObject jsonObject = arrays.getJSONObject( i );
 		PushMessage msg = new PushMessage( );
 
-		msg.setAccount( jsonObject.getString( "Account" ) );
-		msg.setApprID( jsonObject.getInt( "ApprID" ) );
-		msg.setbRead( jsonObject.getInt( "bRead" ) );
-		msg.setContent( jsonObject.getString( "Content" ) );
-		msg.setCrtDate( jsonObject.getString( "CrtDate" ) );
-		msg.setFilesPath( jsonObject.getString( "FilesPath" ) );
-		msg.setFromUser( jsonObject.getString( "FromUser" ) );
-		msg.setMsgID( jsonObject.getString( "MsgID" ) );
-		msg.setMsgType( jsonObject.getInt( "MsgType" ) );
-		msg.setTitle( jsonObject.getString( "Title" ) );
-		msg.setToUser( jsonObject.getString( "ToUser" ) );
+		msg.setAccount( jsonObject.getString( "account" ) );
+		msg.setApprid( jsonObject.getInt( "apprid" ) );
+		msg.setBread( jsonObject.getInt( "bread" ) );
+		msg.setContent( jsonObject.getString( "content" ) );
+		msg.setCrtdate( jsonObject.getString( "crtdate" ) );
+		msg.setFilespath( jsonObject.getString( "filespath" ) );
+		msg.setFromuser( jsonObject.getString( "fromuser" ) );
+		msg.setMsgid( jsonObject.getString( "msgid" ) );
+		msg.setMsgtype( jsonObject.getInt( "msgtype" ) );
+		msg.setTitle( jsonObject.getString( "title" ) );
+		msg.setTouser( jsonObject.getString( "touser" ) );
 		messageList.add( msg );
 	    }
 	}
@@ -569,14 +569,14 @@ public class MessageFragment extends Fragment implements OnClickListener
 		    String title = pushMessage.getTitle( );
 		    String content = pushMessage.getContent( );
 		    String id = "";
-		    int msgType = pushMessage.getMsgType( );
+		    int msgType = pushMessage.getMsgtype( );
 		    switch ( msgType )
 		    {
 			case 0 :
-			    id = pushMessage.getMsgID( );
+			    id = pushMessage.getMsgid( );
 			    break;
 			case 1 :
-			    id = pushMessage.getApprID( ) + "";
+			    id = pushMessage.getApprid( ) + "";
 			    break;
 			default :
 			    break;
@@ -618,20 +618,20 @@ public class MessageFragment extends Fragment implements OnClickListener
 	    holder.contentTv.setText( pushMessage.getContent( ) );
 	    holder.indicateIv.setTag( pushMessage );
 
-	    int msgType = pushMessage.getMsgType( );
+	    int msgType = pushMessage.getMsgtype( );
 	    switch ( msgType )
 	    {
 		case 0 :
-		    holder.idTv.setText( pushMessage.getMsgID( ) + "" );
+		    holder.idTv.setText( pushMessage.getMsgid( ) + "" );
 		    break;
 		case 1 :
-		    holder.idTv.setText( pushMessage.getApprID( ) + "" );
+		    holder.idTv.setText( pushMessage.getApprid( ) + "" );
 		    break;
 
 		default :
 		    break;
 	    }
-	    holder.msgTypeTv.setText( pushMessage.getMsgType( ) + "" );
+	    holder.msgTypeTv.setText( pushMessage.getMsgtype( ) + "" );
 
 	}
 

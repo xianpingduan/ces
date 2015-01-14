@@ -324,7 +324,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 			break;
 		case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
-			mCheckUserId = mEmployeeChecked.getEmployeeID();
+			mCheckUserId = mEmployeeChecked.getEmployeeid();
 			mCheckUserName = mEmployeeChecked.getDescr();
 			Log.d(TAG, "mCheckUserId=" + mCheckUserId + ",mCheckUserName="
 					+ mCheckUserName);
@@ -375,10 +375,10 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 				JSONObject obj = arrays.getJSONObject(i);
 				Employee employee = new Employee();
-				employee.setEmployeeID(obj.getString("EmployeeID"));
-				employee.setDescr(obj.getString("Descr"));
-				employee.setDepart(obj.getString("Depart"));
-				employee.setJob(obj.getString("Job"));
+				employee.setEmployeeid(obj.getString("employeeid"));
+				employee.setDescr(obj.getString("descr"));
+				employee.setDepart(obj.getString("depart"));
+				employee.setJob(obj.getString("job"));
 				invoiceList.add(employee);
 			}
 		} catch (JSONException e) {
@@ -412,14 +412,14 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 							Logger.d(TAG,
 									"----response----" + response.toString());
 							try {
-								int resCode = response.getInt("Success");
+								int resCode = response.getInt("success");
 								Message msg = Message.obtain();
 								if (resCode == 0) {
 									msg.what = MSG_GET_EMPLOYEE_LIST_SUCCESS;
-									msg.obj = response.getString("Data");
+									msg.obj = response.getString("data");
 								} else {
 									msg.what = MSG_GET_EMPLOYEE_LIST_ERROR;
-									msg.obj = response.get("Msg");
+									msg.obj = response.get("msg");
 								}
 								mUiHandler.sendMessage(msg);
 							} catch (JSONException e) {
@@ -527,7 +527,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 			// 初始化
 			for (Employee e : list) {
-				mMap.put(e.getEmployeeID(), false);
+				mMap.put(e.getEmployeeid(), false);
 			}
 		}
 
@@ -600,26 +600,26 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 			switch (mFrom) {
 			case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
-				Employee empId = mSelectMap.get(employee.getEmployeeID());
+				Employee empId = mSelectMap.get(employee.getEmployeeid());
 				if (empId != null
-						&& empId.getEmployeeID().equals(
-								employee.getEmployeeID())) {
+						&& empId.getEmployeeid().equals(
+								employee.getEmployeeid())) {
 					holder.employeeCheckCb.setChecked(true);
-					mMap.put(employee.getEmployeeID(), true);
+					mMap.put(employee.getEmployeeid(), true);
 				} else {
 					holder.employeeCheckCb.setChecked(false);
-					mMap.put(employee.getEmployeeID(), false);
+					mMap.put(employee.getEmployeeid(), false);
 				}
 				break;
 			case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
 				if (mEmployeeChecked != null
-						&& mEmployeeChecked.getEmployeeID().equals(
-								employee.getEmployeeID())) {
+						&& mEmployeeChecked.getEmployeeid().equals(
+								employee.getEmployeeid())) {
 					holder.employeeCheckCb.setChecked(true);
-					mMap.put(employee.getEmployeeID(), true);
+					mMap.put(employee.getEmployeeid(), true);
 				} else {
 					holder.employeeCheckCb.setChecked(false);
-					mMap.put(employee.getEmployeeID(), false);
+					mMap.put(employee.getEmployeeid(), false);
 				}
 				break;
 			default:
@@ -634,10 +634,10 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 									.getTag();
 							if (!holder.employeeCheckCb.isChecked()) {
 								holder.employeeCheckCb.setChecked(false);
-								mMap.put(ele.getEmployeeID(), false);
+								mMap.put(ele.getEmployeeid(), false);
 								switch (mFrom) {
 								case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
-									mSelectMap.remove(ele.getEmployeeID());
+									mSelectMap.remove(ele.getEmployeeid());
 									break;
 								case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
 									mEmployeeChecked = null;
@@ -648,11 +648,11 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 							} else {
 								holder.employeeCheckCb.setChecked(true);
-								mMap.put(ele.getEmployeeID(), true);
+								mMap.put(ele.getEmployeeid(), true);
 
 								switch (mFrom) {
 								case Constants.CHECK_EMPLOYEE_FROM_NOTIFY:
-									mSelectMap.put(ele.getEmployeeID(), ele);
+									mSelectMap.put(ele.getEmployeeid(), ele);
 									break;
 								case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
 									mEmployeeChecked = ele;

@@ -120,14 +120,14 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	    {
 		try
 		{
-		    int resCode = response.getInt( "Success" );
+		    int resCode = response.getInt( "success" );
 		    if( resCode == 0 )
 		    {
-			Logger.d( TAG , response.getString( "Data" ) );
+			Logger.d( TAG , response.getString( "data" ) );
 		    }
 		    else
 		    {
-			Logger.d( TAG , response.getString( "Msg" ) );
+			Logger.d( TAG , response.getString( "msg" ) );
 		    }
 		}
 		catch ( JSONException e )
