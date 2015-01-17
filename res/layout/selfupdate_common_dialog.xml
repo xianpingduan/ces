@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="416dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:layout_margin="@dimen/common_margin"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -15,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_margin="15dp"
             android:orientation="vertical" >
 
             <TextView
@@ -25,18 +26,18 @@
                 android:gravity="center"
                 android:hint="title"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="@dimen/pl_mimi_text_size" />
 
             <TextView
                 android:id="@+id/tip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:lineSpacingExtra="8dp"
-                android:layout_marginTop="24dp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="12dp"
                 android:text="@string/self_update_dialog_tip"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="@dimen/pl_mimi_text_size" />
         </LinearLayout>
     </LinearLayout>
 
@@ -49,18 +50,20 @@
         <Button
             android:id="@+id/left"
             android:layout_width="0dp"
-            android:layout_height="68dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
+            android:textColor="@android:color/black"
             android:background="@drawable/selfupdate_dialog_left_btn"
-            android:textSize="24sp" />
+            android:textSize="@dimen/pl_mimi_text_size" />
 
         <Button
             android:id="@+id/right"
             android:layout_width="0dp"
-            android:layout_height="68dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
+            android:textColor="@android:color/black"
             android:background="@drawable/selfupdate_dialog_right_btn"
-            android:textSize="24sp" />
+            android:textSize="@dimen/pl_mimi_text_size" />
     </LinearLayout>
 
 </LinearLayout>

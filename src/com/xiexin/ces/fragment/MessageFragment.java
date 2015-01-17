@@ -420,18 +420,18 @@ public class MessageFragment extends Fragment implements OnClickListener
 		// TODO
 		try
 		{
-		    int resCode = response.getInt( "Success" );
+		    int resCode = response.getInt( "success" );
 		    Message msg = Message.obtain( );
 		    if( resCode == 0 )
 		    {
 			msg.what = MSG_GET_MESSAGE_LIST_SUCCESS;
-			msg.obj = response.getString( "Data" );
-			Logger.d( TAG , "Data=" + response.getString( "Data" ) );
+			msg.obj = response.getString( "data" );
+			Logger.d( TAG , "data=" + msg.obj );
 		    }
 		    else
 		    {
 			msg.what = MSG_GET_MESSAGE_LIST_ERROR;
-			msg.obj = response.get( "Msg" );
+			msg.obj = response.get( "msg" );
 		    }
 		    mUiHandler.sendMessage( msg );
 		}

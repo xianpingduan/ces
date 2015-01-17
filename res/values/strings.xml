@@ -81,6 +81,7 @@
     <string name="menu_ads">公告</string>
     <string name="menu_invoice">发票真伪</string>
     <string name="menu_record">记一笔</string>
+    <string name="menu_update">检查更新</string>
     
     
     <string name="click_exit_label">"再按一次退出程序" </string>
