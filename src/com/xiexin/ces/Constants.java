@@ -87,6 +87,9 @@ public class Constants
 
     // info
     public final static String DET_INFO = "det_info";
+    public final static String DET_INFOS = "det_infos";
+    public final static String DET_NAMES = "det_names";
+    public final static String DET_COUNT = "det_count";
     public final static String DET_CONFIG = "det_config";
     public final static String DET_HEAD_CONFIG = "det_head_config";
     public final static String FILES_PATH = "files_path";

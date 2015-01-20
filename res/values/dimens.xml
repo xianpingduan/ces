@@ -51,7 +51,7 @@
     <dimen name="approval_dialog_submit_height">36dp</dimen>
     <dimen name="approval_dialog_margin_top">18dp</dimen>
     
-    <dimen name="reside_menu_item_height">48dp</dimen>
+    <dimen name="reside_menu_item_height">42dp</dimen>
     
     
     <!-- welcome -->

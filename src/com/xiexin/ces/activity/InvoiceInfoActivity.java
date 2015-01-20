@@ -102,6 +102,11 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 	private SubmitSuccessDialog mSubmitSuccessDialog;
 	private SubmitErrorDialog mSubmitErrorDialog;
+	
+	//allenduan add at 20150120
+	private int mDetCount=0;
+	private String mDetNameStr="";
+	private String [] mDetContentStrs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -433,8 +438,13 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				InvoiceSecondInfoActivity.class);
 		intent.putExtra(Constants.PRGID, mPrgid);
 		intent.putExtra(Constants.DET_CONFIG, mDetConfigStr);
-		intent.putExtra(Constants.DET_INFO, mDetContentStr);
+		Bundle bundle = new Bundle();
+		bundle.putStringArray(Constants.DET_INFOS, mDetContentStrs);
+		intent.putExtra(Constants.DET_INFO, bundle);
+		//intent.putExtra(Constants.DET_INFO, mDetContentStrs);
 		intent.putExtra(Constants.DET_HEAD_CONFIG, mDetHeaderStr);
+		intent.putExtra(Constants.DET_NAMES, mDetNameStr);
+		intent.putExtra(Constants.DET_COUNT, mDetCount);
 		startActivity(intent);
 
 	}
@@ -528,7 +538,18 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			case MSG_GET_INFO_SUCCESS:
 				mDataContent = (JSONObject) msg.obj;
 				try {
-					mDetContentStr = mDataContent.getString("det");
+					mDetCount = mDataContent.getInt("detcount");
+					if(mDetCount>0){
+						mDetContentStrs= new String[mDetCount];
+						for(int i= 0;i<mDetCount;i++){
+							if(i==0){
+								mDetContentStrs[i] = mDataContent.getString("det");
+							}else{
+								mDetContentStrs[i] = mDataContent.getString("det"+(i+1));
+							}
+						}
+					}
+					mDetNameStr = mDataContent.getString("detname");
 					mFilesPathStr = mDataContent.getString("filespath");
 					mApprListStr = mDataContent.getString("apprlist");
 				} catch (JSONException e) {
@@ -625,7 +646,6 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 			if (jsonArray.length() > 0) {
 				generateDataConfig(mDataConfigStr, mDataHeaderStr);
-
 			}
 
 		} catch (JSONException e) {

@@ -3,15 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <include layout="@layout/header_action_bar"/>
 
-    <com.xiexin.ces.widgets.LoadingUIListView
+    <include layout="@layout/header_action_bar" />
+
+    <!--<com.xiexin.ces.widgets.LoadingUIListView
         android:id="@+id/invoice_second_info_list"
         style="@style/NormalList"
         android:layout_width="match_parent"
-        android:divider="@null"
         android:layout_height="match_parent"
-        android:overScrollMode="never" />
+        android:divider="@null"
+        android:overScrollMode="never" />-->
+
+    <com.xiexin.ces.expandablelist.StickyLayout
+        android:id="@+id/sticky_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/sticky_header"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sticky_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <com.xiexin.ces.expandablelist.PinnedHeaderExpandableListView
+                android:id="@+id/expandablelist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@null"
+                android:childIndicatorLeft="0dp"
+                android:dividerHeight="1dp"
+                android:groupIndicator="@null"
+                android:scrollbarAlwaysDrawHorizontalTrack="false" >
+            </com.xiexin.ces.expandablelist.PinnedHeaderExpandableListView>
+        </LinearLayout>
+    </com.xiexin.ces.expandablelist.StickyLayout>
 
 </LinearLayout>
