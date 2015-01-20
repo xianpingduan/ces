@@ -56,7 +56,7 @@
     
     <!-- welcome -->
     
-    <dimen name="welcome_logo_margin_top">120dp</dimen>
+    <dimen name="welcome_logo_margin_top">110dp</dimen>
     <dimen name="welcome_progress_margin_top">55dp</dimen>
     <dimen name="welcome_text_margin_top">25dp</dimen>
     <dimen name="welcome_progress_width_height">48dp</dimen>
