@@ -106,7 +106,12 @@ public class InvoiceSecondInfoActivity extends Activity implements
 		Intent intent = getIntent();
 		mDetConfigStr = intent.getStringExtra(Constants.DET_CONFIG);
 		mDetContentStr = intent.getStringExtra(Constants.DET_INFO);
+		mDetHeaderStr = intent.getStringExtra(Constants.DET_HEAD_CONFIG);
 		mPrgid = intent.getStringExtra(Constants.PRGID);
+		
+		Logger.d(TAG, "mDetConfigStr="+mDetConfigStr);
+		Logger.d(TAG, "mDetContentStr="+mDetContentStr);
+		Logger.d(TAG, "mDetHeaderStr="+mDetHeaderStr);
 
 		if (mDetConfigStr == null || mDetConfigStr.isEmpty()) {
 			mDetConfig = Constants.getDetDefaultConfig(mPrgid);

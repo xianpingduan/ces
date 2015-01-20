@@ -60,6 +60,8 @@ public class MenuActivity extends FragmentActivity implements
 	private ResideMenuItem itemInvoice;
 	private ResideMenuItem itemRecord;
 
+	private ResideMenuItem itemUpdate;
+
 	// Fragment
 	private PendApprovalFragment mPendApprovalFragment;
 	private MessageFragment mMessageFragment;
@@ -318,7 +320,11 @@ public class MenuActivity extends FragmentActivity implements
 
 		itemMessage.setOnClickListener(this);
 		itemAds.setOnClickListener(this);
-
+		
+		
+		itemUpdate = new ResideMenuItem(this, R.drawable.icon_scratch_upcome,
+				getString(R.string.menu_update));
+		
 		itemInvoice = new ResideMenuItem(this, R.drawable.fapiao_check,
 				getString(R.string.menu_invoice));
 		itemRecord = new ResideMenuItem(this, R.drawable.icon_record,
@@ -326,6 +332,8 @@ public class MenuActivity extends FragmentActivity implements
 
 		itemInvoice.setOnClickListener(this);
 		itemRecord.setOnClickListener(this);
+		
+		itemUpdate.setOnClickListener(this);
 
 		List<ResideMenuItem> oneList = new ArrayList<ResideMenuItem>();
 		oneList.clear();
@@ -344,6 +352,10 @@ public class MenuActivity extends FragmentActivity implements
 		thirdList.add(itemInvoice);
 		thirdList.add(itemRecord);
 
+		List<ResideMenuItem> fourList = new ArrayList<ResideMenuItem>();
+		fourList.clear();
+		fourList.add(itemUpdate);
+
 		// resideMenu.addMenuItem( itemPendApproval ,
 		// ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem( itemSendItem , ResideMenu.DIRECTION_LEFT );
@@ -357,9 +369,12 @@ public class MenuActivity extends FragmentActivity implements
 		// resideMenu.addMenuItem( itemAds , ResideMenu.DIRECTION_LEFT );
 
 		resideMenu.addMenuItem(twoList, ResideMenu.DIRECTION_LEFT);
+		resideMenu.addMenuItem(thirdList, ResideMenu.DIRECTION_LEFT);
+		
+		resideMenu.addMenuItem(itemUpdate, ResideMenu.DIRECTION_LEFT);
 
-		resideMenu.addMenuItem(itemInvoice, ResideMenu.DIRECTION_LEFT);
-		resideMenu.addMenuItem(itemRecord, ResideMenu.DIRECTION_LEFT);
+		// resideMenu.addMenuItem(itemInvoice, ResideMenu.DIRECTION_LEFT);
+		// resideMenu.addMenuItem(itemRecord, ResideMenu.DIRECTION_LEFT);
 
 		// resideMenu.addMenuItem( thirdList , ResideMenu.DIRECTION_LEFT );
 
@@ -443,11 +458,10 @@ public class MenuActivity extends FragmentActivity implements
 						.edit()
 						.putLong(Constants.THE_SYNC_EMPLOYEE_TIME,
 								next_req_time).commit();
-				
-				
-				//checkUpdate
+
+				// checkUpdate
 				checkUpdate();
-				
+
 				break;
 			case MSG_FROM_FRAGMENT_CLOSE_MENU:
 				resideMenu.closeMenu();
@@ -531,9 +545,15 @@ public class MenuActivity extends FragmentActivity implements
 			intentToZhangTao();
 		} else if (view == mLoginOutLl) {
 			sureToLoginOut();
+		}else if(view == itemUpdate){
+			if(isFastDoubleClick()){
+				Toast.makeText(MenuActivity.this, "正在检查更新...", Toast.LENGTH_SHORT).show();
+			}else{
+				checkUpdate();
+			}
 		}
 
-		if (view != mSwitchAccountLl && view != mLoginOutLl) {
+		if (view != mSwitchAccountLl && view != mLoginOutLl&& view != itemUpdate) {
 			mUiHandler.sendEmptyMessageDelayed(MSG_FROM_FRAGMENT_CLOSE_MENU, 0);
 		}
 
@@ -660,19 +680,30 @@ public class MenuActivity extends FragmentActivity implements
 		}
 		mLoadingDialog.show();
 	}
-	
-	
-	private void checkUpdate(){
+
+	private void checkUpdate() {
 		
+
 		mUiHandler.postDelayed(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				
-				SelfUpgrade.getInstance(App.getAppContext()).startUpgrade();				
-				
+
+				SelfUpgrade.getInstance(App.getAppContext()).startUpgrade();
+
 			}
-		}, 1000);
+		}, 2000);
 	}
 	
+	 private static long lastClickTime; 
+	 public static boolean isFastDoubleClick() { 
+	        long time = System.currentTimeMillis(); 
+	        long timeD = time - lastClickTime; 
+	        if ( 0 < timeD && timeD < 2000) {    
+	            return true;    
+	        }    
+	        lastClickTime = time;    
+	        return false;    
+	    } 
+
 }
