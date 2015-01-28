@@ -44,6 +44,7 @@
    	<string name="del_msg_success">删除消息成功！</string>
    	
    	<string name="no_msg">暂无消息</string>
+   	<string name="no_announce">暂无公告</string>
        
     <string name="return_text">返回</string>
     
@@ -126,6 +127,7 @@
     <string name="open_file">打开</string>
     
     <string name="msg_center">消息中心</string>
+    <string name="announce_center">公告</string>
     
    	<string name="submit_success_text">提交成功</string>
    	<string name="submit_error_text">提交失败</string>

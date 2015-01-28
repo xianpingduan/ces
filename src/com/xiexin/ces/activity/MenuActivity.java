@@ -35,6 +35,7 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.db.EmployeeManager;
+import com.xiexin.ces.fragment.AnnounceFragment;
 import com.xiexin.ces.fragment.MessageFragment;
 import com.xiexin.ces.fragment.PendApprovalFragment;
 import com.xiexin.ces.fragment.TipFragment;
@@ -66,6 +67,7 @@ public class MenuActivity extends FragmentActivity implements
 	private PendApprovalFragment mPendApprovalFragment;
 	private MessageFragment mMessageFragment;
 	private TipFragment mTipFragment;
+	private AnnounceFragment mAnnounceFragment;
 
 	// this
 	private TextView mTitleView;
@@ -519,12 +521,12 @@ public class MenuActivity extends FragmentActivity implements
 			mTitleView.setText(getString(R.string.menu_message));
 			changeFragment(mMessageFragment);
 		} else if (view == itemAds) {
-			if (mTipFragment == null) {
-				mTipFragment = new TipFragment();
+			if (mAnnounceFragment == null) {
+				mAnnounceFragment = new AnnounceFragment();
 			}
-			mTipFragment.setMainUIHandler(mUiHandler);
+			mAnnounceFragment.setMainUIHandler(mUiHandler);
 			mTitleView.setText(getString(R.string.menu_ads));
-			changeFragment(mTipFragment);
+			changeFragment(mAnnounceFragment);
 		} else if (view == itemInvoice) {
 			if (mTipFragment == null) {
 				mTipFragment = new TipFragment();
