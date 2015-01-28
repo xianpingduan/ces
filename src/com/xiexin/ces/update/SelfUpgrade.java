@@ -23,6 +23,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
@@ -113,7 +114,9 @@ public class SelfUpgrade {
 
 	}
 
-	public void startUpgrade() {
+	private int checkType;
+	public void startUpgrade(int checkType) {
+		this.checkType = checkType;
 		checkUpdate();
 	}
 
@@ -329,12 +332,20 @@ public class SelfUpgrade {
 				try {
 					JSONArray array = new JSONArray(info);
 					mUpdateInfo = array.getJSONObject(0);
+					Logger.d(TAG, "newvercode="+mUpdateInfo.getInt("newvercode"));
+					Logger.d(TAG, "app versioncode="+App.VersionCode());
+					if(mUpdateInfo.getInt("newvercode")>App.VersionCode()){
+						showUpgradeSpecApkDialog();
+					}else{
+						Logger.d(TAG, "已经是最新版本"+App.VersionCode());
+						if(checkType==Constants.CHECK_UPDATE_NOAUTO){
+							Toast.makeText(mContext, "已经是最新版本!", Toast.LENGTH_SHORT).show();
+						}
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				showUpgradeSpecApkDialog();
-				long next_req_time = System.currentTimeMillis()
-						+ DEFAULT_REQ_GAP_TIME;
+				//long next_req_time = System.currentTimeMillis()+ DEFAULT_REQ_GAP_TIME;
 				if (mSelfUpdateListener != null) {
 					mSelfUpdateListener.checkSuccessed(info);
 				}

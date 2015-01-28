@@ -545,7 +545,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 							if(i==0){
 								mDetContentStrs[i] = mDataContent.getString("det");
 							}else{
-								mDetContentStrs[i] = mDataContent.getString("det"+(i+1));
+								mDetContentStrs[i] = mDataContent.getString("det"+i);
 							}
 						}
 					}

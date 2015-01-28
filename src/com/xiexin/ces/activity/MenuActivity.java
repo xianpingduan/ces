@@ -460,7 +460,7 @@ public class MenuActivity extends FragmentActivity implements
 								next_req_time).commit();
 
 				// checkUpdate
-				checkUpdate();
+				checkUpdate(Constants.CHECK_UPDATE_AUTO);
 
 				break;
 			case MSG_FROM_FRAGMENT_CLOSE_MENU:
@@ -549,7 +549,7 @@ public class MenuActivity extends FragmentActivity implements
 			if(isFastDoubleClick()){
 				Toast.makeText(MenuActivity.this, "正在检查更新...", Toast.LENGTH_SHORT).show();
 			}else{
-				checkUpdate();
+				checkUpdate(Constants.CHECK_UPDATE_NOAUTO);
 			}
 		}
 
@@ -681,7 +681,7 @@ public class MenuActivity extends FragmentActivity implements
 		mLoadingDialog.show();
 	}
 
-	private void checkUpdate() {
+	private void checkUpdate(final int type) {
 		
 
 		mUiHandler.postDelayed(new Runnable() {
@@ -689,7 +689,7 @@ public class MenuActivity extends FragmentActivity implements
 			@Override
 			public void run() {
 
-				SelfUpgrade.getInstance(App.getAppContext()).startUpgrade();
+				SelfUpgrade.getInstance(App.getAppContext()).startUpgrade(type);
 
 			}
 		}, 2000);

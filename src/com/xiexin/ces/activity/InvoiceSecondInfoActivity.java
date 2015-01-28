@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -161,19 +162,22 @@ public class InvoiceSecondInfoActivity extends Activity implements
 	private void generateGroupList() {
 		groupList.clear();
 		for (String s : mDetNames) {
-			Logger.d(TAG, "generateGroupList,s="+s);
+			Logger.d(TAG, "generateGroupList,s=" + s);
 			groupList.add(s.trim());
 		}
 	}
 
 	private void generateDetConfig(String detConfig) {
-
 		mDetConfigList.clear();
-		String tempArray[] = detConfig.split("|");
-		for (String a : tempArray) {
-			Logger.d(TAG, "generateDetConfig,a="+a);
-			mDetConfigList.add(a.split(","));
+		if(detConfig!=null&&!detConfig.isEmpty()){
+			String tempArray[] = detConfig.split("\\|");
+			// Log.d(TAG, "tempArray.length="+tempArray.length);
+			for (String a : tempArray) {
+				Logger.d(TAG, "generateDetConfig,a=" + a);
+				mDetConfigList.add(a.split(","));
+			}
 		}
+		// Log.d(TAG, "detConfig="+detConfig);
 	}
 
 	private void generateDetContent(String[] detContentStrs) {
@@ -181,7 +185,7 @@ public class InvoiceSecondInfoActivity extends Activity implements
 		for (String s : detContentStrs) {
 			try {
 				JSONArray array = new JSONArray(s);
-				Logger.d(TAG, "generateDetContent,array="+array.toString());
+				Logger.d(TAG, "generateDetContent,array=" + array.toString());
 				mDetContentList.add(array);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -216,11 +220,11 @@ public class InvoiceSecondInfoActivity extends Activity implements
 		Logger.d(TAG, "mDetNameStr=" + mDetNameStr);
 		Logger.d(TAG, "mDetCount=" + mDetCount);
 
-		if (mDetConfigStr == null || mDetConfigStr.isEmpty()) {
-			mDetConfig = Constants.getDetDefaultConfig(mPrgid);
-		} else {
-			mDetConfig = mDetConfigStr.split(",");
-		}
+		// if (mDetConfigStr == null || mDetConfigStr.isEmpty()) {
+		// mDetConfig = Constants.getDetDefaultConfig(mPrgid);
+		// } else {
+		// mDetConfig = mDetConfigStr.split(",");
+		// }
 		// mDetContent = new JSONObject(mDetContentStr);
 		if (mDetHeaderStr == null || mDetHeaderStr.isEmpty()) {
 			mDetHeader = Constants.getDet(mPrgid);
@@ -492,21 +496,21 @@ public class InvoiceSecondInfoActivity extends Activity implements
 				try {
 
 					if (i == 0) {
-						headerTv.setText(mDetHeader.getString(tempDetConfig[i].trim()
-								.toLowerCase()));
+						headerTv.setText(mDetHeader.getString(tempDetConfig[i]
+								.trim().toLowerCase()));
 					} else {
-						headerTv.setText(mDetHeader.getString(tempDetConfig[i].trim()
-								.toLowerCase()) + ":");
+						headerTv.setText(mDetHeader.getString(tempDetConfig[i]
+								.trim().toLowerCase()) + ":");
 					}
 					JSONArray array = mDetContentList.get(groupPosition);
 					JSONObject jsonObject = array.getJSONObject(childPosition);
-					String content = jsonObject.getString(tempDetConfig[i].trim()
-							.toLowerCase());
+					String content = jsonObject.getString(tempDetConfig[i]
+							.trim().toLowerCase());
 					if (content == null || content.equals("null")) {
 						content = "";
 					}
 
-					if (content.contains("T00:00:00")) {
+					if (content.contains("T")) {
 						Date date = new Date();
 						try {
 							date = sdf.parse(content);
