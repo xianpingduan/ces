@@ -18,3 +18,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#version history
+#verCode=1 verName=1.0
+
+#verCode=2 verName=1.1 date=20150128
