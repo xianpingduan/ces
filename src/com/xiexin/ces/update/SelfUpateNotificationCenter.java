@@ -37,7 +37,7 @@ public class SelfUpateNotificationCenter
     private SelfUpateNotificationCenter( Context context )
     {
 	mContext = context;
-	mUpdateNotifyIcon = ResourceUtil.getDrawableId( mContext , "selfupdate_icon" );
+	mUpdateNotifyIcon = ResourceUtil.getDrawableId( mContext , "app_icon" );
 	mNotificationManager = (NotificationManager)context.getSystemService( Context.NOTIFICATION_SERVICE );
     }
 

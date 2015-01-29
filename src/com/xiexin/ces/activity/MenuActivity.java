@@ -462,7 +462,7 @@ public class MenuActivity extends FragmentActivity implements
 								next_req_time).commit();
 
 				// checkUpdate
-				checkUpdate(Constants.CHECK_UPDATE_AUTO);
+				// checkUpdate(Constants.CHECK_UPDATE_AUTO);
 
 				break;
 			case MSG_FROM_FRAGMENT_CLOSE_MENU:
@@ -691,10 +691,10 @@ public class MenuActivity extends FragmentActivity implements
 			@Override
 			public void run() {
 
-				SelfUpgrade.getInstance(App.getAppContext()).startUpgrade(type);
+				SelfUpgrade.getInstance(MenuActivity.this).startUpgrade(type);
 
 			}
-		}, 2000);
+		}, 500);
 	}
 	
 	 private static long lastClickTime; 

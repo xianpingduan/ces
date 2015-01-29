@@ -191,6 +191,8 @@ public class SelfUpgrade {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+		addDownloadNotification();
 
 		HttpHandler<File> mHandler = http.download(packUrl, filePath
 				+ getSaveFileName(mContext), true, false,
@@ -239,6 +241,8 @@ public class SelfUpgrade {
 					}
 
 				});
+		
+		
 
 	}
 
@@ -284,7 +288,6 @@ public class SelfUpgrade {
 
 							mHandler.sendMessage(msg);
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 

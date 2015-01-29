@@ -32,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
+import com.xiexin.ces.update.SelfUpgrade;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
 
@@ -104,6 +105,10 @@ public class LoginActivity extends Activity implements OnClickListener
 	    mRemmenberPwdCb.setChecked( rememberPwd );
 	    mAutoLoginCb.setChecked( autoLogin );
 	}
+	
+	//检测更新
+	checkUpdate(Constants.CHECK_UPDATE_AUTO);
+	
     }
 
     private void initView()
@@ -474,7 +479,7 @@ public class LoginActivity extends Activity implements OnClickListener
 
     private void saveLoginInfo( String loginInfo )
     {
-
+    	
 	try
 	{
 	    JSONObject object = new JSONObject( loginInfo );
@@ -633,7 +638,7 @@ public class LoginActivity extends Activity implements OnClickListener
 	Intent intent = new Intent( );
 	intent.setClass( LoginActivity.this , ServerConfigActivity.class );
 	intent.putExtra( Constants.SERVER_CONFIG_REQ , 1 );
-	startActivity( intent );
+	startActivityForResult(intent, 2);
     }
 
     @Override
@@ -641,7 +646,9 @@ public class LoginActivity extends Activity implements OnClickListener
     {
 	super.onActivityResult( requestCode , resultCode , data );
 
-	if( resultCode == RESULT_OK )
+	Logger.d(TAG, "onActivityResult ,reqeustCode="+requestCode + ",resultCode="+resultCode);
+	
+	if( resultCode == RESULT_OK && requestCode==1)
 	{
 	    String ztConnName = data.getStringExtra( Constants.ZHANG_TAO_CONN_NAME );
 	    String ztAccInfo = data.getStringExtra( Constants.ZHANG_TAO_ACCINFO );
@@ -653,14 +660,32 @@ public class LoginActivity extends Activity implements OnClickListener
 		msg.what = MSG_GET_ZT;
 		msg.obj = ztAccInfo;
 		mUiHandler.sendMessage( msg );
-
 	    }
 	    else
 	    {
 		Logger.e( TAG , "账套为空" );
 	    }
-
+	}else if (resultCode == RESULT_OK && requestCode==2){
+		boolean serverConfigChanged = data.getBooleanExtra(Constants.SERVER_CONFIG_CHANGED, false);
+		Logger.d(TAG, "serverConfigChanged="+serverConfigChanged);
+		if(serverConfigChanged){
+			checkUpdate(Constants.CHECK_UPDATE_AUTO);
+		}
 	}
     }
+    
+    
+	private void checkUpdate(final int type) {
+		
+		mUiHandler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+
+				SelfUpgrade.getInstance(LoginActivity.this).startUpgrade(type);
+
+			}
+		}, 500);
+	}
 
 }

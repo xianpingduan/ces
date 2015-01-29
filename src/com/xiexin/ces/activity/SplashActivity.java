@@ -212,12 +212,10 @@ public class SplashActivity extends Activity {
 	}
 
 	private void test() {
-
 		try {
 			JSONObject obj = new JSONObject(Constants.RQ001);
 			Logger.d(TAG, obj.get("Data").toString());
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

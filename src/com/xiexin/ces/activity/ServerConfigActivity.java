@@ -43,6 +43,8 @@ public class ServerConfigActivity extends Activity implements OnClickListener
     private TextView mTitle;
     private Button mBtn1;
     private Button mBtn2;
+    
+    private  boolean serverConfigChanged =false;
 
     // header end
 
@@ -168,7 +170,10 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 	    public void onClick( DialogInterface dialog , int which )
 	    {
 		dialog.dismiss( );
+		serverConfigChanged=true;
 		doRequestServerConfigInfo( );
+		
+	
 	    }
 	} );
 	builder.setNegativeButton( getString( R.string.cancel ) , new DialogInterface.OnClickListener( )
@@ -186,11 +191,20 @@ public class ServerConfigActivity extends Activity implements OnClickListener
     private void intentTo()
     {
 	if( mRequest == 1 )
-	{}
+	{
+		Logger.d(TAG, "setResult,serverConfigChanged="+serverConfigChanged);
+	    Intent intent = new Intent( );
+//	    intent.setClass( ServerConfigActivity.this , LoginActivity.class );
+	    intent.putExtra(Constants.SERVER_CONFIG_CHANGED, serverConfigChanged);
+	    setResult(RESULT_OK,intent);
+	}
 	else
 	{
+//		Logger.d(TAG, "setResult,serverConfigChanged="+serverConfigChanged);
 	    Intent intent = new Intent( );
 	    intent.setClass( ServerConfigActivity.this , LoginActivity.class );
+//	    intent.putExtra(Constants.SERVER_CONFIG_CHANGED, serverConfigChanged);
+//	    setResult(RESULT_OK,intent);
 	    startActivity( intent );
 	}
 	finish( );
@@ -222,6 +236,7 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 		if( validate && !isFirstIn )
 		{
 		    showConfirmDialog( );
+		    
 		}
 		else if( validate && isFirstIn )
 		{
