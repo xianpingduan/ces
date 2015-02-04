@@ -440,7 +440,11 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    {
 		apprMemo = "";
 	    }
+	    
+	    Logger.d(TAG, apprMemo);
+	    
 	    holder.apprMemoTv.setTag( apprMemo );
+	    holder.apprMemoTv.setText(apprMemo);
 	    Logger.d( TAG , "apprDate=" + apprDate );
 	    // String isFinished = iar.getStatus();
 	    // Log.d(TAG,
@@ -456,6 +460,10 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    else
 	    {
 		holder.isFinishedCb.setChecked( false );
+		holder.processModeTv.setTextColor( Color.parseColor( "#575757" ) );
+		holder.apprDateTv.setTextColor( Color.parseColor( "#ababab" ) );
+		holder.apprMemoTv.setTextColor( Color.parseColor( "#ababab" ) );
+		holder.apprTimeTv.setTextColor( Color.parseColor( "#ababab" ) );
 	    }
 	}
     }

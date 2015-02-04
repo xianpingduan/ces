@@ -86,7 +86,7 @@
     <dimen name="info_look_btn_height">24dp</dimen>
     
     <!-- zhangtao -->
-    <dimen name="zhangtao_list_item_margin">18dp</dimen>
+    <dimen name="zhangtao_list_item_margin">12dp</dimen>
     
     <!--  -->
     <dimen name="approval_content_et_height">120dp</dimen>
