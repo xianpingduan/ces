@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class LoginActivity extends Activity implements OnClickListener
     public final static String TAG = "LoginActivity";
     private Context mContext;
 
-    private ImageView mLogo;
+    private FrameLayout mLogo;
     private EditText mLoginAccEt;
     private EditText mLoginPwdEt;
     private Button mLoginBtn;
@@ -113,7 +114,7 @@ public class LoginActivity extends Activity implements OnClickListener
 
     private void initView()
     {
-	mLogo = (ImageView)findViewById( R.id.logo );
+	mLogo = (FrameLayout)findViewById( R.id.logo );
 	mLoginAccEt = (EditText)findViewById( R.id.login_account_et );
 	mLoginPwdEt = (EditText)findViewById( R.id.login_pwd_et );
 	mLoginBtn = (Button)findViewById( R.id.login_btn );

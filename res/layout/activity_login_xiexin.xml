@@ -6,26 +6,28 @@
     android:orientation="vertical" >
 
     <FrameLayout
+        android:id="@+id/logo"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:background="@drawable/xiexin_login_head_bg"
+        android:layout_height="230dp"
+        android:background="@drawable/login_logo_3"
         android:gravity="center">
 
-		<ImageView
+	<!-- 	<ImageView
             android:id="@+id/logo"
             android:layout_width="@dimen/login_logo_width"
             android:layout_height="@dimen/login_logo_height"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="50dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_xiexin" />
+            android:src="@drawable/login_logo_2" /> -->
         
-        <ImageView
+<!--         <ImageView
             android:id="@+id/login_logo_text"
             android:layout_width="@dimen/welcome_logo_width_height"
             android:layout_height="wrap_content"
             android:layout_marginTop="130dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_text" />
+            android:src="@drawable/logo_text" /> -->
 
         <TextView
             android:layout_width="wrap_content"
