@@ -10,6 +10,8 @@
     
     <dimen name="common_margin_2">10dp</dimen>
     
+    <dimen name="common_margin_3">24dp</dimen>
+    
     <dimen name="common_padding">12dp</dimen>
     <dimen name="common_padding_left">12dp</dimen>
     <dimen name="common_padding_right">12dp</dimen>
@@ -56,11 +58,14 @@
     
     <!-- welcome -->
     
-    <dimen name="welcome_logo_margin_top">110dp</dimen>
+    <dimen name="welcome_logo_margin_top">250dp</dimen>
     <dimen name="welcome_progress_margin_top">55dp</dimen>
     <dimen name="welcome_text_margin_top">25dp</dimen>
     <dimen name="welcome_progress_width_height">48dp</dimen>
     <dimen name="welcome_logo_width_height">108dp</dimen>
+    
+    
+    <dimen name="welcome_logo_daoying_width_height">168dp</dimen>
     
     <!-- header bar  -->
     <dimen name="header_return_margin_left">18dp</dimen>

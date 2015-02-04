@@ -33,8 +33,8 @@ public class SelfUpdateCommonDialog extends Dialog
     private View.OnClickListener mLeftBtnListener;
     private View.OnClickListener mRightBtnListener;
 
-    private String sure = "确定";
-    private String cancel = "取消";
+    private String sure = "暂不更新";
+    private String cancel = "前往下载";
 
     private SelfUpdateCommonDialog( Context context )
     {
