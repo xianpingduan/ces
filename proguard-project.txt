@@ -27,3 +27,5 @@
 #verCode=3 verName=1.2 date=20150129
 
 #verCode=4 verName=1.3 date=20150204
+
+#verCode=5 verName=1.4 date=20150205
