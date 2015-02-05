@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -345,7 +346,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 				invoice.setAccname(obj.getString("accname"));
 				invoice.setVertype(obj.getString("vertype").equals("null") ? ""
 						: obj.getString("vertype"));
-				invoice.setTotalcost(obj.getInt("totalcost"));
+				invoice.setTotalcost(obj.getDouble("totalcost"));
 				invoice.setApprdate(obj.getString("apprdate"));
 				invoice.setProcessmode(obj.getString("processmode").equals(
 						"null") ? "" : obj.getString("processmode"));
@@ -544,8 +545,9 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			holder.invoiceDateTv.setText(apprDate);
 			holder.departUserNameTv.setText(invoice.getDepart() + " "
 					+ invoice.getApprname());
+			Logger.d(TAG, "Totalcost="+invoice.getTotalcost());
 			holder.moneyTv
-					.setText("￥" + String.valueOf(invoice.getTotalcost()));
+					.setText("￥" + invoice.getTotalcost()+"");
 			holder.prgIdTv.setText(invoice.getPrgid());
 			holder.accountTv.setText(invoice.getAccount());
 			holder.invoiceDescTv.setText(invoice.getReason());
