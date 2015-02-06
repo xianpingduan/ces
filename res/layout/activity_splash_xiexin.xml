@@ -70,6 +70,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="@dimen/welcome_text_margin_top"
             android:text="@string/money_xiexin"
+            android:visibility="gone"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
