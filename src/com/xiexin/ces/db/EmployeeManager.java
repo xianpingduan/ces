@@ -56,6 +56,7 @@ public class EmployeeManager {
 		values.put(EmployeeInfoColumns.MOBILE, employee.getMobile());
 		values.put(EmployeeInfoColumns.TELNBR, employee.getTelnbr());
 		values.put(EmployeeInfoColumns.EMIAL, employee.getEmail());
+		values.put(EmployeeInfoColumns.ACCOUNT, employee.getAccount());
 		return values;
 	}
 
@@ -69,7 +70,7 @@ public class EmployeeManager {
 		employee.setMobile(cursor.getString(6));
 		employee.setTelnbr(cursor.getString(7));
 		employee.setEmail(cursor.getString(8));
-		
+		employee.setAccount(cursor.getString(9));
 		// 汉字转换成拼音
 		String pinyin = characterParser.getSelling(cursor.getString(2));
 		String sortString = pinyin.substring(0, 1).toUpperCase();
@@ -140,6 +141,30 @@ public class EmployeeManager {
 		return list;
 
 	}
+	
+	//根据账套
+	public synchronized ArrayList<Employee> loadByAcount(String account) {
+		ArrayList<Employee> list = new ArrayList<Employee>();
+		Cursor cursor = mEmployeeDbAdapter.queryByAccount(account);
+		
+		Logger.d("Cursor", cursor.getCount() + "");
+		
+		if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
+			
+			while (cursor.moveToNext()) {
+				Employee employee = createTaskFromCursor(cursor);
+				list.add(employee);
+			}
+			
+		}
+		if (cursor != null) {
+			cursor.close();
+		}
+		return list;
+		
+	}
+	
+	
 
 	public void saveResult(String jsonStr) {
 		ArrayList<Employee> employeeList = new ArrayList<Employee>();
@@ -156,6 +181,7 @@ public class EmployeeManager {
 				employee.setEmail(obj.getString("email"));
 				employee.setMobile(obj.getString("mobile"));
 				employee.setTelnbr(obj.getString("telnbr"));
+				employee.setAccount(obj.getString("account"));
 				employeeList.add(employee);
 			}
 		} catch (JSONException e) {

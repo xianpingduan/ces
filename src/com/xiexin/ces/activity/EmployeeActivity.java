@@ -326,8 +326,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 		case Constants.CHECK_EMPLOYEE_FROM_SETPLUGIN:
 			mCheckUserId = mEmployeeChecked.getEmployeeid();
 			mCheckUserName = mEmployeeChecked.getDescr();
-			Log.d(TAG, "mCheckUserId=" + mCheckUserId + ",mCheckUserName="
-					+ mCheckUserName);
+			Log.d(TAG, "mCheckUserId=" + mCheckUserId + ",mCheckUserName="+ mCheckUserName);
 			break;
 
 		default:
@@ -395,7 +394,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 		showDialog();
 
-		mEmployees = EmployeeManager.getInstance(App.getAppContext()).loadAll();
+		mEmployees = EmployeeManager.getInstance(App.getAppContext()).loadByAcount(mConnName);
 
 		if (mEmployees != null && mEmployees.size() > 0) {
 			mUiHandler.sendEmptyMessage(MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS);
