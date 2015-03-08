@@ -102,7 +102,7 @@ public class EmployeeDbAdapter {
 			
 			if(newVersion == DATABASE_VERSION_2){
 				//先drop
-				_db.execSQL(DROP_TABLE_EMPLOYEEINOES);
+				_db.execSQL(DROP_TABLE_EMPLOYEEINOES); 
 				//后创建
 				_db.execSQL(CREATE_TABLE_EMPLOYEEINOES);
 			}

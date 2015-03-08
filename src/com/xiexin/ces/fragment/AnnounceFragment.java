@@ -351,6 +351,12 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 				announce.setNoticeid(jsonObject.getString("noticeid"));
 				announce.setFromuser(jsonObject.getString("fromuser"));
 				announce.setTitle(jsonObject.getString("title"));
+				
+				String files = jsonObject.getString("filespath");
+				if(files==null || files.equals("null")){
+					files="";
+				}
+				announce.setFilespath(files);
 				announceList.add(announce);
 
 			}
@@ -482,6 +488,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 						.findViewById(R.id.content_tv);
 				holder.indicateIv = (ImageView) convertView
 						.findViewById(R.id.indicate_iv);
+				holder.filesPathTv = (TextView) convertView.findViewById(R.id.filespath_tv);
 				convertView.setTag(holder);
 			} else {
 
@@ -498,11 +505,13 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 					String id = holder.idTv.getText().toString();
 					String title = holder.titleTv.getText().toString();
 					String content = holder.contentTv.getText().toString();
+					String filespath = holder.filesPathTv.getText().toString();
 					Intent intent = new Intent();
 					intent.setClass(getActivity(), AnnounceInfoActivity.class);
 					intent.putExtra("id", id);
 					intent.putExtra("title", title);
 					intent.putExtra("content", content);
+					intent.putExtra("filespath", filespath);
 					startActivityForResult(intent, 1);
 
 				}
@@ -515,11 +524,13 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 					String title = pushAnnounce.getTitle();
 					String content = pushAnnounce.getContent();
 					String announceId = pushAnnounce.getNoticeid();
+					String filespath =  pushAnnounce.getFilespath();
 					Intent intent = new Intent();
 					intent.setClass(getActivity(), AnnounceInfoActivity.class);
 					intent.putExtra("id", announceId);
 					intent.putExtra("title", title);
 					intent.putExtra("content", content);
+					intent.putExtra("filespath", filespath);
 					startActivityForResult(intent, 1);
 				}
 			});
@@ -552,6 +563,8 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 			holder.contentTv.setText(pushAnnounce.getContent());
 			holder.indicateIv.setTag(pushAnnounce);
 			holder.idTv.setText(pushAnnounce.getNoticeid());
+			String filespath = pushAnnounce.getFilespath().toString();
+			holder.filesPathTv.setText(filespath.toString());
 
 		}
 
@@ -563,6 +576,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 		ImageView indicateIv;
 		// 存数据
 		TextView idTv;
+		TextView filesPathTv;
 	}
 
 	@Override

@@ -5,6 +5,13 @@ public class PushAnnounce {
 	private String title;
 	private String content;
 	private String noticeid;
+	private String filespath;
+	public String getFilespath() {
+		return filespath;
+	}
+	public void setFilespath(String filespath) {
+		this.filespath = filespath;
+	}
 	public String getFromuser() {
 		return fromuser;
 	}

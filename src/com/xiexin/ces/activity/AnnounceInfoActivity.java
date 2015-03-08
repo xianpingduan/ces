@@ -10,11 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.R;
+import com.xiexin.ces.utils.Logger;
 
 public class AnnounceInfoActivity extends Activity implements OnClickListener {
 
@@ -23,6 +25,7 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 	private String mAnnounceContent;
 	private String mAnnounceId;
 	private String mAnnounceTitle;
+	private String mAnnounceFilePath;
 
 	// header start
 	private LinearLayout mReturnLl;
@@ -62,8 +65,10 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 		mReturnIv.setVisibility(View.VISIBLE);
 
 		mTitle.setText(getString(R.string.announce_center));
-		mBtn1.setVisibility(View.GONE);
+		mBtn1.setVisibility(View.VISIBLE);
+		mBtn1.setText(getString(R.string.announce_attachment));
 		mReturnLl.setOnClickListener(this);
+		mBtn1.setOnClickListener(this);
 
 		mAnnounceTitleTv = (TextView) findViewById(R.id.announce_title_tv);
 		mAnnounceContentTv = (TextView) findViewById(R.id.announce_content_tv);
@@ -75,6 +80,7 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 		mAnnounceContent = intent.getStringExtra("content");
 		mAnnounceId = intent.getStringExtra("id");
 		mAnnounceTitle = intent.getStringExtra("title");
+		mAnnounceFilePath = intent.getStringExtra("filespath");
 		mAnnounceTitleTv.setText(mAnnounceTitle);
 		mAnnounceContentTv.setText(Html.fromHtml(mAnnounceContent));
 
@@ -146,9 +152,27 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 		case R.id.return_ll:
 			onBackPressed();
 			break;
+		case R.id.btn1:
+			intentAnnounceAttachment();
+			break;
 		default:
 			break;
 		}
+	}
+	
+	private void intentAnnounceAttachment(){
+		
+		Logger.d(TAG, "intentAnnounceAttachment");
+		
+		if(mAnnounceFilePath!=null && !"".equals(mAnnounceFilePath)){
+			Intent intent = new Intent();
+			intent.setClass(AnnounceInfoActivity.this, AnnounceAttachmentActivity.class);
+			intent.putExtra("filespath",mAnnounceFilePath);
+			startActivity(intent);
+		}else{
+			Toast.makeText(AnnounceInfoActivity.this, getString(R.string.announce_no_attachment), Toast.LENGTH_SHORT).show();
+		}
+
 	}
 
 	@Override
