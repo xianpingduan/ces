@@ -16,8 +16,10 @@ public class EmployeeDbAdapter {
 	private final Context context;
 
 	private static final String DATABASE_NAME = "xiexin_db";
-	private static int DATABASE_VERSION = 1;
+	private static int DATABASE_VERSION_1 = 1;
 	private static int DATABASE_VERSION_2=2;
+	private static int DATABASE_VERSION = 2;
+	
 	private EmployeeDbHelper dbHelper;
 	private Cursor mCursor;
 
@@ -100,7 +102,7 @@ public class EmployeeDbAdapter {
 		public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion) {
 			// TODO Auto-generated method stub
 			
-			if(newVersion == DATABASE_VERSION_2){
+			if(oldVersion == DATABASE_VERSION_1){
 				//先drop
 				_db.execSQL(DROP_TABLE_EMPLOYEEINOES); 
 				//后创建

@@ -146,16 +146,12 @@ public class EmployeeManager {
 	public synchronized ArrayList<Employee> loadByAcount(String account) {
 		ArrayList<Employee> list = new ArrayList<Employee>();
 		Cursor cursor = mEmployeeDbAdapter.queryByAccount(account);
-		
 		Logger.d("Cursor", cursor.getCount() + "");
-		
 		if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
-			
 			while (cursor.moveToNext()) {
 				Employee employee = createTaskFromCursor(cursor);
 				list.add(employee);
 			}
-			
 		}
 		if (cursor != null) {
 			cursor.close();

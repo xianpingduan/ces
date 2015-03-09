@@ -395,6 +395,9 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 		showDialog();
 
 		mEmployees = EmployeeManager.getInstance(App.getAppContext()).loadByAcount(mConnName);
+		
+		Log.d(TAG, "mEmployees.size= "+mEmployees.size());
+		Log.d(TAG, "mConnName= "+mConnName);
 
 		if (mEmployees != null && mEmployees.size() > 0) {
 			mUiHandler.sendEmptyMessage(MSG_GET_LOCAL_EMPLOYEE_LIST_SUCCESS);
