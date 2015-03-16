@@ -161,9 +161,7 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 	}
 	
 	private void intentAnnounceAttachment(){
-		
 		Logger.d(TAG, "intentAnnounceAttachment");
-		
 		if(mAnnounceFilePath!=null && !"".equals(mAnnounceFilePath)){
 			Intent intent = new Intent();
 			intent.setClass(AnnounceInfoActivity.this, AnnounceAttachmentActivity.class);
@@ -172,7 +170,6 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 		}else{
 			Toast.makeText(AnnounceInfoActivity.this, getString(R.string.announce_no_attachment), Toast.LENGTH_SHORT).show();
 		}
-
 	}
 
 	@Override

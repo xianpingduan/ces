@@ -95,6 +95,10 @@
             android:name="com.xiexin.ces.activity.AnnounceAttachmentActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.xiexin.ces.activity.MessageInfoAttachActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
 
         <service
             android:name="pada.juidownloadmanager.JuiDownloadService"

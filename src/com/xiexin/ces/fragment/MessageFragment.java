@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Contacts;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -527,7 +528,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 		holder.contentTv = (TextView)convertView.findViewById( R.id.content_tv );
 		holder.indicateIv = (ImageView)convertView.findViewById( R.id.indicate_iv );
 		holder.msgTypeTv = (TextView)convertView.findViewById( R.id.msg_type_tv );
-
+		holder.attachmentTv = (TextView) convertView.findViewById(R.id.attachment_tv);
 		convertView.setTag( holder );
 	    }
 	    else
@@ -549,12 +550,14 @@ public class MessageFragment extends Fragment implements OnClickListener
 		    String title = holder.titleTv.getText( ).toString( );
 		    String content = holder.contentTv.getText( ).toString( );
 		    String msgType = holder.msgTypeTv.getText( ).toString( );
+		    String filespath = holder.attachmentTv.getText().toString();
 		    Intent intent = new Intent( );
 		    intent.setClass( getActivity( ) , MessageInfoActivity.class );
 		    intent.putExtra( "id" , Integer.parseInt( id ) );
 		    intent.putExtra( "title" , title );
 		    intent.putExtra( "content" , content );
 		    intent.putExtra( "msgtype" , Integer.parseInt( msgType ) );
+		    intent.putExtra( "filespath" , filespath);
 		    startActivityForResult( intent , 1 );
 
 		}
@@ -568,6 +571,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 		    PushMessage pushMessage = (PushMessage)v.getTag( );
 		    String title = pushMessage.getTitle( );
 		    String content = pushMessage.getContent( );
+		    String filespath = pushMessage.getFilespath();
 		    String id = "";
 		    int msgType = pushMessage.getMsgtype( );
 		    switch ( msgType )
@@ -587,6 +591,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 		    intent.putExtra( "title" , title );
 		    intent.putExtra( "content" , content );
 		    intent.putExtra( "msgtype" , msgType );
+		    intent.putExtra( "filespath" , filespath);
 		    startActivityForResult( intent , 1 );
 		}
 	    } );
@@ -617,6 +622,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 	    holder.titleTv.setText( pushMessage.getTitle( ) );
 	    holder.contentTv.setText( pushMessage.getContent( ) );
 	    holder.indicateIv.setTag( pushMessage );
+	    holder.attachmentTv.setTag(pushMessage.getFilespath());
 
 	    int msgType = pushMessage.getMsgtype( );
 	    switch ( msgType )
@@ -653,6 +659,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 
 	// 存数据
 	TextView idTv;
+	TextView attachmentTv;
     }
 
     @Override

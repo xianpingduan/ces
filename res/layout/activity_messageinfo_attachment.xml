@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/header_action_bar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <!-- 背景图片 -->
+
+        <com.xiexin.ces.widgets.HorizonScrollLayout
+            android:id="@+id/image_attachment_sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white" >
+        </com.xiexin.ces.widgets.HorizonScrollLayout>
+
+        <com.xiexin.ces.widgets.DotProgressBar
+            android:id="@+id/image_attachment_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="5dp" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/pl_deputy_blue_color" />
+
+    <com.xiexin.ces.widgets.LoadingUIListView
+        android:id="@+id/attachment_list"
+        style="@style/NormalList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never" />
+
+</LinearLayout>

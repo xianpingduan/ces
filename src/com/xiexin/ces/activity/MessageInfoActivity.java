@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
@@ -35,6 +36,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
     private int mMsgId;
     private String mMsgTitle;
     private int mMsgType;
+    private String mMessageInfoFilePath;
 
     // header start
     private LinearLayout mReturnLl;
@@ -77,9 +79,11 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mReturnIv.setVisibility( View.VISIBLE );
 
 	mTitle.setText( getString( R.string.msg_center ) );
-	mBtn1.setVisibility( View.GONE );
+	mBtn1.setVisibility( View.VISIBLE );
+	mBtn1.setText(getString(R.string.attachment));
 
 	mReturnLl.setOnClickListener( this );
+	mBtn1.setOnClickListener(this);
 
 	mMsgTitleTv = (TextView)findViewById( R.id.msg_title_tv );
 	mMsgContentTv = (TextView)findViewById( R.id.msg_content_tv );
@@ -93,7 +97,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mMsgId = intent.getIntExtra( "id" , 0 );
 	mMsgTitle = intent.getStringExtra( "title" );
 	mMsgType = intent.getIntExtra( "msgtype" , 0 );
-
+	mMessageInfoFilePath  = intent.getStringExtra("filespath");
 	mMsgTitleTv.setText( mMsgTitle );
 	
 	mMsgContentTv.setText( Html.fromHtml(mMegContent) );
@@ -167,10 +171,26 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	    case R.id.return_ll :
 		onBackPressed( );
 		break;
+	    case R.id.btn1:
+	    	intentMessageInfoAttachment();
+	    	break;
 	    default :
 		break;
 	}
     }
+    
+	private void intentMessageInfoAttachment(){
+		Logger.d(TAG, "intentMessageInfoAttachment");
+		if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)){
+			Intent intent = new Intent();
+			intent.setClass(MessageInfoActivity.this, MessageInfoAttachActivity.class);
+			intent.putExtra("filespath",mMessageInfoFilePath);
+			startActivity(intent);
+		}else{
+			Toast.makeText(MessageInfoActivity.this, getString(R.string.msg_no_attachment), Toast.LENGTH_SHORT).show();
+		}
+
+	}
 
     @Override
     public void onBackPressed()
