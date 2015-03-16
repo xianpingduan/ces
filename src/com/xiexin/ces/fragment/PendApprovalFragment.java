@@ -40,6 +40,7 @@ import com.xiexin.ces.activity.InvoiceInfoActivity;
 import com.xiexin.ces.activity.SearchPendApprovalActivity;
 import com.xiexin.ces.entry.Invoice;
 import com.xiexin.ces.utils.Logger;
+import com.xiexin.ces.utils.StringUtils;
 import com.xiexin.ces.widgets.LoadingDialog;
 import com.xiexin.ces.widgets.LoadingUIListView;
 import com.xiexin.ces.widgets.PullListView.IListViewListener;
@@ -547,7 +548,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 					+ invoice.getApprname());
 			Logger.d(TAG, "Totalcost="+invoice.getTotalcost());
 			holder.moneyTv
-					.setText("￥" + invoice.getTotalcost()+"");
+					.setText("￥" + StringUtils.priceDecimal(invoice.getTotalcost())+"");
 			holder.prgIdTv.setText(invoice.getPrgid());
 			holder.accountTv.setText(invoice.getAccount());
 			holder.invoiceDescTv.setText(invoice.getReason());

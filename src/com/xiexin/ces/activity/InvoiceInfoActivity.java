@@ -41,6 +41,7 @@ import com.xiexin.ces.R;
 import com.xiexin.ces.db.EmployeeManager;
 import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.utils.Logger;
+import com.xiexin.ces.utils.StringUtils;
 import com.xiexin.ces.widgets.ApprovalDialog;
 import com.xiexin.ces.widgets.LoadingDialog;
 import com.xiexin.ces.widgets.NotifyDialog;
@@ -788,7 +789,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				}
 
 				if (!content.isEmpty() && mDataConfig[i].toLowerCase().equals("totalcost")) {
-					content = "￥" + content;
+					content = "￥" + StringUtils.priceDecimal(Double.parseDouble(content));
 				}
 				contentTv.setText(content);
 			} catch (JSONException e) {
