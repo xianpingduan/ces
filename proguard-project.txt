@@ -33,3 +33,5 @@
 #verCode=6 verName=1.5 date=20150207
 
 #verCode=7 verName=1.6 date=20150308
+
+#verCode=8 verName=1.7 date=20150317
