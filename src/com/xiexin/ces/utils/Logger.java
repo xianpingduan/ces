@@ -5,7 +5,7 @@ import android.util.Log;
 public class Logger
 {
 
-    private static boolean isDebug = true;
+    private static boolean isDebug = false;
     public static boolean isTrace = true;
 
     public static boolean canListAnimation = true;
