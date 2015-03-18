@@ -162,7 +162,7 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 	
 	private void intentAnnounceAttachment(){
 		Logger.d(TAG, "intentAnnounceAttachment");
-		if(mAnnounceFilePath!=null && !"".equals(mAnnounceFilePath)){
+		if(mAnnounceFilePath!=null && !"".equals(mAnnounceFilePath)&&!"null".equals(mAnnounceFilePath)){
 			Intent intent = new Intent();
 			intent.setClass(AnnounceInfoActivity.this, AnnounceAttachmentActivity.class);
 			intent.putExtra("filespath",mAnnounceFilePath);

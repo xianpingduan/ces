@@ -427,10 +427,15 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 	// TODO 第三阶段
 	// 附件
 	private void intentToAttachMent() {
-		Intent intent = new Intent();
-		intent.setClass(InvoiceInfoActivity.this, AttachmentActivity.class);
-		intent.putExtra(Constants.FILES_PATH, mFilesPathStr);
-		startActivity(intent);
+		Logger.d(TAG, "mFilesPathStr="+mFilesPathStr);
+		if(mFilesPathStr!=null && !"".equals(mFilesPathStr)&& !"null".equals(mFilesPathStr)&&!"[]".equals(mFilesPathStr)){
+			Intent intent = new Intent();
+			intent.setClass(InvoiceInfoActivity.this, AttachmentActivity.class);
+			intent.putExtra(Constants.FILES_PATH, mFilesPathStr);
+			startActivity(intent);
+		}else{
+			Toast.makeText(InvoiceInfoActivity.this, getString(R.string.invoice_no_attachment), Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void intentToInfo() {

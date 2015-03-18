@@ -181,7 +181,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
     
 	private void intentMessageInfoAttachment(){
 		Logger.d(TAG, "intentMessageInfoAttachment");
-		if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)){
+		if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&&!"null".equals(mMessageInfoFilePath)){
 			Intent intent = new Intent();
 			intent.setClass(MessageInfoActivity.this, MessageInfoAttachActivity.class);
 			intent.putExtra("filespath",mMessageInfoFilePath);

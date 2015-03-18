@@ -195,7 +195,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 					String attachMentName = object.getString("attchname");
 					if (attachMentName.contains(".jpg")
 							|| attachMentName.contains(".png")
-							|| attachMentName.contains(".jpeg")) {
+							|| attachMentName.contains(".jpeg")||attachMentName.contains(".JPEG")||attachMentName.contains(".JPG")||attachMentName.contains(".PNG")) {
 						mImageList.add(object.getString("filepath"));
 					} else {
 						AttachMent attachMent = new AttachMent();
@@ -210,7 +210,16 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 			}
 		}
 
-		scrollViewAddData(mImageList);
+		//图片数量为零时处理
+		if(mImageList.size()>0){
+			scrollViewAddData(mImageList);
+			mHorizonScrollLayout.setVisibility(View.VISIBLE);
+			mDotProgressBar.setVisibility(View.VISIBLE);
+		}else{
+			mHorizonScrollLayout.setVisibility(View.GONE);
+			mDotProgressBar.setVisibility(View.GONE);
+		}
+		
 		setListAdapter();
 
 		mApkDownloadManager = JuiDownloadService.getDownloadManager(App

@@ -622,7 +622,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 	    holder.titleTv.setText( pushMessage.getTitle( ) );
 	    holder.contentTv.setText( pushMessage.getContent( ) );
 	    holder.indicateIv.setTag( pushMessage );
-	    holder.attachmentTv.setTag(pushMessage.getFilespath());
+	    holder.attachmentTv.setText(pushMessage.getFilespath());
 
 	    int msgType = pushMessage.getMsgtype( );
 	    switch ( msgType )

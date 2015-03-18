@@ -133,6 +133,7 @@
     <string name="announce_attachment">附件</string>
     <string name="announce_no_attachment">此公告下没有附件</string>
     <string name="msg_no_attachment">此消息下没有附件</string>
+    <string name="invoice_no_attachment">此单据下没有附件</string>
     
    	<string name="submit_success_text">提交成功</string>
    	<string name="submit_error_text">提交失败</string>
