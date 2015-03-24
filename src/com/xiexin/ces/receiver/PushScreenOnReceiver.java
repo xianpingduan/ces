@@ -16,29 +16,50 @@ public class PushScreenOnReceiver extends BroadcastReceiver
 
 	long currentTime = System.currentTimeMillis( );
 	long nextReqTime = App.getSharedPreference( ).getLong( Constants.THE_LAST_REQUEST_MSG_TIME , 0 );
+	
+	long nextReqApprovalTime = App.getSharedPreference().getLong(Constants.THE_LAST_REQUEST_APPROVAL_TIME, 0);
 
 	if( intent.getAction( ).equals( Intent.ACTION_SCREEN_ON ) )
 	{
-	    if( currentTime > nextReqTime )
+	    if( currentTime >= nextReqTime )
 	    {
-		requestMsg( context );
+	    	requestMsg( context );
+	    }
+	    
+	    if(currentTime>=nextReqApprovalTime){
+	    	
+	    	requestApproval(context);
 	    }
 
 	}
 	else if( intent.getAction( ).equals( ConnectivityManager.CONNECTIVITY_ACTION ) )
 	{
-	    if( currentTime > nextReqTime )
+	    if( currentTime >= nextReqTime )
 	    {
-		requestMsg( context );
+	    	requestMsg( context );
+	    }
+	    
+	    if(currentTime>=nextReqApprovalTime){
+	    	
+	    	requestApproval(context);
 	    }
 	}
     }
 
     private void requestMsg( Context context )
     {
-	Intent in = new Intent( );
-	in.setAction( "MessageService.action.command" );
-	context.startService( in );
+		Intent in = new Intent( );
+		in.putExtra("type", 0);
+		in.setAction( "MessageService.action.command" );
+		context.startService( in );
+    }
+    
+    private void requestApproval( Context context )
+    {
+		Intent in = new Intent( );
+		in.putExtra("type", 1);
+		in.setAction( "MessageService.action.command" );
+		context.startService( in );
     }
 
     //    private void generateService( Context context , int command , int trigger )

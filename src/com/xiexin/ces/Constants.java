@@ -103,6 +103,8 @@ public class Constants
 
     public final static String THE_LAST_REQUEST_MSG_TIME = "the_last_request_msg_time";
     public final static int DEFAULT_GAP_TIME = 10 * 60 * 1000;
+    
+    public final static String THE_LAST_REQUEST_APPROVAL_TIME = "the_last_request_approval_time";
 
     public final static String THE_SYNC_EMPLOYEE_TIME = "the_sync_employee_time";
     public final static int SYNC_EMPLOYEE_GAP_TIME = 24 * 60 * 60 * 1000;
