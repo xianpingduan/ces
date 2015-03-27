@@ -153,5 +153,6 @@
     
     <string name="task_note">任务提醒</string>
     <string name="have_approval_to_handle">您有新的审批任务请查看！</string>
+    <string name="invoice_have_no_info">此单据没有详情！</string>
     
 </resources>

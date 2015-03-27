@@ -438,7 +438,14 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	//跳转详情
 	private void intentToInfo() {
+		
+		if(mDetConfigStr==null || "".equals(mDetConfigStr)||"null".equals(mDetConfigStr)){
+			Toast.makeText(InvoiceInfoActivity.this, getString(R.string.invoice_have_no_info), Toast.LENGTH_SHORT).show();
+			return ;
+		}
+		
 		Intent intent = new Intent();
 		intent.setClass(InvoiceInfoActivity.this,
 				InvoiceSecondInfoActivity.class);
@@ -466,7 +473,6 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		// default:
 		// break;
 		// }
-
 		Intent intent = new Intent();
 		intent.setClass(InvoiceInfoActivity.this, EmployeeActivity.class);
 		intent.putExtra(Constants.ZHANG_TAO_CONN_NAME, mConnName);

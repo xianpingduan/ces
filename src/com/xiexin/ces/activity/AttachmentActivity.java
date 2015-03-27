@@ -751,7 +751,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 				intent = OpenFiles.getPPTFileIntent(currentPath);
 				startActivity(intent);
 			} else {
-				Toast.makeText(AttachmentActivity.this, "无法打开，请安装相应的软件！",
+				Toast.makeText(AttachmentActivity.this, "无法打开，请安装相应的第三方软件！",
 						Toast.LENGTH_SHORT).show();
 			}
 		} else {
