@@ -104,10 +104,13 @@ public class MessageService extends Service
 		    break;
 		case MSG_REQUEST_LAST_APPROVAL_SUCCESS :
 			String data = (String) msg.obj;
-			int size = size(data);
-			if(size>0){
-				sendHaveAppMsg();
+			if(data!=null){
+				int size = size(data);
+				if(size>0){
+					sendHaveAppMsg();
+				}
 			}
+	
 			break;
 		case MSG_REQUEST_LAST_APPROVAL_ERROR :
 			
@@ -224,6 +227,8 @@ public class MessageService extends Service
     
     public void startGetApproval()
     {
+    	
+    Logger.d(TAG, "MessageService,startGetApproval");
 	String account = App.getSharedPreference( ).getString( Constants.ZHANG_TAO_CONN_NAME , "" );
 	String userid = App.getSharedPreference( ).getString( Constants.USER_ID , "" );
 

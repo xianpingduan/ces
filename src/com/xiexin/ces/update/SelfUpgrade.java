@@ -345,13 +345,16 @@ public class SelfUpgrade {
 							Toast.makeText(mContext, "已经是最新版本!", Toast.LENGTH_SHORT).show();
 						}
 					}
+					
+					if (mSelfUpdateListener != null) {
+						mSelfUpdateListener.checkSuccessed(mUpdateInfo.getInt("newvercode")+"");
+					}
+					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				//long next_req_time = System.currentTimeMillis()+ DEFAULT_REQ_GAP_TIME;
-				if (mSelfUpdateListener != null) {
-					mSelfUpdateListener.checkSuccessed(info);
-				}
+			
 				break;
 			case MSG_NO_HAVE_UPGRADE_TO_INSTALL:
 				LogUtils.e("当前是最新版本!");

@@ -16,7 +16,6 @@ public class PushScreenOnReceiver extends BroadcastReceiver
 
 	long currentTime = System.currentTimeMillis( );
 	long nextReqTime = App.getSharedPreference( ).getLong( Constants.THE_LAST_REQUEST_MSG_TIME , 0 );
-	
 	long nextReqApprovalTime = App.getSharedPreference().getLong(Constants.THE_LAST_REQUEST_APPROVAL_TIME, 0);
 
 	if( intent.getAction( ).equals( Intent.ACTION_SCREEN_ON ) )

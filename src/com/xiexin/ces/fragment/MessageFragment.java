@@ -38,6 +38,7 @@ import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
+import com.xiexin.ces.activity.MenuActivity;
 import com.xiexin.ces.activity.MessageInfoActivity;
 import com.xiexin.ces.entry.PushMessage;
 import com.xiexin.ces.utils.Logger;
@@ -276,6 +277,13 @@ public class MessageFragment extends Fragment implements OnClickListener
 	{
 	    // TODO Auto-generated method stub
 	    super.handleMessage( msg );
+	    
+		//提醒
+		MenuActivity menuActivity=null;
+		if(getActivity()!=null){
+			menuActivity = (MenuActivity) getActivity();
+		}
+	    
 	    switch ( msg.what )
 	    {
 		case MSG_GET_MESSAGE_LIST_SUCCESS :
@@ -301,6 +309,11 @@ public class MessageFragment extends Fragment implements OnClickListener
 			if( invoices.size( ) <= Constants.PAGE_SIZE )
 			{
 			    mListView.setFooterPullEnable( false );
+			}
+			
+			//提醒
+			if(menuActivity!=null && mBread==0){
+				menuActivity.showOrNoMsgTip(true);
 			}
 
 		    }
@@ -335,6 +348,10 @@ public class MessageFragment extends Fragment implements OnClickListener
 		case MSG_NO_DATA :
 		    mListView.setFooterPullEnable( false );
 		    Toast.makeText( App.getAppContext( ) , App.getAppContext( ).getString( R.string.no_msg ) , Toast.LENGTH_SHORT ).show( );
+			//提醒
+			if(menuActivity!=null&& mBread==0){
+				menuActivity.showOrNoMsgTip(false);
+			}
 		    break;
 
 		case MSG_DEL_MSG_SUCCESS :

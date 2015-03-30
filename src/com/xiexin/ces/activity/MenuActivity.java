@@ -42,11 +42,12 @@ import com.xiexin.ces.fragment.TipFragment;
 import com.xiexin.ces.menu.ResideMenu;
 import com.xiexin.ces.menu.ResideMenuItem;
 import com.xiexin.ces.update.SelfUpgrade;
+import com.xiexin.ces.update.SelfUpgrade.SelfUpdateListener;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
 
 public class MenuActivity extends FragmentActivity implements
-		View.OnClickListener {
+		View.OnClickListener,SelfUpdateListener {
 
 	private final static String TAG = "MenuActivity";
 
@@ -283,6 +284,30 @@ public class MenuActivity extends FragmentActivity implements
 		}
 
 	}
+	
+	
+	public void showOrNoApprovalTip(final boolean b){
+		Logger.d(TAG, "showOrNoApprovalTip,b="+b);
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				itemPendApproval.getIv_badge().setVisibility(b?View.VISIBLE:View.GONE);
+			}
+		});
+
+	}
+	
+	public void showOrNoMsgTip(final boolean b){
+		Logger.d(TAG, "showOrNoMsgTip,b="+b);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				itemMessage.getIv_badge().setVisibility(b?View.VISIBLE:View.GONE);
+			}
+		});
+	}
+	
 
 	private void setUpMenu() {
 
@@ -706,6 +731,45 @@ public class MenuActivity extends FragmentActivity implements
 	        }    
 	        lastClickTime = time;    
 	        return false;    
-	    } 
+	    }
+
+	@Override
+	public void checkSuccessed(String info) {
+		final int verCode = Integer.parseInt(info);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if(verCode>App.VersionCode()){
+					itemUpdate.getIv_badge().setVisibility(View.VISIBLE);
+				}else{
+					itemUpdate.getIv_badge().setVisibility(View.GONE);
+				}
+				
+			}
+		});
+		
+	}
+
+	@Override
+	public void checkUnUpdate(int errorCode) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				itemUpdate.getIv_badge().setVisibility(View.GONE);
+			}
+		});
+		
+	}
+
+	@Override
+	public void checkError(int errorCode, String msg) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				itemUpdate.getIv_badge().setVisibility(View.GONE);
+			}
+		});
+		
+	} 
 
 }

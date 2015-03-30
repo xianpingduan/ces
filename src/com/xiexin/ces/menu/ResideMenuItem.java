@@ -21,8 +21,13 @@ public class ResideMenuItem extends LinearLayout
     private ImageView iv_icon;
     /** menu item  title */
     private TextView tv_title;
+    private ImageView iv_badge;
 
-    public ResideMenuItem( Context context )
+    public ImageView getIv_badge() {
+		return iv_badge;
+	}
+
+	public ResideMenuItem( Context context )
     {
 	super( context );
 	initViews( context );
@@ -50,6 +55,7 @@ public class ResideMenuItem extends LinearLayout
 	inflater.inflate( R.layout.residemenu_item , this );
 	iv_icon = (ImageView)findViewById( R.id.iv_icon );
 	tv_title = (TextView)findViewById( R.id.tv_title );
+	iv_badge = (ImageView) findViewById(R.id.iv_badge);
     }
 
     /**

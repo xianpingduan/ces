@@ -37,6 +37,7 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.activity.InvoiceInfoActivity;
+import com.xiexin.ces.activity.MenuActivity;
 import com.xiexin.ces.activity.SearchPendApprovalActivity;
 import com.xiexin.ces.entry.Invoice;
 import com.xiexin.ces.utils.Logger;
@@ -249,13 +250,21 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 	private static final int MSG_KIND_CHANGE = 5;
 
 	private Handler mUiHandler = new Handler() {
-
+		
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
+			
+			//提醒
+			MenuActivity menuActivity=null;
+			if(getActivity()!=null){
+				menuActivity = (MenuActivity) getActivity();
+			}
+			
 			switch (msg.what) {
 			case MSG_GET_INVOICE_LIST_SUCCESS:
+
 				mListView.setFooterPullEnable(true);
 				String data = (String) msg.obj;
 				ArrayList<Invoice> invoices = getInvoiceList(data);
@@ -274,6 +283,11 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 
 					if (invoices.size() < Constants.PAGE_SIZE) {
 						mListView.setFooterPullEnable(false);
+					}
+					
+					//提醒
+					if(menuActivity!=null&& mKind==Constants.TYPE_PEND_APPROVAL_TASKS){
+						menuActivity.showOrNoApprovalTip(true);
 					}
 
 				} else if (invoices.size() == 0 && mCurrentPage == 1) {
@@ -314,6 +328,11 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 				Toast.makeText(App.getAppContext(),
 						App.getAppContext().getString(R.string.no_invoice),
 						Toast.LENGTH_SHORT).show();
+				//提醒
+				if(menuActivity!=null&& mKind==Constants.TYPE_PEND_APPROVAL_TASKS){
+					menuActivity.showOrNoApprovalTip(false);
+				}
+				
 				break;
 
 			case MSG_KIND_CHANGE:

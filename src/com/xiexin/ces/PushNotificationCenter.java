@@ -17,8 +17,7 @@ public class PushNotificationCenter {
 
 	private PushNotificationCenter(Context context) {
 		mContext = context;
-		mNotificationManager = (NotificationManager) context
-				.getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 	}
 
 	public static PushNotificationCenter getInstance(Context context) {
@@ -39,12 +38,8 @@ public class PushNotificationCenter {
 
 		Intent intent = new Intent(App.getAppContext(), MenuActivity.class);
 		intent.putExtra(Constants.MENU_HANDLE, true);
-		PendingIntent pendingIntent = PendingIntent.getActivity(
-				App.getAppContext(), 0, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-
-		NotificationManager mNotificationManager = (NotificationManager) mContext
-				.getSystemService(Context.NOTIFICATION_SERVICE);
+		PendingIntent pendingIntent = PendingIntent.getActivity(App.getAppContext(), 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+		NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification.Builder nb = new Notification.Builder(mContext);
 		nb.setContentIntent(pendingIntent);
 		nb.setContentTitle(title);
@@ -54,6 +49,7 @@ public class PushNotificationCenter {
 		nb.setOngoing(false);
 		nb.getNotification().defaults = Notification.DEFAULT_SOUND;
 		mNotificationManager.notify(MESSAGE_NOTIFY_ID, nb.getNotification());
+		
 	}
 
 }

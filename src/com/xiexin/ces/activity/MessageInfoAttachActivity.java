@@ -210,11 +210,18 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 			}
 		}
 
-		scrollViewAddData(mImageList);
+		//图片数量为零时处理
+		if(mImageList.size()>0){
+			scrollViewAddData(mImageList);
+			mHorizonScrollLayout.setVisibility(View.VISIBLE);
+			mDotProgressBar.setVisibility(View.VISIBLE);
+		}else{
+			mHorizonScrollLayout.setVisibility(View.GONE);
+			mDotProgressBar.setVisibility(View.GONE);
+		}
 		setListAdapter();
 
-		mApkDownloadManager = JuiDownloadService.getDownloadManager(App
-				.getAppContext());
+		mApkDownloadManager = JuiDownloadService.getDownloadManager(App.getAppContext());
 		mApkDownloadManager.setAutoInstall(false);// 不自动安装
 		mApkDownloadManager.setIsNotApk(true);
 

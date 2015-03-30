@@ -209,8 +209,16 @@ public class AnnounceAttachmentActivity extends Activity implements OnClickListe
 				e.printStackTrace();
 			}
 		}
-
-		scrollViewAddData(mImageList);
+		
+		//图片数量为零时处理
+		if(mImageList.size()>0){
+			scrollViewAddData(mImageList);
+			mHorizonScrollLayout.setVisibility(View.VISIBLE);
+			mDotProgressBar.setVisibility(View.VISIBLE);
+		}else{
+			mHorizonScrollLayout.setVisibility(View.GONE);
+			mDotProgressBar.setVisibility(View.GONE);
+		}
 		setListAdapter();
 
 		mApkDownloadManager = JuiDownloadService.getDownloadManager(App
