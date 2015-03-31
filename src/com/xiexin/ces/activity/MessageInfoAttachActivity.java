@@ -43,7 +43,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiexin.ces.App;
-import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.entry.AttachMent;
 import com.xiexin.ces.utils.APNUtil;
@@ -707,51 +706,59 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 
 		if (currentPath != null && currentPath.isFile()) {
 			String fileName = currentPath.toString();
-			Intent intent;
-			if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingImage))) {
-				intent = OpenFiles.getImageFileIntent(currentPath);
+//			Intent intent;
+//			if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingImage))) {
+//				intent = OpenFiles.getImageFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingWebText))) {
+//				intent = OpenFiles.getHtmlFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingPackage))) {
+//				intent = OpenFiles.getApkFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingAudio))) {
+//				intent = OpenFiles.getAudioFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingVideo))) {
+//				intent = OpenFiles.getVideoFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingText))) {
+//				intent = OpenFiles.getTextFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingPdf))) {
+//				intent = OpenFiles.getPdfFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingWord))) {
+//				intent = OpenFiles.getWordFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingExcel))) {
+//				intent = OpenFiles.getExcelFileIntent(currentPath);
+//				startActivity(intent);
+//			} else if (checkEndsWithInStringArray(fileName, getResources()
+//					.getStringArray(R.array.fileEndingPPT))) {
+//				intent = OpenFiles.getPPTFileIntent(currentPath);
+//				startActivity(intent);
+//			} else {
+//				Toast.makeText(MessageInfoAttachActivity.this, "无法打开，请安装相应的软件！",
+//						Toast.LENGTH_SHORT).show();
+//			}
+			
+			Intent intent = OpenFiles.openFile(currentPath);
+			if(intent!=null){
 				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingWebText))) {
-				intent = OpenFiles.getHtmlFileIntent(currentPath);
-				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingPackage))) {
-				intent = OpenFiles.getApkFileIntent(currentPath);
-				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingAudio))) {
-				intent = OpenFiles.getAudioFileIntent(currentPath);
-				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingVideo))) {
-				intent = OpenFiles.getVideoFileIntent(currentPath);
-				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingText))) {
-				intent = OpenFiles.getTextFileIntent(currentPath);
-				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingPdf))) {
-				intent = OpenFiles.getPdfFileIntent(currentPath);
-				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingWord))) {
-				intent = OpenFiles.getWordFileIntent(currentPath);
-				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingExcel))) {
-				intent = OpenFiles.getExcelFileIntent(currentPath);
-				startActivity(intent);
-			} else if (checkEndsWithInStringArray(fileName, getResources()
-					.getStringArray(R.array.fileEndingPPT))) {
-				intent = OpenFiles.getPPTFileIntent(currentPath);
-				startActivity(intent);
-			} else {
-				Toast.makeText(MessageInfoAttachActivity.this, "无法打开，请安装相应的软件！",
-						Toast.LENGTH_SHORT).show();
+			}else{
+				Toast.makeText(MessageInfoAttachActivity.this, "无法打开，请安装相应的软件！",Toast.LENGTH_SHORT).show();
 			}
+			
 		} else {
 			Toast.makeText(MessageInfoAttachActivity.this, "对不起，这不是文件！",
 					Toast.LENGTH_SHORT).show();

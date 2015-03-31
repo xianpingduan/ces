@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -133,15 +134,27 @@ public class MenuActivity extends FragmentActivity implements
 			requestEmployees("");
 		}
 
-		boolean b = getIntent().getBooleanExtra(Constants.MENU_HANDLE, false);
-		if (b) {
-			if (mMessageFragment == null) {
-				mMessageFragment = new MessageFragment();
+		Bundle bundle = getIntent().getBundleExtra(Constants.MENU_HANDLE_BUNDLE);
+		if(bundle!=null){
+			int type = bundle.getInt(Constants.MENU_HANDLE);
+			Logger.d(TAG, "onCreate,type=" + type);
+			if (type==Constants.TYPE_MENU_HANDLE_MSG) {
+				if (mMessageFragment == null) {
+					mMessageFragment = new MessageFragment();
+				}
+				mMessageFragment.setMainUIHandler(mUiHandler);
+				changeFragment(mMessageFragment);
+				mTitleView.setText(getString(R.string.menu_message));
+			} else if(type==Constants.TYPE_MENU_HANDLE_APPROVAL) {
+				if (mPendApprovalFragment == null)
+					mPendApprovalFragment = new PendApprovalFragment();
+				// mPendApprovalFragment.setArguments(args);
+				mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,
+						mAccountChanged);
+				changeFragment(mPendApprovalFragment);
+				mTitleView.setText(getString(R.string.menu_pend_approval));
 			}
-			mMessageFragment.setMainUIHandler(mUiHandler);
-			changeFragment(mMessageFragment);
-			mTitleView.setText(getString(R.string.menu_message));
-		} else {
+		}else{
 			if (mPendApprovalFragment == null)
 				mPendApprovalFragment = new PendApprovalFragment();
 			// mPendApprovalFragment.setArguments(args);
@@ -150,23 +163,36 @@ public class MenuActivity extends FragmentActivity implements
 			changeFragment(mPendApprovalFragment);
 			mTitleView.setText(getString(R.string.menu_pend_approval));
 		}
+		
 
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-
-		boolean b = intent.getBooleanExtra(Constants.MENU_HANDLE, false);
-		Logger.d(TAG, "b=" + b);
-		if (b) {
+		super.onNewIntent(intent);
+		Bundle bundle = getIntent().getBundleExtra(Constants.MENU_HANDLE_BUNDLE);
+		if(bundle!=null){
+			int type = bundle.getInt(Constants.MENU_HANDLE);
+		Logger.d(TAG, "onNewIntent,type=" + type);
+		if (type==Constants.TYPE_MENU_HANDLE_MSG) {
 			if (mMessageFragment == null) {
 				mMessageFragment = new MessageFragment();
 			}
 			mMessageFragment.setMainUIHandler(mUiHandler);
 			changeFragment(mMessageFragment);
 			mTitleView.setText(getString(R.string.menu_message));
+		}else if(type==Constants.TYPE_MENU_HANDLE_APPROVAL){
+			if (mPendApprovalFragment == null) {
+				mPendApprovalFragment = new PendApprovalFragment();
+			}
+			mPendApprovalFragment.setMainUIHandler(mUiHandler);
+			mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,
+					mAccountChanged);
+			changeFragment(mPendApprovalFragment);
+			mTitleView.setText(getString(R.string.menu_pend_approval));
 		}
-		super.onNewIntent(intent);
+		}
+		
 	}
 
 	private void initLoginOutLl() {

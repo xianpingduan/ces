@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.text.Html;
 
 import com.android.volley.Request.Method;
@@ -107,7 +108,7 @@ public class MessageService extends Service
 			if(data!=null){
 				int size = size(data);
 				if(size>0){
-					sendHaveAppMsg();
+					sendHaveApprovalMsg();
 				}
 			}
 	
@@ -122,9 +123,9 @@ public class MessageService extends Service
 	};
     };
     
-    private void sendHaveAppMsg(){
+    private void sendHaveApprovalMsg(){
     	 PushNotificationCenter.getInstance( mContext ).
-    	 addMessageNotification( mContext.getString(R.string.task_note) ,mContext.getString(R.string.have_approval_to_handle) );
+    	 addApprovalNotification( mContext.getString(R.string.task_note) ,mContext.getString(R.string.have_approval_to_handle) );
     }
 
     private void setMessage( JSONObject jsonObject )
@@ -249,18 +250,18 @@ public class MessageService extends Service
 		try
 		{
 		    int resCode = response.getInt( "success" );
-		    if( resCode == 0 )
-		    {
-		    mApprovalStr = response.getString( "data" );
-			long next_req_time = System.currentTimeMillis( ) + Constants.DEFAULT_GAP_TIME;
-			Logger.d( TAG , "next_req_time =" + next_req_time );
-			App.getSharedPreference( ).edit( ).putLong( Constants.THE_LAST_REQUEST_APPROVAL_TIME , next_req_time ).commit( );
-			mHandler.sendEmptyMessage( MSG_REQUEST_LAST_APPROVAL_SUCCESS );
-		    }
-		    else
-		    {
-			mHandler.sendEmptyMessage( MSG_REQUEST_LAST_APPROVAL_ERROR );
-		    }
+		    Message msg = Message.obtain();
+			if (resCode == 0) {
+				msg.what = MSG_REQUEST_LAST_APPROVAL_SUCCESS;
+				msg.obj = response.getString("data");
+				long next_req_time = System.currentTimeMillis( ) + Constants.DEFAULT_GAP_TIME;
+				Logger.d( TAG , "next_req_time =" + next_req_time );
+				App.getSharedPreference( ).edit( ).putLong( Constants.THE_LAST_REQUEST_APPROVAL_TIME , next_req_time ).commit( );
+			} else {
+				msg.what = MSG_REQUEST_LAST_APPROVAL_ERROR;
+				msg.obj = response.get("msg");
+			}
+			mHandler.sendMessage(msg);
 		}
 		catch ( JSONException e )
 		{
@@ -292,6 +293,7 @@ public class MessageService extends Service
 	    if(intent!=null){
 	    	type = intent.getIntExtra("type", 0);
 	    }
+    	Logger.d(TAG, "onStartCommand,type="+type);
 	    switch (type) {
 		case 0:
 			startGetMsg( );

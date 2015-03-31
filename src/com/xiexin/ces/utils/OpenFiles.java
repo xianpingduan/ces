@@ -7,7 +7,7 @@ import android.net.Uri;
 
 public class OpenFiles {
 	
-	private final String[][] MIME_MapTable={ 
+	private static  final String[][] MIME_MapTable={ 
             //{后缀名，MIME类型} 
             {".3gp",    "video/3gpp"}, 
             {".apk",    "application/vnd.android.package-archive"}, 
@@ -83,8 +83,8 @@ public class OpenFiles {
 	 * 打开文件
 	 * @param file
 	 */ 
-	private Intent openFile(File file){ 
-	     
+	public static Intent openFile(File file){ 
+	
 	    Intent intent = new Intent(); 
 	    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
 	    //设置intent的Action属性 
@@ -101,7 +101,7 @@ public class OpenFiles {
 	 * 根据文件后缀名获得对应的MIME类型。
 	 * @param file
 	 */ 
-	private String getMIMEType(File file) { 
+	private  static String getMIMEType(File file) { 
 	     
 	    String type="*/*"; 
 	    String fName = file.getName(); 

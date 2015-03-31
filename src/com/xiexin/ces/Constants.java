@@ -34,6 +34,9 @@ public class Constants
     public final static String SERVER_CONFIG_CHANGED = "server_config_changed";
     
     public final static String MENU_HANDLE="menu_handle";
+    public final static String MENU_HANDLE_BUNDLE="menu_handle_bundle";
+    public final static int TYPE_MENU_HANDLE_APPROVAL=0;
+    public final static int TYPE_MENU_HANDLE_MSG=1;
 
     // public final static String
     // SERVER_CONFIG_SET_FROM="server_config_set_from";
@@ -102,7 +105,7 @@ public class Constants
     public final static int APPR_LIST_RESULT_FROM_APPRSUC = 1;
 
     public final static String THE_LAST_REQUEST_MSG_TIME = "the_last_request_msg_time";
-    public final static int DEFAULT_GAP_TIME = 10 * 60 * 1000;
+    public final static int DEFAULT_GAP_TIME = 2 * 60 * 1000;
     
     public final static String THE_LAST_REQUEST_APPROVAL_TIME = "the_last_request_approval_time";
 
