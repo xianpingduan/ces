@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -149,8 +148,7 @@ public class MenuActivity extends FragmentActivity implements
 				if (mPendApprovalFragment == null)
 					mPendApprovalFragment = new PendApprovalFragment();
 				// mPendApprovalFragment.setArguments(args);
-				mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,
-						mAccountChanged);
+				mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,mAccountChanged);
 				changeFragment(mPendApprovalFragment);
 				mTitleView.setText(getString(R.string.menu_pend_approval));
 			}
@@ -158,8 +156,7 @@ public class MenuActivity extends FragmentActivity implements
 			if (mPendApprovalFragment == null)
 				mPendApprovalFragment = new PendApprovalFragment();
 			// mPendApprovalFragment.setArguments(args);
-			mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,
-					mAccountChanged);
+			mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,mAccountChanged);
 			changeFragment(mPendApprovalFragment);
 			mTitleView.setText(getString(R.string.menu_pend_approval));
 		}
@@ -186,8 +183,7 @@ public class MenuActivity extends FragmentActivity implements
 				mPendApprovalFragment = new PendApprovalFragment();
 			}
 			mPendApprovalFragment.setMainUIHandler(mUiHandler);
-			mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,
-					mAccountChanged);
+			mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,mAccountChanged);
 			changeFragment(mPendApprovalFragment);
 			mTitleView.setText(getString(R.string.menu_pend_approval));
 		}
@@ -312,24 +308,26 @@ public class MenuActivity extends FragmentActivity implements
 	}
 	
 	
-	public void showOrNoApprovalTip(final boolean b){
-		Logger.d(TAG, "showOrNoApprovalTip,b="+b);
+	public void showOrNoApprovalTip(final boolean b,final int size){
+		Logger.d(TAG, "showOrNoApprovalTip,b="+b +",size="+size);
 		runOnUiThread(new Runnable() {
 			
 			@Override
 			public void run() {
-				itemPendApproval.getIv_badge().setVisibility(b?View.VISIBLE:View.GONE);
+				itemPendApproval.getFl_badge().setVisibility(b?View.VISIBLE:View.GONE);
+				itemPendApproval.getTv_badge_num().setText(""+size);
 			}
 		});
 
 	}
 	
-	public void showOrNoMsgTip(final boolean b){
+	public void showOrNoMsgTip(final boolean b,final int size){
 		Logger.d(TAG, "showOrNoMsgTip,b="+b);
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				itemMessage.getIv_badge().setVisibility(b?View.VISIBLE:View.GONE);
+				itemMessage.getFl_badge().setVisibility(b?View.VISIBLE:View.GONE);
+				itemMessage.getTv_badge_num().setText(""+size);
 			}
 		});
 	}
@@ -766,9 +764,10 @@ public class MenuActivity extends FragmentActivity implements
 			@Override
 			public void run() {
 				if(verCode>App.VersionCode()){
-					itemUpdate.getIv_badge().setVisibility(View.VISIBLE);
+					itemUpdate.getFl_badge().setVisibility(View.VISIBLE);
+					itemUpdate.getTv_badge_num().setVisibility(View.GONE);
 				}else{
-					itemUpdate.getIv_badge().setVisibility(View.GONE);
+					itemUpdate.getFl_badge().setVisibility(View.GONE);
 				}
 				
 			}
@@ -781,7 +780,7 @@ public class MenuActivity extends FragmentActivity implements
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				itemUpdate.getIv_badge().setVisibility(View.GONE);
+				itemUpdate.getFl_badge().setVisibility(View.GONE);
 			}
 		});
 		
@@ -792,7 +791,7 @@ public class MenuActivity extends FragmentActivity implements
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				itemUpdate.getIv_badge().setVisibility(View.GONE);
+				itemUpdate.getFl_badge().setVisibility(View.GONE);
 			}
 		});
 		

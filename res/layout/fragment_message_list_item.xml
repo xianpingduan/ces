@@ -13,6 +13,15 @@
         android:layout_centerVertical="true"
         android:src="@drawable/icon_arrow" />
 
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/indicate_iv"
+        android:textColor="@color/pl_deputy_text_color"
+        android:textSize="@dimen/pl_mimi_text_size" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +30,7 @@
         android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
         android:layout_marginLeft="@dimen/zhangtao_list_item_margin"
         android:layout_marginTop="@dimen/zhangtao_list_item_margin"
-        android:layout_toLeftOf="@id/indicate_iv"
+        android:layout_toLeftOf="@id/time_tv"
         android:orientation="horizontal" >
 
         <TextView
@@ -29,15 +38,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/pl_main_text_color"
-            android:textSize="@dimen/pl_small_text_size" 
-            android:visibility="gone"/>
+            android:textSize="@dimen/pl_small_text_size"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:textColor="@color/pl_main_text_color"
-            android:textSize="@dimen/pl_small_text_size" 
+            android:textSize="@dimen/pl_small_text_size"
             android:visibility="visible" />
 
         <TextView
@@ -45,6 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
+
         <TextView
             android:id="@+id/attachment_tv"
             android:layout_width="wrap_content"

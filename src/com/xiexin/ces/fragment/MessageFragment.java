@@ -1,7 +1,9 @@
 package com.xiexin.ces.fragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +17,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Contacts;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +82,7 @@ public class MessageFragment extends Fragment implements OnClickListener
     private static final int LOAD_LIST_REFRESH = 1;
     private static final int LOAD_LIST_LOADMORE = 2;
 
-    public SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd" );
+    public SimpleDateFormat sdf = new SimpleDateFormat( "yyyy年MM月dd" );
     
 	private Handler mMainUIHandler;
 	public void setMainUIHandler(Handler handler){
@@ -313,7 +314,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 			
 			//提醒
 			if(menuActivity!=null && mBread==0){
-				menuActivity.showOrNoMsgTip(true);
+				menuActivity.showOrNoMsgTip(true,invoices.size());
 			}
 
 		    }
@@ -350,7 +351,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 		    Toast.makeText( App.getAppContext( ) , App.getAppContext( ).getString( R.string.no_msg ) , Toast.LENGTH_SHORT ).show( );
 			//提醒
 			if(menuActivity!=null&& mBread==0){
-				menuActivity.showOrNoMsgTip(false);
+				menuActivity.showOrNoMsgTip(false,0);
 			}
 		    break;
 
@@ -546,6 +547,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 		holder.indicateIv = (ImageView)convertView.findViewById( R.id.indicate_iv );
 		holder.msgTypeTv = (TextView)convertView.findViewById( R.id.msg_type_tv );
 		holder.attachmentTv = (TextView) convertView.findViewById(R.id.attachment_tv);
+		holder.timeTv = (TextView) convertView.findViewById(R.id.time_tv);
 		convertView.setTag( holder );
 	    }
 	    else
@@ -640,6 +642,13 @@ public class MessageFragment extends Fragment implements OnClickListener
 	    holder.contentTv.setText( pushMessage.getContent( ) );
 	    holder.indicateIv.setTag( pushMessage );
 	    holder.attachmentTv.setText(pushMessage.getFilespath());
+	    Date date = new Date();	    
+	    try {
+			date = sdf.parse(pushMessage.getCrtdate());
+		} catch (ParseException e) {
+			holder.timeTv.setText("");
+		}
+	    holder.timeTv.setText(sdf.format(date));
 
 	    int msgType = pushMessage.getMsgtype( );
 	    switch ( msgType )
@@ -671,6 +680,7 @@ public class MessageFragment extends Fragment implements OnClickListener
     {
 	TextView titleTv;
 	TextView contentTv;
+	TextView timeTv;
 	TextView msgTypeTv;
 	ImageView indicateIv;
 

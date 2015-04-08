@@ -335,7 +335,7 @@ public class EmployeeActivity extends Activity implements OnClickListener {
 
 	}
 
-	//
+	//设置返回结果
 	private void setResult() {
 		generateCheckedUser();
 		Intent in = new Intent();

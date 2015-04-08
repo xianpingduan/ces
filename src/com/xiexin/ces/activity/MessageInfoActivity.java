@@ -45,6 +45,8 @@ public class MessageInfoActivity extends Activity implements OnClickListener
     private TextView mTitle;
     private Button mBtn1;
     private Button mBtn2;
+    private ImageView mTipIv1;
+    private ImageView mTipIv2;
 
     // header end
 
@@ -74,6 +76,9 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mTitle = (TextView)findViewById( R.id.title );
 	mBtn1 = (Button)findViewById( R.id.btn1 );
 	mBtn2 = (Button)findViewById( R.id.btn2 );
+	mTipIv1 = (ImageView) findViewById(R.id.tip1_iv);
+	mTipIv2 = (ImageView) findViewById(R.id.tip2_iv);
+	
 	// /header end
 
 	mReturnIv.setVisibility( View.VISIBLE );
@@ -101,6 +106,13 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mMsgTitleTv.setText( mMsgTitle );
 	
 	mMsgContentTv.setText( Html.fromHtml(mMegContent) );
+	
+	if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&&!"null".equals(mMessageInfoFilePath)){
+		mTipIv1.setVisibility(View.VISIBLE);
+	}else{
+		mTipIv1.setVisibility(View.GONE);
+	}
+	
 
 	doMsgRead( );
 

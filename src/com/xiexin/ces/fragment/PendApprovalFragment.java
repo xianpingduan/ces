@@ -287,7 +287,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 					
 					//提醒
 					if(menuActivity!=null&& mKind==Constants.TYPE_PEND_APPROVAL_TASKS){
-						menuActivity.showOrNoApprovalTip(true);
+						menuActivity.showOrNoApprovalTip(true,invoices.size());
 					}
 
 				} else if (invoices.size() == 0 && mCurrentPage == 1) {
@@ -330,7 +330,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 						Toast.LENGTH_SHORT).show();
 				//提醒
 				if(menuActivity!=null&& mKind==Constants.TYPE_PEND_APPROVAL_TASKS){
-					menuActivity.showOrNoApprovalTip(false);
+					menuActivity.showOrNoApprovalTip(false,0);
 				}
 				
 				break;

@@ -38,6 +38,7 @@ import com.xiexin.ces.expandablelist.PinnedHeaderExpandableListView.OnHeaderUpda
 import com.xiexin.ces.expandablelist.StickyLayout;
 import com.xiexin.ces.expandablelist.StickyLayout.OnGiveUpTouchEventListener;
 import com.xiexin.ces.utils.Logger;
+import com.xiexin.ces.utils.StringUtils;
 
 public class InvoiceSecondInfoActivity extends Activity implements
 		OnClickListener, ExpandableListView.OnChildClickListener,
@@ -346,15 +347,9 @@ public class InvoiceSecondInfoActivity extends Activity implements
 				}
 
 				if (i == 0) {
-					headerTv.setTextColor(InvoiceSecondInfoActivity.this
-							.getResources().getColor(
-									R.color.header_bar_btn_txt_press_color));
-					contentTv.setTextColor(InvoiceSecondInfoActivity.this
-							.getResources().getColor(
-									R.color.header_bar_btn_txt_press_color));
-					view.setBackgroundColor(InvoiceSecondInfoActivity.this
-							.getResources().getColor(
-									R.color.approval_list_item_bg_color));
+					headerTv.setTextColor(InvoiceSecondInfoActivity.this.getResources().getColor(R.color.header_bar_btn_txt_press_color));
+					contentTv.setTextColor(InvoiceSecondInfoActivity.this.getResources().getColor(R.color.header_bar_btn_txt_press_color));
+					view.setBackgroundColor(InvoiceSecondInfoActivity.this.getResources().getColor(R.color.approval_list_item_bg_color));
 				}
 
 				ll.addView(view);
@@ -493,6 +488,8 @@ public class InvoiceSecondInfoActivity extends Activity implements
 						.findViewById(R.id.table_header_name);
 				TextView contentTv = (TextView) view
 						.findViewById(R.id.table_content);
+				
+				
 				try {
 
 					if (i == 0) {
@@ -520,6 +517,21 @@ public class InvoiceSecondInfoActivity extends Activity implements
 							Logger.d(TAG, "date format error");
 						}
 					}
+					
+					//金额处理
+					if (!content.isEmpty() && (tempDetConfig[i].toLowerCase().equals("totalcost")||tempDetConfig[i].toLowerCase().equals("actcost"))) {
+						content = "￥" + StringUtils.priceDecimal(Double.parseDouble(content));
+					}
+					
+					
+					if (tempDetConfig[i].toLowerCase().equals("totalcost")||tempDetConfig[i].toLowerCase().equals("actcost")) {
+						contentTv.setTextColor(getResources().getColor(
+								R.color.pl_main_red_color));
+					} else {
+						contentTv.setTextColor(getResources().getColor(
+								R.color.pl_main_text_color));
+					}
+					
 					contentTv.setText(content);
 				} catch (JSONException e) {
 					e.printStackTrace();

@@ -49,28 +49,54 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/btn1"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/header_return_margin_left"
-            android:background="@null"
-            android:gravity="center"
-            android:text="btn1"
-            android:textColor="@color/btn_title_color"
-            android:textSize="@dimen/pl_small_text_size"
-            android:visibility="gone" />
+            android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/btn2"
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/header_return_margin_left"
+                android:background="@null"
+                android:gravity="center"
+                android:text="btn1"
+                android:textColor="@color/btn_title_color"
+                android:textSize="@dimen/pl_small_text_size"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/tip1_iv"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="right|top"
+                android:src="@drawable/pl_comm_actionbar_manage_tip"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:gravity="center"
-            android:text="btn2"
-            android:textColor="@color/btn_title_color"
-            android:textSize="@dimen/pl_small_text_size"
-            android:visibility="gone" />
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:text="btn2"
+                android:textColor="@color/btn_title_color"
+                android:textSize="@dimen/pl_small_text_size"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/tip2_iv"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="right|top"
+                android:src="@drawable/pl_comm_actionbar_manage_tip"
+                android:visibility="gone" />
+        </FrameLayout>
     </LinearLayout>
 
 </RelativeLayout>

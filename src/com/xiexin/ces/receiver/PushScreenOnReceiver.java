@@ -32,10 +32,10 @@ public class PushScreenOnReceiver extends BroadcastReceiver {
 				requestMsg(context);
 			}
 
-			if (currentTime >= nextReqApprovalTime) {
-				Logger.d(TAG, "onReceive,requestApproval");
-				requestApproval(context);
-			}
+		//			if (currentTime >= nextReqApprovalTime) {
+		//				Logger.d(TAG, "onReceive,requestApproval");
+		//				requestApproval(context);
+		//			}
 
 		} else if (intent.getAction().equals(
 				ConnectivityManager.CONNECTIVITY_ACTION)) {
@@ -44,10 +44,10 @@ public class PushScreenOnReceiver extends BroadcastReceiver {
 				requestMsg(context);
 			}
 
-			if (currentTime >= nextReqApprovalTime) {
-				Logger.d(TAG, "onReceive,requestApproval");
-				requestApproval(context);
-			}
+		//			if (currentTime >= nextReqApprovalTime) {
+		//				Logger.d(TAG, "onReceive,requestApproval");
+		//				requestApproval(context);
+		//			}
 		}
 	}
 
@@ -60,6 +60,7 @@ public class PushScreenOnReceiver extends BroadcastReceiver {
 
 	}
 
+	//取消此功能
 	private void requestApproval(Context context) {
 		Intent in = new Intent();
 		in.putExtra("type", 1);

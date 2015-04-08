@@ -19,19 +19,34 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:textColor="@android:color/white"
             android:textSize="17sp" />
 
-        <ImageView
-            android:id="@+id/iv_badge"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_gravity="right|top"
-            android:layout_marginTop="3dp"
-            android:layout_marginRight="8dp"
-            android:visibility="gone"
-            android:src="@drawable/pl_comm_actionbar_manage_tip" />
+        <FrameLayout
+            android:id="@+id/fl_badge"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="6dp"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/iv_badge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/pl_comm_actionbar_manage_tip" />
+
+            <TextView
+                android:id="@+id/tv_badge_num"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="2dp"
+                android:textColor="@android:color/white" />
+        </FrameLayout>
     </FrameLayout>
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.xiexin.ces.menu;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,10 +22,15 @@ public class ResideMenuItem extends LinearLayout
     private ImageView iv_icon;
     /** menu item  title */
     private TextView tv_title;
-    private ImageView iv_badge;
+    private FrameLayout fl_badge;
+    private TextView tv_badge_num;
 
-    public ImageView getIv_badge() {
-		return iv_badge;
+    public TextView getTv_badge_num() {
+		return tv_badge_num;
+	}
+
+	public FrameLayout getFl_badge() {
+		return fl_badge;
 	}
 
 	public ResideMenuItem( Context context )
@@ -55,7 +61,8 @@ public class ResideMenuItem extends LinearLayout
 	inflater.inflate( R.layout.residemenu_item , this );
 	iv_icon = (ImageView)findViewById( R.id.iv_icon );
 	tv_title = (TextView)findViewById( R.id.tv_title );
-	iv_badge = (ImageView) findViewById(R.id.iv_badge);
+	fl_badge = (FrameLayout) findViewById(R.id.fl_badge);
+	tv_badge_num = (TextView) findViewById(R.id.tv_badge_num);
     }
 
     /**
