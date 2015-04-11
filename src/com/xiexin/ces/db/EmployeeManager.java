@@ -8,13 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import pada.juidownloadmanager.utils.ThreadTask;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Handler;
 
 import com.xiexin.ces.activity.MenuActivity;
-import com.xiexin.ces.db.EmployeeDbAdapter.EmployeeInfoColumns;
 import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.sortlistview.CharacterParser;
@@ -25,12 +23,12 @@ public class EmployeeManager {
 
 	private static EmployeeManager mEmployeeManager;
 
-	private EmployeeDbAdapter mEmployeeDbAdapter;
+	private final EmployeeDbAdapter mEmployeeDbAdapter;
 
 	/**
 	 * 汉字转换成拼音的类
 	 */
-	private CharacterParser characterParser;
+	private final CharacterParser characterParser;
 
 	private Handler mHandler;
 
@@ -44,20 +42,6 @@ public class EmployeeManager {
 	private EmployeeManager(Context context) {
 		mEmployeeDbAdapter = new EmployeeDbAdapter(context);
 		characterParser = CharacterParser.getInstance();
-	}
-
-	private ContentValues createContentValues(Employee employee) {
-		ContentValues values = new ContentValues();
-		values.put(EmployeeInfoColumns.EMPLOYEE_ID, employee.getEmployeeid());
-		values.put(EmployeeInfoColumns.SEX, employee.getSex());
-		values.put(EmployeeInfoColumns.DESCR, employee.getDescr());
-		values.put(EmployeeInfoColumns.DEPART, employee.getDepart());
-		values.put(EmployeeInfoColumns.JOB, employee.getJob());
-		values.put(EmployeeInfoColumns.MOBILE, employee.getMobile());
-		values.put(EmployeeInfoColumns.TELNBR, employee.getTelnbr());
-		values.put(EmployeeInfoColumns.EMIAL, employee.getEmail());
-		values.put(EmployeeInfoColumns.ACCOUNT, employee.getAccount());
-		return values;
 	}
 
 	private Employee createTaskFromCursor(Cursor cursor) {
@@ -89,7 +73,7 @@ public class EmployeeManager {
 			@Override
 			public void run() {
 				synchronized (removelock) {
-					mEmployeeDbAdapter.insert(createContentValues(employee));
+					mEmployeeDbAdapter.insert(employee);
 				}
 			}
 		});
@@ -101,8 +85,7 @@ public class EmployeeManager {
 			@Override
 			public void run() {
 				synchronized (removelock) {
-					mEmployeeDbAdapter.update(employee.getEmployeeid(),
-							createContentValues(employee));
+					mEmployeeDbAdapter.update(employee);
 				}
 			}
 		});
@@ -173,10 +156,9 @@ public class EmployeeManager {
 				employee.setDescr(obj.getString("descr"));
 				employee.setDepart(obj.getString("depart"));
 				employee.setJob(obj.getString("job"));
-				employee.setSex(obj.getString("sex"));
-				employee.setEmail(obj.getString("email"));
+				employee.setTitle(obj.getString("title"));
+				employee.setChannel(obj.getString("channel"));
 				employee.setMobile(obj.getString("mobile"));
-				employee.setTelnbr(obj.getString("telnbr"));
 				employee.setAccount(obj.getString("account"));
 				employeeList.add(employee);
 			}
@@ -206,16 +188,12 @@ public class EmployeeManager {
 		public void run() {
 
 			synchronized (removelock) {
-				for (Employee employee : data) {
-					insertRecord(employee);
-				}
-
+                insertRecord(data);
 				mHandler.sendEmptyMessage(MenuActivity.MSG_SAVE_EMPLOYEE_LIST_SUCCESS);
 			}
 		}
-
-		private void insertRecord(Employee employee) {
-			mEmployeeDbAdapter.insert(createContentValues(employee));
+		private void insertRecord(List<Employee> employees) {
+			mEmployeeDbAdapter.insert(employees);
 		}
 	}
 

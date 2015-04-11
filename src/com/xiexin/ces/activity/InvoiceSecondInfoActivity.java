@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,7 +52,7 @@ public class InvoiceSecondInfoActivity extends Activity implements
 	// allenduan add at 20150121 start
 	private PinnedHeaderExpandableListView expandableListView;
 	private StickyLayout stickyLayout;
-	private LinkedList<String> groupList = new LinkedList<String>();
+	private final LinkedList<String> groupList = new LinkedList<String>();
 	// private LinkedList<JSONArray> childList;
 
 	private MyexpandableListAdapter adapter;
@@ -74,11 +73,11 @@ public class InvoiceSecondInfoActivity extends Activity implements
 	private String mPrgid;
 
 	// 需显示的字段 数组
-	private LinkedList<String[]> mDetConfigList = new LinkedList<String[]>();
+	private final LinkedList<String[]> mDetConfigList = new LinkedList<String[]>();
 	// 需显示内容 child
-	private LinkedList<JSONArray> mDetContentList = new LinkedList<JSONArray>();
+	private final LinkedList<JSONArray> mDetContentList = new LinkedList<JSONArray>();
 	// 需显示头部
-	private LinkedList<JSONObject> mDetHeaderList = new LinkedList<JSONObject>();
+	private final LinkedList<JSONObject> mDetHeaderList = new LinkedList<JSONObject>();
 
 	private String[] mDetConfig;
 	// private JSONObject mDetContent;
@@ -386,8 +385,8 @@ public class InvoiceSecondInfoActivity extends Activity implements
 	 * 
 	 */
 	class MyexpandableListAdapter extends BaseExpandableListAdapter {
-		private Context context;
-		private LayoutInflater inflater;
+		private final Context context;
+		private final LayoutInflater inflater;
 
 		public MyexpandableListAdapter(Context context) {
 			this.context = context;
@@ -585,7 +584,7 @@ public class InvoiceSecondInfoActivity extends Activity implements
 
 	@Override
 	public View getPinnedHeader() {
-		View headerView = (ViewGroup) getLayoutInflater().inflate(
+		View headerView = getLayoutInflater().inflate(
 				R.layout.group, null);
 		headerView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT));

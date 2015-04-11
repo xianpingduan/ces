@@ -105,7 +105,7 @@ public class Constants
     public final static int APPR_LIST_RESULT_FROM_APPRSUC = 1;
 
     public final static String THE_LAST_REQUEST_MSG_TIME = "the_last_request_msg_time";
-    public final static int DEFAULT_GAP_TIME = 2 * 60 * 1000;
+    public final static int DEFAULT_GAP_TIME = 10 * 60 * 1000;
     
     public final static String THE_LAST_REQUEST_APPROVAL_TIME = "the_last_request_approval_time";
 

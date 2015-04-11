@@ -33,6 +33,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
+import com.xiexin.ces.PushNotificationCenter;
 import com.xiexin.ces.R;
 import com.xiexin.ces.db.EmployeeManager;
 import com.xiexin.ces.fragment.AnnounceFragment;
@@ -144,6 +145,9 @@ public class MenuActivity extends FragmentActivity implements
 				mMessageFragment.setMainUIHandler(mUiHandler);
 				changeFragment(mMessageFragment);
 				mTitleView.setText(getString(R.string.menu_message));
+				
+				PushNotificationCenter.getInstance(App.getAppContext()).cancelMessageNotify();
+				
 			} else if(type==Constants.TYPE_MENU_HANDLE_APPROVAL) {
 				if (mPendApprovalFragment == null)
 					mPendApprovalFragment = new PendApprovalFragment();
@@ -151,6 +155,8 @@ public class MenuActivity extends FragmentActivity implements
 				mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,mAccountChanged);
 				changeFragment(mPendApprovalFragment);
 				mTitleView.setText(getString(R.string.menu_pend_approval));
+				
+				PushNotificationCenter.getInstance(App.getAppContext()).cancelApprovalNotify();
 			}
 		}else{
 			if (mPendApprovalFragment == null)
@@ -178,6 +184,9 @@ public class MenuActivity extends FragmentActivity implements
 			mMessageFragment.setMainUIHandler(mUiHandler);
 			changeFragment(mMessageFragment);
 			mTitleView.setText(getString(R.string.menu_message));
+			
+			PushNotificationCenter.getInstance(App.getAppContext()).cancelMessageNotify();
+			
 		}else if(type==Constants.TYPE_MENU_HANDLE_APPROVAL){
 			if (mPendApprovalFragment == null) {
 				mPendApprovalFragment = new PendApprovalFragment();
@@ -186,6 +195,8 @@ public class MenuActivity extends FragmentActivity implements
 			mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,mAccountChanged);
 			changeFragment(mPendApprovalFragment);
 			mTitleView.setText(getString(R.string.menu_pend_approval));
+			
+			PushNotificationCenter.getInstance(App.getAppContext()).cancelApprovalNotify();
 		}
 		}
 		
@@ -461,7 +472,7 @@ public class MenuActivity extends FragmentActivity implements
 	private static final int MSG_CLOSE_MENU = 2;
 	private final static int MSG_GET_ZT = 3;
 
-	private Handler mUiHandler = new Handler() {
+	private final Handler mUiHandler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
@@ -491,6 +502,9 @@ public class MenuActivity extends FragmentActivity implements
 				break;
 
 			case MSG_GET_EMPLOYEE_LIST_SUCCESS:
+			    
+			    Logger.d(TAG, "get data="+System.currentTimeMillis());
+			    
 				String data = (String) msg.obj;
 				Logger.d(TAG, "data=" + data);
 				EmployeeManager.getInstance(mContext).saveResult(data);
@@ -611,7 +625,7 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	// 菜单打开和关闭监听
-	private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
+	private final ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
 		@Override
 		public void openMenu() {
 			mUiHandler.sendEmptyMessage(MSG_OPEN_MENU);
@@ -674,6 +688,8 @@ public class MenuActivity extends FragmentActivity implements
 
 	private void requestEmployees(String filter) {
 
+	    Logger.d(TAG, "requestEmployees  start = "+System.currentTimeMillis());
+	    
 		showDialog();
 		String commName = App.getSharedPreference().getString(
 				Constants.ZHANG_TAO_CONN_NAME, "");
@@ -707,8 +723,7 @@ public class MenuActivity extends FragmentActivity implements
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						Logger.d(TAG, "----e----" + error.toString());
-						mUiHandler
-								.sendEmptyMessage(MSG_GET_EMPLOYEE_LIST_ERROR);
+						mUiHandler.sendEmptyMessage(MSG_GET_EMPLOYEE_LIST_ERROR);
 					}
 				});
 		json.setShouldCache(true);

@@ -14,7 +14,6 @@ import pada.juidownloader.http.callback.RequestCallBack;
 import pada.juidownloader.util.LogUtils;
 import pada.juidownloadmanager.utils.PackageUtils;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -26,15 +25,14 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
-import com.xiexin.ces.R;
 import com.xiexin.ces.utils.Logger;
 
 /**
@@ -47,7 +45,7 @@ public class SelfUpgrade {
 	private static SelfUpgrade mInstance = null;
 	private SelfUpdateListener mSelfUpdateListener;
 	private final SelfUpateNotificationCenter mNotificationCenter;
-	private Context mContext;
+	private final Context mContext;
 	private PackageInfo info = null;
 	private boolean isDownloading = false;
 
@@ -59,7 +57,7 @@ public class SelfUpgrade {
 
 	// 网络请求
 
-	private RequestQueue mQueue;
+	private final RequestQueue mQueue;
 
 	private JSONObject mUpdateInfo = null;
 	private String packUrl;
@@ -324,14 +322,12 @@ public class SelfUpgrade {
 		doRequestUpdate();
 	}
 
-	private Handler mHandler = new Handler() {
+	private final Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MSG_HAVE_UPGRADE_TO_INSTALL:
-
 				String info = (String) msg.obj;
-
 				try {
 					JSONArray array = new JSONArray(info);
 					mUpdateInfo = array.getJSONObject(0);
@@ -342,10 +338,9 @@ public class SelfUpgrade {
 					}else{
 						Logger.d(TAG, "已经是最新版本"+App.VersionCode());
 						if(checkType==Constants.CHECK_UPDATE_NOAUTO){
-							Toast.makeText(mContext, "已经是最新版本!", Toast.LENGTH_SHORT).show();
+							Toast.makeText(mContext, "当前软件版本是"+App.VersionName()+",已经是最新版本!", Toast.LENGTH_SHORT).show();
 						}
 					}
-					
 					if (mSelfUpdateListener != null) {
 						mSelfUpdateListener.checkSuccessed(mUpdateInfo.getInt("newvercode")+"");
 					}
@@ -354,7 +349,6 @@ public class SelfUpgrade {
 					e.printStackTrace();
 				}
 				//long next_req_time = System.currentTimeMillis()+ DEFAULT_REQ_GAP_TIME;
-			
 				break;
 			case MSG_NO_HAVE_UPGRADE_TO_INSTALL:
 				LogUtils.e("当前是最新版本!");

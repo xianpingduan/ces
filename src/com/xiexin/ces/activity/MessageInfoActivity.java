@@ -107,11 +107,11 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	
 	mMsgContentTv.setText( Html.fromHtml(mMegContent) );
 	
-	if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&&!"null".equals(mMessageInfoFilePath)){
-		mTipIv1.setVisibility(View.VISIBLE);
-	}else{
-		mTipIv1.setVisibility(View.GONE);
-	}
+//	if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&&!"null".equals(mMessageInfoFilePath)){
+//		mTipIv1.setVisibility(View.VISIBLE);
+//	}else{
+//		mTipIv1.setVisibility(View.GONE);
+//	}
 	
 
 	doMsgRead( );
