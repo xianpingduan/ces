@@ -406,7 +406,6 @@ public class SelfUpgrade {
 					mUpgradeDialog.dismiss();
 			}
 		});
-
 		mUpgradeDialog.show();
 	}
 

@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,6 +47,7 @@ import com.xiexin.ces.widgets.PullListView.IListViewListener;
 
 /**
  * User: special Date: 13-12-22 Time: 下午3:26 Mail: specialcyci@gmail.com
+ * 
  */
 public class PendApprovalFragment extends Fragment implements OnClickListener {
 
@@ -249,7 +249,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 
 	private static final int MSG_KIND_CHANGE = 5;
 
-	private Handler mUiHandler = new Handler() {
+	private final Handler mUiHandler = new Handler() {
 		
 		@Override
 		public void handleMessage(Message msg) {
@@ -451,7 +451,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 
 	private class InvoiceAdapter extends BaseAdapter {
 
-		private ArrayList<Invoice> list = new ArrayList<Invoice>();
+		private final ArrayList<Invoice> list = new ArrayList<Invoice>();
 
 		public void addData(ArrayList<Invoice> data, int type) {
 
