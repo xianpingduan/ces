@@ -74,6 +74,7 @@ public class PushNotificationCenter {
 		Bundle bundle = new Bundle();
 		bundle.putInt(Constants.MENU_HANDLE, Constants.TYPE_MENU_HANDLE_APPROVAL);
 		intent.putExtra(Constants.MENU_HANDLE_BUNDLE,bundle);
+		intent.setData(Uri.parse("custom://"+System.currentTimeMillis()));
 		PendingIntent pendingIntent = PendingIntent.getActivity(App.getAppContext(), 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
 		NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification.Builder nb = new Notification.Builder(mContext);

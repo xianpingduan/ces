@@ -98,7 +98,7 @@ public class PlusSignDialog extends Dialog {
 				// TODO Auto-generated method stub
 				// intent to employee activity
 				Message msg = Message.obtain();
-				msg.what = InvoiceInfoActivity.MSG_NOTIFY_TO_EMPLOYEE;
+				msg.what = InvoiceInfoActivity.MSG_PLUS_SIGN_TO_EMPLOYEE;
 				mHandler.sendMessage(msg);
 
 			}

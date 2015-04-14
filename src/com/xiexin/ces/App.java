@@ -106,7 +106,7 @@ public class App extends Application
 	return mVerCode;
     }
 
-    public static String VersionName()
+    public static String VersionName() 
     {
 	return mVerName;
     }
