@@ -102,6 +102,20 @@ public class MenuActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		mContext = this;
+		
+		String userId = App.getSharedPreference().getString(Constants.USER_ID, "");
+		String conn = App.getSharedPreference().getString(Constants.ZHANG_TAO_CONN_NAME, "");
+		
+		if(userId.isEmpty()||conn.isEmpty()){
+			
+			Toast.makeText(mContext, "您还没登录或登录已过期，请登录!", Toast.LENGTH_SHORT).show();
+			PushNotificationCenter.getInstance(App.getAppContext()).cancelMessageNotify();
+			PushNotificationCenter.getInstance(App.getAppContext()).cancelApprovalNotify();
+			
+			loginout();
+			return;
+		}
+		
 
 		mQueue = Volley.newRequestQueue(App.getAppContext());
 
@@ -162,6 +176,11 @@ public class MenuActivity extends FragmentActivity implements
 			if (mPendApprovalFragment == null)
 				mPendApprovalFragment = new PendApprovalFragment();
 			// mPendApprovalFragment.setArguments(args);
+			
+			if(isConnChanged){
+				mPendApprovalFragment.setIsShowDialog(false);
+			}
+			
 			mPendApprovalFragment.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,mAccountChanged);
 			changeFragment(mPendApprovalFragment);
 			mTitleView.setText(getString(R.string.menu_pend_approval));
@@ -493,6 +512,7 @@ public class MenuActivity extends FragmentActivity implements
 					mPendApprovalFragment
 							.setKind(Constants.TYPE_PEND_APPROVAL_TASKS,
 									mAccountChanged);
+					mPendApprovalFragment.setIsShowDialog(false);
 					changeFragment(mPendApprovalFragment);
 					mTitleView.setText(getString(R.string.menu_pend_approval));
 					// 同步人员数据
@@ -523,7 +543,9 @@ public class MenuActivity extends FragmentActivity implements
 						.edit()
 						.putLong(Constants.THE_SYNC_EMPLOYEE_TIME,
 								next_req_time).commit();
-
+				if(mPendApprovalFragment!=null){
+					mPendApprovalFragment.setIsShowDialog(true);
+				}
 				// checkUpdate
 				// checkUpdate(Constants.CHECK_UPDATE_AUTO);
 
@@ -742,7 +764,7 @@ public class MenuActivity extends FragmentActivity implements
 
 	private void showDialog() {
 		if (mLoadingDialog == null) {
-			mLoadingDialog = new LoadingDialog(this, "正在同步人员档案信息");
+			mLoadingDialog = new LoadingDialog(this, "正在加载...");
 		}
 		mLoadingDialog.show();
 	}

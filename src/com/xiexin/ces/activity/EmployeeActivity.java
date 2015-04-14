@@ -608,7 +608,7 @@ public class EmployeeActivity extends Activity implements OnClickListener
             {
                 convertView = App.getLayoutInflater().inflate(R.layout.activity_employee_list_item, null);
                 holder = new ViewHolder();
-                holder.employeeFrameRl = (RelativeLayout) findViewById(R.id.employee_frame);
+                holder.employeeFrameRl = (RelativeLayout) convertView.findViewById(R.id.employee_frame);
                 holder.employeeNameTv = (TextView) convertView.findViewById(R.id.employee_name_tv);
                 holder.employeeDepartTv = (TextView) convertView.findViewById(R.id.employee_depart_tv);
                 holder.employeeJobTv = (TextView) convertView.findViewById(R.id.employee_job_tv);

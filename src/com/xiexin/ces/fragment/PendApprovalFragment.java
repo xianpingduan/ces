@@ -74,6 +74,12 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 	private int mCurrentPage = 1;
 
 	private Handler mMainUIHandler;
+	
+	private boolean isShowDialog = true;
+	
+	public void setIsShowDialog(boolean b){
+		isShowDialog = b;
+	}
 
 	public void setMainUIHandler(Handler handler) {
 		mMainUIHandler = handler;
@@ -105,7 +111,9 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				mLoadingDialog.show();
+				if(isShowDialog){
+					mLoadingDialog.show();
+				}
 			}
 		}, 200);
 

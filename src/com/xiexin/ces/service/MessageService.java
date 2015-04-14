@@ -114,7 +114,7 @@ public class MessageService extends Service
 	
 			break;
 		case MSG_REQUEST_LAST_APPROVAL_ERROR :
-			
+			Logger.d(TAG, "MSG_REQUEST_LAST_APPROVAL_ERROR");
 			break;
 
 		default :
@@ -277,7 +277,7 @@ public class MessageService extends Service
 	    }
 	} );
 
-	if( !account.isEmpty( ) && !userid.isEmpty( ) )
+	if(!account.isEmpty( )&&!userid.isEmpty( ) )
 	{
 	    mQueue.add( json );
 	    mQueue.start( );
@@ -288,7 +288,6 @@ public class MessageService extends Service
     @Override
     public int onStartCommand( Intent intent , int flags , int startId )
     {
-    	
     	int type  = 0;
 	    if(intent!=null){
 	    	type = intent.getIntExtra("type", 0);
