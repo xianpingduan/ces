@@ -91,12 +91,20 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 
 	if( isFirstIn )
 	{
-	    mReturnLl.setVisibility( View.GONE );
+		mReturnIv.setVisibility(View.VISIBLE);
+		mReturnTv.setVisibility(View.GONE);
+		mReturnIv.setClickable(false);
+		mReturnIv.setImageResource(R.drawable.titlebar_menu_selector);
 	}
 	else
 	{
+		mReturnTv.setVisibility(View.VISIBLE);
 	    mReturnIv.setVisibility( View.VISIBLE );
+		mReturnIv.setClickable(true);
+		mReturnIv.setImageResource(R.drawable.ab_btn_return);
+
 	}
+	
 
 	mTitle.setText( getString( R.string.server_config ) );
 	mBtn1.setVisibility( View.VISIBLE );

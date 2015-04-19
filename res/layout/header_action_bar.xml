@@ -28,6 +28,7 @@
             android:text="@string/return_text"
             android:textColor="@android:color/white"
             android:textSize="@dimen/pl_small_text_size" />
+        
     </LinearLayout>
 
     <TextView
