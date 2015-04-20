@@ -367,7 +367,7 @@ public class MenuActivity extends FragmentActivity implements
 
 		// attach to current activity;
 		resideMenu = new ResideMenu(this);
-		resideMenu.setBackground(R.color.menu_bg_color);
+		resideMenu.setBackground(R.drawable.main_bg);
 		resideMenu.attachToActivity(this);
 		resideMenu.setMenuListener(menuListener);
 		// valid scale factor is between 0.0f and 1.0f. leftmenu'width is
