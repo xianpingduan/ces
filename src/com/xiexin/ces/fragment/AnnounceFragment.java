@@ -53,7 +53,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 
 	// // header start
 	// private LinearLayout mReturnLl;
-	// private ImageView mReturnIv;
+	// private FrameLayout mReturnIv;
 	// private TextView mReturnTv;
 	// private TextView mTitle;
 	// private Button mBtn1;
@@ -142,7 +142,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 
 		// // header start
 		// mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
-		// mReturnIv = (ImageView) parentView.findViewById(R.id.return_iv);
+		// mReturnIv = (FrameLayout) parentView.findViewById(R.id.return_iv);
 		// mReturnTv = (TextView) parentView.findViewById(R.id.return_tv);
 		// mTitle = (TextView) parentView.findViewById(R.id.title);
 		// mBtn1 = (Button) parentView.findViewById(R.id.btn1);
@@ -482,13 +482,12 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 						R.layout.fragment_announce_list_item, null);
 				holder = new ViewHolder();
 				holder.idTv = (TextView) convertView.findViewById(R.id.id_tv);
-				holder.titleTv = (TextView) convertView
-						.findViewById(R.id.title_tv);
-				holder.contentTv = (TextView) convertView
-						.findViewById(R.id.content_tv);
-				holder.indicateIv = (ImageView) convertView
-						.findViewById(R.id.indicate_iv);
+				holder.titleTv = (TextView) convertView.findViewById(R.id.title_tv);
+				holder.contentTv = (TextView) convertView.findViewById(R.id.content_tv);
+				holder.indicateIv = (ImageView) convertView.findViewById(R.id.indicate_iv);
 				holder.filesPathTv = (TextView) convertView.findViewById(R.id.filespath_tv);
+				holder.haveAttachIv = (ImageView) convertView.findViewById(R.id.have_attachment_iv);
+				
 				convertView.setTag(holder);
 			} else {
 
@@ -564,7 +563,13 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 			holder.indicateIv.setTag(pushAnnounce);
 			holder.idTv.setText(pushAnnounce.getNoticeid());
 			String filespath = pushAnnounce.getFilespath().toString();
-			holder.filesPathTv.setText(filespath.toString());
+			holder.filesPathTv.setText(filespath);
+			
+			if(filespath!=null&&!filespath.isEmpty()){
+			    holder.haveAttachIv.setVisibility(View.VISIBLE);
+			}else{
+			    holder.haveAttachIv.setVisibility(View.INVISIBLE);
+			}
 
 		}
 
@@ -574,6 +579,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 		TextView titleTv;
 		TextView contentTv;
 		ImageView indicateIv;
+		ImageView haveAttachIv;
 		// 存数据
 		TextView idTv;
 		TextView filesPathTv;

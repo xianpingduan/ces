@@ -31,7 +31,7 @@
             android:layout_marginBottom="@dimen/common_margin_buttom"
             android:layout_marginLeft="@dimen/common_margin_left"
             android:layout_marginTop="@dimen/common_margin_top"
-            android:background="@drawable/normal_check_button"
+            android:background="@drawable/icon_employee_check_btn"
             android:button="@null" />
 
         <TextView

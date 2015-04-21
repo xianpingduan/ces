@@ -34,6 +34,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -43,7 +44,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiexin.ces.App;
-import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.entry.AttachMent;
 import com.xiexin.ces.utils.APNUtil;
@@ -79,7 +79,7 @@ public class AnnounceAttachmentActivity extends Activity implements OnClickListe
 
 	// header start
 	private LinearLayout mReturnLl;
-	private ImageView mReturnIv;
+	private FrameLayout mReturnIv;
 	private TextView mReturnTv;
 	private TextView mTitle;
 	private Button mBtn1;
@@ -150,7 +150,7 @@ public class AnnounceAttachmentActivity extends Activity implements OnClickListe
 
 		// header start
 		mReturnLl = (LinearLayout) findViewById(R.id.return_ll);
-		mReturnIv = (ImageView) findViewById(R.id.return_iv);
+		mReturnIv = (FrameLayout) findViewById(R.id.return_iv);
 		mReturnTv = (TextView) findViewById(R.id.return_tv);
 		mTitle = (TextView) findViewById(R.id.title);
 		mBtn1 = (Button) findViewById(R.id.btn1);

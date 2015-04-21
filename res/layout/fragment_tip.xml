@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <TextView
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/expect"
-            style="@style/fragment_text"
             android:layout_gravity="center"
-            android:id="@+id/textView"/>
+            android:src="@drawable/developing_bg" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/fragment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="3dp"
+            android:text="@string/expect" />
+    </FrameLayout>
 
 </FrameLayout>

@@ -23,7 +23,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +45,6 @@ import com.xiexin.ces.entry.Invoice;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
 import com.xiexin.ces.widgets.LoadingUIListView;
-import com.xiexin.ces.widgets.PullListView.IListViewListener;
 
 /**
  * User: special Date: 13-12-22 Time: 下午3:26 Mail: specialcyci@gmail.com
@@ -65,7 +63,7 @@ public class SearchPendApprovalActivity extends Activity implements
 
 	// // header start
 	// private LinearLayout mReturnLl;
-	// private ImageView mReturnIv;
+	// private FrameLayout mReturnIv;
 	// private TextView mReturnTv;
 	// private TextView mTitle;
 	// private Button mBtn1;
@@ -162,7 +160,7 @@ public class SearchPendApprovalActivity extends Activity implements
 
 		// // header start
 		// mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
-		// mReturnIv = (ImageView) parentView.findViewById(R.id.return_iv);
+		// mReturnIv = (FrameLayout) parentView.findViewById(R.id.return_iv);
 		// mReturnTv = (TextView) parentView.findViewById(R.id.return_tv);
 		// mTitle = (TextView) parentView.findViewById(R.id.title);
 		// mBtn1 = (Button) parentView.findViewById(R.id.btn1);

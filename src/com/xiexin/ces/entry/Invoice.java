@@ -17,7 +17,16 @@ public class Invoice {
 	private String processmode;
 	private String status;
 	private String reason;
-	public String getAccount() {
+	private String accountname;
+	public String getAccountname()
+    {
+        return accountname;
+    }
+    public void setAccountname(String accountname)
+    {
+        this.accountname = accountname;
+    }
+    public String getAccount() {
 		return account;
 	}
 	public void setAccount(String account) {

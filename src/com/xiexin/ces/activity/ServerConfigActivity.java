@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,7 +39,8 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 
     // header start
     private LinearLayout mReturnLl;
-    private ImageView mReturnIv;
+    private FrameLayout mReturnIv;
+    private ImageView mReturnIv2;
     private TextView mReturnTv;
     private TextView mTitle;
     private Button mBtn1;
@@ -82,7 +84,8 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 
 	// header start
 	mReturnLl = (LinearLayout)findViewById( R.id.return_ll );
-	mReturnIv = (ImageView)findViewById( R.id.return_iv );
+	mReturnIv = (FrameLayout)findViewById( R.id.return_iv );
+	mReturnIv2 = (ImageView) findViewById(R.id.return_iv_2);
 	mReturnTv = (TextView)findViewById( R.id.return_tv );
 	mTitle = (TextView)findViewById( R.id.title );
 	mBtn1 = (Button)findViewById( R.id.btn1 );
@@ -94,14 +97,14 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 		mReturnIv.setVisibility(View.VISIBLE);
 		mReturnTv.setVisibility(View.GONE);
 		mReturnIv.setClickable(false);
-		mReturnIv.setImageResource(R.drawable.titlebar_menu_selector);
+		mReturnIv2.setImageResource(R.drawable.titlebar_menu_selector);
 	}
 	else
 	{
 		mReturnTv.setVisibility(View.VISIBLE);
 	    mReturnIv.setVisibility( View.VISIBLE );
 		mReturnIv.setClickable(true);
-		mReturnIv.setImageResource(R.drawable.ab_btn_return);
+		mReturnIv2.setImageResource(R.drawable.ab_btn_return);
 
 	}
 	

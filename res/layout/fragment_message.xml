@@ -18,15 +18,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:background="#F5F4F0" >
 
             <CheckBox
                 android:id="@+id/noread_cb"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="#F5F4F0"
+                android:layout_centerInParent="true"
                 android:button="@null"
-                android:gravity="center"
+                android:drawableLeft="@drawable/unread_msg_button"
+                android:drawablePadding="6dp"
                 android:text="@string/noread"
                 android:textColor="@color/btn_approval_color" />
 
@@ -38,16 +39,23 @@
                 android:gravity="right" />
         </RelativeLayout>
 
-        <CheckBox
-            android:id="@+id/readed_cb"
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#F5F4F0"
-            android:button="@null"
-            android:gravity="center"
-            android:text="@string/readed"
-            android:textColor="@color/btn_approval_color" />
+            android:background="#F5F4F0" >
+
+            <CheckBox
+                android:id="@+id/readed_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:button="@null"
+                android:drawablePadding="6dp"
+                android:drawableLeft="@drawable/read_msg_button"
+                android:text="@string/readed"
+                android:textColor="@color/btn_approval_color" />
+        </RelativeLayout>
     </LinearLayout>
 
     <View

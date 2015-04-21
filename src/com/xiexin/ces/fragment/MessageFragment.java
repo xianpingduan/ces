@@ -61,7 +61,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 
     // // header start
     // private LinearLayout mReturnLl;
-    // private ImageView mReturnIv;
+    // private FrameLayout mReturnIv;
     // private TextView mReturnTv;
     // private TextView mTitle;
     // private Button mBtn1;
@@ -159,7 +159,7 @@ public class MessageFragment extends Fragment implements OnClickListener
 
         // // header start
         // mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
-        // mReturnIv = (ImageView) parentView.findViewById(R.id.return_iv);
+        // mReturnIv = (FrameLayout) parentView.findViewById(R.id.return_iv);
         // mReturnTv = (TextView) parentView.findViewById(R.id.return_tv);
         // mTitle = (TextView) parentView.findViewById(R.id.title);
         // mBtn1 = (Button) parentView.findViewById(R.id.btn1);
@@ -547,6 +547,7 @@ public class MessageFragment extends Fragment implements OnClickListener
                 holder.msgTypeTv = (TextView) convertView.findViewById(R.id.msg_type_tv);
                 holder.attachmentTv = (TextView) convertView.findViewById(R.id.attachment_tv);
                 holder.timeTv = (TextView) convertView.findViewById(R.id.time_tv);
+                holder.haveAttachIv = (ImageView) convertView.findViewById(R.id.have_attachment_iv);
                 convertView.setTag(holder);
             } else
             {
@@ -639,7 +640,16 @@ public class MessageFragment extends Fragment implements OnClickListener
             holder.titleTv.setText(pushMessage.getTitle());
             holder.contentTv.setText(pushMessage.getContent());
             holder.indicateIv.setTag(pushMessage);
-            holder.attachmentTv.setText(pushMessage.getFilespath());
+            
+            String filespath = pushMessage.getFilespath();
+            holder.attachmentTv.setText(filespath);
+            
+            if(filespath!=null&&!filespath.isEmpty()){
+                holder.haveAttachIv.setVisibility(View.VISIBLE);
+            }else{
+                holder.haveAttachIv.setVisibility(View.INVISIBLE);
+            }
+            
             Date date = new Date();
             try
             {
@@ -682,6 +692,7 @@ public class MessageFragment extends Fragment implements OnClickListener
         TextView timeTv;
         TextView msgTypeTv;
         ImageView indicateIv;
+        ImageView haveAttachIv;
 
         // 存数据
         TextView idTv;

@@ -11,6 +11,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:src="@drawable/icon_arrow" />
 
     <TextView
@@ -50,6 +52,17 @@
             android:textColor="@color/pl_main_text_color"
             android:textSize="@dimen/pl_small_text_size"
             android:visibility="visible" />
+        
+        <ImageView 
+            android:id="@+id/have_attachment_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/is_have_attach"
+            android:layout_marginLeft="6dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="6dp"
+            android:visibility="invisible"
+            />
 
         <TextView
             android:id="@+id/id_tv"

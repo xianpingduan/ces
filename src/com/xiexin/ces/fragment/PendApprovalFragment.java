@@ -59,7 +59,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 
 	// // header start
 	// private LinearLayout mReturnLl;
-	// private ImageView mReturnIv;
+	// private FrameLayout mReturnIv;
 	// private TextView mReturnTv;
 	// private TextView mTitle;
 	// private Button mBtn1;
@@ -179,7 +179,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 
 		// // header start
 		// mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
-		// mReturnIv = (ImageView) parentView.findViewById(R.id.return_iv);
+		// mReturnIv = (FrameLayout) parentView.findViewById(R.id.return_iv);
 		// mReturnTv = (TextView) parentView.findViewById(R.id.return_tv);
 		// mTitle = (TextView) parentView.findViewById(R.id.title);
 		// mBtn1 = (Button) parentView.findViewById(R.id.btn1);
@@ -382,6 +382,8 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 						: obj.getString("status"));
 				invoice.setReason(obj.getString("reason").equals("null") ? ""
 						: obj.getString("reason"));
+				invoice.setAccountname(obj.getString("accountname").equals("null") ? ""
+                        : obj.getString("accountname"));
 				invoiceList.add(invoice);
 			}
 		} catch (JSONException e) {
@@ -520,6 +522,8 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 						.findViewById(R.id.account_tv);
 				holder.prgIdTv = (TextView) convertView
 						.findViewById(R.id.prgid_tv);
+				
+				holder.accountNameTv =(TextView) convertView.findViewById(R.id.account_name_tv);
 
 				convertView.setTag(holder);
 			} else {
@@ -577,16 +581,24 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			holder.moneyTv
 					.setText("￥" + StringUtils.priceDecimal(invoice.getTotalcost())+"");
 			holder.prgIdTv.setText(invoice.getPrgid());
+			
+			String account=invoice.getAccount();
+			
 			holder.accountTv.setText(invoice.getAccount());
 			holder.invoiceDescTv.setText(invoice.getReason());
+			
+			if(account==null||account.isEmpty()){
+			     String accountName = App.getSharedPreference().getString(Constants.ZHANG_TAO_ACCINFO, "");
+			    holder.accountNameTv.setText(accountName);
+			}else{
+			    holder.accountNameTv.setText(invoice.getAccountname()); 
+			}
 
 			holder.indicateIv.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-
 					intentToInvoiceDesc();
-
 				}
 			});
 
@@ -607,6 +619,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		TextView moneyTv;
 		TextView invoiceDescTv;
 		ImageView indicateIv;
+		TextView accountNameTv;
 
 		// 存数据
 		TextView prgIdTv;

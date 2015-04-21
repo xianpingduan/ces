@@ -7,7 +7,7 @@ import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +29,7 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 
 	// header start
 	private LinearLayout mReturnLl;
-	private ImageView mReturnIv;
+	private FrameLayout mReturnIv;
 	private TextView mReturnTv;
 	private TextView mTitle;
 	private Button mBtn1;
@@ -56,7 +56,7 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 	private void initView() {
 		// header start
 		mReturnLl = (LinearLayout) findViewById(R.id.return_ll);
-		mReturnIv = (ImageView) findViewById(R.id.return_iv);
+		mReturnIv = (FrameLayout) findViewById(R.id.return_iv);
 		mReturnTv = (TextView) findViewById(R.id.return_tv);
 		mTitle = (TextView) findViewById(R.id.title);
 		mBtn1 = (Button) findViewById(R.id.btn1);
