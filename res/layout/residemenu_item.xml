@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:scaleType="centerCrop" />
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="fitXY" />
 
     <FrameLayout
         android:layout_width="match_parent"

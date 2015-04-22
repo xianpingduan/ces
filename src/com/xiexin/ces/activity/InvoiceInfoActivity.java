@@ -716,19 +716,27 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					.findViewById(R.id.table_content);
 			ImageView msgIv = (ImageView) view.findViewById(R.id.message);
 			ImageView phoneIv = (ImageView) view.findViewById(R.id.phone);
-			contentTv.setTextColor(getResources().getColor(
-					R.color.info_content_text_color));
+			
+//			contentTv.setTextColor(getResources().getColor(
+//					R.color.info_content_text_color));
+			
+//			if (mDataConfig[i].toLowerCase().equals("totalcost")) {
+//                contentTv.setTextColor(getResources().getColor(
+//                        R.color.header_bar_btn_txt_press_color));
+//            } else {
+//                contentTv.setTextColor(getResources().getColor(
+//                        R.color.second_info_header_color4));
+//            }
 
 			if (mDataConfig[i].toLowerCase().equals("totalcost")) {
 				contentTv.setTextColor(getResources().getColor(
-						R.color.pl_main_red_color));
+						R.color.second_info_header_color3));
 			} else {
 				contentTv.setTextColor(getResources().getColor(
-						R.color.info_content_text_color));
+						R.color.second_info_header_color4));
 			}
 
 			msgIv.setOnClickListener(new View.OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					Object obj = v.getTag();

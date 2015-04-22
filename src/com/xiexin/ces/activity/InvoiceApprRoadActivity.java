@@ -369,6 +369,8 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    {
 		convertView = App.getLayoutInflater( ).inflate( R.layout.activity_invoice_road_item , null );
 		holder = new ViewHolder( );
+		
+		holder.invoiceRoadFrame= (LinearLayout) convertView.findViewById(R.id.invoice_road_frame);
 		holder.apprDateTv = (TextView)convertView.findViewById( R.id.node_date_tv );
 		holder.apprTimeTv = (TextView)convertView.findViewById( R.id.node_time_tv );
 		holder.processModeTv = (TextView)convertView.findViewById( R.id.node_name_tv );
@@ -421,8 +423,6 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    {
 		apprDate = "";
 	    }
-	    
-	  
 
 	    Logger.d( TAG , "bindData,date =" + apprDate );
 	    Logger.d( TAG , "bindData,apprTime =" + apprTime );
@@ -434,7 +434,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    }
 	    holder.processModeTv.setText( apprObjName );
 	    holder.apprDateTv.setText( apprDate );
-	    holder.apprTimeTv.setText( apprTime );
+	    holder.apprTimeTv.setText(apprDate +"  "+ apprTime );
 	    String apprMemo = iar.getApprmemo( );
 	    if( apprMemo == null || apprMemo.equals( "null" ) )
 	    {
@@ -452,24 +452,28 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    if( !apprDate.isEmpty( ) )
 	    {
 		holder.isFinishedCb.setChecked( true );
-		holder.processModeTv.setTextColor( Color.parseColor( "#0160fe" ) );
-		holder.apprDateTv.setTextColor( Color.parseColor( "#0160fe" ) );
-		holder.apprMemoTv.setTextColor( Color.parseColor( "#0160fe" ) );
-		holder.apprTimeTv.setTextColor( Color.parseColor( "#0160fe" ) );
+//		holder.processModeTv.setTextColor( Color.parseColor( "#0160fe" ) );
+//		holder.apprDateTv.setTextColor( Color.parseColor( "#0160fe" ) );
+//		holder.apprMemoTv.setTextColor( Color.parseColor( "#0160fe" ) );
+//		holder.apprTimeTv.setTextColor( Color.parseColor( "#0160fe" ) );
+		
+		holder.invoiceRoadFrame.setBackgroundColor(Color.WHITE);
+		
 	    }
 	    else
 	    {
 		holder.isFinishedCb.setChecked( false );
-		holder.processModeTv.setTextColor( Color.parseColor( "#575757" ) );
-		holder.apprDateTv.setTextColor( Color.parseColor( "#ababab" ) );
-		holder.apprMemoTv.setTextColor( Color.parseColor( "#ababab" ) );
-		holder.apprTimeTv.setTextColor( Color.parseColor( "#ababab" ) );
+//		holder.processModeTv.setTextColor( Color.parseColor( "#575757" ) );
+//		holder.apprDateTv.setTextColor( Color.parseColor( "#ababab" ) );
+//		holder.apprMemoTv.setTextColor( Color.parseColor( "#ababab" ) );
+//		holder.apprTimeTv.setTextColor( Color.parseColor( "#ababab" ) );
 	    }
 	}
     }
 
     class ViewHolder
     {
+    LinearLayout invoiceRoadFrame;
 	TextView apprDateTv;
 	TextView apprTimeTv;
 	TextView processModeTv;

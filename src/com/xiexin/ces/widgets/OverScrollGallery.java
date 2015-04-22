@@ -12,7 +12,7 @@ public class OverScrollGallery extends Gallery
 {
     private static final int MAX_SCROLL_X = 200;
     private static final float SCROLL_RATIO = 0.5f;// 阻尼系数  
-
+    
     public OverScrollGallery( Context context )
     {
 	super( context ,null);

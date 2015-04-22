@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="@color/pl_main_text_color"
+                android:textColor="@color/header_bar_btn_txt_press_color"
                 android:textSize="@dimen/pl_micro_text_size" />
 
             <TextView
@@ -49,7 +49,7 @@
                 android:ellipsize="end"
                 android:gravity="right"
                 android:singleLine="true"
-                android:textColor="@color/pl_main_text_color"
+                android:textColor="#404040"
                 android:textSize="@dimen/pl_micro_text_size" />
         </LinearLayout>
 
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:textColor="@color/pl_main_text_color"
+                   	android:textColor="#404040"
                     android:textSize="@dimen/pl_micro_text_size" />
 
                 <TextView 
@@ -86,7 +86,7 @@
                     android:singleLine="true"
                     android:gravity="right"
                     android:layout_weight="0.7"
-                    android:textColor="@color/pl_main_text_color"
+                    android:textColor="#404040"
                     android:textSize="@dimen/pl_micro_text_size" 
                     />
             </LinearLayout>
@@ -99,7 +99,7 @@
                 android:ellipsize="end"
                 android:gravity="right"
                 android:singleLine="true"
-                android:textColor="@color/pl_deputy_red_color"
+                android:textColor="@color/second_info_header_color3"
                 android:textSize="@dimen/pl_micro_text_size" />
         </LinearLayout>
 
@@ -117,7 +117,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="@color/pl_main_text_color"
+                android:textColor="#999999"
                 android:textSize="@dimen/pl_micro_text_size" />
 
             <TextView
@@ -144,6 +144,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/pl_deputy_blue_color" />
+        android:background="#cccccc" />
 
 </RelativeLayout>

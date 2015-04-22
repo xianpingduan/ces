@@ -30,7 +30,7 @@
             android:id="@+id/content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pl_main_text_color"
+            android:textColor="#404040"
             android:textSize="@dimen/pl_small_text_size"
             android:visibility="gone" />
 
@@ -75,6 +75,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/pl_deputy_blue_color" />
+        android:background="#cccccc" />
 
 </RelativeLayout>

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:textColor="@color/pl_main_text_color"
+        android:textColor="#404040"
         android:layout_marginBottom="@dimen/common_margin_buttom"
         android:layout_marginLeft="@dimen/common_margin_left"
         android:layout_marginTop="@dimen/common_margin_top"

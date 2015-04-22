@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/zhangtao_list_item_margin"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:textColor="@color/pl_main_text_color"
+            android:textColor="@color/second_info_header_color1"
             android:textSize="@dimen/pl_small_text_size"
             android:visibility="visible" />
 
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textColor="@color/pl_main_text_color"
+                android:textColor="@color/second_info_header_color4"
                 android:textSize="@dimen/pl_small_text_size" />
 
             <ImageView
@@ -71,6 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/pl_deputy_blue_color" />
+        android:background="#cccccc" />
 
 </RelativeLayout>

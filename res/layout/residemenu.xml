@@ -51,8 +51,8 @@
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="@string/user_info_no_data"
-                    android:textSize="@dimen/pl_mimi_text_size"
-                    android:textColor="@android:color/white" />
+                    android:textSize="@dimen/pl_small_text_size"
+                    android:textColor="@color/second_info_header_color5" />
 
                 <TextView
                     android:id="@+id/user_dept_tv"
@@ -64,7 +64,7 @@
                     android:singleLine="true"
                     android:textSize="@dimen/pl_mimi_text_size"
                     android:text="@string/user_info_no_data"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/second_info_header_color5" />
 
                 <TextView
                     android:id="@+id/user_account_tv"
@@ -76,7 +76,7 @@
                     android:singleLine="true"
                     android:textSize="@dimen/pl_mimi_text_size"
                     android:text="@string/user_info_no_data"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/second_info_header_color5" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -154,7 +154,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="6dp"
                 android:text="@string/switch_account_text"
-                android:textColor="@android:color/white"
+                android:textColor="@color/second_info_header_color6"
                 android:textSize="@dimen/pl_mimi_text_size" />
         </LinearLayout>
 
@@ -187,7 +187,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="6dp"
                 android:text="@string/loginout_text"
-                android:textColor="@android:color/white"
+                android:textColor="@color/second_info_header_color6"
                 android:textSize="@dimen/pl_mimi_text_size" />
         </LinearLayout>
     </LinearLayout>

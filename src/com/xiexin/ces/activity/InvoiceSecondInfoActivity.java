@@ -526,10 +526,10 @@ public class InvoiceSecondInfoActivity extends Activity implements
 					
 					if (tempDetConfig[i].toLowerCase().equals("totalcost")||tempDetConfig[i].toLowerCase().equals("actcost")) {
 						contentTv.setTextColor(getResources().getColor(
-								R.color.pl_main_red_color));
+								R.color.second_info_header_color3));
 					} else {
 						contentTv.setTextColor(getResources().getColor(
-								R.color.pl_main_text_color));
+								R.color.second_info_header_color4));
 					}
 					
 					contentTv.setText(content);

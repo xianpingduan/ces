@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/zt_frame"
+    android:id="@+id/invoice_road_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false" 
     android:orientation="horizontal"
     android:weightSum="4" >
 
@@ -21,8 +22,8 @@
 
         <CheckBox
             android:id="@+id/is_finished_cb"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
             android:layout_gravity="center"
             android:background="@drawable/process_node_passed"
             android:button="@null"
@@ -46,8 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textColor="@color/pl_deputy_light_text_color"
-                android:textSize="@dimen/pl_medium_text_size" />
+                android:textColor="#999999"
+                android:textSize="@dimen/pl_small_text_size" />
 
             <TextView
                 android:id="@+id/node_time_tv"
@@ -57,8 +58,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/common_margin_right"
                 android:layout_marginTop="@dimen/common_margin_top"
-                android:textColor="@color/pl_deputy_text_color"
-                android:textSize="@dimen/pl_medium_text_size" />
+                android:textColor="#999999"
+                android:textSize="@dimen/pl_mimi_text_size" />
         </RelativeLayout>
 
         <TextView
@@ -66,14 +67,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/pl_deputy_text_color"
-            android:textSize="@dimen/pl_small_text_size" />
+            android:textSize="@dimen/pl_mimi_text_size" 
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/node_content_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/pl_deputy_text_color"
-            android:textSize="@dimen/pl_small_text_size" />
+            android:textColor="#999999"
+            android:textSize="@dimen/pl_mimi_text_size" />
     </LinearLayout>
 
 </LinearLayout>

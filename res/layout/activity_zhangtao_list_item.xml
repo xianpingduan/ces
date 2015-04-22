@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:textColor="@color/pl_main_text_color"
+        android:textColor="#888888"
         android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
         android:layout_marginLeft="@dimen/zhangtao_list_item_margin"
         android:layout_marginTop="@dimen/zhangtao_list_item_margin"
@@ -25,8 +25,8 @@
 
     <CheckBox
         android:id="@+id/zt_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
@@ -38,7 +38,7 @@
     <View 
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/pl_deputy_blue_color"
+        android:background="#cccccc"
         android:layout_alignParentBottom="true"
         />
 

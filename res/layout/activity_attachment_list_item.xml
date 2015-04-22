@@ -30,7 +30,7 @@
         android:layout_toLeftOf="@id/handle_btn"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textColor="@color/pl_main_text_color"
+        android:textColor="#888888"
         android:textSize="@dimen/pl_small_text_size" />
 
     <TextView
@@ -43,6 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/pl_deputy_blue_color" />
+        android:background="#cccccc" />
 
 </RelativeLayout>

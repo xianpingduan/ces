@@ -209,7 +209,7 @@
                 android:layout_marginLeft="@dimen/remmenber_pwd_tv_margin_left"
                 android:gravity="center_vertical"
                 android:text="@string/remmenber_pwd_text"
-                android:textColor="@color/pl_deputy_text_color"
+                android:textColor="#979da4"
                 android:textSize="@dimen/pl_small_text_size" />
         </LinearLayout>
 
@@ -237,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|right"
                 android:text="@string/auto_login_text"
-                android:textColor="@color/pl_deputy_text_color"
+                android:textColor="#979da4"
                 android:textSize="@dimen/pl_small_text_size" />
             
             

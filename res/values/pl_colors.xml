@@ -33,7 +33,7 @@
    	
    	<color name="header_bar_bg_color">#0160fe</color>
    	<color name="login_bg_color">#ececec</color>
-   	<color name="header_bar_btn_txt_press_color">#F77A0C</color>
+   	<color name="header_bar_btn_txt_press_color">#2782df</color>
    	<color name="approval_list_item_bg_color">#EFEFF4</color>
    	
    	<color name="menu_line_color">#44494e</color>
@@ -50,5 +50,13 @@
    	<color name="attachment_list_view_item_color">#f3f3f3</color>
    	
    	<color name="black_99">#99000000</color>
+   	
+   	<color name="second_info_header_color1">#1b1b1b</color>
+   	<color name="second_info_header_color2">#2782df</color>
+   	
+   	<color name="second_info_header_color3">#fc7b7b</color>
+   	<color name="second_info_header_color4">#767676</color>
+   	<color name="second_info_header_color5">#b0b6b8</color>
+   	<color name="second_info_header_color6">#e5e5e5</color>
     
 </resources>

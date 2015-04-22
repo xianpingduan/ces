@@ -33,8 +33,9 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/employee_select_iv"
             android:text="@string/please_select_employee"
+            android:paddingLeft="6dp"
             android:textSize="@dimen/pl_small_text_size"
-            android:textColor="@color/pl_deputy_text_color" />
+            android:textColor="#404040" />
     </RelativeLayout>
 
     <Button
