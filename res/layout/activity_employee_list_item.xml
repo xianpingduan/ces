@@ -24,8 +24,8 @@
 
         <CheckBox
             android:id="@+id/employee_check_cb"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/common_margin_buttom"

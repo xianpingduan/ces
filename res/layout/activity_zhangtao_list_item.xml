@@ -21,12 +21,12 @@
         android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
         android:layout_marginLeft="@dimen/zhangtao_list_item_margin"
         android:layout_marginTop="@dimen/zhangtao_list_item_margin"
-        android:textSize="@dimen/pl_small_text_size" />
+        android:textSize="12.5sp" />
 
     <CheckBox
         android:id="@+id/zt_check"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/zhangtao_list_item_margin"

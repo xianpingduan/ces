@@ -6,20 +6,18 @@
     android:orientation="vertical" >
 
     <FrameLayout
-        android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:background="@drawable/login_logo_3"
+        android:background="@color/header_bar_btn_txt_press_color"
         android:gravity="center">
 
-	<!-- 	<ImageView
+		<ImageView
             android:id="@+id/logo"
-            android:layout_width="@dimen/login_logo_width"
-            android:layout_height="@dimen/login_logo_height"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/login_logo_2" /> -->
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/login_logo_3" />
         
 <!--         <ImageView
             android:id="@+id/login_logo_text"
@@ -241,7 +239,7 @@
                 android:textSize="@dimen/pl_small_text_size" />
             
             
-        </LinearLayout>
+        </LinearLayout> 
     </LinearLayout>
 
     <Button
@@ -254,6 +252,6 @@
         android:layout_marginTop="@dimen/login_btn_margin_top"
         android:gravity="center"
         android:text="@string/login_text"
-        android:textSize="@dimen/pl_small_text_size" />
+        android:textSize="@dimen/pl_medium_text_size" />
 
 </LinearLayout>

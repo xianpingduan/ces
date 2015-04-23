@@ -23,7 +23,7 @@
             android:imeOptions="flagNoExtractUi"
             android:singleLine="true"
             android:paddingLeft="6dp"
-            android:background="@drawable/edit_textview_bg"
+            android:background="@drawable/server_config_et_bg"
             android:textColorHint="#979ca2"
             android:text="@string/default_server_confi_url"
             android:textCursorDrawable="@drawable/pl_edittext_cursor" />
@@ -37,7 +37,7 @@
             android:hint="@string/server_config_port_hint"
             android:layout_marginTop="10dp"
             android:imeOptions="flagNoExtractUi"
-            android:background="@drawable/edit_textview_bg"
+            android:background="@drawable/server_config_et_bg"
             android:maxLength="18"
             android:paddingLeft="6dp"
             android:singleLine="true"
