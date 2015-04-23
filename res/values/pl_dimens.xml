@@ -4,14 +4,14 @@
     <!-- 字体大小适配 start -->
     
     <!-- 应用场景：号码归属地/时间/辅助性说明 -->
-    <dimen name="pl_mimi_text_size">11sp</dimen>
+    <dimen name="pl_mimi_text_size">14sp</dimen>
     
     <!-- 应用场景：号码归属地/时间/辅助性说明 -->
-    <dimen name="pl_micro_text_size">14sp</dimen>
+    <dimen name="pl_micro_text_size">16sp</dimen>
     <!-- 应用场景：下拉菜单/Button/Menu上的文字-->
-    <dimen name="pl_small_text_size">16sp</dimen>
+    <dimen name="pl_small_text_size">18sp</dimen>
     <!-- 应用场景：主标题、Listview主信息-->
-    <dimen name="pl_medium_text_size">17.5sp</dimen>
+    <dimen name="pl_medium_text_size">20sp</dimen>
     <!-- 应用场景：拨号输入/大标题-->
     <dimen name="pl_large_text_size">26sp</dimen>
     <!-- 字体大小适配 end -->

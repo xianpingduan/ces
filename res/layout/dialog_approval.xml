@@ -1,64 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dialog_approval_width"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@drawable/loading_pop_background"
-    android:orientation="vertical" >
+    android:layout_gravity="center" >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/common_margin_left"
-        android:layout_marginRight="@dimen/common_margin_right"
-        android:layout_marginTop="@dimen/common_margin_top"
-        android:background="@drawable/edit_textview_bg" >
-        
+        android:layout_gravity="center"
+        android:background="@drawable/loading_pop_background"
+        android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/expansion_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/button_expand_edit" />
-
-        <Spinner
-            android:id="@+id/approval_spinner"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:layout_toLeftOf="@id/expansion_iv" />
-    </RelativeLayout>
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_right"
+            android:layout_marginTop="@dimen/common_margin_top"
+            android:background="@drawable/edit_textview_bg" >
 
-    <EditText
-        android:id="@+id/approval_content_et"
-        style="@style/NormalEditText"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/approval_content_et_height"
-        android:layout_marginLeft="@dimen/common_margin_left"
-        android:layout_marginRight="@dimen/common_margin_right"
-        android:layout_marginTop="@dimen/common_margin_top"
-        android:paddingLeft="6dp"
-        android:background="@drawable/edit_textview_bg"
-        android:gravity="top"
-        android:hint="@string/please_enter_approval_content"
-        android:imeOptions="flagNoExtractUi"
-        android:textColorHint="#cccccc"
-        android:textCursorDrawable="@drawable/pl_edittext_cursor" />
+            <ImageView
+                android:id="@+id/expansion_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/button_expand_edit" />
 
-    <Button
-        android:id="@+id/submit_btn"
-        style="@style/NormalSubmitButton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/approval_dialog_submit_height"
-        android:layout_marginLeft="@dimen/common_margin_left"
-        android:layout_marginRight="@dimen/common_margin_right"
-        android:layout_marginBottom="@dimen/common_margin_top"
-        android:layout_marginTop="@dimen/approval_dialog_margin_top"
-        android:gravity="center"
-        android:text="@string/submit"
-        android:textSize="@dimen/pl_small_text_size" />
+            <Spinner
+                android:id="@+id/approval_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/expansion_iv"
+                android:background="@null" />
+        </RelativeLayout>
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/approval_content_et"
+            style="@style/NormalEditText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/approval_content_et_height"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_right"
+            android:layout_marginTop="@dimen/common_margin_top"
+            android:background="@drawable/approval_ed_bg"
+            android:gravity="top"
+            android:hint="@string/please_enter_approval_content"
+            android:imeOptions="flagNoExtractUi"
+            android:paddingLeft="6dp"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@drawable/pl_edittext_cursor" />
+
+        <Button
+            android:id="@+id/submit_btn"
+            style="@style/NormalSubmitButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/approval_dialog_submit_height"
+            android:layout_marginBottom="@dimen/common_margin_top"
+            android:layout_marginLeft="@dimen/common_margin_left"
+            android:layout_marginRight="@dimen/common_margin_right"
+            android:layout_marginTop="@dimen/approval_dialog_margin_top"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textSize="@dimen/pl_small_text_size" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:src="@drawable/close" />
+
+</FrameLayout>

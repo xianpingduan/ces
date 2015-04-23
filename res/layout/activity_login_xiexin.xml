@@ -156,7 +156,7 @@
             	android:layout_alignParentRight="true"
             	android:layout_centerVertical="true"
             	android:layout_marginRight="12dp"
-            	android:src="@drawable/icon_arrow" />
+            	android:src="@drawable/xiexin_select" />
         	<ImageView 
                 android:id="@+id/login_zt_icon"
                	android:layout_width="wrap_content"
@@ -194,8 +194,8 @@
 
             <CheckBox
                 android:id="@+id/remmenber_pwd_cb"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/normal_login_check_button"
                 android:button="@null"
                 android:gravity="center_vertical" />
@@ -222,8 +222,8 @@
 
             <CheckBox
                 android:id="@+id/auto_login_cb"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginRight="@dimen/common_margin_right"
                 android:background="@drawable/normal_login_check_button"
                 android:button="@null"

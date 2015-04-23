@@ -97,7 +97,7 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 		mReturnIv.setVisibility(View.VISIBLE);
 		mReturnTv.setVisibility(View.GONE);
 		mReturnIv.setClickable(false);
-		mReturnIv2.setImageResource(R.drawable.titlebar_menu_selector);
+		mReturnIv2.setImageResource(R.drawable.server_config_head_menu);
 	}
 	else
 	{

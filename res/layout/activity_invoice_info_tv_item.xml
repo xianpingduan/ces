@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/zt_frame"
     android:layout_width="match_parent"
+    android:background="@drawable/listview_item_bg_color"
     android:layout_height="@dimen/invoice_second_info_item_height" >
 
     <LinearLayout
@@ -13,9 +14,9 @@
             android:id="@+id/table_header_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
-            android:layout_marginLeft="@dimen/common_margin_left"
-            android:layout_marginTop="@dimen/zhangtao_list_item_margin"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
             android:textColor="@color/second_info_header_color1"
@@ -25,8 +26,8 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
-            android:layout_marginTop="@dimen/zhangtao_list_item_margin"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="2" >
 <!-- 
             <View
@@ -47,8 +48,8 @@
 
             <ImageView
                 android:id="@+id/message"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/login_margin_right"
@@ -57,8 +58,8 @@
 
             <ImageView
                 android:id="@+id/phone"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="30dp"
+                android:layout_height="29dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/login_margin_right"
                 android:layout_toLeftOf="@id/message"
@@ -69,7 +70,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_alignParentBottom="true"
         android:background="#cccccc" />
 

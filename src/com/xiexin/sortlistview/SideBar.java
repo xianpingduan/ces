@@ -57,10 +57,11 @@ public class SideBar extends View {
 			// paint.setColor(Color.WHITE);
 			paint.setTypeface(Typeface.DEFAULT_BOLD);
 			paint.setAntiAlias(true);
-			paint.setTextSize(20);
+			paint.setTextSize(30);
+			paint.setColor(Color.parseColor("#727272"));
 			// 选中的状态
 			if (i == choose) {
-				paint.setColor(Color.parseColor("#3399ff"));
+				paint.setColor(Color.parseColor("#727272"));
 				paint.setFakeBoldText(true);
 			}
 			// x坐标等于中间-字符串宽度的一半.
@@ -91,7 +92,8 @@ public class SideBar extends View {
 			break;
 
 		default:
-			setBackgroundResource(R.drawable.sidebar_background);
+//			setBackgroundResource(R.drawable.sidebar_background);
+			setBackgroundDrawable(new ColorDrawable(0x00000000));
 			if (oldChoose != c) {
 				if (c >= 0 && c < b.length) {
 					if (listener != null) {

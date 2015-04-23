@@ -38,7 +38,7 @@
     </style>
     
     <style name="NormalEditText" parent="Ces.Widget">
-        <item name="android:textSize">@dimen/pl_small_text_size</item>
+        <item name="android:textSize">@dimen/pl_micro_text_size</item>
         <item name="android:textColor">@color/pl_main_text_color</item>
         <item name="android:textStyle">normal</item>
     </style>

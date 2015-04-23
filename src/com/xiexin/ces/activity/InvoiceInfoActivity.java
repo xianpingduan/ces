@@ -717,6 +717,19 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			ImageView msgIv = (ImageView) view.findViewById(R.id.message);
 			ImageView phoneIv = (ImageView) view.findViewById(R.id.phone);
 			
+			if(i==0){
+				contentTv.setTextColor(getResources().getColor(
+				R.color.header_bar_btn_txt_press_color));
+			}else{
+				if (mDataConfig[i].toLowerCase().equals("totalcost")) {
+					contentTv.setTextColor(getResources().getColor(
+							R.color.second_info_header_color3));
+				} else {
+					contentTv.setTextColor(getResources().getColor(
+							R.color.second_info_header_color4));
+				}
+			}
+			
 //			contentTv.setTextColor(getResources().getColor(
 //					R.color.info_content_text_color));
 			
@@ -728,13 +741,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 //                        R.color.second_info_header_color4));
 //            }
 
-			if (mDataConfig[i].toLowerCase().equals("totalcost")) {
-				contentTv.setTextColor(getResources().getColor(
-						R.color.second_info_header_color3));
-			} else {
-				contentTv.setTextColor(getResources().getColor(
-						R.color.second_info_header_color4));
-			}
+
 
 			msgIv.setOnClickListener(new View.OnClickListener() {
 				@Override

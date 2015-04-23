@@ -36,7 +36,7 @@
    	<color name="header_bar_btn_txt_press_color">#2782df</color>
    	<color name="approval_list_item_bg_color">#EFEFF4</color>
    	
-   	<color name="menu_line_color">#44494e</color>
+   	<color name="menu_line_color">#cccccc</color>
    	<color name="menu_bg_color">#26292d</color>
    	
    	<color name="info_content_text_color">#0160fe</color>

@@ -654,7 +654,7 @@ public class MessageFragment extends Fragment implements OnClickListener
             try
             {
                 date = sdf.parse(pushMessage.getCrtdate());
-                holder.timeTv.setText(sdf.format(date));
+                holder.timeTv.setText("("+sdf.format(date)+")");
             } catch (ParseException e)
             {
                 holder.timeTv.setText("");

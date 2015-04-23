@@ -2,9 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/login_bg_color"
     android:orientation="vertical" >
 
     <include layout="@layout/header_action_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,15 +30,13 @@
             <Button
                 android:id="@+id/second_info_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/button_lookinfo_edit"
                 android:layout_marginTop="@dimen/common_margin_top"
+                android:background="@drawable/button_lookinfo_edit"
                 android:text="@string/look_invoice_info"
-                android:textSize="@dimen/pl_micro_text_size"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/pl_small_text_size" />
 
             <View
                 android:layout_width="match_parent"
@@ -54,14 +62,14 @@
                         android:id="@+id/approval_rb"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="@string/approval"
                         android:background="#F5F4F0"
-                        android:padding="6dp"
+                        android:button="@null"
                         android:drawableTop="@drawable/approval_info_button"
-                        android:textSize="@dimen/pl_micro_text_size"
-                        android:textColor="@color/btn_approval_color" />
+                        android:gravity="center"
+                        android:padding="6dp"
+                        android:text="@string/approval"
+                        android:textColor="@color/btn_approval_color"
+                        android:textSize="@dimen/pl_micro_text_size" />
 
                     <View
                         android:layout_width="0.5dp"
@@ -81,14 +89,14 @@
                         android:id="@+id/notify_rb"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="#F5F4F0"
                         android:button="@null"
+                        android:drawableTop="@drawable/zhihui_info_button"
                         android:gravity="center"
                         android:padding="6dp"
-                        android:background="#F5F4F0"
                         android:text="@string/notify"
-                        android:drawableTop="@drawable/zhihui_info_button"
-                        android:textSize="@dimen/pl_micro_text_size"
-                        android:textColor="@color/btn_approval_color" />
+                        android:textColor="@color/btn_approval_color"
+                        android:textSize="@dimen/pl_micro_text_size" />
 
                     <View
                         android:layout_width="0.5dp"
@@ -103,14 +111,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="#f5f4f0"
                     android:button="@null"
+                    android:drawableTop="@drawable/jiaqian_info_button"
                     android:gravity="center"
                     android:padding="6dp"
-                    android:background="#f5f4f0"
                     android:text="@string/set_plugin"
-                    android:drawableTop="@drawable/jiaqian_info_button"
-                    android:textSize="@dimen/pl_micro_text_size"
-                    android:textColor="@color/btn_approval_color" />
+                    android:textColor="@color/btn_approval_color"
+                    android:textSize="@dimen/pl_micro_text_size" />
             </LinearLayout>
         </LinearLayout>
 

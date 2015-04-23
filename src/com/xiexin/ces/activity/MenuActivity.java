@@ -422,20 +422,13 @@ public class MenuActivity extends FragmentActivity implements
 		oneList.add(itemSendItem);
 		oneList.add(itemScratchUpcome);
 		oneList.add(itemApproved);
+		oneList.add(itemMessage);
+		oneList.add(itemAds);
 
-		List<ResideMenuItem> twoList = new ArrayList<ResideMenuItem>();
-		twoList.clear();
-		twoList.add(itemMessage);
-		twoList.add(itemAds);
+		oneList.add(itemInvoice);
+		oneList.add(itemRecord);
 
-		List<ResideMenuItem> thirdList = new ArrayList<ResideMenuItem>();
-		thirdList.clear();
-		thirdList.add(itemInvoice);
-		thirdList.add(itemRecord);
-
-		List<ResideMenuItem> fourList = new ArrayList<ResideMenuItem>();
-		fourList.clear();
-		fourList.add(itemUpdate);
+		oneList.add(itemUpdate);
 
 		// resideMenu.addMenuItem( itemPendApproval ,
 		// ResideMenu.DIRECTION_LEFT);
@@ -449,10 +442,10 @@ public class MenuActivity extends FragmentActivity implements
 		// resideMenu.addMenuItem( itemMessage , ResideMenu.DIRECTION_LEFT );
 		// resideMenu.addMenuItem( itemAds , ResideMenu.DIRECTION_LEFT );
 
-		resideMenu.addMenuItem(twoList, ResideMenu.DIRECTION_LEFT);
-		resideMenu.addMenuItem(thirdList, ResideMenu.DIRECTION_LEFT);
+//		resideMenu.addMenuItem(twoList, ResideMenu.DIRECTION_LEFT);
+//		resideMenu.addMenuItem(thirdList, ResideMenu.DIRECTION_LEFT);
 		
-		resideMenu.addMenuItem(itemUpdate, ResideMenu.DIRECTION_LEFT);
+//		resideMenu.addMenuItem(itemUpdate, ResideMenu.DIRECTION_LEFT);
 
 		// resideMenu.addMenuItem(itemInvoice, ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem(itemRecord, ResideMenu.DIRECTION_LEFT);

@@ -208,6 +208,8 @@ public class ResideMenu extends FrameLayout
     //add menu group
     public void addMenuItem( List< ResideMenuItem > menuItems , int direction )
     {
+    	
+    	
 	for( ResideMenuItem menuItem : menuItems )
 	{
 	    if( direction == DIRECTION_LEFT )
@@ -220,15 +222,6 @@ public class ResideMenu extends FrameLayout
 		this.rightMenuItems.add( menuItem );
 		layoutRightMenu.addView( menuItem );
 	    }
-	}
-
-	if( direction == DIRECTION_LEFT )
-	{
-	    layoutLeftMenu.addView( createLineView( ) );
-	}
-	else
-	{
-	    layoutRightMenu.addView( createLineView( ) );
 	}
 
     }

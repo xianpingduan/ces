@@ -541,9 +541,6 @@ public class InvoiceSecondInfoActivity extends Activity implements
 					headerTv.setTextColor(InvoiceSecondInfoActivity.this
 							.getResources().getColor(
 									R.color.header_bar_btn_txt_press_color));
-					contentTv.setTextColor(InvoiceSecondInfoActivity.this
-							.getResources().getColor(
-									R.color.header_bar_btn_txt_press_color));
 					view.setBackgroundColor(InvoiceSecondInfoActivity.this
 							.getResources().getColor(
 									R.color.approval_list_item_bg_color));

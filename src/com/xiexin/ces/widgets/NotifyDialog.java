@@ -21,6 +21,8 @@ public class NotifyDialog extends Dialog {
 	private Button mSubmit;
 
 	private Handler mHandler;
+	
+	private ImageView close;
 
 	private RelativeLayout mZtSelectRl;
 
@@ -44,6 +46,15 @@ public class NotifyDialog extends Dialog {
 		mEmployeeTv = (TextView) findViewById(R.id.employee_tv);
 
 		mZtSelectRl = (RelativeLayout) findViewById(R.id.zt_select_rl);
+		close= (ImageView) findViewById(R.id.close);
+		
+		close.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
 
 		mZtSelectRl.setOnClickListener(new View.OnClickListener() {
 

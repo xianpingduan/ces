@@ -19,13 +19,13 @@
             android:layout_height="18dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/common_margin_left"
-            android:src="@drawable/fapiao_check" />
+            android:src="@drawable/search_bar_icon_normal" />
 
         <com.xiexin.sortlistview.ClearEditText
             android:id="@+id/search_et"
             style="@style/NormalEditText"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/login_frame_height"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/search_iv"
             android:background="@null"

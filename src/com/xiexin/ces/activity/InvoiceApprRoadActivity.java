@@ -23,6 +23,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -376,6 +377,9 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 		holder.processModeTv = (TextView)convertView.findViewById( R.id.node_name_tv );
 		holder.apprMemoTv = (TextView)convertView.findViewById( R.id.node_content_tv );
 		holder.isFinishedCb = (CheckBox)convertView.findViewById( R.id.is_finished_cb );
+		holder.line1 = convertView.findViewById(R.id.line1);
+		holder.line2 = convertView.findViewById(R.id.line2);
+		holder.roadEditIv =(ImageView) convertView.findViewById(R.id.road_edit_iv);
 
 		convertView.setTag( holder );
 	    }
@@ -386,6 +390,24 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	    }
 
 	    bindData( holder , list.get( position ) );
+	    
+	    
+	    if(position==0){
+	    	holder.line1.setVisibility(View.INVISIBLE);
+	    	holder.line2.setVisibility(View.VISIBLE);
+	    	holder.roadEditIv.setVisibility(View.VISIBLE);
+	    	holder.isFinishedCb.setVisibility(View.INVISIBLE);
+	    }else if(position == getCount()-1){
+	    	holder.line1.setVisibility(View.VISIBLE);
+	    	holder.line2.setVisibility(View.INVISIBLE);
+	    	holder.roadEditIv.setVisibility(View.INVISIBLE);
+	    	holder.isFinishedCb.setVisibility(View.VISIBLE);
+	    }else{
+	    	holder.line1.setVisibility(View.VISIBLE);
+	    	holder.line2.setVisibility(View.VISIBLE);
+	    	holder.roadEditIv.setVisibility(View.INVISIBLE);
+	    	holder.isFinishedCb.setVisibility(View.VISIBLE);
+	    }
 
 	    return convertView;
 	}
@@ -478,6 +500,9 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	TextView apprTimeTv;
 	TextView processModeTv;
 	TextView apprMemoTv;
+	View line1;
+	View line2;
+	ImageView roadEditIv;
 	CheckBox isFinishedCb;
     }
 

@@ -38,8 +38,11 @@
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp" 
+            android:layout_marginBottom="3dp"
             android:textColor="@color/pl_main_text_color"
-            android:textSize="@dimen/pl_small_text_size"
+            android:layout_marginRight="20dp"
+            android:textSize="@dimen/pl_mimi_text_size"
             android:visibility="visible" />
 
         <ImageView
@@ -73,7 +76,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_alignParentBottom="true"
         android:background="#cccccc" />
 

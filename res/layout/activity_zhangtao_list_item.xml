@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/zt_frame"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/listview_item_bg_color" >
 
@@ -21,12 +21,12 @@
         android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
         android:layout_marginLeft="@dimen/zhangtao_list_item_margin"
         android:layout_marginTop="@dimen/zhangtao_list_item_margin"
-        android:textSize="12.5sp" />
+        android:textSize="14sp" />
 
     <CheckBox
         android:id="@+id/zt_check"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/zhangtao_list_item_margin"
@@ -37,7 +37,7 @@
     
     <View 
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="#cccccc"
         android:layout_alignParentBottom="true"
         />

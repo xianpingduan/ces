@@ -8,7 +8,6 @@
         android:id="@+id/catalog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E0E0E0"
         android:textColor="#727272"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
@@ -19,19 +18,19 @@
     <RelativeLayout
         android:id="@+id/employee_frame"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="@drawable/listview_item_bg_color" >
 
         <CheckBox
             android:id="@+id/employee_check_cb"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/common_margin_buttom"
             android:layout_marginLeft="@dimen/common_margin_left"
             android:layout_marginTop="@dimen/common_margin_top"
-            android:background="@drawable/icon_employee_check_btn"
+            android:background="@drawable/normal_check_button"
             android:button="@null" />
 
         <TextView

@@ -26,6 +26,8 @@ public class PlusSignDialog extends Dialog {
 	private CheckBox mXianghouCb;
 	private Button mSubmit;
 
+	private ImageView  close;
+	
 	private int mType = -1;
 
 	private Handler mHandler;
@@ -56,6 +58,16 @@ public class PlusSignDialog extends Dialog {
 
 		mXianghouLl = (LinearLayout) findViewById(R.id.xianghou_ll);
 		mXianghouCb = (CheckBox) findViewById(R.id.xianghou_cb);
+		
+		close= (ImageView) findViewById(R.id.close);
+		
+		close.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
 
 		mXiangqianCb.setOnClickListener(new View.OnClickListener() {
 

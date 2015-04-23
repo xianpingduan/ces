@@ -33,6 +33,8 @@ public class ApprovalDialog extends Dialog {
 
 	private Handler mHandler;
 	private int mKind;
+	
+	private ImageView close;
 
 	private int mSpinnerVal;
 	private ApprovalSpinnerAdapter mApprovalSpinnerAdapter;
@@ -53,6 +55,17 @@ public class ApprovalDialog extends Dialog {
 		setContentView(R.layout.dialog_approval);
 		setCanceledOnTouchOutside(false);
 		generateList();
+		
+		
+		close= (ImageView) findViewById(R.id.close);
+		
+		close.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
 
 		mSpinner = (Spinner) findViewById(R.id.approval_spinner);
 

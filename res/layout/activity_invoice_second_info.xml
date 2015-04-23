@@ -2,9 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/login_bg_color"
     android:orientation="vertical" >
 
     <include layout="@layout/header_action_bar" />
+    
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc" />
 
     <!--<com.xiexin.ces.widgets.LoadingUIListView
         android:id="@+id/invoice_second_info_list"
@@ -18,7 +28,6 @@
         android:id="@+id/sticky_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -47,7 +56,7 @@
                 android:layout_height="match_parent"
                 android:cacheColorHint="@null"
                 android:childIndicatorLeft="0dp"
-                android:dividerHeight="1dp"
+                android:dividerHeight="0.5dp"
                 android:groupIndicator="@null"
                 android:scrollbarAlwaysDrawHorizontalTrack="false" >
             </com.xiexin.ces.expandablelist.PinnedHeaderExpandableListView>
