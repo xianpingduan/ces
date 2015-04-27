@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg" >
 
-    <ImageView
+<!--     <ImageView
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
+        android:visibility="gone"
+        android:scaleType="centerCrop" /> -->
+
+    <ImageView
+        android:id="@+id/iv_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="@dimen/reside_menu_width"
@@ -81,15 +90,15 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <com.xiexin.ces.widgets.StretchScrollView
+    <ScrollView
         android:id="@+id/sv_left_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:fillViewport="true"
-        android:overScrollMode="never"
         android:layout_marginBottom="@dimen/left_menu_scrollview_margin_buttom"
         android:layout_marginTop="@dimen/left_menu_scrollview_margin_top"
+        android:fillViewport="true"
+        android:overScrollMode="never"
         android:scrollbars="none" >
 
         <LinearLayout
@@ -117,15 +126,15 @@
                 android:layout_height="0.5dp"
                 android:background="@color/pl_deputy_text_color" />
         </LinearLayout>
-    </com.xiexin.ces.widgets.StretchScrollView>
+    </ScrollView>
 
     <com.xiexin.ces.widgets.StretchScrollView
         android:id="@+id/sv_right_menu"
         android:layout_width="@dimen/reside_menu_width"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
-        android:scrollbars="none" 
-        android:visibility="gone">
+        android:scrollbars="none"
+        android:visibility="gone" >
 
         <LinearLayout
             android:id="@+id/layout_right_menu"
@@ -166,15 +175,14 @@
                 android:layout_marginLeft="6dp"
                 android:text="@string/switch_account_text"
                 android:textColor="@color/second_info_header_color6"
-                android:textSize="@dimen/pl_mimi_text_size" />
+                android:textSize="@dimen/pl_micro_text_size" />
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/login_out_ll"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp" >
 
             <ImageView
                 android:id="@+id/login_out_iv"
@@ -191,7 +199,7 @@
                 android:layout_marginLeft="6dp"
                 android:text="@string/loginout_text"
                 android:textColor="@color/second_info_header_color6"
-                android:textSize="@dimen/pl_mimi_text_size" />
+                android:textSize="@dimen/pl_micro_text_size" />
         </LinearLayout>
     </LinearLayout>
 

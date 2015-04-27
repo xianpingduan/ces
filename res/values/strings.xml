@@ -98,7 +98,8 @@
     
     <!-- 详情 -->
     <string name="invoice_info">详情</string>
-    <string name="invoice_approval_road">审批路线</string>
+    <string name="invoice_approval_road">路线</string>
+    <string name="invoice_approval_road_info">审批路线</string>
     <string name="invoice_attachment">附件</string>
     <string name="request_appr_road_list_error">加载单据审批路线失败</string>
     <string name="set_plugin">加签</string>
@@ -109,7 +110,7 @@
     <!-- 人员 -->
     <string name="please_select_employee">请选择人员</string>
     <string name="search">搜索</string>
-    <string name="please_enter_employee_name">请输入姓名</string>
+    <string name="please_enter_employee_name">请输入您要查询的姓名</string>
 
     
     <string name="sure_to_login_out">是否确认注销当前帐号?</string>

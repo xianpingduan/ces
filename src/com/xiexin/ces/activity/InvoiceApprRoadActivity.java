@@ -121,7 +121,7 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 	// mInvoiceType = getIntent( ).getIntExtra( Constants.INVOICE_TYPE , 0
 	// );
 	mReturnTv.setText( getString( R.string.invoice_info ) );
-	mTitle.setText( getString( R.string.invoice_approval_road ) );
+	mTitle.setText( getString( R.string.invoice_approval_road_info ) );
 
 	mBtn1.setVisibility( View.GONE );
 	mBtn2.setVisibility( View.GONE );

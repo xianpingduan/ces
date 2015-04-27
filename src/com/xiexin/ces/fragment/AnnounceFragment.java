@@ -1,7 +1,9 @@
 package com.xiexin.ces.fragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -351,6 +353,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 				announce.setNoticeid(jsonObject.getString("noticeid"));
 				announce.setFromuser(jsonObject.getString("fromuser"));
 				announce.setTitle(jsonObject.getString("title"));
+				announce.setCrtdate(jsonObject.getString("crtdate"));
 				
 				String files = jsonObject.getString("filespath");
 				if(files==null || files.equals("null")){
@@ -487,6 +490,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 				holder.indicateIv = (ImageView) convertView.findViewById(R.id.indicate_iv);
 				holder.filesPathTv = (TextView) convertView.findViewById(R.id.filespath_tv);
 				holder.haveAttachIv = (ImageView) convertView.findViewById(R.id.have_attachment_iv);
+				holder.timeTv =  (TextView) convertView.findViewById(R.id.time_tv);
 				
 				convertView.setTag(R.id.id_tv,holder);
 			} else {
@@ -565,6 +569,16 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 			String filespath = pushAnnounce.getFilespath().toString();
 			holder.filesPathTv.setText(filespath);
 			
+            Date date = new Date();
+            try
+            {
+                date = sdf.parse(pushAnnounce.getCrtdate());
+                holder.timeTv.setText("("+sdf.format(date)+")");
+            } catch (ParseException e)
+            {
+                holder.timeTv.setText("");
+            }
+			
 			if(filespath!=null&&!filespath.isEmpty()&&!"[]".equals(filespath)){
 			    holder.haveAttachIv.setVisibility(View.VISIBLE);
 			}else{
@@ -580,6 +594,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 		TextView contentTv;
 		ImageView indicateIv;
 		ImageView haveAttachIv;
+		TextView timeTv;
 		// 存数据
 		TextView idTv;
 		TextView filesPathTv;
