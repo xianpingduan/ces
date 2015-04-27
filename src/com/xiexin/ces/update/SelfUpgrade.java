@@ -337,8 +337,15 @@ public class SelfUpgrade {
 						showUpgradeSpecApkDialog();
 					}else{
 						Logger.d(TAG, "已经是最新版本"+App.VersionCode());
-						if(checkType==Constants.CHECK_UPDATE_NOAUTO){
-							Toast.makeText(mContext, "当前软件版本是"+App.VersionName()+",已经是最新版本!", Toast.LENGTH_SHORT).show();
+						if(checkType==Constants.CHECK_UPDATE_NOAUTO&&mContext!=null){
+							//Toast.makeText(mContext, "当前软件版本是"+App.VersionName()+",已经是最新版本!", Toast.LENGTH_SHORT).show();
+							if(mUpdateInfoDialog==null){
+								mUpdateInfoDialog = new UpdateInfoDialog(mContext, "", "当前软件版本是"+App.VersionName()+",已经是最新版本");
+							}
+							mUpdateInfoDialog.getWindow().setType(
+									WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+							mUpdateInfoDialog.show();
+							
 						}
 					}
 					if (mSelfUpdateListener != null) {
@@ -372,6 +379,8 @@ public class SelfUpgrade {
 	private SelfUpdateCommonDialog mUpgradeDialog;
 	private String mUpdatePrompt;
 	private String mUpdateDesc;
+	
+	private UpdateInfoDialog mUpdateInfoDialog;
 
 	// 上报最近任务弹出框
 	private void showUpgradeSpecApkDialog() {

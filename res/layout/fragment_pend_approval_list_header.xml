@@ -10,6 +10,7 @@
         android:layout_centerInParent="true"
         android:layout_margin="@dimen/common_margin"
         android:gravity="center"
+        android:orientation="horizontal"
         android:background="@drawable/search_input_box_bg" >
 
         <ImageView
@@ -17,6 +18,14 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/fapiao_check" />
+        
+        <TextView 
+            android:id="@+id/search_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textColor="#888888"
+            />
 
     </LinearLayout>
 

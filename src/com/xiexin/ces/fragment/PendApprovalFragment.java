@@ -575,25 +575,32 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			// Logger.d(TAG, "---prgName="+invoice.getPrgName());
 			holder.invoiceIdTv.setText(invoice.getDatanbr());
 			holder.invoiceDateTv.setText(apprDate);
-			holder.departUserNameTv.setText(invoice.getDepart() + " "
-					+ invoice.getApprname());
+			
+			String account=invoice.getAccount();
+			if(account==null||account.isEmpty()){
+			     String accountName = App.getSharedPreference().getString(Constants.ZHANG_TAO_ACCINFO, "");
+//			    holder.accountNameTv.setText(accountName);
+			    holder.departUserNameTv.setText(invoice.getDepart() + " "
+						+ invoice.getApprname() +"  "+accountName);
+			    
+			}else{
+			    holder.accountNameTv.setText(invoice.getAccountname()); 
+			    
+			    holder.departUserNameTv.setText(invoice.getDepart() + " "
+						+ invoice.getApprname() +"  " +invoice.getAccountname());
+			}
+
+			
 			Logger.d(TAG, "Totalcost="+invoice.getTotalcost());
 			holder.moneyTv
 					.setText("￥" + StringUtils.priceDecimal(invoice.getTotalcost())+"");
 			holder.prgIdTv.setText(invoice.getPrgid());
 			
-			String account=invoice.getAccount();
+
 			
 			holder.accountTv.setText(invoice.getAccount());
 			holder.invoiceDescTv.setText(invoice.getReason());
 			
-			if(account==null||account.isEmpty()){
-			     String accountName = App.getSharedPreference().getString(Constants.ZHANG_TAO_ACCINFO, "");
-			    holder.accountNameTv.setText(accountName);
-			}else{
-			    holder.accountNameTv.setText(invoice.getAccountname()); 
-			}
-
 			holder.indicateIv.setOnClickListener(new View.OnClickListener() {
 
 				@Override
