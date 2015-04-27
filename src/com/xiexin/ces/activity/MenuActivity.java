@@ -403,7 +403,7 @@ public class MenuActivity extends FragmentActivity implements
 		itemAds.setOnClickListener(this);
 		
 		
-		itemUpdate = new ResideMenuItem(this, R.drawable.icon_scratch_upcome,
+		itemUpdate = new ResideMenuItem(this, R.drawable.icon_update,
 				getString(R.string.menu_update));
 		
 		itemInvoice = new ResideMenuItem(this, R.drawable.fapiao_check,

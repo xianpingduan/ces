@@ -10,13 +10,6 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop" />
 
-    <ImageView
-        android:id="@+id/iv_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/shadow"
-        android:scaleType="fitXY" />
-
     <LinearLayout
         android:layout_width="@dimen/reside_menu_width"
         android:layout_height="wrap_content"
@@ -93,6 +86,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
+        android:fillViewport="true"
+        android:overScrollMode="never"
         android:layout_marginBottom="@dimen/left_menu_scrollview_margin_buttom"
         android:layout_marginTop="@dimen/left_menu_scrollview_margin_top"
         android:scrollbars="none" >
@@ -129,7 +124,8 @@
         android:layout_width="@dimen/reside_menu_width"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
-        android:scrollbars="none" >
+        android:scrollbars="none" 
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/layout_right_menu"
@@ -173,20 +169,11 @@
                 android:textSize="@dimen/pl_mimi_text_size" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="18dp"
-            android:layout_height="wrap_content"
-            android:gravity="center" >
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="10dp"
-                android:background="@android:color/white" />
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/login_out_ll"
             android:layout_width="wrap_content"
+            android:layout_marginLeft="30dp"
             android:layout_height="wrap_content" >
 
             <ImageView

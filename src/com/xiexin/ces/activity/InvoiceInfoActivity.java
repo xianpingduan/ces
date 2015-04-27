@@ -818,6 +818,13 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				if (!content.isEmpty() && mDataConfig[i].toLowerCase().equals("totalcost")) {
 					content = "￥" + StringUtils.priceDecimal(Double.parseDouble(content));
 				}
+				
+				if(content.equals("true")){
+					content ="是";
+				}else if(content.equals("false")){
+					content ="否";
+				}
+				
 				contentTv.setText(content);
 			} catch (JSONException e) {
 				e.printStackTrace();

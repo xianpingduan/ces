@@ -43,10 +43,10 @@ public class ResideMenu extends FrameLayout
     private static final int PRESSED_DONE = 4;
     private static final int PRESSED_MOVE_VERTICAL = 5;
 
-    private ImageView imageViewShadow;
+//    private ImageView imageViewShadow;
     private ImageView imageViewBackground;
     private LinearLayout layoutLeftMenu;
-    private LinearLayout layoutRightMenu;
+//    private LinearLayout layoutRightMenu;
     private ScrollView scrollViewLeftMenu;
     private ScrollView scrollViewRightMenu;
     private ScrollView scrollViewMenu;
@@ -94,9 +94,9 @@ public class ResideMenu extends FrameLayout
 	//	contentInfoLl = (LinearLayout) findViewById(R.id.content_info_ll);
 	scrollViewLeftMenu = (ScrollView)findViewById( R.id.sv_left_menu );
 	scrollViewRightMenu = (ScrollView)findViewById( R.id.sv_right_menu );
-	imageViewShadow = (ImageView)findViewById( R.id.iv_shadow );
+//	imageViewShadow = (ImageView)findViewById( R.id.iv_shadow );
 	layoutLeftMenu = (LinearLayout)findViewById( R.id.layout_left_menu );
-	layoutRightMenu = (LinearLayout)findViewById( R.id.layout_right_menu );
+//	layoutRightMenu = (LinearLayout)findViewById( R.id.layout_right_menu );
 	imageViewBackground = (ImageView)findViewById( R.id.iv_background );
 
 	mUserInfoRl = (RelativeLayout)findViewById( R.id.user_info_rl );
@@ -160,18 +160,18 @@ public class ResideMenu extends FrameLayout
 	imageViewBackground.setImageResource( imageResrouce );
     }
 
-    /**
-     * the visiblity of shadow under the activity view;
-     *
-     * @param isVisible
-     */
-    public void setShadowVisible( boolean isVisible )
-    {
-	if( isVisible )
-	    imageViewShadow.setBackgroundResource( R.drawable.shadow );
-	else
-	    imageViewShadow.setBackgroundResource( 0 );
-    }
+//    /**
+//     * the visiblity of shadow under the activity view;
+//     *
+//     * @param isVisible
+//     */
+//    public void setShadowVisible( boolean isVisible )
+//    {
+//	if( isVisible )
+//	    imageViewShadow.setBackgroundResource( R.drawable.shadow );
+//	else
+//	    imageViewShadow.setBackgroundResource( 0 );
+//    }
 
     /**
      * add a single items to left menu;
@@ -201,7 +201,7 @@ public class ResideMenu extends FrameLayout
 	else
 	{
 	    this.rightMenuItems.add( menuItem );
-	    layoutRightMenu.addView( menuItem );
+//	    layoutRightMenu.addView( menuItem );
 	}
     }
 
@@ -220,7 +220,7 @@ public class ResideMenu extends FrameLayout
 	    else
 	    {
 		this.rightMenuItems.add( menuItem );
-		layoutRightMenu.addView( menuItem );
+//		layoutRightMenu.addView( menuItem );
 	    }
 	}
 
@@ -273,11 +273,11 @@ public class ResideMenu extends FrameLayout
     private void rebuildMenu()
     {
 	layoutLeftMenu.removeAllViews( );
-	layoutRightMenu.removeAllViews( );
+//	layoutRightMenu.removeAllViews( );
 	for( int i = 0 ; i < leftMenuItems.size( ) ; i++ )
 	    layoutLeftMenu.addView( leftMenuItems.get( i ) , i );
-	for( int i = 0 ; i < rightMenuItems.size( ) ; i++ )
-	    layoutRightMenu.addView( rightMenuItems.get( i ) , i );
+//	for( int i = 0 ; i < rightMenuItems.size( ) ; i++ )
+//	    layoutRightMenu.addView( rightMenuItems.get( i ) , i );
     }
 
     /**
@@ -339,13 +339,13 @@ public class ResideMenu extends FrameLayout
 
 	isOpened = true;
 	AnimatorSet scaleDown_activity = buildScaleDownAnimation( viewActivity , mScaleValue , mScaleValue );
-	AnimatorSet scaleDown_shadow = buildScaleDownAnimation( imageViewShadow , mScaleValue + shadowAdjustScaleX , mScaleValue + shadowAdjustScaleY );
+//	AnimatorSet scaleDown_shadow = buildScaleDownAnimation( imageViewShadow , mScaleValue + shadowAdjustScaleX , mScaleValue + shadowAdjustScaleY );
 	AnimatorSet alpha_menu = buildMenuAnimation( scrollViewMenu , 1.0f );
 	AnimatorSet alpha_userinfo = buildMenuAnimation( mUserInfoRl , 1.0f );
 	AnimatorSet alpha_loginout = buildMenuAnimation( mSettingLl , 1.0f );
 
-	scaleDown_shadow.addListener( animationListener );
-	scaleDown_activity.playTogether( scaleDown_shadow );
+//	scaleDown_shadow.addListener( animationListener );
+//	scaleDown_activity.playTogether( scaleDown_shadow );
 	scaleDown_activity.playTogether( alpha_menu );
 	scaleDown_activity.playTogether( alpha_userinfo );
 	scaleDown_activity.playTogether( alpha_loginout );
@@ -360,12 +360,12 @@ public class ResideMenu extends FrameLayout
 
 	isOpened = false;
 	AnimatorSet scaleUp_activity = buildScaleUpAnimation( viewActivity , 1.0f , 1.0f );
-	AnimatorSet scaleUp_shadow = buildScaleUpAnimation( imageViewShadow , 1.0f , 1.0f );
+//	AnimatorSet scaleUp_shadow = buildScaleUpAnimation( imageViewShadow , 1.0f , 1.0f );
 	AnimatorSet alpha_menu = buildMenuAnimation( scrollViewMenu , 0.0f );
 	AnimatorSet alpha_userinfo = buildMenuAnimation( mUserInfoRl , 0.0f );
 	AnimatorSet alpha_loginout = buildMenuAnimation( mSettingLl , 0.0f );
 	scaleUp_activity.addListener( animationListener );
-	scaleUp_activity.playTogether( scaleUp_shadow );
+//	scaleUp_activity.playTogether( scaleUp_shadow );
 	scaleUp_activity.playTogether( alpha_menu );
 	scaleUp_activity.playTogether( alpha_userinfo );
 	scaleUp_activity.playTogether( alpha_loginout );
@@ -408,8 +408,8 @@ public class ResideMenu extends FrameLayout
 
 	ViewHelper.setPivotX( viewActivity , pivotX );
 	ViewHelper.setPivotY( viewActivity , pivotY );
-	ViewHelper.setPivotX( imageViewShadow , pivotX );
-	ViewHelper.setPivotY( imageViewShadow , pivotY );
+//	ViewHelper.setPivotX( imageViewShadow , pivotX );
+//	ViewHelper.setPivotY( imageViewShadow , pivotY );
 	scaleDirection = direction;
     }
 
@@ -657,8 +657,8 @@ public class ResideMenu extends FrameLayout
 		    float targetScale = getTargetScale( ev.getRawX( ) );
 		    ViewHelper.setScaleX( viewActivity , targetScale );
 		    ViewHelper.setScaleY( viewActivity , targetScale );
-		    ViewHelper.setScaleX( imageViewShadow , targetScale + shadowAdjustScaleX );
-		    ViewHelper.setScaleY( imageViewShadow , targetScale + shadowAdjustScaleY );
+//		    ViewHelper.setScaleX( imageViewShadow , targetScale + shadowAdjustScaleX );
+//		    ViewHelper.setScaleY( imageViewShadow , targetScale + shadowAdjustScaleY );
 		    ViewHelper.setAlpha( scrollViewMenu , ( 1 - targetScale ) * 2.0f );
 		    ViewHelper.setAlpha( mSettingLl , ( 1 - targetScale ) * 2.0f );
 		    ViewHelper.setAlpha( mUserInfoRl , ( 1 - targetScale ) * 2.0f );

@@ -56,6 +56,7 @@
                 android:layout_marginLeft="@dimen/common_margin_left"
                 android:layout_marginTop="@dimen/common_margin_top"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:orientation="horizontal" >
 
                 <CheckBox
@@ -73,6 +74,7 @@
                     android:layout_marginLeft="@dimen/remmenber_pwd_tv_margin_left"
                     android:gravity="center_vertical"
                     android:text="@string/xiangqian"
+                    android:layout_marginRight="30dp"
                     android:textColor="#404040"
                     android:textSize="@dimen/pl_small_text_size" />
             </LinearLayout>
@@ -84,7 +86,7 @@
                 android:layout_marginRight="@dimen/common_margin_right"
                 android:layout_marginTop="@dimen/common_margin_top"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="left"
                 android:orientation="horizontal" >
 
                 <CheckBox
@@ -93,6 +95,7 @@
                     android:layout_height="18dp"
                     android:layout_marginRight="@dimen/common_margin_right"
                     android:background="@drawable/normal_check_button"
+                    android:layout_marginLeft="10dp"
                     android:button="@null"
                     android:gravity="center_vertical|right" />
 
