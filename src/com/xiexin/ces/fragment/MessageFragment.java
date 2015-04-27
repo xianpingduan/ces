@@ -548,33 +548,52 @@ public class MessageFragment extends Fragment implements OnClickListener
                 holder.attachmentTv = (TextView) convertView.findViewById(R.id.attachment_tv);
                 holder.timeTv = (TextView) convertView.findViewById(R.id.time_tv);
                 holder.haveAttachIv = (ImageView) convertView.findViewById(R.id.have_attachment_iv);
-                convertView.setTag(holder);
+                convertView.setTag(R.id.id_tv,holder);
+                
             } else
             {
 
-                holder = (ViewHolder) convertView.getTag();
+                holder = (ViewHolder) convertView.getTag(R.id.id_tv);
             }
 
             bindData(holder, list.get(position));
 
+            convertView.setTag(list.get(position));
+            
             convertView.setOnClickListener(new View.OnClickListener()
             {
 
                 @Override
                 public void onClick(View v)
                 {
-                    ViewHolder holder = (ViewHolder) v.getTag();
-                    String id = holder.idTv.getText().toString();
-                    String title = holder.titleTv.getText().toString();
-                    String content = holder.contentTv.getText().toString();
-                    String msgType = holder.msgTypeTv.getText().toString();
-                    String filespath = holder.attachmentTv.getText().toString();
+                    PushMessage pushMessage = (PushMessage) v.getTag();
+                    String title = pushMessage.getTitle();
+                    String content = pushMessage.getContent();
+                    String filespath = pushMessage.getFilespath();
+                    String id = "";
+                    int msgType = pushMessage.getMsgtype();
+                    switch (msgType)
+                    {
+                    case 0:
+                        id = pushMessage.getMsgid();
+                        break;
+                    case 1:
+                        id = pushMessage.getApprid() + "";
+                        break;
+                    default:
+                        break;
+                    }
+                    
+                    if(id==null || "".equals(id)||"null".equals(id)){
+                        id="-1";
+                    }
+                    
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), MessageInfoActivity.class);
                     intent.putExtra("id", Integer.parseInt(id));
                     intent.putExtra("title", title);
                     intent.putExtra("content", content);
-                    intent.putExtra("msgtype", Integer.parseInt(msgType));
+                    intent.putExtra("msgtype", msgType);
                     intent.putExtra("filespath", filespath);
                     startActivityForResult(intent, 1);
 
@@ -603,6 +622,11 @@ public class MessageFragment extends Fragment implements OnClickListener
                     default:
                         break;
                     }
+                    
+                    if(id==null || "".equals(id)||"null".equals(id)){
+                        id="-1";
+                    }
+                    
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), MessageInfoActivity.class);
                     intent.putExtra("id", Integer.parseInt(id));
@@ -644,7 +668,7 @@ public class MessageFragment extends Fragment implements OnClickListener
             String filespath = pushMessage.getFilespath();
             holder.attachmentTv.setText(filespath);
             
-            if(filespath!=null&&!filespath.isEmpty()){
+            if(filespath!=null&&!filespath.isEmpty()&&!"[]".equals(filespath)){
                 holder.haveAttachIv.setVisibility(View.VISIBLE);
             }else{
                 holder.haveAttachIv.setVisibility(View.INVISIBLE);

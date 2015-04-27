@@ -488,30 +488,30 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 				holder.filesPathTv = (TextView) convertView.findViewById(R.id.filespath_tv);
 				holder.haveAttachIv = (ImageView) convertView.findViewById(R.id.have_attachment_iv);
 				
-				convertView.setTag(holder);
+				convertView.setTag(R.id.id_tv,holder);
 			} else {
 
-				holder = (ViewHolder) convertView.getTag();
+				holder = (ViewHolder) convertView.getTag(R.id.id_tv);
 			}
 
 			bindData(holder, list.get(position));
-
+			convertView.setTag(list.get(position));
 			convertView.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					ViewHolder holder = (ViewHolder) v.getTag();
-					String id = holder.idTv.getText().toString();
-					String title = holder.titleTv.getText().toString();
-					String content = holder.contentTv.getText().toString();
-					String filespath = holder.filesPathTv.getText().toString();
-					Intent intent = new Intent();
-					intent.setClass(getActivity(), AnnounceInfoActivity.class);
-					intent.putExtra("id", id);
-					intent.putExtra("title", title);
-					intent.putExtra("content", content);
-					intent.putExtra("filespath", filespath);
-					startActivityForResult(intent, 1);
+				    PushAnnounce pushAnnounce = (PushAnnounce) v.getTag();
+                    String title = pushAnnounce.getTitle();
+                    String content = pushAnnounce.getContent();
+                    String announceId = pushAnnounce.getNoticeid();
+                    String filespath =  pushAnnounce.getFilespath();
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), AnnounceInfoActivity.class);
+                    intent.putExtra("id", announceId);
+                    intent.putExtra("title", title);
+                    intent.putExtra("content", content);
+                    intent.putExtra("filespath", filespath);
+                    startActivityForResult(intent, 1);
 
 				}
 			});
@@ -565,7 +565,7 @@ public class AnnounceFragment extends Fragment implements OnClickListener {
 			String filespath = pushAnnounce.getFilespath().toString();
 			holder.filesPathTv.setText(filespath);
 			
-			if(filespath!=null&&!filespath.isEmpty()){
+			if(filespath!=null&&!filespath.isEmpty()&&!"[]".equals(filespath)){
 			    holder.haveAttachIv.setVisibility(View.VISIBLE);
 			}else{
 			    holder.haveAttachIv.setVisibility(View.INVISIBLE);
