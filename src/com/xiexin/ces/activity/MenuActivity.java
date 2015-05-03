@@ -35,6 +35,7 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.PushNotificationCenter;
 import com.xiexin.ces.R;
+import com.xiexin.ces.SlidingMenu;
 import com.xiexin.ces.db.EmployeeManager;
 import com.xiexin.ces.fragment.AnnounceFragment;
 import com.xiexin.ces.fragment.MessageFragment;
@@ -52,7 +53,7 @@ public class MenuActivity extends FragmentActivity implements
 
 	private final static String TAG = "MenuActivity";
 
-	private ResideMenu resideMenu;
+//	private ResideMenu resideMenu;
 	private MenuActivity mContext;
 	private ResideMenuItem itemPendApproval;
 	private ResideMenuItem itemSendItem;
@@ -93,6 +94,10 @@ public class MenuActivity extends FragmentActivity implements
 	private RequestQueue mQueue;
 
 	private EmployeeManager mEmployeeManager;
+	
+	
+	private LinearLayout menu;
+	private SlidingMenu mSlidingMenu;
 
 	/**
 	 * Called when the activity is first created.
@@ -100,7 +105,7 @@ public class MenuActivity extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.activity_main);
 		mContext = this;
 		
 		String userId = App.getSharedPreference().getString(Constants.USER_ID, "");
@@ -366,16 +371,22 @@ public class MenuActivity extends FragmentActivity implements
 	private void setUpMenu() {
 
 		// attach to current activity;
-		resideMenu = new ResideMenu(this);
+//		resideMenu = new ResideMenu(this);
 //		resideMenu.setBackground(R.drawable.main_bg);
-		resideMenu.attachToActivity(this);
-		resideMenu.setMenuListener(menuListener);
+//		resideMenu.attachToActivity(this);
+//		resideMenu.setMenuListener(menuListener);
 		// valid scale factor is between 0.0f and 1.0f. leftmenu'width is
 		// 150dip.
-		resideMenu.setScaleValue(0.6f);
+//		resideMenu.setScaleValue(0.6f);
 
 		// 右边菜单不显示
-		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);\
+		
+		mSlidingMenu = (SlidingMenu) findViewById(R.id.id_menu);
+		
+		
+		menu = (LinearLayout) findViewById(R.id.menu);
+		
 
 		// create menu items;
 		itemPendApproval = new ResideMenuItem(this,
@@ -416,19 +427,29 @@ public class MenuActivity extends FragmentActivity implements
 		
 		itemUpdate.setOnClickListener(this);
 
-		List<ResideMenuItem> oneList = new ArrayList<ResideMenuItem>();
-		oneList.clear();
-		oneList.add(itemPendApproval);
-		oneList.add(itemSendItem);
-		oneList.add(itemScratchUpcome);
-		oneList.add(itemApproved);
-		oneList.add(itemMessage);
-		oneList.add(itemAds);
-
-		oneList.add(itemInvoice);
-		oneList.add(itemRecord);
-
-		oneList.add(itemUpdate);
+//		List<ResideMenuItem> oneList = new ArrayList<ResideMenuItem>();
+//		oneList.clear();
+//		oneList.add(itemPendApproval);
+//		oneList.add(itemSendItem);
+//		oneList.add(itemScratchUpcome);
+//		oneList.add(itemApproved);
+//		oneList.add(itemMessage);
+//		oneList.add(itemAds);
+//
+//		oneList.add(itemInvoice);
+//		oneList.add(itemRecord);
+//		oneList.add(itemUpdate);
+		
+		menu.addView(itemPendApproval);
+		menu.addView(itemSendItem);
+		menu.addView(itemScratchUpcome);
+		menu.addView(itemApproved);
+		menu.addView(itemMessage);
+		menu.addView(itemAds);
+		
+		menu.addView(itemInvoice);
+		menu.addView(itemRecord);
+		menu.addView(itemUpdate);
 
 		// resideMenu.addMenuItem( itemPendApproval ,
 		// ResideMenu.DIRECTION_LEFT);
@@ -437,7 +458,7 @@ public class MenuActivity extends FragmentActivity implements
 		// ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem( itemApproved , ResideMenu.DIRECTION_LEFT );
 
-		resideMenu.addMenuItem(oneList, ResideMenu.DIRECTION_LEFT);
+//		resideMenu.addMenuItem(oneList, ResideMenu.DIRECTION_LEFT);
 
 		// resideMenu.addMenuItem( itemMessage , ResideMenu.DIRECTION_LEFT );
 		// resideMenu.addMenuItem( itemAds , ResideMenu.DIRECTION_LEFT );
@@ -463,7 +484,8 @@ public class MenuActivity extends FragmentActivity implements
 		mLeftMenuBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+//				resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+				toggleMenu(view);
 			}
 		});
 		// mRightMenuBtn.setOnClickListener(
@@ -475,9 +497,14 @@ public class MenuActivity extends FragmentActivity implements
 		// });
 	}
 
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		return resideMenu.dispatchTouchEvent(ev);
+//	@Override
+//	public boolean dispatchTouchEvent(MotionEvent ev) {
+//		return resideMenu.dispatchTouchEvent(ev);
+//	}
+	
+	public void toggleMenu(View view)
+	{
+		mSlidingMenu.toggle();
 	}
 
 	private static final int MSG_OPEN_MENU = 1;
@@ -527,7 +554,7 @@ public class MenuActivity extends FragmentActivity implements
 				break;
 			case MSG_SAVE_EMPLOYEE_LIST_SUCCESS:
 				Logger.d(TAG, "save data success!");
-				// resideMenu.closeMenu();
+				mSlidingMenu.closeMenu();
 				dismissDialog();
 				long next_req_time = System.currentTimeMillis()
 						+ Constants.SYNC_EMPLOYEE_GAP_TIME;
@@ -544,7 +571,7 @@ public class MenuActivity extends FragmentActivity implements
 
 				break;
 			case MSG_FROM_FRAGMENT_CLOSE_MENU:
-				resideMenu.closeMenu();
+				mSlidingMenu.closeMenu();
 				break;
 			default:
 				break;
@@ -640,24 +667,24 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	// 菜单打开和关闭监听
-	private final ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
-		@Override
-		public void openMenu() {
-			mUiHandler.sendEmptyMessage(MSG_OPEN_MENU);
-			// Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT)
-			// .show();
-		}
-
-		@Override
-		public void closeMenu() {
-			mUiHandler.sendEmptyMessage(MSG_CLOSE_MENU);
-			// Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT)
-			// .show();
-		}
-	};
+//	private final ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
+//		@Override
+//		public void openMenu() {
+//			mUiHandler.sendEmptyMessage(MSG_OPEN_MENU);
+//			// Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT)
+//			// .show();
+//		}
+//
+//		@Override
+//		public void closeMenu() {
+//			mUiHandler.sendEmptyMessage(MSG_CLOSE_MENU);
+//			// Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT)
+//			// .show();
+//		}
+//	};
 
 	private void changeFragment(Fragment targetFragment) {
-		resideMenu.clearIgnoredViewList();
+//		resideMenu.clearIgnoredViewList();
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.main_fragment, targetFragment, "fragment")
 				.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -665,9 +692,9 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	// What good method is to access resideMenu？
-	public ResideMenu getResideMenu() {
-		return resideMenu;
-	}
+//	public ResideMenu getResideMenu() {
+//		return resideMenu;
+//	}
 
 	private long lastClickKeyBackTime;
 

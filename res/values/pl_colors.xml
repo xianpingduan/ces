@@ -32,7 +32,7 @@
    	
    	
    	<color name="header_bar_bg_color">#0160fe</color>
-   	<color name="login_bg_color">#ececec</color>
+   	<color name="login_bg_color">#ebecee</color>
    	<color name="header_bar_btn_txt_press_color">#2782df</color>
    	<color name="approval_list_item_bg_color">#EFEFF4</color>
    	

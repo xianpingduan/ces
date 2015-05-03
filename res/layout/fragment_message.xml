@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/login_bg_color"
     android:orientation="vertical" >
 
     <!-- <include layout="@layout/header_action_bar"/> -->
@@ -51,8 +52,8 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:button="@null"
-                android:drawablePadding="6dp"
                 android:drawableLeft="@drawable/read_msg_button"
+                android:drawablePadding="6dp"
                 android:text="@string/readed"
                 android:textColor="@color/btn_approval_color" />
         </RelativeLayout>
