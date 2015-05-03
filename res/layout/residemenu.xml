@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/main_bg" >
+    android:layout_height="match_parent" >
 
-<!--     <ImageView
+     <ImageView
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:visibility="gone"
-        android:scaleType="centerCrop" /> -->
+        android:src="@drawable/main_bg"
+        android:scaleType="fitXY" />
 
     <ImageView
         android:id="@+id/iv_shadow"

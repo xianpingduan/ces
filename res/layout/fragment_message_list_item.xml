@@ -51,7 +51,7 @@
             android:layout_marginBottom="3dp"
             android:textColor="@color/pl_main_text_color"
             android:layout_marginRight="20dp"
-            android:textSize="@dimen/pl_mimi_text_size"
+            android:textSize="@dimen/pl_micro_text_size"
             android:visibility="visible" />
         
         <ImageView 

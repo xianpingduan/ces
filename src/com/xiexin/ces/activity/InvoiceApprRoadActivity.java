@@ -307,6 +307,9 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 		    dismissDialog( );
 
 		    String dataStr = (String)msg.obj;
+		    
+		    Logger.d(TAG, "dataStr = "+dataStr);
+		    
 		    ArrayList< InvoiceApprRoad > roads = getInvoiceList( dataStr );
 		    if( roads.size( ) > 0 )
 		    {
@@ -372,7 +375,6 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 		holder = new ViewHolder( );
 		
 		holder.invoiceRoadFrame= (LinearLayout) convertView.findViewById(R.id.invoice_road_frame);
-		holder.apprDateTv = (TextView)convertView.findViewById( R.id.node_date_tv );
 		holder.apprTimeTv = (TextView)convertView.findViewById( R.id.node_time_tv );
 		holder.processModeTv = (TextView)convertView.findViewById( R.id.node_name_tv );
 		holder.apprMemoTv = (TextView)convertView.findViewById( R.id.node_content_tv );
@@ -455,18 +457,27 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
 		apprObjName = "";
 	    }
 	    holder.processModeTv.setText( apprObjName );
-	    holder.apprDateTv.setText( apprDate );
 	    holder.apprTimeTv.setText(apprDate +"  "+ apprTime );
 	    String apprMemo = iar.getApprmemo( );
-	    if( apprMemo == null || apprMemo.equals( "null" ) )
+	    if( apprMemo == null || apprMemo.equals( "null" )  || "".equals(apprMemo))
 	    {
-		apprMemo = "";
+	    	String processmode = iar.getProcessmode();
+	    	if(processmode==null || processmode.equals("null") || "".equals(processmode)){
+	    		processmode ="";
+	    	}
+	    	apprMemo = processmode;
 	    }
 	    
 	    Logger.d(TAG, apprMemo);
 	    
 	    holder.apprMemoTv.setTag( apprMemo );
-	    holder.apprMemoTv.setText(apprMemo);
+	    
+	    if(apprMemo.isEmpty()){
+	    	holder.apprMemoTv.setVisibility(View.GONE);
+	    }else{
+	    	holder.apprMemoTv.setVisibility(View.VISIBLE);
+		    holder.apprMemoTv.setText(apprMemo);
+	    }
 	    Logger.d( TAG , "apprDate=" + apprDate );
 	    // String isFinished = iar.getStatus();
 	    // Log.d(TAG,
@@ -496,7 +507,6 @@ public class InvoiceApprRoadActivity extends Activity implements OnClickListener
     class ViewHolder
     {
     LinearLayout invoiceRoadFrame;
-	TextView apprDateTv;
 	TextView apprTimeTv;
 	TextView processModeTv;
 	TextView apprMemoTv;

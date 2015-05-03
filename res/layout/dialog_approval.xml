@@ -2,13 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dialog_approval_width"
     android:layout_height="wrap_content"
-    android:layout_gravity="center" >
+    android:layout_gravity="center"
+    android:background="@drawable/loading_pop_background" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/loading_pop_background"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/common_margin_left"
             android:layout_marginRight="@dimen/common_margin_right"
-            android:layout_marginTop="@dimen/common_margin_top"
-            android:background="@drawable/edit_textview_bg" >
+            android:layout_marginTop="20dp"
+            android:background="@drawable/approval_select_bg" >
 
             <ImageView
                 android:id="@+id/expansion_iv"
@@ -71,6 +71,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
-        android:src="@drawable/close" />
+        android:src="@drawable/icon_close" />
 
 </FrameLayout>

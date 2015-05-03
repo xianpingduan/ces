@@ -55,14 +55,12 @@ public class SideBar extends View {
 		for (int i = 0; i < b.length; i++) {
 			paint.setColor(Color.rgb(33, 65, 98));
 			// paint.setColor(Color.WHITE);
-			paint.setTypeface(Typeface.DEFAULT_BOLD);
 			paint.setAntiAlias(true);
 			paint.setTextSize(30);
-			paint.setColor(Color.parseColor("#2782df"));
+			paint.setColor(Color.parseColor("#727272"));
 			// 选中的状态
 			if (i == choose) {
 				paint.setColor(Color.parseColor("#2782df"));
-				paint.setFakeBoldText(true);
 			}
 			// x坐标等于中间-字符串宽度的一半.
 			float xPos = width / 2 - paint.measureText(b[i]) / 2;
