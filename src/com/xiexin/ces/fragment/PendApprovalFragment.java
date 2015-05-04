@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -504,6 +505,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 				convertView = App.getLayoutInflater().inflate(
 						R.layout.fragment_pend_approval_list_item, null);
 				holder = new ViewHolder();
+				holder.invoiceFrameRl = (RelativeLayout) convertView.findViewById(R.id.invoice_frame);
 				holder.invoiceIdTv = (TextView) convertView
 						.findViewById(R.id.invoice_id_tv);
 				holder.invoiceDateTv = (TextView) convertView
@@ -578,18 +580,20 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			
 			String account=invoice.getAccount();
 			if(account==null||account.isEmpty()){
-			     String accountName = App.getSharedPreference().getString(Constants.ZHANG_TAO_ACCINFO, "");
-//			    holder.accountNameTv.setText(accountName);
-			    holder.departUserNameTv.setText(invoice.getDepart() + " "
-						+ invoice.getApprname() +"  "+accountName);
+			    String accountName = App.getSharedPreference().getString(Constants.ZHANG_TAO_ACCINFO, "");
+			    //holder.accountNameTv.setText(accountName);
+			    holder.departUserNameTv.setText(invoice.getDepart() + " " + invoice.getApprname() +"  "+accountName);
 			    
 			}else{
 			    holder.accountNameTv.setText(invoice.getAccountname()); 
-			    
-			    holder.departUserNameTv.setText(invoice.getDepart() + " "
-						+ invoice.getApprname() +"  " +invoice.getAccountname());
+			    holder.departUserNameTv.setText(invoice.getDepart() + " " + invoice.getApprname() +"  " +invoice.getAccountname());
 			}
-
+			
+			if(invoice.getStatus().equals("待审")){
+				holder.invoiceFrameRl.setBackgroundResource(R.drawable.listview_item_bg_color_pend);
+			}else{
+				holder.invoiceFrameRl.setBackgroundResource(R.drawable.listview_item_bg_color);
+			}
 			
 			Logger.d(TAG, "Totalcost="+invoice.getTotalcost());
 			holder.moneyTv
@@ -620,6 +624,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 	}
 
 	class ViewHolder {
+		RelativeLayout invoiceFrameRl;
 		TextView invoiceIdTv;
 		TextView invoiceDateTv;
 		TextView departUserNameTv;

@@ -46,6 +46,7 @@
    	<color name="road_line_color">#dcdcdc</color>
    	
    	<color name="list_view_item_press_color">#c8dde4</color>
+   	<color name="list_view_item_press_color_pend">#f4f495</color>
    	
    	<color name="attachment_list_view_item_color">#f3f3f3</color>
    	

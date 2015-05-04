@@ -375,26 +375,21 @@ public class MenuActivity extends FragmentActivity implements
 		// valid scale factor is between 0.0f and 1.0f. leftmenu'width is
 		// 150dip.
 //		resideMenu.setScaleValue(0.6f);
-
 		// 右边菜单不显示
-//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);\
+//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 		
 		mMainLl = (LinearLayout) findViewById(R.id.main_ll);
 		
 		mMainLl.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				mSlidingMenu.closeMenu();
 			}
 		});
 		
 		mSlidingMenu = (SlidingMenu) findViewById(R.id.id_menu);
 		
-		
 		menu = (LinearLayout) findViewById(R.id.menu);
-		
 
 		// create menu items;
 		itemPendApproval = new ResideMenuItem(this,
@@ -675,24 +670,24 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	// 菜单打开和关闭监听
-//	private final ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
-//		@Override
-//		public void openMenu() {
-//			mUiHandler.sendEmptyMessage(MSG_OPEN_MENU);
-//			// Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT)
-//			// .show();
-//		}
-//
-//		@Override
-//		public void closeMenu() {
-//			mUiHandler.sendEmptyMessage(MSG_CLOSE_MENU);
-//			// Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT)
-//			// .show();
-//		}
-//	};
+    //	private final ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
+    //		@Override
+    //		public void openMenu() {
+    //			mUiHandler.sendEmptyMessage(MSG_OPEN_MENU);
+    //			// Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT)
+    //			// .show();
+    //		}
+    //
+    //		@Override
+    //		public void closeMenu() {
+    //			mUiHandler.sendEmptyMessage(MSG_CLOSE_MENU);
+    //			// Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT)
+    //			// .show();
+    //		}
+    //	};
 
 	private void changeFragment(Fragment targetFragment) {
-//		resideMenu.clearIgnoredViewList();
+    //		resideMenu.clearIgnoredViewList();
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.main_fragment, targetFragment, "fragment")
 				.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
