@@ -1,8 +1,5 @@
 package com.xiexin.ces.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,8 +13,8 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +38,6 @@ import com.xiexin.ces.fragment.AnnounceFragment;
 import com.xiexin.ces.fragment.MessageFragment;
 import com.xiexin.ces.fragment.PendApprovalFragment;
 import com.xiexin.ces.fragment.TipFragment;
-import com.xiexin.ces.menu.ResideMenu;
 import com.xiexin.ces.menu.ResideMenuItem;
 import com.xiexin.ces.update.SelfUpgrade;
 import com.xiexin.ces.update.SelfUpgrade.SelfUpdateListener;
@@ -98,6 +94,7 @@ public class MenuActivity extends FragmentActivity implements
 	
 	private LinearLayout menu;
 	private SlidingMenu mSlidingMenu;
+	private LinearLayout mMainLl;
 
 	/**
 	 * Called when the activity is first created.
@@ -381,6 +378,17 @@ public class MenuActivity extends FragmentActivity implements
 
 		// 右边菜单不显示
 //		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);\
+		
+		mMainLl = (LinearLayout) findViewById(R.id.main_ll);
+		
+		mMainLl.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mSlidingMenu.closeMenu();
+			}
+		});
 		
 		mSlidingMenu = (SlidingMenu) findViewById(R.id.id_menu);
 		
