@@ -162,7 +162,7 @@ public class MenuActivity extends FragmentActivity implements
 				changeFragment(mMessageFragment);
 				mTitleView.setText(getString(R.string.menu_message));
 				
-				PushNotificationCenter.getInstance(App.getAppContext()).cancelMessageNotify();
+				PushNotificationCenter.getInstance(App.getAppContext()).cancelMessageNotify(); 
 				
 			} else if(type==Constants.TYPE_MENU_HANDLE_APPROVAL) {
 				if (mPendApprovalFragment == null)
@@ -177,7 +177,7 @@ public class MenuActivity extends FragmentActivity implements
 		}else{
 			if (mPendApprovalFragment == null)
 				mPendApprovalFragment = new PendApprovalFragment();
-			// mPendApprovalFragment.setArguments(args);
+			    // mPendApprovalFragment.setArguments(args);
 			
 			if(isConnChanged){
 				mPendApprovalFragment.setIsShowDialog(false);
@@ -299,15 +299,11 @@ public class MenuActivity extends FragmentActivity implements
 
 	private void loginout() {
 		App.clear();
-
 		Intent intent = new Intent();
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-				| Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK   | Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setClass(MenuActivity.this, LoginActivity.class);
 		startActivity(intent);
-
 		finish();
-
 	}
 
 	@Override
@@ -419,7 +415,6 @@ public class MenuActivity extends FragmentActivity implements
 		
 		itemUpdate = new ResideMenuItem(this, R.drawable.icon_update,
 				getString(R.string.menu_update));
-		
 		itemInvoice = new ResideMenuItem(this, R.drawable.fapiao_check,
 				getString(R.string.menu_invoice));
 		itemRecord = new ResideMenuItem(this, R.drawable.icon_record,
@@ -430,18 +425,18 @@ public class MenuActivity extends FragmentActivity implements
 		
 		itemUpdate.setOnClickListener(this);
 
-//		List<ResideMenuItem> oneList = new ArrayList<ResideMenuItem>();
-//		oneList.clear();
-//		oneList.add(itemPendApproval);
-//		oneList.add(itemSendItem);
-//		oneList.add(itemScratchUpcome);
-//		oneList.add(itemApproved);
-//		oneList.add(itemMessage);
-//		oneList.add(itemAds);
-//
-//		oneList.add(itemInvoice);
-//		oneList.add(itemRecord);
-//		oneList.add(itemUpdate);
+        //		List<ResideMenuItem> oneList = new ArrayList<ResideMenuItem>();
+        //		oneList.clear();
+        //		oneList.add(itemPendApproval);
+        //		oneList.add(itemSendItem);
+        //		oneList.add(itemScratchUpcome);
+        //		oneList.add(itemApproved);
+        //		oneList.add(itemMessage);
+        //		oneList.add(itemAds);
+        //
+        //		oneList.add(itemInvoice);
+        //		oneList.add(itemRecord);
+        //		oneList.add(itemUpdate);
 		
 		menu.addView(itemPendApproval);
 		menu.addView(itemSendItem);
@@ -461,15 +456,15 @@ public class MenuActivity extends FragmentActivity implements
 		// ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem( itemApproved , ResideMenu.DIRECTION_LEFT );
 
-//		resideMenu.addMenuItem(oneList, ResideMenu.DIRECTION_LEFT);
+		// resideMenu.addMenuItem(oneList, ResideMenu.DIRECTION_LEFT);
 
 		// resideMenu.addMenuItem( itemMessage , ResideMenu.DIRECTION_LEFT );
 		// resideMenu.addMenuItem( itemAds , ResideMenu.DIRECTION_LEFT );
 
-//		resideMenu.addMenuItem(twoList, ResideMenu.DIRECTION_LEFT);
-//		resideMenu.addMenuItem(thirdList, ResideMenu.DIRECTION_LEFT);
+		// resideMenu.addMenuItem(twoList, ResideMenu.DIRECTION_LEFT);
+		// resideMenu.addMenuItem(thirdList, ResideMenu.DIRECTION_LEFT);
 		
-//		resideMenu.addMenuItem(itemUpdate, ResideMenu.DIRECTION_LEFT);
+		// resideMenu.addMenuItem(itemUpdate, ResideMenu.DIRECTION_LEFT);
 
 		// resideMenu.addMenuItem(itemInvoice, ResideMenu.DIRECTION_LEFT);
 		// resideMenu.addMenuItem(itemRecord, ResideMenu.DIRECTION_LEFT);
@@ -487,7 +482,7 @@ public class MenuActivity extends FragmentActivity implements
 		mLeftMenuBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-//				resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+			//	resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
 				toggleMenu(view);
 			}
 		});
@@ -500,10 +495,10 @@ public class MenuActivity extends FragmentActivity implements
 		// });
 	}
 
-//	@Override
-//	public boolean dispatchTouchEvent(MotionEvent ev) {
-//		return resideMenu.dispatchTouchEvent(ev);
-//	}
+    //	@Override
+    //	public boolean dispatchTouchEvent(MotionEvent ev) {
+    //		return resideMenu.dispatchTouchEvent(ev);
+    //	}
 	
 	public void toggleMenu(View view)
 	{
@@ -695,9 +690,9 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	// What good method is to access resideMenu？
-//	public ResideMenu getResideMenu() {
-//		return resideMenu;
-//	}
+	//	public ResideMenu getResideMenu() {
+	//		return resideMenu;
+	//	}
 
 	private long lastClickKeyBackTime;
 
@@ -723,7 +718,6 @@ public class MenuActivity extends FragmentActivity implements
 			}
 			finish();
 		}
-
 	}
 
 	private static final int MSG_GET_EMPLOYEE_LIST_ERROR = 4;
@@ -732,9 +726,7 @@ public class MenuActivity extends FragmentActivity implements
 	public static final int MSG_FROM_FRAGMENT_CLOSE_MENU = 7;
 
 	private void requestEmployees(String filter) {
-
 	    Logger.d(TAG, "requestEmployees  start = "+System.currentTimeMillis());
-	    
 		showDialog();
 		String commName = App.getSharedPreference().getString(
 				Constants.ZHANG_TAO_CONN_NAME, "");
@@ -742,7 +734,6 @@ public class MenuActivity extends FragmentActivity implements
 				+ Constants.GET_EMPLOYEE_LIST + "?");
 		urlSbf.append("account=").append(commName);
 		urlSbf.append("&filter=").append(filter);
-
 		JsonObjectRequest json = new JsonObjectRequest(Method.GET,
 				urlSbf.toString(), null, new Listener<JSONObject>() {
 					@Override
@@ -778,7 +769,6 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	private LoadingDialog mLoadingDialog;
-
 	private void dismissDialog() {
 		if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
 			mLoadingDialog.dismiss();
@@ -793,15 +783,10 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	private void checkUpdate(final int type) {
-		
-
 		mUiHandler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
-
 				SelfUpgrade.getInstance(MenuActivity.this).startUpgrade(type);
-
 			}
 		}, 500);
 	}

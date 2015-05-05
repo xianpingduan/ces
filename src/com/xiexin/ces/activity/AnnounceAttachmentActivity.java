@@ -78,6 +78,7 @@ public class AnnounceAttachmentActivity extends Activity implements OnClickListe
 			.cacheOnDisc(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 
 	// header start
+	
 	private LinearLayout mReturnLl;
 	private FrameLayout mReturnIv;
 	private TextView mReturnTv;
