@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +35,7 @@ import com.xiexin.ces.PushNotificationCenter;
 import com.xiexin.ces.R;
 import com.xiexin.ces.SlidingMenu;
 import com.xiexin.ces.db.EmployeeManager;
+import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.fragment.AnnounceFragment;
 import com.xiexin.ces.fragment.MessageFragment;
 import com.xiexin.ces.fragment.PendApprovalFragment;
@@ -243,6 +245,7 @@ public class MenuActivity extends FragmentActivity implements
 		mUserDeptTv = (TextView) findViewById(R.id.user_dept_tv);
 		mUserAccountTv = (TextView) findViewById(R.id.user_account_tv);
 		mUserHeaderIv = (ImageView) findViewById(R.id.user_head_img);
+		
 
 		String userName = App.getSharedPreference().getString(
 				Constants.USER_NAME, "");
@@ -254,8 +257,20 @@ public class MenuActivity extends FragmentActivity implements
 		mUserNameTv.setText(userName);
 		mUserDeptTv.setText(userDept);
 		mUserAccountTv.setText(userAccount);
-
+		
 		mUserHeaderIv.setOnClickListener(this);
+		
+		sendDepart();
+	}
+	
+	private void sendDepart(){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				requestDepart();
+			}
+		}).start();
+
 	}
 
 	private void initSwitchAccoutLl() {
@@ -566,10 +581,15 @@ public class MenuActivity extends FragmentActivity implements
 				}
 				// checkUpdate
 				// checkUpdate(Constants.CHECK_UPDATE_AUTO);
+				
+				sendDepart();
 
 				break;
 			case MSG_FROM_FRAGMENT_CLOSE_MENU:
 				mSlidingMenu.closeMenu();
+				break;
+			case MSG_GET_DEPART:
+				mUserDeptTv.setText((String)msg.obj);
 				break;
 			default:
 				break;
@@ -724,6 +744,7 @@ public class MenuActivity extends FragmentActivity implements
 	private static final int MSG_GET_EMPLOYEE_LIST_SUCCESS = 5;
 	public static final int MSG_SAVE_EMPLOYEE_LIST_SUCCESS = 6;
 	public static final int MSG_FROM_FRAGMENT_CLOSE_MENU = 7;
+	public static final int MSG_GET_DEPART = 8;
 
 	private void requestEmployees(String filter) {
 	    Logger.d(TAG, "requestEmployees  start = "+System.currentTimeMillis());
@@ -841,5 +862,24 @@ public class MenuActivity extends FragmentActivity implements
 		});
 		
 	} 
+	
+	
+	private void requestDepart(){
+		String userId = App.getSharedPreference().getString(Constants.USER_ID, "");
+		Employee employee =null;
+		String depart="";
+		if(!userId.isEmpty()){
+			 employee = EmployeeManager.getInstance(mContext).findEmployeeById(userId);
+		}
+		if(employee!=null ){
+			depart = employee.getDepart();
+		}else{
+			depart="";
+		}
+		Message msg = Message.obtain();
+		msg.what = MSG_GET_DEPART;
+		msg.obj = depart;
+		mUiHandler.sendMessage(msg);
+	}
 
 }
