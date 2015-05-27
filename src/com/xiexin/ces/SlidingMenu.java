@@ -10,10 +10,13 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.nineoldandroids.view.ViewHelper;
-import com.xiexin.ces.R;
 
 public class SlidingMenu extends HorizontalScrollView
 {
+    
+    public interface SlidingMenuListener{
+        public void open(boolean b);
+    }
 	/**
 	 * 屏幕宽度
 	 */
@@ -34,11 +37,17 @@ public class SlidingMenu extends HorizontalScrollView
 
 	private ViewGroup mMenu;
 	private ViewGroup mContent;
+	
+	private SlidingMenuListener listener=null;
 
 	public SlidingMenu(Context context, AttributeSet attrs)
 	{
 		this(context, attrs, 0);
 
+	}
+	
+	public void addListener(SlidingMenuListener listener){
+	    this.listener = listener;
 	}
 
 	public SlidingMenu(Context context, AttributeSet attrs, int defStyle)
@@ -118,10 +127,18 @@ public class SlidingMenu extends HorizontalScrollView
 			{
 				this.smoothScrollTo(mMenuWidth, 0);
 				isOpen = false;
+				
+				if(listener!=null){
+				    listener.open(isOpen);
+				}
+				
 			} else
 			{
 				this.smoothScrollTo(0, 0);
 				isOpen = true;
+				if(listener!=null){
+                    listener.open(isOpen);
+                }
 			}
 			return true;
 		}
@@ -137,6 +154,10 @@ public class SlidingMenu extends HorizontalScrollView
 			return;
 		this.smoothScrollTo(0, 0);
 		isOpen = true;
+		
+		if(listener!=null){
+            listener.open(isOpen);
+        }
 	}
 
 	/**
@@ -148,6 +169,9 @@ public class SlidingMenu extends HorizontalScrollView
 		{
 			this.smoothScrollTo(mMenuWidth, 0);
 			isOpen = false;
+			if(listener!=null){
+                listener.open(isOpen);
+            }
 		}
 	}
 
@@ -163,6 +187,11 @@ public class SlidingMenu extends HorizontalScrollView
 		{
 			openMenu();
 		}
+	}
+	
+	public boolean isOpened(){
+	    
+	    return isOpen;
 	}
 
 	@Override

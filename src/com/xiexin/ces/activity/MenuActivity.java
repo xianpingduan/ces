@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +33,7 @@ import com.xiexin.ces.Constants;
 import com.xiexin.ces.PushNotificationCenter;
 import com.xiexin.ces.R;
 import com.xiexin.ces.SlidingMenu;
+import com.xiexin.ces.SlidingMenu.SlidingMenuListener;
 import com.xiexin.ces.db.EmployeeManager;
 import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.fragment.AnnounceFragment;
@@ -47,7 +47,7 @@ import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
 
 public class MenuActivity extends FragmentActivity implements
-		View.OnClickListener,SelfUpdateListener {
+		View.OnClickListener,SelfUpdateListener,SlidingMenuListener {
 
 	private final static String TAG = "MenuActivity";
 
@@ -97,6 +97,8 @@ public class MenuActivity extends FragmentActivity implements
 	private LinearLayout menu;
 	private SlidingMenu mSlidingMenu;
 	private LinearLayout mMainLl;
+	
+	private View decorView;
 
 	/**
 	 * Called when the activity is first created.
@@ -398,6 +400,10 @@ public class MenuActivity extends FragmentActivity implements
 			}
 		});
 		
+		decorView = getWindow().getDecorView();
+		
+		Logger.d(TAG, "decorView : "+ decorView.getId());
+		
 		mSlidingMenu = (SlidingMenu) findViewById(R.id.id_menu);
 		
 		menu = (LinearLayout) findViewById(R.id.menu);
@@ -510,6 +516,20 @@ public class MenuActivity extends FragmentActivity implements
 		// });
 	}
 
+	private View.OnClickListener decorViewListener= new View.OnClickListener()
+    {
+            @Override
+            public void onClick(View v)
+            {
+                
+              Logger.d(TAG, "decorViewListener");
+                
+              if(mSlidingMenu.isOpened()){
+                  mSlidingMenu.closeMenu();
+              }
+            }
+    };
+	
     //	@Override
     //	public boolean dispatchTouchEvent(MotionEvent ev) {
     //		return resideMenu.dispatchTouchEvent(ev);
@@ -881,5 +901,16 @@ public class MenuActivity extends FragmentActivity implements
 		msg.obj = depart;
 		mUiHandler.sendMessage(msg);
 	}
+
+    @Override
+    public void open(boolean b)
+    {
+       if(b){
+           decorView.setOnClickListener(decorViewListener);
+       }else{
+           decorView.setOnClickListener(null);
+       }
+        
+    }
 
 }

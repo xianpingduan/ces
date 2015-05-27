@@ -127,6 +127,7 @@ public class ResideMenu extends FrameLayout {
 		ViewGroup parent = (ViewGroup) scrollViewLeftMenu.getParent();
 		parent.removeView(scrollViewLeftMenu);
 		parent.removeView(scrollViewRightMenu);
+		
 	}
 
 	private void setShadowAdjustScaleXByOrientation() {
