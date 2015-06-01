@@ -1,137 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-     <ImageView
+    <ImageView
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:src="@drawable/main_bg"
         android:scaleType="fitXY" />
 
     <ImageView
         android:id="@+id/iv_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/shadow"
         android:scaleType="fitXY"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:layout_width="@dimen/reside_menu_width"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/user_info_rl_margin_top"
-        android:orientation="vertical" >
-
-        <RelativeLayout
-            android:id="@+id/user_info_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="24dp" >
-
-            <ImageView
-                android:id="@+id/user_head_img"
-                android:layout_width="@dimen/head_image_width"
-                android:layout_height="@dimen/head_image_height"
-                android:src="@drawable/icon_head_portrait" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="36dp"
-                android:layout_toRightOf="@id/user_head_img"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/user_name_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="@string/user_info_no_data"
-                    android:textColor="@color/second_info_header_color5"
-                    android:textSize="@dimen/pl_medium_text_size" />
-
-                <TextView
-                    android:id="@+id/user_dept_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/user_info_margin_top"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="@string/user_info_no_data"
-                    android:textColor="@color/second_info_header_color5"
-                    android:textSize="@dimen/pl_mimi_text_size" />
-
-                <TextView
-                    android:id="@+id/user_account_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/user_info_margin_top"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="@string/user_info_no_data"
-                    android:textColor="@color/second_info_header_color5"
-                    android:textSize="@dimen/pl_mimi_text_size" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <View
-            android:id="@+id/line_1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/menu_line_color"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <ScrollView
+    <FrameLayout
         android:id="@+id/sv_left_menu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginBottom="@dimen/left_menu_scrollview_margin_buttom"
-        android:layout_marginTop="@dimen/left_menu_scrollview_margin_top"
-        android:fillViewport="true"
-        android:overScrollMode="never"
-        android:scrollbars="none" >
+        android:layout_height="match_parent"
+        android:layout_gravity="left" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+        <include 
+            android:id="@+id/layout_left_menu"
+            layout="@layout/layout_menu" />
+            
+    </FrameLayout>
 
-            <View
-                android:id="@+id/line_2"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/pl_deputy_text_color" />
-
-            <LinearLayout
-                android:id="@+id/layout_left_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="30dp" >
-            </LinearLayout>
-
-            <View
-                android:id="@+id/line_3"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/pl_deputy_text_color" />
-        </LinearLayout>
-    </ScrollView>
-
-    <com.xiexin.ces.widgets.StretchScrollView
+    <FrameLayout
         android:id="@+id/sv_right_menu"
-        android:layout_width="@dimen/reside_menu_width"
+        android:layout_width="@dimen/reside_menu_line_width"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
+        android:paddingRight="30dp"
         android:scrollbars="none"
         android:visibility="gone" >
 
@@ -142,64 +44,6 @@
             android:gravity="right"
             android:orientation="vertical" >
         </LinearLayout>
-    </com.xiexin.ces.widgets.StretchScrollView>
+    </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/setting_ll"
-        android:layout_width="@dimen/reside_menu_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|bottom"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="24dp"
-        android:paddingLeft="18dp" >
-
-        <LinearLayout
-            android:id="@+id/switch_accout_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/switch_accout_iv"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/icon_change_accout" />
-
-            <TextView
-                android:id="@+id/switch_text_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="6dp"
-                android:text="@string/switch_account_text"
-                android:textColor="@color/second_info_header_color6"
-                android:textSize="@dimen/pl_micro_text_size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/login_out_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp" >
-
-            <ImageView
-                android:id="@+id/login_out_iv"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/icon_profile" />
-
-            <TextView
-                android:id="@+id/loginout_text_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="6dp"
-                android:text="@string/loginout_text"
-                android:textColor="@color/second_info_header_color6"
-                android:textSize="@dimen/pl_micro_text_size" />
-        </LinearLayout>
-    </LinearLayout>
-
-</FrameLayout>
+</merge>

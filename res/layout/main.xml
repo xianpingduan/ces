@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/login_bg_color"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -9,11 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-
-        <!--<ImageView
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="#2ea3fe" />-->
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -44,17 +40,13 @@
                 android:layout_marginRight="12dp"
                 android:background="@drawable/titlebar_menu_selector" />
         </FrameLayout>
-
-        <!--<ImageView
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="#ebebeb"/>-->
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/main_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/login_bg_color"
         android:orientation="vertical" >
     </FrameLayout>
 

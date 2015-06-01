@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,14 +31,13 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.PushNotificationCenter;
 import com.xiexin.ces.R;
-import com.xiexin.ces.SlidingMenu;
-import com.xiexin.ces.SlidingMenu.SlidingMenuListener;
 import com.xiexin.ces.db.EmployeeManager;
 import com.xiexin.ces.entry.Employee;
 import com.xiexin.ces.fragment.AnnounceFragment;
 import com.xiexin.ces.fragment.MessageFragment;
 import com.xiexin.ces.fragment.PendApprovalFragment;
 import com.xiexin.ces.fragment.TipFragment;
+import com.xiexin.ces.menu.ResideMenu;
 import com.xiexin.ces.menu.ResideMenuItem;
 import com.xiexin.ces.update.SelfUpgrade;
 import com.xiexin.ces.update.SelfUpgrade.SelfUpdateListener;
@@ -47,11 +45,11 @@ import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.LoadingDialog;
 
 public class MenuActivity extends FragmentActivity implements
-		View.OnClickListener,SelfUpdateListener,SlidingMenuListener {
+		View.OnClickListener,SelfUpdateListener {
 
 	private final static String TAG = "MenuActivity";
 
-//	private ResideMenu resideMenu;
+	private ResideMenu resideMenu;
 	private MenuActivity mContext;
 	private ResideMenuItem itemPendApproval;
 	private ResideMenuItem itemSendItem;
@@ -95,8 +93,8 @@ public class MenuActivity extends FragmentActivity implements
 	
 	
 	private LinearLayout menu;
-	private SlidingMenu mSlidingMenu;
-	private LinearLayout mMainLl;
+//	private SlidingMenu mSlidingMenu;
+//	private LinearLayout mMainLl;
 	
 	private View decorView;
 
@@ -106,7 +104,7 @@ public class MenuActivity extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.main);
 		mContext = this;
 		
 		String userId = App.getSharedPreference().getString(Constants.USER_ID, "");
@@ -229,7 +227,7 @@ public class MenuActivity extends FragmentActivity implements
 
 	private void initLoginOutLl() {
 
-		mLoginOutLl = (LinearLayout) findViewById(R.id.login_out_ll);
+		mLoginOutLl = resideMenu.getLoginOutLl();
 		mLoginOutLl.setOnClickListener(this);
 
 	}
@@ -243,10 +241,10 @@ public class MenuActivity extends FragmentActivity implements
 
 	private void initUserInfo() {
 
-		mUserNameTv = (TextView) findViewById(R.id.user_name_tv);
-		mUserDeptTv = (TextView) findViewById(R.id.user_dept_tv);
-		mUserAccountTv = (TextView) findViewById(R.id.user_account_tv);
-		mUserHeaderIv = (ImageView) findViewById(R.id.user_head_img);
+		mUserNameTv = resideMenu.getUserNameTv();
+		mUserDeptTv = resideMenu.getUserDeptTv();
+		mUserAccountTv = resideMenu.getUserAccountTv();
+		mUserHeaderIv = resideMenu.getUserHeaderIv();
 		
 
 		String userName = App.getSharedPreference().getString(
@@ -277,7 +275,7 @@ public class MenuActivity extends FragmentActivity implements
 
 	private void initSwitchAccoutLl() {
 
-		mSwitchAccountLl = (LinearLayout) findViewById(R.id.switch_accout_ll);
+		mSwitchAccountLl = resideMenu.getSwitchAccountLl();
 		mSwitchAccountLl.setOnClickListener(this);
 	}
 
@@ -381,32 +379,32 @@ public class MenuActivity extends FragmentActivity implements
 	private void setUpMenu() {
 
 		// attach to current activity;
-//		resideMenu = new ResideMenu(this);
-//		resideMenu.setBackground(R.drawable.main_bg);
-//		resideMenu.attachToActivity(this);
-//		resideMenu.setMenuListener(menuListener);
+		resideMenu = new ResideMenu(this);
+		resideMenu.setBackground(R.drawable.main_bg);
+		resideMenu.attachToActivity(this);
+		resideMenu.setMenuListener(menuListener);
 		// valid scale factor is between 0.0f and 1.0f. leftmenu'width is
 		// 150dip.
-//		resideMenu.setScaleValue(0.6f);
-		// 右边菜单不显示
-//		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+		resideMenu.setScaleValue(0.5f);
+//		 右边菜单不显示
+		resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 		
-		mMainLl = (LinearLayout) findViewById(R.id.main_ll);
-		
-		mMainLl.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mSlidingMenu.closeMenu();
-			}
-		});
+//		mMainLl = (LinearLayout) findViewById(R.id.main_ll);
+//		
+//		mMainLl.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				mSlidingMenu.closeMenu();
+//			}
+//		});
 		
 		decorView = getWindow().getDecorView();
 		
 		Logger.d(TAG, "decorView : "+ decorView.getId());
 		
-		mSlidingMenu = (SlidingMenu) findViewById(R.id.id_menu);
+//		mSlidingMenu = (SlidingMenu) findViewById(R.id.id_menu);
 		
-		menu = (LinearLayout) findViewById(R.id.menu);
+		menu = resideMenu.getNewMenuView();
 
 		// create menu items;
 		itemPendApproval = new ResideMenuItem(this,
@@ -503,8 +501,8 @@ public class MenuActivity extends FragmentActivity implements
 		mLeftMenuBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-			//	resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
-				toggleMenu(view);
+				resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+//				toggleMenu(view);
 			}
 		});
 		// mRightMenuBtn.setOnClickListener(
@@ -516,29 +514,29 @@ public class MenuActivity extends FragmentActivity implements
 		// });
 	}
 
-	private View.OnClickListener decorViewListener= new View.OnClickListener()
-    {
-            @Override
-            public void onClick(View v)
-            {
-                
-              Logger.d(TAG, "decorViewListener");
-                
-              if(mSlidingMenu.isOpened()){
-                  mSlidingMenu.closeMenu();
-              }
-            }
-    };
+//	private View.OnClickListener decorViewListener= new View.OnClickListener()
+//    {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                
+//              Logger.d(TAG, "decorViewListener");
+//                
+//              if(mSlidingMenu.isOpened()){
+//                  mSlidingMenu.closeMenu();
+//              }
+//            }
+//    };
 	
     //	@Override
     //	public boolean dispatchTouchEvent(MotionEvent ev) {
     //		return resideMenu.dispatchTouchEvent(ev);
     //	}
 	
-	public void toggleMenu(View view)
-	{
-		mSlidingMenu.toggle();
-	}
+//	public void toggleMenu(View view)
+//	{
+//		mSlidingMenu.toggle();
+//	}
 
 	private static final int MSG_OPEN_MENU = 1;
 	private static final int MSG_CLOSE_MENU = 2;
@@ -587,7 +585,7 @@ public class MenuActivity extends FragmentActivity implements
 				break;
 			case MSG_SAVE_EMPLOYEE_LIST_SUCCESS:
 				Logger.d(TAG, "save data success!");
-				mSlidingMenu.closeMenu();
+//				mSlidingMenu.closeMenu();
 				dismissDialog();
 				long next_req_time = System.currentTimeMillis()
 						+ Constants.SYNC_EMPLOYEE_GAP_TIME;
@@ -606,7 +604,7 @@ public class MenuActivity extends FragmentActivity implements
 
 				break;
 			case MSG_FROM_FRAGMENT_CLOSE_MENU:
-				mSlidingMenu.closeMenu();
+//				mSlidingMenu.closeMenu();
 				break;
 			case MSG_GET_DEPART:
 				mUserDeptTv.setText((String)msg.obj);
@@ -705,21 +703,21 @@ public class MenuActivity extends FragmentActivity implements
 	}
 
 	// 菜单打开和关闭监听
-    //	private final ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
-    //		@Override
-    //		public void openMenu() {
-    //			mUiHandler.sendEmptyMessage(MSG_OPEN_MENU);
-    //			// Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT)
-    //			// .show();
-    //		}
-    //
-    //		@Override
-    //		public void closeMenu() {
-    //			mUiHandler.sendEmptyMessage(MSG_CLOSE_MENU);
-    //			// Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT)
-    //			// .show();
-    //		}
-    //	};
+    	private final ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
+    		@Override
+    		public void openMenu() {
+    			mUiHandler.sendEmptyMessage(MSG_OPEN_MENU);
+    			// Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT)
+    			// .show();
+    		}
+    
+    		@Override
+    		public void closeMenu() {
+    			mUiHandler.sendEmptyMessage(MSG_CLOSE_MENU);
+    			// Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT)
+    			// .show();
+    		}
+    	};
 
 	private void changeFragment(Fragment targetFragment) {
     //		resideMenu.clearIgnoredViewList();
@@ -902,15 +900,15 @@ public class MenuActivity extends FragmentActivity implements
 		mUiHandler.sendMessage(msg);
 	}
 
-    @Override
-    public void open(boolean b)
-    {
-       if(b){
-           decorView.setOnClickListener(decorViewListener);
-       }else{
-           decorView.setOnClickListener(null);
-       }
-        
-    }
+//    @Override
+//    public void open(boolean b)
+//    {
+//       if(b){
+//           decorView.setOnClickListener(decorViewListener);
+//       }else{
+//           decorView.setOnClickListener(null);
+//       }
+//        
+//    }
 
 }

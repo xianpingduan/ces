@@ -9,7 +9,6 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -34,18 +33,18 @@ public class ResideMenu extends FrameLayout {
 
 	public static final int DIRECTION_LEFT = 0;
 	public static final int DIRECTION_RIGHT = 1;
-	private static final int PRESSED_MOVE_HORIZANTAL = 2;
+	private static final int PRESSED_MOVE_HORIZONTAL = 2;
 	private static final int PRESSED_DOWN = 3;
 	private static final int PRESSED_DONE = 4;
 	private static final int PRESSED_MOVE_VERTICAL = 5;
 
 	private ImageView imageViewShadow;
 	private ImageView imageViewBackground;
-	private LinearLayout layoutLeftMenu;
+	private FrameLayout layoutLeftMenu;
 	// private LinearLayout layoutRightMenu;
-	private ScrollView scrollViewLeftMenu;
-	private ScrollView scrollViewRightMenu;
-	private ScrollView scrollViewMenu;
+	private FrameLayout scrollViewLeftMenu;
+	private FrameLayout scrollViewRightMenu;
+	private FrameLayout scrollViewMenu;
 	// private LinearLayout contentInfoLl;
 	/** the activity that view attach to */
 	private Activity activity;
@@ -55,7 +54,6 @@ public class ResideMenu extends FrameLayout {
 	private TouchDisableView viewActivity;
 	/** the flag of menu open status */
 	private boolean isOpened;
-	private GestureDetector gestureDetector;
 	private float shadowAdjustScaleX;
 	private float shadowAdjustScaleY;
 	/** the view which don't want to intercept touch event */
@@ -71,6 +69,14 @@ public class ResideMenu extends FrameLayout {
 	private List<Integer> disabledSwipeDirection = new ArrayList<Integer>();
 	// valid scale factor is between 0.0f and 1.0f.
 	private float mScaleValue = 0.5f;
+	
+	private LinearLayout mNewMenu;
+	private TextView mUserNameTv;
+	private TextView mUserDeptTv;
+	private TextView mUserAccountTv;
+	private ImageView mUserHeaderIv;
+	private LinearLayout mSwitchAccountLl;
+	private LinearLayout mLoginOutLl;
 
 	// header
 	private RelativeLayout mUserInfoRl;
@@ -87,18 +93,52 @@ public class ResideMenu extends FrameLayout {
 		inflater.inflate(R.layout.residemenu, this);
 
 		// contentInfoLl = (LinearLayout) findViewById(R.id.content_info_ll);
-		scrollViewLeftMenu = (ScrollView) findViewById(R.id.sv_left_menu);
-		scrollViewRightMenu = (ScrollView) findViewById(R.id.sv_right_menu);
+		scrollViewLeftMenu = (FrameLayout) findViewById(R.id.sv_left_menu);
+		scrollViewRightMenu = (FrameLayout) findViewById(R.id.sv_right_menu);
 		imageViewShadow = (ImageView) findViewById(R.id.iv_shadow);
-		layoutLeftMenu = (LinearLayout) findViewById(R.id.layout_left_menu);
+		layoutLeftMenu = (FrameLayout) findViewById(R.id.layout_left_menu);
 		// layoutRightMenu = (LinearLayout)findViewById( R.id.layout_right_menu
 		// );
 		imageViewBackground = (ImageView) findViewById(R.id.iv_background);
 
 		mUserInfoRl = (RelativeLayout) findViewById(R.id.user_info_rl);
 		mSettingLl = (LinearLayout) findViewById(R.id.setting_ll);
+		
+		mNewMenu= (LinearLayout) findViewById(R.id.menu);
+		
+	      mUserNameTv = (TextView) findViewById(R.id.user_name_tv);
+	        mUserDeptTv = (TextView) findViewById(R.id.user_dept_tv);
+	        mUserAccountTv = (TextView) findViewById(R.id.user_account_tv);
+	        mUserHeaderIv = (ImageView) findViewById(R.id.user_head_img);
+	        
+	        mLoginOutLl = (LinearLayout) findViewById(R.id.login_out_ll);
+	        
+	        mSwitchAccountLl = (LinearLayout) findViewById(R.id.switch_accout_ll);
 	}
-
+	
+	
+	public LinearLayout getNewMenuView(){
+	    return mNewMenu;
+	}
+	public TextView getUserNameTv(){
+	    return mUserNameTv;
+	}
+	public TextView getUserDeptTv(){
+	    return mUserDeptTv;
+	}
+	public TextView getUserAccountTv(){
+	    return mUserAccountTv;
+	}
+	public ImageView getUserHeaderIv(){
+	    return mUserHeaderIv;
+	}
+	
+	   public LinearLayout getSwitchAccountLl(){
+	        return mSwitchAccountLl;
+	   }
+       public LinearLayout getLoginOutLl(){
+           return mLoginOutLl;
+       }
 	/**
 	 * use the method to set up the activity which residemenu need to show;
 	 * 
@@ -108,8 +148,19 @@ public class ResideMenu extends FrameLayout {
 		initValue(activity);
 		setShadowAdjustScaleXByOrientation();
 		viewDecor.addView(this, 0);
-		setViewPadding();
+//		setViewPadding();
 	}
+	
+    @Override
+    protected boolean fitSystemWindows(Rect insets) {
+        // Applies the content insets to the view's padding, consuming that content (modifying the insets to be 0),
+        // and returning true. This behavior is off by default and can be enabled through setFitsSystemWindows(boolean)
+        // in api14+ devices.
+        this.setPadding(viewActivity.getPaddingLeft() + insets.left, viewActivity.getPaddingTop() + insets.top,
+                viewActivity.getPaddingRight() + insets.right, viewActivity.getPaddingBottom() + insets.bottom);
+        insets.left = insets.top = insets.right = insets.bottom = 0;
+        return true;
+    }
 
 	private void initValue(Activity activity) {
 		this.activity = activity;
@@ -146,8 +197,8 @@ public class ResideMenu extends FrameLayout {
 	 * 
 	 * @param imageResrouce
 	 */
-	public void setBackground(int imageResrouce) {
-		imageViewBackground.setImageResource(imageResrouce);
+	public void setBackground(int imageResource) {
+		imageViewBackground.setImageResource(imageResource);
 	}
 
 	/**
@@ -581,7 +632,7 @@ public class ResideMenu extends FrameLayout {
 				break;
 
 			if (pressedState != PRESSED_DOWN
-					&& pressedState != PRESSED_MOVE_HORIZANTAL)
+					&& pressedState != PRESSED_MOVE_HORIZONTAL)
 				break;
 
 			int xOffset = (int) (ev.getX() - lastActionDownX);
@@ -593,10 +644,10 @@ public class ResideMenu extends FrameLayout {
 					break;
 				}
 				if (xOffset < -50 || xOffset > 50) {
-					pressedState = PRESSED_MOVE_HORIZANTAL;
+					pressedState = PRESSED_MOVE_HORIZONTAL;
 					ev.setAction(MotionEvent.ACTION_CANCEL);
 				}
-			} else if (pressedState == PRESSED_MOVE_HORIZANTAL) {
+			} else if (pressedState == PRESSED_MOVE_HORIZONTAL) {
 				if (currentActivityScaleX < 0.95) {
 					showScrollViewMenu(scrollViewMenu);
 					showUserInfoView(mUserInfoRl);
@@ -624,7 +675,7 @@ public class ResideMenu extends FrameLayout {
 
 			if (isInIgnoredView)
 				break;
-			if (pressedState != PRESSED_MOVE_HORIZANTAL)
+			if (pressedState != PRESSED_MOVE_HORIZONTAL)
 				break;
 
 			pressedState = PRESSED_DONE;
@@ -679,13 +730,13 @@ public class ResideMenu extends FrameLayout {
 		public void closeMenu();
 	}
 
-	private void showScrollViewMenu(ScrollView scrollViewMenu) {
+	private void showScrollViewMenu(FrameLayout scrollViewMenu) {
 		if (scrollViewMenu != null && scrollViewMenu.getParent() == null) {
 			addView(scrollViewMenu);
 		}
 	}
 
-	private void hideScrollViewMenu(ScrollView scrollViewMenu) {
+	private void hideScrollViewMenu(FrameLayout scrollViewMenu) {
 		if (scrollViewMenu != null && scrollViewMenu.getParent() != null) {
 			removeView(scrollViewMenu);
 		}
