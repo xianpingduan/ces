@@ -84,6 +84,7 @@ public class App extends Application
 	ImageLoader.getInstance( ).init( config );
 
 	mSharePrefences = getSharedPreferences( SHARED_PERFERENCE_NAME , 0 );
+	
     }
 
     @Override
