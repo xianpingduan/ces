@@ -148,7 +148,6 @@ public class ResideMenu extends FrameLayout {
 
     /**
      * use the method to set up the activity which residemenu need to show;
-     * 
      * @param activity
      */
     public void attachToActivity(Activity activity) {
@@ -367,7 +366,10 @@ public class ResideMenu extends FrameLayout {
 
         isOpened = true;
         AnimatorSet scaleDown_activity = buildScaleDownAnimation(viewActivity, mScaleValue, mScaleValue);
-        AnimatorSet translateDown_activity = buildTranslateAnimation(viewActivity, 250);
+        AnimatorSet translateDown_activity = buildTranslateAnimation(viewActivity, dp2px(125));
+        
+        AnimatorSet translateDown_shadow = buildTranslateAnimation(imageViewShadow, dp2px(125));
+        
         AnimatorSet scaleDown_shadow = buildScaleDownAnimation(imageViewShadow, mScaleValue + shadowAdjustScaleX, mScaleValue
                 + shadowAdjustScaleY);
         AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 1.0f);
@@ -376,6 +378,7 @@ public class ResideMenu extends FrameLayout {
 
         scaleDown_shadow.addListener(animationListener);
         scaleDown_activity.playTogether(translateDown_activity);
+        scaleDown_activity.playTogether(translateDown_shadow);
         scaleDown_activity.playTogether(scaleDown_shadow);
         scaleDown_activity.playTogether(alpha_menu);
         scaleDown_activity.playTogether(alpha_userinfo);
@@ -394,11 +397,14 @@ public class ResideMenu extends FrameLayout {
         
         AnimatorSet translateUp_activity = buildTranslateAnimation(viewActivity, 0);
         
+        AnimatorSet translateUp_shadow = buildTranslateAnimation(viewActivity, 0);
+        
         AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 0.0f);
         AnimatorSet alpha_userinfo = buildMenuAnimation(mUserInfoRl, 0.0f);
         AnimatorSet alpha_loginout = buildMenuAnimation(mSettingLl, 0.0f);
         scaleUp_activity.addListener(animationListener);
         scaleUp_activity.playTogether(translateUp_activity);
+        scaleUp_activity.playTogether(translateUp_shadow);
         scaleUp_activity.playTogether(scaleUp_shadow);
         scaleUp_activity.playTogether(alpha_menu);
         scaleUp_activity.playTogether(alpha_userinfo);
@@ -692,6 +698,21 @@ public class ResideMenu extends FrameLayout {
                     ViewHelper.setAlpha(scrollViewMenu, (1 - targetScale) * 2.0f);
                     ViewHelper.setAlpha(mSettingLl, (1 - targetScale) * 2.0f);
                     ViewHelper.setAlpha(mUserInfoRl, (1 - targetScale) * 2.0f);
+                    
+                    Logger.d(TAG, "xOffset:"+xOffset);
+                    
+                    //平移
+                    if(xOffset<0){
+                        ViewHelper.setTranslationX(mSettingLl, xOffset);
+                        ViewHelper.setTranslationX(mUserInfoRl, xOffset);
+                        ViewHelper.setTranslationX(scrollViewMenu, xOffset);
+                    }else{
+                        ViewHelper.setTranslationX(mSettingLl, 0);
+                        ViewHelper.setTranslationX(mUserInfoRl, 0);
+                        ViewHelper.setTranslationX(scrollViewMenu, 0);
+                    }
+
+//                    ViewHelper.setTranslationX(viewActivity, xOffset);
 
                     lastRawX = ev.getRawX();
                     return true;

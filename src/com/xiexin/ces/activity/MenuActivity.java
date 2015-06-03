@@ -184,14 +184,6 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             mTitleView.setText(getString(R.string.menu_pend_approval));
         }
 
-        float screenWidth = getWindowManager().getDefaultDisplay().getWidth(); // 屏幕宽（像素，如：480px）
-        float screenHeight = getWindowManager().getDefaultDisplay().getHeight(); // 屏幕高（像素，如：800p）
-        
-        Logger.d(TAG, "screenWidth:"+screenWidth +",screenHeight:"+screenHeight);
-        float bili = (screenHeight/screenWidth);
-        
-        Logger.d(TAG, "bili:"+bili +",(screenHeight/screenWidth):"+(screenHeight/screenWidth)+",(screenWidth%screenHeight):"+(screenWidth%screenHeight));
-
     }
 
     @Override
