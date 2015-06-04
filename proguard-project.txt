@@ -43,3 +43,5 @@
 #verCode=11 verName=2.0 date=20150414
 
 #verCode=12 verName=2.1 date=20150422
+
+#verCode=13 verName=2.2 date=20150604

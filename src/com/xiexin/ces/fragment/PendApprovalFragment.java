@@ -552,7 +552,6 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 					intent.putExtra(Constants.DATANBR, id);
 					intent.putExtra(Constants.INVOICE_TYPE, mKind);
 					startActivityForResult(intent, 1);
-
 				}
 			});
 

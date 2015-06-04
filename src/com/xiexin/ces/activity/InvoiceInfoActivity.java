@@ -804,7 +804,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				if (content == null || content.equals("null")) {
 					content = "";
 				}
-				if (content.contains("T00:00:00")) {
+				if (content.contains("T")) {
 					Date date = new Date();
 					try {
 						date = sdf.parse(content);
