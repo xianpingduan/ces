@@ -377,6 +377,9 @@ public class ResideMenu extends FrameLayout {
         AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 1.0f);
         AnimatorSet alpha_userinfo = buildMenuAnimation(mUserInfoRl, 1.0f);
         AnimatorSet alpha_loginout = buildMenuAnimation(mSettingLl, 1.0f);
+        
+        AnimatorSet translate_userinfo = buildTranslateAnimation(mUserInfoRl, 0);
+        AnimatorSet translate_loginout = buildTranslateAnimation(mSettingLl, 0);
 
         scaleDown_shadow.addListener(animationListener);
         scaleDown_activity.playTogether(translateDown_activity);
@@ -385,7 +388,9 @@ public class ResideMenu extends FrameLayout {
         scaleDown_activity.playTogether(alpha_menu);
         scaleDown_activity.playTogether(translate_menu);
         scaleDown_activity.playTogether(alpha_userinfo);
+        scaleDown_activity.playTogether(translate_userinfo);
         scaleDown_activity.playTogether(alpha_loginout);
+        scaleDown_activity.playTogether(translate_loginout);
         scaleDown_activity.start();
     }
 
@@ -403,6 +408,8 @@ public class ResideMenu extends FrameLayout {
         AnimatorSet translateUp_shadow = buildTranslateAnimation(viewActivity, 0);
         
         AnimatorSet translate_menu = buildTranslateAnimation(scrollViewMenu, 0);
+        AnimatorSet translate_userinfo = buildTranslateAnimation(mUserInfoRl, 0);
+        AnimatorSet translate_loginout = buildTranslateAnimation(mSettingLl, 0);
         
         AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 0.0f);
         AnimatorSet alpha_userinfo = buildMenuAnimation(mUserInfoRl, 0.0f);
@@ -414,7 +421,9 @@ public class ResideMenu extends FrameLayout {
         scaleUp_activity.playTogether(alpha_menu);
         scaleUp_activity.playTogether(translate_menu);
         scaleUp_activity.playTogether(alpha_userinfo);
+        scaleUp_activity.playTogether(translate_userinfo);
         scaleUp_activity.playTogether(alpha_loginout);
+        scaleUp_activity.playTogether(translate_loginout);
         scaleUp_activity.start();
     }
 
