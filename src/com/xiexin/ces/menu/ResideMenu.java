@@ -28,7 +28,8 @@ import com.xiexin.ces.R;
 import com.xiexin.ces.utils.Logger;
 
 /**
- * User: special Date: 13-12-10 Time: 下午10:44 Mail: specialcyci@gmail.com
+ * User: allenduan 
+ * Date: 2015-6-10 
  */
 public class ResideMenu extends FrameLayout {
     
