@@ -175,11 +175,13 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 		mReturnTv.setText(getReturnStr(mInvoiceType));
 		mTitle.setText(getString(R.string.invoice_info));
-		mBtn1.setText(getString(R.string.invoice_approval_road));
-		mBtn2.setText(getString(R.string.invoice_attachment));
+//		mBtn1.setText(getString(R.string.invoice_approval_road));
+//		mBtn2.setText(getString(R.string.invoice_attachment));
 
 		mBtn1.setVisibility(View.VISIBLE);
 		mBtn2.setVisibility(View.VISIBLE);
+		mBtn1.setBackgroundResource(R.drawable.icon_info_road);
+		mBtn2.setBackgroundResource(R.drawable.icon_attach_clickable_btn);
 		mReturnLl.setVisibility(View.VISIBLE);
 
 		mBtn1.setOnClickListener(this);
@@ -448,8 +450,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		}
 		
 		Intent intent = new Intent();
-		intent.setClass(InvoiceInfoActivity.this,
-				InvoiceSecondInfoActivity.class);
+		intent.setClass(InvoiceInfoActivity.this,InvoiceSecondInfoActivity.class);
 		intent.putExtra(Constants.PRGID, mPrgid);
 		intent.putExtra(Constants.DET_CONFIG, mDetConfigStr);
 		Bundle bundle = new Bundle();
@@ -565,6 +566,13 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					mDetNameStr = mDataContent.getString("detname");
 					mFilesPathStr = mDataContent.getString("filespath");
 					mApprListStr = mDataContent.getString("apprlist");
+					
+					if(mFilesPathStr!=null && !"".equals(mFilesPathStr)&& !"null".equals(mFilesPathStr)&&!"[]".equals(mFilesPathStr)){
+					    mBtn2.setEnabled(true);
+					}else{
+					    mBtn2.setEnabled(false);
+					}
+					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -732,7 +740,6 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			
 //			contentTv.setTextColor(getResources().getColor(
 //					R.color.info_content_text_color));
-			
 //			if (mDataConfig[i].toLowerCase().equals("totalcost")) {
 //                contentTv.setTextColor(getResources().getColor(
 //                        R.color.header_bar_btn_txt_press_color));
@@ -740,8 +747,6 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 //                contentTv.setTextColor(getResources().getColor(
 //                        R.color.second_info_header_color4));
 //            }
-
-
 
 			msgIv.setOnClickListener(new View.OnClickListener() {
 				@Override

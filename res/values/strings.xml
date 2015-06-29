@@ -76,12 +76,12 @@
     <string name="pl_error_msg_net_refresh">未连接网络或连接失败，请检查网络后重试！</string>
     <string name="pl_loading">正在疯狂地加载...</string>
     
-    <string name="menu_pend_approval">待审批事项</string>
+    <string name="menu_pend_approval">待办事项</string>
     <string name="menu_sent_item">已发事项</string>
     <string name="menu_scratch_upcome">暂存待办</string>
-    <string name="menu_approved">已审批事项</string>
+    <string name="menu_approved">已办事项</string>
     <string name="menu_message">消息中心</string>
-    <string name="menu_ads">公告</string>
+    <string name="menu_ads">公告中心</string>
     <string name="menu_invoice">发票真伪</string>
     <string name="menu_record">记一笔</string>
     <string name="menu_update">检查更新</string>
@@ -113,7 +113,7 @@
     <string name="please_enter_employee_name">请输入您要查询的姓名</string>
 
     
-    <string name="sure_to_login_out">是否确认注销当前帐号?</string>
+    <string name="sure_to_login_out">请确认是否注销账号信息！</string>
     <string name="xiangqian">向前</string>
     <string name="xianghou">向后</string>
     

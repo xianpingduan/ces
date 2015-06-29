@@ -102,7 +102,7 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 		
 		mReturnLl.setVisibility(View.VISIBLE);
 		mReturnTv.setVisibility(View.GONE);
-		mReturnIv2.setImageResource(R.drawable.server_config_head_menu);
+		mReturnIv2.setImageResource(R.drawable.title_bar_menu);
 	}
 
 	private void initData() {
