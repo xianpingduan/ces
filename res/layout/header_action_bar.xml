@@ -15,8 +15,8 @@
 
         <FrameLayout
             android:id="@+id/return_iv"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:gravity="center_vertical" >
 
             <ImageView

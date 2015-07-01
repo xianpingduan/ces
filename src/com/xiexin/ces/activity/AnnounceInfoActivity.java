@@ -3,9 +3,9 @@ package com.xiexin.ces.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -38,7 +38,9 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 	// header end
 
 	private TextView mAnnounceTitleTv;
-	private TextView mAnnounceContentTv;
+//	private TextView mAnnounceContentTv;
+	
+	private WebView mAnnounceContentWv;
 
 	private RequestQueue mQueue;
 
@@ -71,7 +73,9 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 		mBtn1.setOnClickListener(this);
 
 		mAnnounceTitleTv = (TextView) findViewById(R.id.announce_title_tv);
-		mAnnounceContentTv = (TextView) findViewById(R.id.announce_content_tv);
+//		mAnnounceContentTv = (TextView) findViewById(R.id.announce_content_tv);
+		
+		mAnnounceContentWv = (WebView) findViewById(R.id.announce_content_tv);
 
 	}
 
@@ -82,7 +86,9 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 		mAnnounceTitle = intent.getStringExtra("title");
 		mAnnounceFilePath = intent.getStringExtra("filespath");
 		mAnnounceTitleTv.setText(mAnnounceTitle);
-		mAnnounceContentTv.setText(Html.fromHtml(mAnnounceContent));
+//		mAnnounceContentTv.setText(Html.fromHtml(mAnnounceContent));
+		
+		mAnnounceContentWv.loadData(mAnnounceContent, "text/html", "UTF-8");
 
 		//doMsgRead( );
 

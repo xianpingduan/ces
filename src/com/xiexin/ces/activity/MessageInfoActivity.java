@@ -6,9 +6,9 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -52,7 +52,9 @@ public class MessageInfoActivity extends Activity implements OnClickListener
     // header end
 
     private TextView mMsgTitleTv;
-    private TextView mMsgContentTv;
+//    private TextView mMsgContentTv;
+    
+    private WebView mMsgContentWv;
 
     private RequestQueue mQueue;
 
@@ -92,7 +94,10 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mBtn1.setOnClickListener(this);
 
 	mMsgTitleTv = (TextView)findViewById( R.id.msg_title_tv );
-	mMsgContentTv = (TextView)findViewById( R.id.msg_content_tv );
+//	mMsgContentTv = (TextView)findViewById( R.id.msg_content_tv );
+	
+	mMsgContentWv = (WebView) findViewById(R.id.msg_content_tv);
+	mMsgContentWv.getSettings().setJavaScriptEnabled(true);
 
     }
 
@@ -106,7 +111,9 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mMessageInfoFilePath  = intent.getStringExtra("filespath");
 	mMsgTitleTv.setText( mMsgTitle );
 	
-	mMsgContentTv.setText( Html.fromHtml(mMegContent) );
+//	mMsgContentTv.setText( Html.fromHtml(mMegContent) );
+	
+	mMsgContentWv.loadData(mMegContent, "text/html", "UTF-8");
 	
 //	if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&&!"null".equals(mMessageInfoFilePath)){
 //		mTipIv1.setVisibility(View.VISIBLE);
