@@ -87,8 +87,12 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 		mAnnounceFilePath = intent.getStringExtra("filespath");
 		mAnnounceTitleTv.setText(mAnnounceTitle);
 //		mAnnounceContentTv.setText(Html.fromHtml(mAnnounceContent));
+//		mAnnounceContentWv.loadData(mAnnounceContent, "text/html", "UTF-8");
 		
-		mAnnounceContentWv.loadData(mAnnounceContent, "text/html", "UTF-8");
+//		mAnnounceContentWv.setBackgroundColor(0); // 设置背景色
+//		mAnnounceContentWv.getBackground().setAlpha(0); // 设置填充透明度 范围：0-255
+		
+		mAnnounceContentWv.loadDataWithBaseURL(null, mAnnounceContent, "text/html","UTF-8", null);
 
 		//doMsgRead( );
 

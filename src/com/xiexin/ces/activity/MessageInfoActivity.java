@@ -113,7 +113,14 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	
 //	mMsgContentTv.setText( Html.fromHtml(mMegContent) );
 	
-	mMsgContentWv.loadData(mMegContent, "text/html", "UTF-8");
+//	mMsgContentWv.loadData(mMegContent, "text/html", "UTF-8");
+	
+//	mMsgContentWv.setBackgroundColor(0); // 设置背景色
+//    mMsgContentWv.getBackground().setAlpha(0); // 设置填充透明度 范围：0-255
+	
+	mMsgContentWv.loadDataWithBaseURL(null, mMegContent, "text/html","UTF-8", null);
+	
+	Logger.d(TAG, "mMegContent:"+mMegContent);
 	
 //	if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&&!"null".equals(mMessageInfoFilePath)){
 //		mTipIv1.setVisibility(View.VISIBLE);
