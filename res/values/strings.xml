@@ -52,7 +52,7 @@
     
     <string name="user_info_no_data">暂无</string>
     
-    <string name="loading_tip_text">正在加载</string>
+    <string name="loading_tip_text">加载中</string>
     <string name="expect">精彩待续...</string>
     <string name="data_laoding_failed">数据加载失败</string>
     <string name="tip_last_page">已经到最后啦!</string>

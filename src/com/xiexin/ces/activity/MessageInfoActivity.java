@@ -88,7 +88,9 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 
 	mTitle.setText( getString( R.string.msg_center ) );
 	mBtn1.setVisibility( View.VISIBLE );
-	mBtn1.setText(getString(R.string.attachment));
+//	mBtn1.setText(getString(R.string.attachment));
+	
+    mBtn1.setBackgroundResource(R.drawable.icon_attach_clickable_btn);
 
 	mReturnLl.setOnClickListener( this );
 	mBtn1.setOnClickListener(this);
