@@ -88,6 +88,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 
 	mTitle.setText( getString( R.string.msg_center ) );
 	mBtn1.setVisibility( View.VISIBLE );
+	mBtn2.setVisibility( View.GONE );
 //	mBtn1.setText(getString(R.string.attachment));
 	
     mBtn1.setBackgroundResource(R.drawable.icon_attach_clickable_btn);
@@ -130,6 +131,12 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 //		mTipIv1.setVisibility(View.GONE);
 //	}
 	
+	
+    if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&& !"null".equals(mMessageInfoFilePath)&&!"[]".equals(mMessageInfoFilePath)){
+        mBtn1.setEnabled(true);
+    }else{
+        mBtn1.setEnabled(false);
+    }
 
 	doMsgRead( );
 

@@ -1,10 +1,7 @@
 package com.xiexin.ces.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -23,6 +21,8 @@ import android.widget.Toast;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
+import com.xiexin.ces.update.ResourceUtil;
+import com.xiexin.ces.update.SelfUpdateCommonDialog;
 import com.xiexin.ces.utils.Logger;
 
 //服务器配置信息请求转到此
@@ -171,31 +171,49 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 
     private void showConfirmDialog()
     {
+        final SelfUpdateCommonDialog mUpgradeDialog = new SelfUpdateCommonDialog(mContext, "", getString(R.string.server_config_change_msg));
+        mUpgradeDialog.setmRightBtnTitle(mContext.getString(ResourceUtil.getStringId(mContext, "sure")));
+        mUpgradeDialog.setmLeftBtnTitle(mContext.getString(ResourceUtil.getStringId(mContext, "cancel")));
+        mUpgradeDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+        mUpgradeDialog.addRightBtnListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUpgradeDialog.dismiss();
+                serverConfigChanged=true;
+                doRequestServerConfigInfo( );
+            }
+        });
+        mUpgradeDialog.addLeftBtnListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mUpgradeDialog != null)
+                    mUpgradeDialog.dismiss();
+            }
+        });
+        mUpgradeDialog.show();
 
-	AlertDialog.Builder builder = new Builder( ServerConfigActivity.this );
-	builder.setMessage( getString( R.string.server_config_change_msg ) );
-	builder.setTitle( null );
-	builder.setPositiveButton( getString( R.string.sure ) , new DialogInterface.OnClickListener( )
-	{
-	    @Override
-	    public void onClick( DialogInterface dialog , int which )
-	    {
-		dialog.dismiss( );
-		serverConfigChanged=true;
-		doRequestServerConfigInfo( );
-		
-	
-	    }
-	} );
-	builder.setNegativeButton( getString( R.string.cancel ) , new DialogInterface.OnClickListener( )
-	{
-	    @Override
-	    public void onClick( DialogInterface dialog , int which )
-	    {
-		dialog.dismiss( );
-	    }
-	} );
-	builder.create( ).show( );
+//	AlertDialog.Builder builder = new Builder( ServerConfigActivity.this );
+//	builder.setMessage( getString( R.string.server_config_change_msg ) );
+//	builder.setTitle( null );
+//	builder.setPositiveButton( getString( R.string.sure ) , new DialogInterface.OnClickListener( )
+//	{
+//	    @Override
+//	    public void onClick( DialogInterface dialog , int which )
+//	    {
+//		dialog.dismiss( );
+//		serverConfigChanged=true;
+//		doRequestServerConfigInfo( );
+//	    }
+//	} );
+//	builder.setNegativeButton( getString( R.string.cancel ) , new DialogInterface.OnClickListener( )
+//	{
+//	    @Override
+//	    public void onClick( DialogInterface dialog , int which )
+//	    {
+//		dialog.dismiss( );
+//	    }
+//	} );
+//	builder.create( ).show( );
     }
 
     // 跳转到首页

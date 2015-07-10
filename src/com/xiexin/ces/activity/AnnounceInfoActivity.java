@@ -68,6 +68,7 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 
 		mTitle.setText(getString(R.string.announce_center));
 		mBtn1.setVisibility(View.VISIBLE);
+		mBtn2.setVisibility( View.GONE );
 //		mBtn1.setText(getString(R.string.announce_attachment));
 		
 	    mBtn1.setBackgroundResource(R.drawable.icon_attach_clickable_btn);
@@ -98,6 +99,12 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 		mAnnounceContentWv.loadDataWithBaseURL(null, mAnnounceContent, "text/html","UTF-8", null);
 
 		//doMsgRead( );
+		
+        if(mAnnounceFilePath!=null && !"".equals(mAnnounceFilePath)&& !"null".equals(mAnnounceFilePath)&&!"[]".equals(mAnnounceFilePath)){
+            mBtn1.setEnabled(true);
+        }else{
+            mBtn1.setEnabled(false);
+        }
 
 	}
 

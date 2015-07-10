@@ -39,7 +39,7 @@
     <string name="sure">确定</string>
     <string name="cancel">取消</string>
     
-    <string name="server_config_change_msg">确认更改服务器地址和端口?如果更改将清空所有登录信息。</string>
+    <string name="server_config_change_msg">更改服务器地址和端口将清空登录信息.</string>
     
    	<string name="sure_to_del_the_msg">确认删除此条消息?。</string>
    	
@@ -132,9 +132,9 @@
     <string name="msg_center">消息中心</string>
     <string name="announce_center">公告</string>
     <string name="announce_attachment">附件</string>
-    <string name="announce_no_attachment">此公告下没有附件</string>
-    <string name="msg_no_attachment">此消息下没有附件</string>
-    <string name="invoice_no_attachment">此单据下没有附件</string>
+    <string name="announce_no_attachment">此公告没有附件</string>
+    <string name="msg_no_attachment">此消息没有附件</string>
+    <string name="invoice_no_attachment">此单据没有附件</string>
     
    	<string name="submit_success_text">提交成功</string>
    	<string name="submit_error_text">提交失败</string>
