@@ -19,6 +19,7 @@
     <string name="please_enter_account">请输入用户名</string>
     <string name="please_enter_pwd">请输入密码</string> 
     <string name="please_select_zt">请选择账套</string>
+    <string name="please_sure_modify_account">请确认是否修改账套!</string>
     
     <string name="select_zt">账套选择</string>
     
@@ -39,7 +40,7 @@
     <string name="sure">确定</string>
     <string name="cancel">取消</string>
     
-    <string name="server_config_change_msg">更改服务器地址和端口将清空登录信息.</string>
+    <string name="server_config_change_msg">确认更改服务器地址和端口 ？如果更改将清空所有登录信息。</string>
     
    	<string name="sure_to_del_the_msg">确认删除此条消息?。</string>
    	
@@ -52,7 +53,7 @@
     
     <string name="user_info_no_data">暂无</string>
     
-    <string name="loading_tip_text">加载中</string>
+    <string name="loading_tip_text">加载中...</string>
     <string name="expect">精彩待续...</string>
     <string name="data_laoding_failed">数据加载失败</string>
     <string name="tip_last_page">已经到最后啦!</string>
@@ -132,8 +133,8 @@
     <string name="msg_center">消息中心</string>
     <string name="announce_center">公告</string>
     <string name="announce_attachment">附件</string>
-    <string name="announce_no_attachment">此公告没有附件</string>
-    <string name="msg_no_attachment">此消息没有附件</string>
+    <string name="announce_no_attachment">没有附件</string>
+    <string name="msg_no_attachment">没有附件</string>
     <string name="invoice_no_attachment">此单据没有附件</string>
     
    	<string name="submit_success_text">提交成功</string>

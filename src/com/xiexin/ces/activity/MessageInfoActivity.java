@@ -8,13 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
@@ -27,6 +27,7 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.utils.Logger;
+import com.xiexin.ces.widgets.NodataNoteDialog;
 
 public class MessageInfoActivity extends Activity implements OnClickListener
 {
@@ -91,7 +92,7 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mBtn2.setVisibility( View.GONE );
 //	mBtn1.setText(getString(R.string.attachment));
 	
-    mBtn1.setBackgroundResource(R.drawable.icon_attach_clickable_btn);
+	mBtn1.setBackgroundResource(R.drawable.icon_attach_clickable);
 
 	mReturnLl.setOnClickListener( this );
 	mBtn1.setOnClickListener(this);
@@ -133,13 +134,23 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	
 	
     if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&& !"null".equals(mMessageInfoFilePath)&&!"[]".equals(mMessageInfoFilePath)){
-        mBtn1.setEnabled(true);
+        mBtn1.setBackgroundResource(R.drawable.icon_attach_clickable);
     }else{
-        mBtn1.setEnabled(false);
+        mBtn1.setBackgroundResource(R.drawable.icon_attach_no_clickable);
     }
 
 	doMsgRead( );
 
+    }
+    
+    private NodataNoteDialog mNodataNoteDialog;
+    private void showNodataDialog(){
+        
+        if(mNodataNoteDialog==null){
+            mNodataNoteDialog = new NodataNoteDialog(MessageInfoActivity.this, getString(R.string.msg_no_attachment));
+        }
+        mNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+        mNodataNoteDialog.show();
     }
 
     private void doMsgRead()
@@ -223,7 +234,8 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 			intent.putExtra("filespath",mMessageInfoFilePath);
 			startActivity(intent);
 		}else{
-			Toast.makeText(MessageInfoActivity.this, getString(R.string.msg_no_attachment), Toast.LENGTH_SHORT).show();
+//			Toast.makeText(MessageInfoActivity.this, getString(R.string.msg_no_attachment), Toast.LENGTH_SHORT).show();
+		    showNodataDialog();
 		}
 
 	}

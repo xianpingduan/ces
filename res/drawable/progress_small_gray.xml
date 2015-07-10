@@ -2,7 +2,7 @@
 <rotate xmlns:android="http://schemas.android.com/apk/res/android"
     android:drawable="@drawable/pl_progress_small_gray"
     android:fromDegrees="0"
-    android:interpolator="@android:anim/linear_interpolator"
+    android:interpolator="@android:anim/accelerate_interpolator"
     android:pivotX="50%"
     android:pivotY="50%"
     android:repeatCount="infinite"

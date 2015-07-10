@@ -15,6 +15,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
@@ -32,6 +32,7 @@ import com.xiexin.ces.entry.ZhangTao;
 import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.widgets.ILoadingViewListener;
 import com.xiexin.ces.widgets.LoadingUIListView;
+import com.xiexin.ces.widgets.NodataNoteDialog;
 import com.xiexin.ces.widgets.PullListView.IListViewListener;
 
 public class ZhangTaoActivity extends Activity implements OnClickListener {
@@ -268,7 +269,6 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 			}
 
 			bindData(holder, list.get(position));
-
 			return convertView;
 		}
 
@@ -302,7 +302,6 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 						mCheckAccInfo = holder.accInfoTv.getTag().toString();
 					}
 					Logger.d(TAG, "mCheckConnName=" + mCheckConnName);
-
 					mUiHandler.sendEmptyMessage(MSG_REFRESH_ZT_LIST);
 				}
 			});
@@ -331,17 +330,34 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 		finish();
 	}
 
+	private NodataNoteDialog mNodataNoteDialog;
+	private NodataNoteDialog mSureNodataNoteDialog;
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn1:
 			Logger.d(TAG, "选择的帐套是:" + mCheckConnName);
 			if (mCheckConnName == null || mCheckConnName.isEmpty()) {
-				Toast.makeText(ZhangTaoActivity.this,
-						getString(R.string.please_select_zt),
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(ZhangTaoActivity.this,getString(R.string.please_select_zt),Toast.LENGTH_SHORT).show();
+				if(mNodataNoteDialog==null){
+				    mNodataNoteDialog = new NodataNoteDialog(ZhangTaoActivity.this, getString(R.string.please_select_zt));
+				}
+		        mNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+		        mNodataNoteDialog.show();
 			} else {
-				setResult();
+			    if(mSureNodataNoteDialog==null){
+			        mSureNodataNoteDialog = new NodataNoteDialog(ZhangTaoActivity.this, getString(R.string.please_sure_modify_account));
+                }
+			    mSureNodataNoteDialog.addSureBtnListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSureNodataNoteDialog.dismiss();
+                        setResult();
+                    }
+                });
+			    mSureNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+			    mSureNodataNoteDialog.show();
 			}
 			break;
 		case R.id.return_ll:
@@ -355,7 +371,6 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-
 		super.onBackPressed();
 		finish();
 	}

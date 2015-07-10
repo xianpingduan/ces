@@ -319,7 +319,6 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             }
         });
         mUpgradeDialog.show();
-
     }
 
     private void loginout() {
@@ -346,7 +345,6 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
                 msg.what = MSG_GET_ZT;
                 msg.obj = ztAccInfo;
                 mUiHandler.sendMessage(msg);
-
             } else {
                 Logger.e(TAG, "账套为空");
             }
