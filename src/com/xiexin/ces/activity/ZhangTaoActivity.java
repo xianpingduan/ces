@@ -57,6 +57,8 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 
 	private String mCheckAccInfo;
 	private String mCheckConnName;
+	
+	private String oldConnName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,8 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 	}
 
 	private void initData() {
+		
+		oldConnName = getIntent().getStringExtra(Constants.ZHANG_TAO_CONN_NAME);
 		String ztListStr = App.getSharedPreference().getString(
 				Constants.ZHANG_TAO_LIST, "");
 		Logger.d(TAG, "zhangtao info is " + ztListStr);
@@ -346,18 +350,25 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 		        mNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
 		        mNodataNoteDialog.show();
 			} else {
-			    if(mSureNodataNoteDialog==null){
-			        mSureNodataNoteDialog = new NodataNoteDialog(ZhangTaoActivity.this, getString(R.string.please_sure_modify_account));
-                }
-			    mSureNodataNoteDialog.addSureBtnListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mSureNodataNoteDialog.dismiss();
-                        setResult();
-                    }
-                });
-			    mSureNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
-			    mSureNodataNoteDialog.show();
+				
+				if(!oldConnName.equals("")&&mCheckConnName!=null && !oldConnName.equals(mCheckConnName)){
+					if(mSureNodataNoteDialog==null){
+				        mSureNodataNoteDialog = new NodataNoteDialog(ZhangTaoActivity.this, getString(R.string.please_sure_modify_account));
+	                }
+				    mSureNodataNoteDialog.addSureBtnListener(new View.OnClickListener() {
+	                    @Override
+	                    public void onClick(View v) {
+	                        mSureNodataNoteDialog.dismiss();
+	                        setResult();
+	                    }
+	                });
+				    mSureNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+				    mSureNodataNoteDialog.show();
+				}else{
+					
+					setResult();
+				}
+			    
 			}
 			break;
 		case R.id.return_ll:

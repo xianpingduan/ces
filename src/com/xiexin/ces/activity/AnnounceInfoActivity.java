@@ -97,8 +97,10 @@ public class AnnounceInfoActivity extends Activity implements OnClickListener {
 //		mAnnounceContentWv.setBackgroundColor(0); // 设置背景色
 //		mAnnounceContentWv.getBackground().setAlpha(0); // 设置填充透明度 范围：0-255
 		
+		mAnnounceContentWv.clearView();
+		mAnnounceContentWv.measure(10, 10);
 		mAnnounceContentWv.loadDataWithBaseURL(null, mAnnounceContent, "text/html","UTF-8", null);
-
+		mAnnounceContentWv.requestLayout();
 		//doMsgRead( );
 		
         if(mAnnounceFilePath!=null && !"".equals(mAnnounceFilePath)&& !"null".equals(mAnnounceFilePath)&&!"[]".equals(mAnnounceFilePath)){

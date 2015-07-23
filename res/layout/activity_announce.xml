@@ -19,14 +19,19 @@
         android:textColor="#404040"
         android:textSize="@dimen/pl_small_text_size" />
 
-    <WebView
-        android:id="@+id/announce_content_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:textColor="#888888"
-        android:textSize="@dimen/pl_micro_text_size" />
+        android:layout_marginTop="20dp" >
+
+        <WebView
+            android:id="@+id/announce_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#888888"
+            android:textSize="@dimen/pl_micro_text_size" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -387,6 +387,7 @@ public class LoginActivity extends Activity implements OnClickListener
 	    {
 		Intent intent = new Intent( );
 		intent.setClass( LoginActivity.this , ZhangTaoActivity.class );
+		intent.putExtra(Constants.ZHANG_TAO_CONN_NAME, App.getSharedPreference().getString(Constants.ZHANG_TAO_CONN_NAME, ""));
 		// intent.putExtra(Constants.SERVER_CONFIG_SET_FROM,
 		// Constants.SERVER_CONFIG_SET_FROM_LOGIN);
 		startActivityForResult( intent , 1 );
@@ -427,6 +428,7 @@ public class LoginActivity extends Activity implements OnClickListener
 		    dismissDialog( );
 		    Intent intent = new Intent( );
 		    intent.setClass( LoginActivity.this , ZhangTaoActivity.class );
+		    intent.putExtra(Constants.ZHANG_TAO_CONN_NAME, App.getSharedPreference().getString(Constants.ZHANG_TAO_CONN_NAME, ""));
 		    startActivityForResult( intent , 1 );
 		    break;
 		case MSG_REQUEST_ZT_ERROR :

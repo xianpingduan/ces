@@ -122,8 +122,10 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 //	mMsgContentWv.setBackgroundColor(0); // 设置背景色
 //    mMsgContentWv.getBackground().setAlpha(0); // 设置填充透明度 范围：0-255
 	
+	mMsgContentWv.clearView();
+	mMsgContentWv.measure(10, 10);
 	mMsgContentWv.loadDataWithBaseURL(null, mMegContent, "text/html","UTF-8", null);
-	
+	mMsgContentWv.requestLayout();
 	Logger.d(TAG, "mMegContent:"+mMegContent);
 	
 //	if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&&!"null".equals(mMessageInfoFilePath)){

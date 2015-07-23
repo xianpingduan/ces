@@ -13,20 +13,26 @@
         android:id="@+id/msg_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:textColor="#404040"
         android:textSize="@dimen/pl_small_text_size" />
 
-    <WebView
-        android:id="@+id/msg_content_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textColor="#888888"
-        android:textSize="@dimen/pl_micro_text_size" />
+        android:layout_marginTop="20dp" >
+
+        <WebView
+            android:id="@+id/msg_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#888888"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:textSize="@dimen/pl_micro_text_size" />
+    </LinearLayout>
 
 </LinearLayout>

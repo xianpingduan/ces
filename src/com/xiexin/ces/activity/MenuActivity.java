@@ -95,6 +95,8 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     // private LinearLayout mMainLl;
 
     private View decorView;
+    
+    
 
     /**
      * Called when the activity is first created.
@@ -272,6 +274,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
         Intent intent = new Intent();
         intent.setClass(MenuActivity.this, ZhangTaoActivity.class);
+        intent.putExtra(Constants.ZHANG_TAO_CONN_NAME, App.getSharedPreference().getString(Constants.ZHANG_TAO_CONN_NAME, ""));
         // intent.putExtra(Constants.SERVER_CONFIG_SET_FROM,
         // Constants.SERVER_CONFIG_SET_FROM_MENU);
         startActivityForResult(intent, 1);
