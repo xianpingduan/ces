@@ -3,9 +3,6 @@ package com.xiexin.ces.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +37,8 @@ import com.xiexin.ces.fragment.PendApprovalFragment;
 import com.xiexin.ces.fragment.TipFragment;
 import com.xiexin.ces.menu.ResideMenu;
 import com.xiexin.ces.menu.ResideMenuItem;
+import com.xiexin.ces.update.ResourceUtil;
+import com.xiexin.ces.update.SelfUpdateCommonDialog;
 import com.xiexin.ces.update.SelfUpgrade;
 import com.xiexin.ces.update.SelfUpgrade.SelfUpdateListener;
 import com.xiexin.ces.utils.Logger;
@@ -280,23 +280,45 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
     private void sureToLoginOut() {
 
-        AlertDialog.Builder builder = new Builder(MenuActivity.this);
-        builder.setMessage(getString(R.string.sure_to_login_out));
-        builder.setTitle(null);
-        builder.setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
+        // AlertDialog.Builder builder = new Builder(MenuActivity.this);
+        // builder.setMessage(getString(R.string.sure_to_login_out));
+        // builder.setTitle(null);
+        // builder.setPositiveButton(getString(R.string.cancel), new
+        // DialogInterface.OnClickListener() {
+        // @Override
+        // public void onClick(DialogInterface dialog, int which) {
+        // dialog.dismiss();
+        // }
+        // });
+        // builder.setNegativeButton(getString(R.string.sure), new
+        // DialogInterface.OnClickListener() {
+        // @Override
+        // public void onClick(DialogInterface dialog, int which) {
+        // dialog.dismiss();
+        // loginout();
+        // }
+        // });
+        // builder.create().show();
+
+        final SelfUpdateCommonDialog mUpgradeDialog = new SelfUpdateCommonDialog(mContext, "", getString(R.string.sure_to_login_out));
+        mUpgradeDialog.setmRightBtnTitle(mContext.getString(ResourceUtil.getStringId(mContext, "sure")));
+        mUpgradeDialog.setmLeftBtnTitle(mContext.getString(ResourceUtil.getStringId(mContext, "cancel")));
+        mUpgradeDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+        mUpgradeDialog.addRightBtnListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
                 loginout();
+                mUpgradeDialog.dismiss();
             }
         });
-        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        mUpgradeDialog.addLeftBtnListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                if (mUpgradeDialog != null)
+                    mUpgradeDialog.dismiss();
             }
         });
-        builder.create().show();
+        mUpgradeDialog.show();
     }
 
     private void loginout() {
@@ -323,11 +345,9 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
                 msg.what = MSG_GET_ZT;
                 msg.obj = ztAccInfo;
                 mUiHandler.sendMessage(msg);
-
             } else {
                 Logger.e(TAG, "账套为空");
             }
-
         }
 
     }
@@ -658,6 +678,8 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         if (view != mSwitchAccountLl && view != mLoginOutLl && view != itemUpdate) {
             mUiHandler.sendEmptyMessageDelayed(MSG_FROM_FRAGMENT_CLOSE_MENU, 0);
         }
+
+        resideMenu.closeMenu();
 
     }
 

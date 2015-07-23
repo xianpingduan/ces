@@ -67,7 +67,7 @@
                 android:layout_marginRight="@dimen/header_return_margin_left"
                 android:background="@null"
                 android:gravity="center"
-                android:text="btn1"
+                android:text=""
                 android:textColor="@color/btn_title_color"
                 android:textSize="@dimen/pl_micro_text_size"
                 android:visibility="gone" />
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:gravity="center"
-                android:text="btn2"
+                android:text=""
                 android:textColor="@color/btn_title_color"
                 android:textSize="@dimen/pl_micro_text_size"
                 android:visibility="gone" />

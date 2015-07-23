@@ -81,7 +81,6 @@ public class PlusSignDialog extends Dialog {
 					mXiangqianCb.setChecked(true);
 					mXianghouCb.setChecked(false);
 				}
-
 			}
 		});
 

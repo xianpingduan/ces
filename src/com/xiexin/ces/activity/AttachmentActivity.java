@@ -223,8 +223,7 @@ public class AttachmentActivity extends Activity implements OnClickListener {
 		
 		setListAdapter();
 
-		mApkDownloadManager = JuiDownloadService.getDownloadManager(App
-				.getAppContext());
+		mApkDownloadManager = JuiDownloadService.getDownloadManager(App.getAppContext());
 		mApkDownloadManager.setAutoInstall(false);// 不自动安装
 		mApkDownloadManager.setIsNotApk(true);
 

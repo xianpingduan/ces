@@ -331,7 +331,7 @@ public class InvoiceSecondInfoActivity extends Activity implements
 						content = "";
 					}
 
-					if (content.contains("T00:00:00")) {
+					if (content.contains("T")) {
 						Date date = new Date();
 						try {
 							date = sdf.parse(content);

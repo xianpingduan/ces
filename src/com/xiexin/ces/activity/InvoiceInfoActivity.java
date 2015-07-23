@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -45,6 +46,7 @@ import com.xiexin.ces.utils.Logger;
 import com.xiexin.ces.utils.StringUtils;
 import com.xiexin.ces.widgets.ApprovalDialog;
 import com.xiexin.ces.widgets.LoadingDialog;
+import com.xiexin.ces.widgets.NodataNoteDialog;
 import com.xiexin.ces.widgets.NotifyDialog;
 import com.xiexin.ces.widgets.PlusSignDialog;
 import com.xiexin.ces.widgets.SubmitErrorDialog;
@@ -175,11 +177,13 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 
 		mReturnTv.setText(getReturnStr(mInvoiceType));
 		mTitle.setText(getString(R.string.invoice_info));
-		mBtn1.setText(getString(R.string.invoice_approval_road));
-		mBtn2.setText(getString(R.string.invoice_attachment));
+//		mBtn1.setText(getString(R.string.invoice_approval_road));
+//		mBtn2.setText(getString(R.string.invoice_attachment));
 
 		mBtn1.setVisibility(View.VISIBLE);
 		mBtn2.setVisibility(View.VISIBLE);
+		mBtn1.setBackgroundResource(R.drawable.icon_info_road);
+		mBtn2.setBackgroundResource(R.drawable.icon_attach_clickable);
 		mReturnLl.setVisibility(View.VISIBLE);
 
 		mBtn1.setOnClickListener(this);
@@ -435,7 +439,8 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			intent.putExtra(Constants.FILES_PATH, mFilesPathStr);
 			startActivity(intent);
 		}else{
-			Toast.makeText(InvoiceInfoActivity.this, getString(R.string.invoice_no_attachment), Toast.LENGTH_SHORT).show();
+//			Toast.makeText(InvoiceInfoActivity.this, getString(R.string.invoice_no_attachment), Toast.LENGTH_SHORT).show();
+		    showNodataDialog();
 		}
 	}
 
@@ -448,8 +453,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		}
 		
 		Intent intent = new Intent();
-		intent.setClass(InvoiceInfoActivity.this,
-				InvoiceSecondInfoActivity.class);
+		intent.setClass(InvoiceInfoActivity.this,InvoiceSecondInfoActivity.class);
 		intent.putExtra(Constants.PRGID, mPrgid);
 		intent.putExtra(Constants.DET_CONFIG, mDetConfigStr);
 		Bundle bundle = new Bundle();
@@ -479,6 +483,16 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 		intent.putExtra(Constants.ZHANG_TAO_CONN_NAME, mConnName);
 		intent.putExtra(Constants.CHECK_EMPLOYEE_FROM, from);
 		startActivityForResult(intent, 1);
+	}
+	
+	private NodataNoteDialog mNodataNoteDialog;
+	private void showNodataDialog(){
+	    
+	    if(mNodataNoteDialog==null){
+	        mNodataNoteDialog = new NodataNoteDialog(InvoiceInfoActivity.this, getString(R.string.invoice_no_attachment));
+        }
+	    mNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+	    mNodataNoteDialog.show();
 	}
 
 	private void doRequestMobileCfg() {
@@ -565,6 +579,13 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 					mDetNameStr = mDataContent.getString("detname");
 					mFilesPathStr = mDataContent.getString("filespath");
 					mApprListStr = mDataContent.getString("apprlist");
+					
+					if(mFilesPathStr!=null && !"".equals(mFilesPathStr)&& !"null".equals(mFilesPathStr)&&!"[]".equals(mFilesPathStr)){
+					    mBtn2.setBackgroundResource(R.drawable.icon_attach_clickable);
+					}else{
+					    mBtn2.setBackgroundResource(R.drawable.icon_attach_no_clickable);
+					}
+					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -732,7 +753,6 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 			
 //			contentTv.setTextColor(getResources().getColor(
 //					R.color.info_content_text_color));
-			
 //			if (mDataConfig[i].toLowerCase().equals("totalcost")) {
 //                contentTv.setTextColor(getResources().getColor(
 //                        R.color.header_bar_btn_txt_press_color));
@@ -740,8 +760,6 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 //                contentTv.setTextColor(getResources().getColor(
 //                        R.color.second_info_header_color4));
 //            }
-
-
 
 			msgIv.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -804,7 +822,7 @@ public class InvoiceInfoActivity extends Activity implements OnClickListener {
 				if (content == null || content.equals("null")) {
 					content = "";
 				}
-				if (content.contains("T00:00:00")) {
+				if (content.contains("T")) {
 					Date date = new Date();
 					try {
 						date = sdf.parse(content);

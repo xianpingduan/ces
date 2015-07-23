@@ -19,6 +19,7 @@
     <string name="please_enter_account">请输入用户名</string>
     <string name="please_enter_pwd">请输入密码</string> 
     <string name="please_select_zt">请选择账套</string>
+    <string name="please_sure_modify_account">请确认是否修改账套!</string>
     
     <string name="select_zt">账套选择</string>
     
@@ -39,7 +40,7 @@
     <string name="sure">确定</string>
     <string name="cancel">取消</string>
     
-    <string name="server_config_change_msg">确认更改服务器地址和端口?如果更改将清空所有登录信息。</string>
+    <string name="server_config_change_msg">确认更改服务器地址和端口 ？如果更改将清空所有登录信息。</string>
     
    	<string name="sure_to_del_the_msg">确认删除此条消息?。</string>
    	
@@ -52,7 +53,7 @@
     
     <string name="user_info_no_data">暂无</string>
     
-    <string name="loading_tip_text">正在加载</string>
+    <string name="loading_tip_text">加载中...</string>
     <string name="expect">精彩待续...</string>
     <string name="data_laoding_failed">数据加载失败</string>
     <string name="tip_last_page">已经到最后啦!</string>
@@ -76,12 +77,12 @@
     <string name="pl_error_msg_net_refresh">未连接网络或连接失败，请检查网络后重试！</string>
     <string name="pl_loading">正在疯狂地加载...</string>
     
-    <string name="menu_pend_approval">待审批事项</string>
+    <string name="menu_pend_approval">待办事项</string>
     <string name="menu_sent_item">已发事项</string>
     <string name="menu_scratch_upcome">暂存待办</string>
-    <string name="menu_approved">已审批事项</string>
+    <string name="menu_approved">已办事项</string>
     <string name="menu_message">消息中心</string>
-    <string name="menu_ads">公告</string>
+    <string name="menu_ads">公告中心</string>
     <string name="menu_invoice">发票真伪</string>
     <string name="menu_record">记一笔</string>
     <string name="menu_update">检查更新</string>
@@ -113,7 +114,7 @@
     <string name="please_enter_employee_name">请输入您要查询的姓名</string>
 
     
-    <string name="sure_to_login_out">是否确认注销当前帐号?</string>
+    <string name="sure_to_login_out">请确认是否注销账号信息！</string>
     <string name="xiangqian">向前</string>
     <string name="xianghou">向后</string>
     
@@ -132,9 +133,9 @@
     <string name="msg_center">消息中心</string>
     <string name="announce_center">公告</string>
     <string name="announce_attachment">附件</string>
-    <string name="announce_no_attachment">此公告下没有附件</string>
-    <string name="msg_no_attachment">此消息下没有附件</string>
-    <string name="invoice_no_attachment">此单据下没有附件</string>
+    <string name="announce_no_attachment">没有附件</string>
+    <string name="msg_no_attachment">没有附件</string>
+    <string name="invoice_no_attachment">此单据没有附件</string>
     
    	<string name="submit_success_text">提交成功</string>
    	<string name="submit_error_text">提交失败</string>

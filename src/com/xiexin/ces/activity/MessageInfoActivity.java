@@ -6,15 +6,15 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
@@ -27,6 +27,7 @@ import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
 import com.xiexin.ces.R;
 import com.xiexin.ces.utils.Logger;
+import com.xiexin.ces.widgets.NodataNoteDialog;
 
 public class MessageInfoActivity extends Activity implements OnClickListener
 {
@@ -52,7 +53,9 @@ public class MessageInfoActivity extends Activity implements OnClickListener
     // header end
 
     private TextView mMsgTitleTv;
-    private TextView mMsgContentTv;
+//    private TextView mMsgContentTv;
+    
+    private WebView mMsgContentWv;
 
     private RequestQueue mQueue;
 
@@ -86,13 +89,19 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 
 	mTitle.setText( getString( R.string.msg_center ) );
 	mBtn1.setVisibility( View.VISIBLE );
-	mBtn1.setText(getString(R.string.attachment));
+	mBtn2.setVisibility( View.GONE );
+//	mBtn1.setText(getString(R.string.attachment));
+	
+	mBtn1.setBackgroundResource(R.drawable.icon_attach_clickable);
 
 	mReturnLl.setOnClickListener( this );
 	mBtn1.setOnClickListener(this);
 
 	mMsgTitleTv = (TextView)findViewById( R.id.msg_title_tv );
-	mMsgContentTv = (TextView)findViewById( R.id.msg_content_tv );
+//	mMsgContentTv = (TextView)findViewById( R.id.msg_content_tv );
+	
+	mMsgContentWv = (WebView) findViewById(R.id.msg_content_tv);
+	mMsgContentWv.getSettings().setJavaScriptEnabled(true);
 
     }
 
@@ -106,7 +115,16 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 	mMessageInfoFilePath  = intent.getStringExtra("filespath");
 	mMsgTitleTv.setText( mMsgTitle );
 	
-	mMsgContentTv.setText( Html.fromHtml(mMegContent) );
+//	mMsgContentTv.setText( Html.fromHtml(mMegContent) );
+	
+//	mMsgContentWv.loadData(mMegContent, "text/html", "UTF-8");
+	
+//	mMsgContentWv.setBackgroundColor(0); // 设置背景色
+//    mMsgContentWv.getBackground().setAlpha(0); // 设置填充透明度 范围：0-255
+	
+	mMsgContentWv.loadDataWithBaseURL(null, mMegContent, "text/html","UTF-8", null);
+	
+	Logger.d(TAG, "mMegContent:"+mMegContent);
 	
 //	if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&&!"null".equals(mMessageInfoFilePath)){
 //		mTipIv1.setVisibility(View.VISIBLE);
@@ -114,9 +132,25 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 //		mTipIv1.setVisibility(View.GONE);
 //	}
 	
+	
+    if(mMessageInfoFilePath!=null && !"".equals(mMessageInfoFilePath)&& !"null".equals(mMessageInfoFilePath)&&!"[]".equals(mMessageInfoFilePath)){
+        mBtn1.setBackgroundResource(R.drawable.icon_attach_clickable);
+    }else{
+        mBtn1.setBackgroundResource(R.drawable.icon_attach_no_clickable);
+    }
 
 	doMsgRead( );
 
+    }
+    
+    private NodataNoteDialog mNodataNoteDialog;
+    private void showNodataDialog(){
+        
+        if(mNodataNoteDialog==null){
+            mNodataNoteDialog = new NodataNoteDialog(MessageInfoActivity.this, getString(R.string.msg_no_attachment));
+        }
+        mNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+        mNodataNoteDialog.show();
     }
 
     private void doMsgRead()
@@ -200,7 +234,8 @@ public class MessageInfoActivity extends Activity implements OnClickListener
 			intent.putExtra("filespath",mMessageInfoFilePath);
 			startActivity(intent);
 		}else{
-			Toast.makeText(MessageInfoActivity.this, getString(R.string.msg_no_attachment), Toast.LENGTH_SHORT).show();
+//			Toast.makeText(MessageInfoActivity.this, getString(R.string.msg_no_attachment), Toast.LENGTH_SHORT).show();
+		    showNodataDialog();
 		}
 
 	}

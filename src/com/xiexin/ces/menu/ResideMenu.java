@@ -28,7 +28,8 @@ import com.xiexin.ces.R;
 import com.xiexin.ces.utils.Logger;
 
 /**
- * User: special Date: 13-12-10 Time: 下午10:44 Mail: specialcyci@gmail.com
+ * User: allenduan 
+ * Date: 2015-6-10 
  */
 public class ResideMenu extends FrameLayout {
     
@@ -370,14 +371,17 @@ public class ResideMenu extends FrameLayout {
         
         AnimatorSet translateDown_shadow = buildTranslateAnimation(imageViewShadow, dp2px(125));
         
+        AnimatorSet translate_menu = buildTranslateAnimation(scrollViewMenu, 0);
+        
         AnimatorSet scaleDown_shadow = buildScaleDownAnimation(imageViewShadow, mScaleValue + shadowAdjustScaleX, mScaleValue
                 + shadowAdjustScaleY);
         AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 1.0f);
         
-        AnimatorSet translate_menu = buildTranslateAnimation(scrollViewMenu, 0);
-        
         AnimatorSet alpha_userinfo = buildMenuAnimation(mUserInfoRl, 1.0f);
         AnimatorSet alpha_loginout = buildMenuAnimation(mSettingLl, 1.0f);
+        
+        AnimatorSet translate_userinfo = buildTranslateAnimation(mUserInfoRl, 0);
+        AnimatorSet translate_loginout = buildTranslateAnimation(mSettingLl, 0);
 
         scaleDown_shadow.addListener(animationListener);
         scaleDown_activity.playTogether(translateDown_activity);
@@ -386,7 +390,9 @@ public class ResideMenu extends FrameLayout {
         scaleDown_activity.playTogether(alpha_menu);
         scaleDown_activity.playTogether(translate_menu);
         scaleDown_activity.playTogether(alpha_userinfo);
+        scaleDown_activity.playTogether(translate_userinfo);
         scaleDown_activity.playTogether(alpha_loginout);
+        scaleDown_activity.playTogether(translate_loginout);
         scaleDown_activity.start();
     }
 
@@ -403,8 +409,11 @@ public class ResideMenu extends FrameLayout {
         
         AnimatorSet translateUp_shadow = buildTranslateAnimation(viewActivity, 0);
         
-        AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 0.0f);
         AnimatorSet translate_menu = buildTranslateAnimation(scrollViewMenu, 0);
+        AnimatorSet translate_userinfo = buildTranslateAnimation(mUserInfoRl, 0);
+        AnimatorSet translate_loginout = buildTranslateAnimation(mSettingLl, 0);
+        
+        AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 0.0f);
         AnimatorSet alpha_userinfo = buildMenuAnimation(mUserInfoRl, 0.0f);
         AnimatorSet alpha_loginout = buildMenuAnimation(mSettingLl, 0.0f);
         scaleUp_activity.addListener(animationListener);
@@ -414,7 +423,9 @@ public class ResideMenu extends FrameLayout {
         scaleUp_activity.playTogether(alpha_menu);
         scaleUp_activity.playTogether(translate_menu);
         scaleUp_activity.playTogether(alpha_userinfo);
+        scaleUp_activity.playTogether(translate_userinfo);
         scaleUp_activity.playTogether(alpha_loginout);
+        scaleUp_activity.playTogether(translate_loginout);
         scaleUp_activity.start();
     }
 
