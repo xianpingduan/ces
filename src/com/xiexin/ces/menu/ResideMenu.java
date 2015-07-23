@@ -373,6 +373,9 @@ public class ResideMenu extends FrameLayout {
         AnimatorSet scaleDown_shadow = buildScaleDownAnimation(imageViewShadow, mScaleValue + shadowAdjustScaleX, mScaleValue
                 + shadowAdjustScaleY);
         AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 1.0f);
+        
+        AnimatorSet translate_menu = buildTranslateAnimation(scrollViewMenu, 0);
+        
         AnimatorSet alpha_userinfo = buildMenuAnimation(mUserInfoRl, 1.0f);
         AnimatorSet alpha_loginout = buildMenuAnimation(mSettingLl, 1.0f);
 
@@ -381,6 +384,7 @@ public class ResideMenu extends FrameLayout {
         scaleDown_activity.playTogether(translateDown_shadow);
         scaleDown_activity.playTogether(scaleDown_shadow);
         scaleDown_activity.playTogether(alpha_menu);
+        scaleDown_activity.playTogether(translate_menu);
         scaleDown_activity.playTogether(alpha_userinfo);
         scaleDown_activity.playTogether(alpha_loginout);
         scaleDown_activity.start();
@@ -400,6 +404,7 @@ public class ResideMenu extends FrameLayout {
         AnimatorSet translateUp_shadow = buildTranslateAnimation(viewActivity, 0);
         
         AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 0.0f);
+        AnimatorSet translate_menu = buildTranslateAnimation(scrollViewMenu, 0);
         AnimatorSet alpha_userinfo = buildMenuAnimation(mUserInfoRl, 0.0f);
         AnimatorSet alpha_loginout = buildMenuAnimation(mSettingLl, 0.0f);
         scaleUp_activity.addListener(animationListener);
@@ -407,6 +412,7 @@ public class ResideMenu extends FrameLayout {
         scaleUp_activity.playTogether(translateUp_shadow);
         scaleUp_activity.playTogether(scaleUp_shadow);
         scaleUp_activity.playTogether(alpha_menu);
+        scaleUp_activity.playTogether(translate_menu);
         scaleUp_activity.playTogether(alpha_userinfo);
         scaleUp_activity.playTogether(alpha_loginout);
         scaleUp_activity.start();
