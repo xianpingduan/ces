@@ -68,7 +68,7 @@ public class ApprovalDialog extends Dialog {
 		});
 
 		mSpinner = (Spinner) findViewById(R.id.approval_spinner);
-
+		
 		mExpansionIv = (ImageView) findViewById(R.id.expansion_iv);
 
 		mExpansionIv.setOnClickListener(new View.OnClickListener() {

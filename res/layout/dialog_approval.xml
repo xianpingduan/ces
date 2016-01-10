@@ -11,30 +11,31 @@
         android:layout_gravity="center"
         android:orientation="vertical" >
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/common_margin_left"
             android:layout_marginRight="@dimen/common_margin_right"
             android:layout_marginTop="20dp"
             android:background="@drawable/approval_select_bg" >
-
-            <ImageView
-                android:id="@+id/expansion_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/button_expand_edit" />
-
+            
             <Spinner
                 android:id="@+id/approval_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/expansion_iv"
+                android:spinnerMode="dropdown"
+                android:popupBackground="@drawable/default_bg"
+                android:dropDownVerticalOffset="1dp"
                 android:background="@null" />
-        </RelativeLayout>
+            
+             <ImageView
+                android:id="@+id/expansion_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/button_expand_edit" />
+        </FrameLayout>
 
         <EditText
             android:id="@+id/approval_content_et"

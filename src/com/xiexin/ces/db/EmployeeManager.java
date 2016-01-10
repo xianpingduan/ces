@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pada.juidownloadmanager.utils.ThreadTask;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Handler;
@@ -69,7 +68,7 @@ public class EmployeeManager {
 	}
 
 	public synchronized void saveEmpToDB(final Employee employee) {
-		ThreadTask.postTask(new Runnable() {
+		com.xiexin.ces.utils.ThreadTask.postTask(new Runnable() {
 			@Override
 			public void run() {
 				synchronized (removelock) {
@@ -81,7 +80,7 @@ public class EmployeeManager {
 	}
 
 	public synchronized void updateEmpToDB(final Employee employee) {
-		ThreadTask.postTask(new Runnable() {
+		com.xiexin.ces.utils.ThreadTask.postTask(new Runnable() {
 			@Override
 			public void run() {
 				synchronized (removelock) {

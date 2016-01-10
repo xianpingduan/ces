@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/common_margin_3"
+    android:background="@drawable/update_dialog_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/self_update_dialog_tip"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/pl_mimi_text_size" />
+    </LinearLayout>
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_gravity="top"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/dialog_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="#3b3b3b"
+                android:textSize="@dimen/pl_micro_text_size" />
+
+            <Button
+                android:id="@+id/dialog_sure"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="#3b3b3b"
+                android:textSize="@dimen/pl_micro_text_size" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.8dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#cccccc" />
+    </FrameLayout>
+
+</FrameLayout>

@@ -1,28 +1,27 @@
 package com.xiexin.ces.update;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.x;
+import org.xutils.common.Callback;
+import org.xutils.common.task.PriorityExecutor;
+import org.xutils.http.RequestParams;
 
-import pada.juidownloader.HttpUtils;
-import pada.juidownloader.exception.HttpException;
-import pada.juidownloader.http.HttpHandler;
-import pada.juidownloader.http.ResponseInfo;
-import pada.juidownloader.http.callback.RequestCallBack;
-import pada.juidownloader.util.LogUtils;
-import pada.juidownloadmanager.utils.PackageUtils;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PowerManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
@@ -33,6 +32,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.xiexin.ces.App;
 import com.xiexin.ces.Constants;
+import com.xiexin.ces.download.DefaultDownloadViewHolder;
 import com.xiexin.ces.utils.Logger;
 
 /**
@@ -65,7 +65,7 @@ public class SelfUpgrade {
 	// 下载包保存的路径
 	public final static String UPDATE_APK_SAVE_PATH = "/ces/apk/";
 
-	private HttpUtils http = null;
+	// private HttpUtils http = null;
 
 	public void setmUpdateListener(SelfUpdateListener mSelfUpdateListener) {
 		this.mSelfUpdateListener = mSelfUpdateListener;
@@ -99,20 +99,21 @@ public class SelfUpgrade {
 
 	}
 
-	public interface UpdateListener {
-		public void onSuccess(ResponseInfo<File> responseInfo);
-
-		public void onStart();
-
-		public void onStopped();
-
-		public void onLoading(long total, long current, boolean isUploading);
-
-		public void onFailure(HttpException error, String msg);
-
-	}
+	// public interface UpdateListener {
+	// public void onSuccess(ResponseInfo<File> responseInfo);
+	//
+	// public void onStart();
+	//
+	// public void onStopped();
+	//
+	// public void onLoading(long total, long current, boolean isUploading);
+	//
+	// public void onFailure(HttpException error, String msg);
+	//
+	// }
 
 	private int checkType;
+
 	public void startUpgrade(int checkType) {
 		this.checkType = checkType;
 		checkUpdate();
@@ -163,85 +164,165 @@ public class SelfUpgrade {
 
 	private void startDonwloadApk() {
 		if (mUpdateInfo == null) {
-			LogUtils.e("update is null,please check!");
+			Log.e("startDonwloadApk", "update is null,please check!");
 			return;
 		}
 		// 下载apk存放的路径
 		String filePath = getStorePath(mContext, UPDATE_APK_SAVE_PATH);
 		File apkFile = new File(filePath + getSaveFileName(mContext));
 		if (apkFile.exists()) {
-			LogUtils.d("apkFile.exists=" + apkFile.exists());
+			Log.e("startDonwloadApk", "apkFile.exists=" + apkFile.exists());
 			apkFile.delete();
 		}
 		try {
 			apkFile.createNewFile();
 		} catch (Exception e) {
-			LogUtils.e("create file error!");
+			Log.e("startDonwloadApk", "create file error!");
 		}
-		PowerManager pm = (PowerManager) mContext
-				.getSystemService(Context.POWER_SERVICE);
-		if (http == null)
-			http = new HttpUtils(pm);
-		http.configRequestThreadPoolSize(1);
-
 		try {
 			packUrl = mUpdateInfo.getString("packurl");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		addDownloadNotification();
 
-		HttpHandler<File> mHandler = http.download(packUrl, filePath
-				+ getSaveFileName(mContext), true, false,
-				new RequestCallBack<File>() {
+		RequestParams params = new RequestParams(packUrl);
+		params.setAutoResume(true);
+		params.setAutoRename(false);
+		params.setSaveFilePath(apkFile.getAbsolutePath());
+		params.setExecutor(new PriorityExecutor(1, true));
+		params.setCancelFast(true);
+		Callback.Cancelable cancelable = x.http().get(params,
+				new Callback.ProgressCallback<File>() {
+
 					@Override
-					public void onSuccess(ResponseInfo<File> responseInfo) {
+					public void onCancelled(CancelledException arg0) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onError(Throwable arg0, boolean arg1) {
+						// TODO Auto-generated method stub
 						isDownloading = false;
-						LogUtils.d("文件" + responseInfo.result.getPath()
-								+ "下载完成，开始安装!");
-						finishDownloadNotification(responseInfo.result);
+						updateDownloadNotificationError();
+					}
+
+					@Override
+					public void onFinished() {
+						// TODO Auto-generated method stub
+						isDownloading = false;
+
+					}
+
+					@Override
+					public void onSuccess(File file) {
+						// TODO Auto-generated method stub
+						isDownloading = false;
+						Log.d("", "文件" + file.getPath() + "下载完成，开始安装!");
+						finishDownloadNotification(file);
 						// 安装
-						PackageUtils.installNormal(mContext,
-								responseInfo.result.getPath());
+						install(mContext, file.getPath());
 						// 统计
 					}
 
 					@Override
-					public void onStart() {
-						// if( mUpdateListener != null )
-						// mUpdateListener.onStart( );
-					}
+					public void onLoading(long total, long current, boolean arg2) {
+						// TODO Auto-generated method stub
 
-					@Override
-					public void onStopped() {
-						isDownloading = false;
-						// if( mUpdateListener != null )
-						// mUpdateListener.onStopped( );
-					}
-
-					@Override
-					public void onLoading(long total, long current,
-							boolean isUploading) {
 						isDownloading = true;
 						updateDownloadNotification((int) current, (int) total);
-						// if( mUpdateListener != null )
-						// mUpdateListener.onLoading( total , current ,
-						// isUploading );
 					}
 
 					@Override
-					public void onFailure(HttpException error, String msg) {
-						isDownloading = false;
-						updateDownloadNotificationError();
-						// if( mUpdateListener != null )
-						// mUpdateListener.onFailure( error , msg );
+					public void onStarted() {
+						// TODO Auto-generated method stub
+
 					}
 
-				});
-		
-		
+					@Override
+					public void onWaiting() {
+						// TODO Auto-generated method stub
 
+					}
+				});
+
+		// HttpHandler<File> mHandler = http.download(packUrl, filePath
+		// + getSaveFileName(mContext), true, false,
+		// new RequestCallBack<File>() {
+		// @Override
+		// public void onSuccess(ResponseInfo<File> responseInfo) {
+		// isDownloading = false;
+		// LogUtils.d("文件" + responseInfo.result.getPath()
+		// + "下载完成，开始安装!");
+		// finishDownloadNotification(responseInfo.result);
+		// // 安装
+		// PackageUtils.installNormal(mContext,
+		// responseInfo.result.getPath());
+		// // 统计
+		// }
+		//
+		// @Override
+		// public void onStart() {
+		// // if( mUpdateListener != null )
+		// // mUpdateListener.onStart( );
+		// }
+		//
+		// @Override
+		// public void onStopped() {
+		// isDownloading = false;
+		// // if( mUpdateListener != null )
+		// // mUpdateListener.onStopped( );
+		// }
+		//
+		// @Override
+		// public void onLoading(long total, long current,
+		// boolean isUploading) {
+		// isDownloading = true;
+		// updateDownloadNotification((int) current, (int) total);
+		// // if( mUpdateListener != null )
+		// // mUpdateListener.onLoading( total , current ,
+		// // isUploading );
+		// }
+		//
+		// @Override
+		// public void onFailure(HttpException error, String msg) {
+		// isDownloading = false;
+		// updateDownloadNotificationError();
+		// // if( mUpdateListener != null )
+		// // mUpdateListener.onFailure( error , msg );
+		// }
+		//
+		// });
+
+	}
+
+	void install(Context context, String filePath) {
+
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		File file = new File(filePath);
+		try {
+			String cmd = "chmod 777 " + file.getAbsolutePath();
+			Runtime.getRuntime().exec(cmd);
+			cmd = "chmod 777 " + file.getParent();
+			Runtime.getRuntime().exec(cmd);
+			// 尝试提升上2级的父文件夹权限，在阅读插件下载到手机存储时，刚好用到了2级目录
+			// /data/data/packagename/files/这个目录下面所有的层级目录都需要提升权限，才可安装apk，弹出安装界面
+			cmd = "chmod 777 " + new File(file.getParent()).getParent();
+			Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			Log.e("", "file " + file.getName() + "is not exist");
+		}
+
+		if (file == null || !file.exists() || !file.isFile()
+				|| file.length() <= 0) {
+			return;
+		}
+		i.setDataAndType(Uri.parse("file://" + filePath),
+				"application/vnd.android.package-archive");
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(i);
 	}
 
 	private void doRequestUpdate() {
@@ -331,34 +412,45 @@ public class SelfUpgrade {
 				try {
 					JSONArray array = new JSONArray(info);
 					mUpdateInfo = array.getJSONObject(0);
-					Logger.d(TAG, "newvercode="+mUpdateInfo.getInt("newvercode"));
-					Logger.d(TAG, "app versioncode="+App.VersionCode());
-					if(mUpdateInfo.getInt("newvercode")>App.VersionCode()){
+					Logger.d(TAG,
+							"newvercode=" + mUpdateInfo.getInt("newvercode"));
+					Logger.d(TAG, "app versioncode=" + App.VersionCode());
+					if (mUpdateInfo.getInt("newvercode") > App.VersionCode()) {
 						showUpgradeSpecApkDialog();
-					}else{
-						Logger.d(TAG, "已经是最新版本"+App.VersionCode());
-						if(checkType==Constants.CHECK_UPDATE_NOAUTO&&mContext!=null){
-							//Toast.makeText(mContext, "当前软件版本是"+App.VersionName()+",已经是最新版本!", Toast.LENGTH_SHORT).show();
-							if(mUpdateInfoDialog==null){
-								mUpdateInfoDialog = new UpdateInfoDialog(mContext, "", "当前软件版本是"+App.VersionName()+",已经是最新版本");
+					} else {
+						Logger.d(TAG, "已经是最新版本" + App.VersionCode());
+						if (checkType == Constants.CHECK_UPDATE_NOAUTO
+								&& mContext != null) {
+							// Toast.makeText(mContext,
+							// "当前软件版本是"+App.VersionName()+",已经是最新版本!",
+							// Toast.LENGTH_SHORT).show();
+							if (mUpdateInfoDialog == null) {
+								mUpdateInfoDialog = new UpdateInfoDialog(
+										mContext, "", "当前软件版本是"
+												+ App.VersionName()
+												+ ",已经是最新版本");
 							}
-							mUpdateInfoDialog.getWindow().setType(
-									WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+							mUpdateInfoDialog
+									.getWindow()
+									.setType(
+											WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
 							mUpdateInfoDialog.show();
-							
+
 						}
 					}
 					if (mSelfUpdateListener != null) {
-						mSelfUpdateListener.checkSuccessed(mUpdateInfo.getInt("newvercode")+"");
+						mSelfUpdateListener.checkSuccessed(mUpdateInfo
+								.getInt("newvercode") + "");
 					}
-					
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				//long next_req_time = System.currentTimeMillis()+ DEFAULT_REQ_GAP_TIME;
+				// long next_req_time = System.currentTimeMillis()+
+				// DEFAULT_REQ_GAP_TIME;
 				break;
 			case MSG_NO_HAVE_UPGRADE_TO_INSTALL:
-				LogUtils.e("当前是最新版本!");
+				Log.e("SelfUpgrade", "当前是最新版本!");
 				if (mSelfUpdateListener != null) {
 					mSelfUpdateListener
 							.checkUnUpdate(MSG_NO_HAVE_UPGRADE_TO_INSTALL);
@@ -379,7 +471,7 @@ public class SelfUpgrade {
 	private SelfUpdateCommonDialog mUpgradeDialog;
 	private String mUpdatePrompt;
 	private String mUpdateDesc;
-	
+
 	private UpdateInfoDialog mUpdateInfoDialog;
 
 	// 上报最近任务弹出框

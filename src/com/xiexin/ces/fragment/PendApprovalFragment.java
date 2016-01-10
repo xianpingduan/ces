@@ -176,7 +176,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		mListView.setFooterPullEnable(true);
 		mListView.setListViewListener(mListViewListener);
 
-		mListView.addHeaderView(generateListHeaderView());
+//		mListView.addHeaderView(generateListHeaderView());
 
 		// // header start
 		// mReturnLl = (LinearLayout) parentView.findViewById(R.id.return_ll);
@@ -482,7 +482,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return list.size();
+			return list.size()+1;
 		}
 
 		@Override
@@ -496,11 +496,30 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 			// TODO Auto-generated method stub
 			return position;
 		}
+		
+		@Override
+		public int getItemViewType(int position) {
+			if(position==0){
+				return 0;
+			}
+			return 1;
+		}
+		
+		@Override
+		public int getViewTypeCount() {
+			return 2;
+		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-
 			ViewHolder holder;
+			if(position == 0){
+				if(convertView ==null ){
+					convertView = generateListHeaderView();
+				}
+				return convertView;
+			}
+			
 			if (convertView == null) {
 				convertView = App.getLayoutInflater().inflate(
 						R.layout.fragment_pend_approval_list_item, null);
@@ -533,7 +552,7 @@ public class PendApprovalFragment extends Fragment implements OnClickListener {
 				holder = (ViewHolder) convertView.getTag();
 			}
 
-			bindData(holder, list.get(position));
+			bindData(holder, list.get(position-1));
 
 			convertView.setOnClickListener(new View.OnClickListener() {
 

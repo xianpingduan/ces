@@ -26,3 +26,7 @@
 #verCode=13 verName=2.2 date=20150604
 
 #verCode=14 verName=2.3 date=20150629
+
+#verCode=15 verName=2.4 date=20150805
+
+#verCode=16 verName=2.5 date=20160110

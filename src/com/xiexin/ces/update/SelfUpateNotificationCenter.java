@@ -2,7 +2,6 @@ package com.xiexin.ces.update;
 
 import java.io.File;
 
-import pada.juidownloader.util.LogUtils;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,6 +15,7 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 
 public class SelfUpateNotificationCenter
 {
@@ -56,12 +56,12 @@ public class SelfUpateNotificationCenter
 	{
 	    PackageInfo info = mContext.getPackageManager( ).getPackageInfo( mContext.getPackageName( ) , PackageManager.GET_SIGNATURES );
 	    Drawable icon = info.applicationInfo.loadIcon( mContext.getPackageManager( ) );
-	    LogUtils.e( "icon=" + icon.toString( ) );
+	    Log.e("SelfUpateNotificationCenter", "icon=" + icon.toString( ) );
 	    return drawableToBitmap( icon );
 	}
 	catch ( NameNotFoundException e )
 	{
-	    LogUtils.e( "startUpgrade," + e.getMessage( ) );
+	    Log.e("SelfUpateNotificationCenter", "startUpgrade," + e.getMessage( ) );
 	    return null;
 	}
     }

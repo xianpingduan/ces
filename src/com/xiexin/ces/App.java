@@ -1,5 +1,7 @@
 package com.xiexin.ces;
 
+import org.xutils.x;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -58,6 +60,9 @@ public class App extends Application
     {
 	super.onCreate( );
 
+	x.Ext.init(this);
+	x.Ext.setDebug(true);
+	
 	mAppContext = (App)getApplicationContext( );
 	mLayoutInflater = (LayoutInflater)getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 

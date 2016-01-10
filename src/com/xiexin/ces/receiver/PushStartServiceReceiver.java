@@ -2,12 +2,12 @@ package com.xiexin.ces.receiver;
 
 import java.util.List;
 
-import pada.juidownloader.util.LogUtils;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.xiexin.ces.service.MessageService;
 
@@ -39,7 +39,7 @@ public class PushStartServiceReceiver extends BroadcastReceiver
 	{
 	    if( runningServiceInfo.service.getClassName( ).equals( serviceClassName ) )
 	    {
-		LogUtils.d( serviceClassName + " ,服务已经启动! " );
+		Log.d("PushStartServiceReceiver", serviceClassName + " ,服务已经启动! " );
 		return true;
 	    }
 	}

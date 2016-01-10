@@ -16,7 +16,7 @@ import com.xiexin.ces.update.ResourceUtil;
  * 提示消息通过构造方法设置
 */
 
-public class NodataNoteDialog extends Dialog
+public class ZhangTaoChangeDialog extends Dialog
 {
 
     private Context mContext;
@@ -24,15 +24,19 @@ public class NodataNoteDialog extends Dialog
 
     private String mTip;
     private Button mSureBtn;
+    private Button mCancelBtn;
     private String mSureBtnTitle;
+    private String mCancelBtnTitle;
 
     private View.OnClickListener mSureBtnListener;
+    private View.OnClickListener mCancelBtnListener;
+    
+    private String sure = "确定";
+    private String cancel = "取消";
 
-    private String cancel = "确定";
-
-    private NodataNoteDialog( Context context )
+    private ZhangTaoChangeDialog( Context context )
     {
-	super( context ); 
+	super( context );
     }
 
     /**
@@ -41,7 +45,7 @@ public class NodataNoteDialog extends Dialog
      * param title 标题
      */
 
-    public NodataNoteDialog( Context context , String tip )
+    public ZhangTaoChangeDialog( Context context , String tip )
     {
 	super( context , ResourceUtil.getStyleId( context , "SelfUpdateDialog" ) );
 	this.mContext = context;
@@ -52,7 +56,7 @@ public class NodataNoteDialog extends Dialog
     protected void onCreate( Bundle savedInstanceState )
     {
 	super.onCreate( savedInstanceState );
-	setContentView( ResourceUtil.getLayoutId( mContext , "nodata_dialog" ) );
+	setContentView( ResourceUtil.getLayoutId( mContext , "zhangtao_change_dialog" ) );
 
 	mTipTextView = (TextView)findViewById( ResourceUtil.getId( mContext , "tip" ) );
 	if( mTip == null )
@@ -60,13 +64,26 @@ public class NodataNoteDialog extends Dialog
 	    mTip = "";
 	}
 	mSureBtn = (Button)findViewById( ResourceUtil.getId( mContext , "dialog_sure" ) );
+	mCancelBtn = (Button)findViewById( ResourceUtil.getId( mContext , "dialog_cancel" ) );
 	mTipTextView.setText( mTip );
-	mSureBtn.setText( mSureBtnTitle == null ? cancel : mSureBtnTitle );
+	mSureBtn.setText( mSureBtnTitle == null ? sure : mSureBtnTitle );
+	mCancelBtn.setText( mCancelBtnTitle == null ? cancel : mCancelBtnTitle );
 	mSureBtn.setOnClickListener( mSureBtnListener == null ? mSureBtnDefautListener : mSureBtnListener );
-
+	mCancelBtn.setOnClickListener( mSureBtnListener == null ? mCancelBtnDefautListener : mCancelBtnListener );
     }
 
     private View.OnClickListener mSureBtnDefautListener = new View.OnClickListener( )
+    {
+
+	@Override
+	public void onClick( View v )
+	{
+	    dismiss( );
+	}
+    };
+    
+
+    private View.OnClickListener mCancelBtnDefautListener = new View.OnClickListener( )
     {
 
 	@Override
@@ -80,11 +97,20 @@ public class NodataNoteDialog extends Dialog
     {
 	this.mSureBtnListener = listener;
     }
+    public void addCancelBtnListener( View.OnClickListener listener )
+    {
+	this.mCancelBtnListener = listener;
+    }
 
 
     public void setmSureBtnTitle( String mSureBtnTitle )
     {
 	this.mSureBtnTitle = mSureBtnTitle;
+    }
+    
+    public void setmCancelBtnTitle( String mCancelBtnTitle )
+    {
+	this.mCancelBtnTitle = mCancelBtnTitle;
     }
 
 

@@ -97,7 +97,7 @@ public class ServerConfigActivity extends Activity implements OnClickListener
 		mReturnIv.setVisibility(View.VISIBLE);
 		mReturnTv.setVisibility(View.GONE);
 		mReturnIv.setClickable(false);
-		mReturnIv2.setImageResource(R.drawable.server_config_head_menu);
+		mReturnIv2.setImageResource(R.drawable.title_bar_menu);
 	}
 	else
 	{
@@ -191,6 +191,7 @@ public class ServerConfigActivity extends Activity implements OnClickListener
             }
         });
         mUpgradeDialog.show();
+        mUpgradeDialog.setTipTextViewGrivity();
 
 //	AlertDialog.Builder builder = new Builder( ServerConfigActivity.this );
 //	builder.setMessage( getString( R.string.server_config_change_msg ) );

@@ -3,6 +3,7 @@ package com.xiexin.ces.update;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -129,6 +130,11 @@ public class SelfUpdateCommonDialog extends Dialog
 	this.mRightBtnTitle = mRightBtnTitle;
     }
 
+    
+    public void setTipTextViewGrivity(){
+    	mTipTextView.setGravity(Gravity.CENTER);
+    }
+    
     @Override
     public void onBackPressed()
     {

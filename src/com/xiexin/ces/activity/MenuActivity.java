@@ -322,6 +322,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             }
         });
         mUpgradeDialog.show();
+        mUpgradeDialog.setTipTextViewGrivity();
     }
 
     private void loginout() {

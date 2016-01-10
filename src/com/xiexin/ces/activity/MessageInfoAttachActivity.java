@@ -4,20 +4,16 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.x;
+import org.xutils.common.Callback;
+import org.xutils.ex.DbException;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 
-import pada.juidownloader.util.LogUtils;
-import pada.juidownloadmanager.ApkDownloadManager;
-import pada.juidownloadmanager.DownloadTask;
-import pada.juidownloadmanager.DownloadTask.TaskState;
-import pada.juidownloadmanager.DownloadTaskStateListener;
-import pada.juidownloadmanager.IDownloadTaskStateListener;
-import pada.juidownloadmanager.JuiDownloadService;
-import pada.juidownloadmanager.entry.DownloadInfo;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,7 +23,6 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,7 +32,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,15 +39,17 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiexin.ces.App;
 import com.xiexin.ces.R;
+import com.xiexin.ces.download.DownloadInfo;
+import com.xiexin.ces.download.DownloadManager;
+import com.xiexin.ces.download.DownloadState;
+import com.xiexin.ces.download.DownloadViewHolder;
 import com.xiexin.ces.entry.AttachMent;
 import com.xiexin.ces.utils.APNUtil;
 import com.xiexin.ces.utils.Logger;
-import com.xiexin.ces.utils.Md5Util;
 import com.xiexin.ces.utils.OpenFiles;
 import com.xiexin.ces.widgets.DotProgressBar;
 import com.xiexin.ces.widgets.HorizonScrollLayout;
 import com.xiexin.ces.widgets.HorizonScrollLayout.OnTouchScrollListener;
-import com.xiexin.ces.widgets.IUpdateSingleView;
 import com.xiexin.ces.widgets.LoadingUIListView;
 
 public class MessageInfoAttachActivity extends Activity implements OnClickListener {
@@ -92,7 +88,8 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 	private LoadingUIListView mListView;
 	private AttachmentAdapter mAnnounceAttachmentAdapter;
 
-	private ApkDownloadManager mApkDownloadManager;
+	// new download
+	private DownloadManager downloadManager;
 	
 
 	@Override
@@ -103,7 +100,7 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 		initView();
 		initData();
 
-		LogUtils.open();
+		downloadManager = DownloadManager.getInstance();
 
 		IntentFilter mFilter = new IntentFilter();
 		mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -167,7 +164,7 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 		// mListView.setListViewListener(mListViewListener);
 		// mListView.setPadaLoadingViewListener(mLoadingViewListener);
 		if (mAnnounceAttachmentAdapter == null)
-			mAnnounceAttachmentAdapter = new AttachmentAdapter();
+			mAnnounceAttachmentAdapter = new AttachmentAdapter(this);
 
 		mListView.setAdapter(mAnnounceAttachmentAdapter);
 
@@ -221,9 +218,6 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 		}
 		setListAdapter();
 
-		mApkDownloadManager = JuiDownloadService.getDownloadManager(App.getAppContext());
-		mApkDownloadManager.setAutoInstall(false);// 不自动安装
-		mApkDownloadManager.setIsNotApk(true);
 
 	}
 
@@ -232,41 +226,17 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 		mAnnounceAttachmentAdapter.notifyDataSetChanged();
 	}
 
-	private DownloadTaskStateListener mDownloadTaskStateListener = new DownloadTaskStateListener() {
-
-		@Override
-		public void onUpdateTaskState(DownloadTask arg0) {
-
-			if (mAnnounceAttachmentAdapter != null)
-				mAnnounceAttachmentAdapter.onUpdateTaskState(arg0);
-		}
-
-		@Override
-		public void onUpdateTaskProgress(DownloadTask arg0) {
-
-			if (mAnnounceAttachmentAdapter != null)
-				mAnnounceAttachmentAdapter.onUpdateTaskProgress(arg0);
-		}
-
-		@Override
-		public void onUpdateTaskList(Object arg0) {
-			if (mAnnounceAttachmentAdapter != null)
-				mAnnounceAttachmentAdapter.onUpdateTaskList(arg0);
-		}
-	};
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		mApkDownloadManager.registerListener(mDownloadTaskStateListener);
 	}
 
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		mApkDownloadManager.unregisterListener(mDownloadTaskStateListener);
 		unregisterReceiver(mNetChangeReceiver);
 	}
 
@@ -390,12 +360,16 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 		}
 	}
 
-	private class AttachmentAdapter extends BaseAdapter implements
-			IUpdateSingleView<String>, IDownloadTaskStateListener {
+	private class AttachmentAdapter extends BaseAdapter {
 
 		private ArrayList<AttachMent> list = new ArrayList<AttachMent>();
+		private LayoutInflater inflater;
+		private Context context;
 
-		protected HashMap<String, View> mViewMap = new HashMap<String, View>();
+		public AttachmentAdapter(Context context) {
+			inflater = LayoutInflater.from(context);
+			this.context = context;
+		}
 
 		public void addData(ArrayList<AttachMent> data) {
 			list.clear();
@@ -422,244 +396,134 @@ public class MessageInfoAttachActivity extends Activity implements OnClickListen
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-
-			ViewHolder holder;
+			AttachMent attachMent = list.get(position);
+			DownloadItemViewHolder holder = null;
+			DownloadInfo downloadInfo = downloadManager.getDownloadInfo(context,attachMent);
 			if (convertView == null) {
-				convertView = App.getLayoutInflater().inflate(
+				convertView = inflater.inflate(
 						R.layout.activity_attachment_list_item, null);
-				holder = new ViewHolder();
-				holder.downloadRl = (RelativeLayout) convertView
-						.findViewById(R.id.attachment_frame);
-				holder.fileNameTv = (TextView) convertView
-						.findViewById(R.id.attachment_name_tv);
-				holder.handleBtn = (Button) convertView
-						.findViewById(R.id.handle_btn);
+				holder = new DownloadItemViewHolder(convertView, downloadInfo);
 				convertView.setTag(holder);
+				holder.refresh();
 			} else {
-				holder = (ViewHolder) convertView.getTag();
+				holder = (DownloadItemViewHolder) convertView.getTag();
+				holder.update(downloadInfo);
 			}
-
-			bindData(holder, list.get(position));
-
-			String url = list.get(position).getFilepath();
-			String signCode = Md5Util.stringToMD5(changeToUrl(url));
-
-			setViewForSingleUpdate(signCode, convertView);
 			return convertView;
 		}
+	}
 
-		private void bindData(final ViewHolder holder, final AttachMent am) {
+	public class DownloadItemViewHolder extends DownloadViewHolder {
+		@ViewInject(R.id.attachment_name_tv)
+		TextView label;
+		@ViewInject(R.id.handle_btn)
+		Button stopBtn;
 
-			String url = am.getFilepath();
-			String signCode = Md5Util.stringToMD5(changeToUrl(url));
-			Logger.d(TAG, "bindData,signCode=" + signCode);
-			final DownloadTask task = mApkDownloadManager
-					.getDownloadTaskBySignCode(signCode);
-			Logger.d(TAG, "bindData,task=" + task);
-			// if (task != null && task.getState() == TaskState.SUCCEEDED) {
-			// holder.handleBtn.setText(getString(R.string.open_file));
-			// holder.handleBtn.setTag(task);
-			// } else {
-			// holder.handleBtn.setTag(am);
-			// holder.handleBtn.setText(getString(R.string.download));
-			// }
-
-			if (task != null) {
-				holder.handleBtn.setTag(task);
-				setState(holder.handleBtn, task);
-			} else {
-				holder.handleBtn.setTag(am);
-				holder.handleBtn.setText(getString(R.string.download));
-			}
-
-			holder.fileNameTv.setText(am.getAttchname());
-			holder.handleBtn.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					Object obj = v.getTag();
-					if (obj instanceof DownloadTask) {
-						DownloadTask dinfo = (DownloadTask) obj;
-							switch (dinfo.getState()) {
-							case PREPARING:
-							case WAITING:
-							case STARTED:
-							case LOADING:
-								mApkDownloadManager.stopDownload(dinfo);
-								break;
-							case SUCCEEDED:
-								openFile(dinfo.getFileSavePath());
-								break;
-							case STOPPED:
-							case FAILED_NETWORK:
-							case FAILED_SERVER:
-							case FAILED_NOFREESPACE:
-								if (APNUtil.isWifiDataEnable(mContext)) {
-									mApkDownloadManager.resumeDownload(dinfo);
-								} else {
-
-									Toast.makeText(
-											MessageInfoAttachActivity.this,
-											getString(R.string.please_download_at_wifi),
-											Toast.LENGTH_SHORT).show();
-								}
-
-								break;
-							case FAILED_BROKEN:
-							case DELETED:
-								if (APNUtil.isWifiDataEnable(mContext)) {
-									mApkDownloadManager.restartDownload(dinfo);
-								} else {
-
-									Toast.makeText(
-											MessageInfoAttachActivity.this,
-											getString(R.string.please_download_at_wifi),
-											Toast.LENGTH_SHORT).show();
-								}
-
-								break;
-							case FAILED_NOEXIST:
-								mApkDownloadManager.removeDownload(dinfo);
-								break;
-							}
-
-					} else if (obj instanceof AttachMent) {
-						AttachMent attachMent = (AttachMent) v.getTag();
-						startDownload(attachMent);
-					}
-				}
-			});
-			// Log.d(TAG,
-			// "connName="+zt.getConnName()+"checked="+mMap.get(zt.getConnName()));
+		public DownloadItemViewHolder(View view, DownloadInfo downloadInfo) {
+			super(view, downloadInfo);
+			refresh();
 		}
 
-		private void setState(Button button, DownloadTask task) {
-
-			switch (task.getState()) {
-			case PREPARING:
-				button.setText(getString(R.string.app_pause));
-				break;
+		@Event(R.id.handle_btn)
+		private void toggleEvent(View view) {
+			DownloadState state = downloadInfo.getState();
+			switch (state) {
 			case WAITING:
-				button.setText(getString(R.string.app_pause));
-				break;
 			case STARTED:
-			case LOADING:
-				button.setText(getString(R.string.app_pause));
+				downloadManager.stopDownload(downloadInfo);
 				break;
+			case ERROR:
 			case STOPPED:
-				button.setText(getString(R.string.app_resume));
+				try {
+					downloadManager.startDownload(downloadInfo.getUrl(),
+							downloadInfo.getLabel(),
+							downloadInfo.getFileSavePath(),
+							downloadInfo.isAutoResume(),
+							downloadInfo.isAutoRename(), this);
+				} catch (DbException ex) {
+					Toast.makeText(x.app(), "添加下载失败", Toast.LENGTH_LONG).show();
+				}
 				break;
-			case SUCCEEDED:
-				button.setText(getString(R.string.open_file));
-				break;
-			case DELETED:
-				button.setText(getString(R.string.app_redownload));
-				break;
-			case FAILED_NETWORK:
-				button.setText(getString(R.string.app_retry));
-				break;
-			case FAILED_BROKEN:
-				button.setText(getString(R.string.app_retry));
-				break;
-			case FAILED_NOEXIST:
-				button.setText(getString(R.string.app_delete));
-				break;
-			case FAILED_SERVER:
-				button.setText(getString(R.string.app_retry));
-				break;
-			case FAILED_NOFREESPACE:
-				button.setText(getString(R.string.app_retry));
+			case FINISHED:
+				openFile(downloadInfo.getFileSavePath());
+//				Toast.makeText(x.app(), "已经下载完成", Toast.LENGTH_LONG).show();
 				break;
 			default:
 				break;
 			}
 		}
 
-		private void startDownload(AttachMent attachMent) {
+		// @Event(R.id.download_remove_btn)
+		// private void removeEvent(View view) {
+		// try {
+		// downloadManager.removeDownload(downloadInfo);
+		// downloadListAdapter.notifyDataSetChanged();
+		// } catch (DbException e) {
+		// Toast.makeText(x.app(), "移除任务失败", Toast.LENGTH_LONG).show();
+		// }
+		// }
 
-			String url = attachMent.getFilepath();
-			String signCode = Md5Util.stringToMD5(changeToUrl(url));
-
-			Logger.d(TAG, "startDownload,signCode=" + signCode);
-
-			DownloadInfo downloadInfo = new DownloadInfo();
-			downloadInfo.appDownloadURL = changeToUrl(url);
-			Log.d(TAG, "downloadInfo.appDownloadURL="
-					+ downloadInfo.appDownloadURL);
-			downloadInfo.appIconURL = "";
-
-			downloadInfo.appName = attachMent.getAttchname();
-
-			downloadInfo.nFromPos = 0;
-			downloadInfo.packageName = "com.xiexin.ces";
-			downloadInfo.packId = 0;
-			downloadInfo.signCode = signCode;
-
-			Logger.d(TAG, "startDownload,downloadInfo.signCode=" + signCode);
-
-			mApkDownloadManager.startDownload(downloadInfo);
+		@Override
+		public void update(DownloadInfo downloadInfo) {
+			super.update(downloadInfo);
+			refresh();
 		}
 
 		@Override
-		public View getViewByKey(String key) {
-			View view = mViewMap.get(key);
-			return view;
+		public void onWaiting() {
+			refresh();
 		}
 
 		@Override
-		public void setViewForSingleUpdate(String key, View view) {
-			if (view == null) {
-				return;
+		public void onStarted() {
+			refresh();
+		}
+
+		@Override
+		public void onLoading(long total, long current) {
+			refresh();
+		}
+
+		@Override
+		public void onSuccess(File result) {
+			refresh();
+		}
+
+		@Override
+		public void onError(Throwable ex, boolean isOnCallback) {
+			refresh();
+		}
+
+		@Override
+		public void onCancelled(Callback.CancelledException cex) {
+			refresh();
+		}
+
+		public void refresh() {
+			label.setText(downloadInfo.getLabel());
+			// state.setText(downloadInfo.getState().toString());
+			// progressBar.setProgress(downloadInfo.getProgress());
+
+			stopBtn.setVisibility(View.VISIBLE);
+			stopBtn.setText(x.app().getString(R.string.app_pause));
+			DownloadState state = downloadInfo.getState();
+			switch (state) {
+			case WAITING:
+			case STARTED:
+				stopBtn.setText(x.app().getString(R.string.app_pause));
+				break;
+			case ERROR:
+			case STOPPED:
+				stopBtn.setText(x.app().getString(R.string.download));
+				break;
+			case FINISHED:
+				stopBtn.setText(x.app().getString(R.string.open_file));
+				break;
+			default:
+				stopBtn.setText(x.app().getString(R.string.download));
+				break;
 			}
-			mViewMap.put(key, view);
 		}
-
-		@Override
-		public void removeViewForSingleUpdate(View view) {
-
-		}
-
-		@Override
-		public void removeViewForSingleUpdate(String key) {
-			mViewMap.remove(key);
-		}
-
-		@Override
-		public void onUpdateTaskList(Object task) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void onUpdateTaskProgress(DownloadTask task) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onUpdateTaskState(DownloadTask task) {
-
-			Log.d(TAG, "onUpdateTaskState,signCode=" + task.signCode);
-			View view = getViewByKey(task.signCode);
-			Log.d(TAG, "view=" + view);
-			if (view == null) {
-				return;
-			}
-			ViewHolder holder = (ViewHolder) view.getTag();
-			Log.d(TAG, "onUpdateTaskState,arg0.getState()=" + task.getState());
-			if (task.getState() == TaskState.SUCCEEDED) {
-				holder.handleBtn.setText(getString(R.string.open_file));
-			} else {
-				holder.handleBtn.setText(getString(R.string.download));
-			}
-			
-			notifyDataSetChanged();
-		}
-	}
-
-	class ViewHolder {
-		RelativeLayout downloadRl;
-		TextView fileNameTv;
-		Button handleBtn;
 	}
 
 	@Override

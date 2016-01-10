@@ -34,6 +34,7 @@ import com.xiexin.ces.widgets.ILoadingViewListener;
 import com.xiexin.ces.widgets.LoadingUIListView;
 import com.xiexin.ces.widgets.NodataNoteDialog;
 import com.xiexin.ces.widgets.PullListView.IListViewListener;
+import com.xiexin.ces.widgets.ZhangTaoChangeDialog;
 
 public class ZhangTaoActivity extends Activity implements OnClickListener {
 
@@ -335,7 +336,7 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 	}
 
 	private NodataNoteDialog mNodataNoteDialog;
-	private NodataNoteDialog mSureNodataNoteDialog;
+	private ZhangTaoChangeDialog mZhangTaoChangeDialog;
 	
 	@Override
 	public void onClick(View v) {
@@ -352,18 +353,25 @@ public class ZhangTaoActivity extends Activity implements OnClickListener {
 			} else {
 				
 				if(!oldConnName.equals("")&&mCheckConnName!=null && !oldConnName.equals(mCheckConnName)){
-					if(mSureNodataNoteDialog==null){
-				        mSureNodataNoteDialog = new NodataNoteDialog(ZhangTaoActivity.this, getString(R.string.please_sure_modify_account));
+					if(mZhangTaoChangeDialog==null){
+						mZhangTaoChangeDialog = new ZhangTaoChangeDialog(ZhangTaoActivity.this, getString(R.string.please_sure_modify_account));
 	                }
-				    mSureNodataNoteDialog.addSureBtnListener(new View.OnClickListener() {
+					mZhangTaoChangeDialog.addSureBtnListener(new View.OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
-	                        mSureNodataNoteDialog.dismiss();
+	                    	mZhangTaoChangeDialog.dismiss();
 	                        setResult();
 	                    }
 	                });
-				    mSureNodataNoteDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
-				    mSureNodataNoteDialog.show();
+					mZhangTaoChangeDialog.addCancelBtnListener(new View.OnClickListener() {
+	                    @Override
+	                    public void onClick(View v) {
+	                    	mZhangTaoChangeDialog.dismiss();
+	                		finish();
+	                    }
+	                });
+					mZhangTaoChangeDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT); // 全局dialog
+					mZhangTaoChangeDialog.show();
 				}else{
 					
 					setResult();

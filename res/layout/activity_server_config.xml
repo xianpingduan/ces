@@ -25,7 +25,6 @@
             android:paddingLeft="6dp"
             android:background="@drawable/server_config_et_bg"
             android:textColorHint="#979ca2"
-            android:text="@string/default_server_confi_url"
             android:textCursorDrawable="@drawable/pl_edittext_cursor" />
 
         <EditText
@@ -41,7 +40,6 @@
             android:maxLength="18"
             android:paddingLeft="6dp"
             android:singleLine="true"
-           	android:text="@string/default_server_confi_port"
             android:textColorHint="#979ca2"
             android:textCursorDrawable="@drawable/pl_edittext_cursor" />
     </LinearLayout>
